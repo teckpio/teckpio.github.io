@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="vas.css"/>
+        <link rel="stylesheet" href="translist.css"/>
+    </head>
+    <body>
+        <div class="vas_content">
+            <header class = "vas_header" class="vas_headertext">
+                <img src="c:\vas\setup\vlogo9.bmp" alt="VAS"; style=width:80px;>
+                <p class="vas_headertext"></p>
+            </header>
+
+            <div id="translist_title"><h2>Transaction Listing</h2></div>
+            <div id="translist_cat"></div>
+                       
+            <input type="file" />
+
+            <table id="translist_tbl">
+                <colgroup>
+                    <col>
+                    <col id="translist_tblcolref">
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr id="translist_tblheader">
+                        <th id="translist_tblthdate">Date</th>
+                        <th id="translist_tblthref">Reference</th>
+                        <th id="translist_tblthname">Name</th>
+                        <th id="translist_tblthamount">Amount</th>
+                    </tr>            
+                </thead>
+                <tbody id="translist_tblbody">
+                    <tr>
+                        <td>1/1/2019</td>
+                        <td>IN90901</td>
+                        <td>ANC Sdn Bhd</td>
+                        <td>900.00</td>
+                    </tr>    
+                    <tr>
+                        <td>1/1/2019</td>
+                        <td>IN90901</td>
+                            <td>ANC Sdn Bhd</td>
+                            <td>900.00</td>
+                        </tr>    
+                        <tr>
+                            <td>31/1/2019</td>
+                            <td>IN90901</td>
+                            <td>ANC Sdn Bhd</td>
+                            <td>900.00</td>
+                        </tr>    
+                </tbody>
+            </table>
+        </div>
+        
+        <footer class="vas_footer">
+            <p class="vas_footertext"></p>
+        </footer>
+        
+        <script src="translist.js"></script>
+    </body>
+</html>

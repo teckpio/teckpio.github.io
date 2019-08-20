@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            #grid1{
+                display: grid;
+                grid-template-columns: 1fr 3fr 2fr;
+                grid-gap:5px;
+                grid-auto-rows: minmax(100px, auto);
+            }
+
+            #grid1 div{
+                padding:10px;
+                border-style:solid;
+                border-width: 2px;
+                border-color: black;
+            }
+
+            #grid1 div:nth-child(odd){
+                background:green;
+            }
+
+            #grid1 div:nth-child(even){
+                background:blue;
+            }
+
+            #grid11{
+                display:grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-gap:5px;
+                justify-items: end;
+                align-items: flex-end;
+                grid-column:1/3;
+                grid-row:1/3;
+            }
+
+            #grid11 div{
+                padding:10px;
+                
+            }
+
+            #grid11 div:nth-child(odd){
+                background:brown;
+                color:white;
+            }
+
+            #grid11 div:nth-child(even){
+                background:yellow;
+            }
+
+            
+        </style>
+
+    </head>
+    <body>
+        <div id="grid1">
+            <div id="grid11">
+                <div id="grid111" style="align-self:flex-start">
+                    111 Lorem ipsum dolor sit ameteveniet.
+                </div>
+                <div id="grid112">
+                    111 Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur quis sint, cumque exercitationem mollitia maiores, modi sequi amet temporibus quibusdam asperiores nulla! Sit, id dolorem corporis laudantium quae est si
+                </div>
+                <div id="grid113">
+                    111 Lorem ipsum.
+                </div>
+                <div id="grid114">
+                    111 Lorem ipsum!
+                </div>
+            </div>
+            <div id="grid12">
+                    222 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quis expedita corporis laudantium! Sequi, eligendi? Cumque officia pariatur adipisci asperiores non odio repudiandae perferendis. Ut iste deleniti illum quaerat molestias.
+            </div>
+            <div id="grid13">
+                        333 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quis expedita corporis laudantium! Sequi, eligendi? Cumque officia pariatur adipisci asperiores non odio repudiandae perferendis. Ut iste deleniti illum quaerat molestias.
+            </div>
+            <div id="grid14">
+                            444 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quis expedita corporis laudantium! Sequi, eligendi? Cumque officia pariatur adipisci asperiores non odio repudiandae perferendis. Ut iste deleniti illum quaerat molestias.
+            </div>
+            <div id="grid15" style="grid-column:1; grid-row:2/4;">
+                                555 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quis expedita corporis laudantium! Sequi, eligendi? Cumque officia pariatur adipisci asperiores non odio repudiandae perferendis. Ut iste deleniti illum quaerat molestias.
+            </div>
+        </div>
+        <div id="objD_detail"></div>
+    </body>
+
+</html>

@@ -1,0 +1,39 @@
+#translist_tbl{
+    width:100%;
+    border: 1px solid blue;
+    border-collapse: collapse;
+    padding:2px;
+}
+
+#translist_tbl th, #translist_tbl td{
+    border: 1px solid blue;
+    border-collapse: collapse;
+    padding:2px;
+}
+
+#translist_tbl, th{
+    text-align:center;
+}
+
+#translist_tbl tr:nth-child(even){
+    background-color:#eee;
+    color:black;
+}
+
+#translist_tbl tr:nth-child(odd){
+    background-color:white;
+    color:black;}
+    
+#translist_tblthdate{
+    width:10%;
+}
+#translist_tblthref{
+    width:20%;
+}
+#translist_tblthname{
+    width:50%;
+}
+#translist_tblthamount{
+    width:20%;
+}
+

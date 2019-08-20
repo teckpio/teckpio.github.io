@@ -1,0 +1,8 @@
+[
+    {
+        "ID":"2","NName":"ABC SB","NName2":"null","Code":"null","Currcy":"0","RefPrefix":"null","GGroup":"2","DebitAcc":"4","CreditAcc":"null","Handler":"null","Warehouse":"null","XInCharge":"null","Taxable":false,"TaxNumber":"null","CreditLimit":0.000,"CreditTerm":"null","PricingStruct":"null","AllowDiffBilling":false,"Recon":false,"Media1":"null","Media2":"null","Remark":"null","Arc":false,"SysUser":"0","SysTime":"26-07-2019"
+        },
+        {
+            "ID":"1","NName":"RHB Bank","NName2":"null","Code":"null","Currcy":"0","RefPrefix":"null","GGroup":"11","DebitAcc":"3","CreditAcc":"3","Handler":"null","Warehouse":"null","XInCharge":"null","Taxable":false,"TaxNumber":"null","CreditLimit":0.000,"CreditTerm":"null","PricingStruct":"null","AllowDiffBilling":false,"Recon":true,"Media1":"null","Media2":"null","Remark":"null","Arc":false,"SysUser":"0","SysTime":"26-07-2019"},{"ID":"3","NName":"XYZ Trading","NName2":"null","Code":"null","Currcy":"0","RefPrefix":"null","GGroup":"2","DebitAcc":"4","CreditAcc":"null","Handler":"null","Warehouse":"null","XInCharge":"null","Taxable":false,"TaxNumber":"null","CreditLimit":0.000,"CreditTerm":"null","PricingStruct":"null","AllowDiffBilling":false,"Recon":false,"Media1":"null","Media2":"null","Remark":"null","Arc":false,"SysUser":"0","SysTime":"30-07-2019"
+            }
+        ]
