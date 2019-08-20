@@ -63,44 +63,6 @@
         darkblue,
         darkblue
     );
-
-    --bgcolorgradienti:linear-gradient(
-        to top,
-        white,
-        white,
-        white
-        pink,
-        pink,
-        pink,
-        red,
-        red,
-        red,
-        red,
-        darkred,
-        darkred,
-        darkred,
-        darkred,
-        darkred,
-        darkred
-    );
-
-    --bgcolorgradienti2:linear-gradient(
-        to top,
-        darkred,
-        darkred,
-        darkred,
-        darkred,
-        darkred,
-        darkred,
-        darkred,
-        darkred,
-        darkred,
-        darkred,
-        darkred,
-        darkred,
-        darkred
-    );
-
 }
 
 html, body{
@@ -583,6 +545,7 @@ header:hover{
 }
 
 .vsse_bodyfirstofpara{
+    display: inline-block;
     font-size:var(--fontsizefirstofpara);
     font-style:bold;
     background: black;
@@ -821,11 +784,11 @@ header:hover{
 }
 
 #vsse_bodyweareimg11{
-    left:10%;
+    left:0%;
     top:0%;
 }
 #vsse_bodyweareimg12{
-    left:40%;
+    left:35%;
     top:0%;
 }
 #vsse_bodyweareimg13{
@@ -834,7 +797,7 @@ header:hover{
 }
 #vsse_bodyweareimg14{
     left:80%;
-    top:0%;
+    top:30%;
 }
 .vsse_bodyweareservice2{
     position:absolute;
@@ -957,9 +920,10 @@ header:hover{
     /* padding-top:30px; */
     box-sizing: border-box;
     padding:0;
-    width:100%;
+    width:80%;
     margin:0 auto;
-    box-shadow: 0px 2px 0px 6px rgba(200,200,200,.2);
+    margin-top:-30%;
+    box-shadow: 3px 3px 1px 8px rgba(255,255,255,.5);
     /* border:black solid 1px; */
     /* height:auto; */
     /*padding-left:60px;*/
@@ -993,8 +957,8 @@ header:hover{
     margin-right:20px;
     opacity: .1;
     transition:opacity 1s;
-    
 }
+
 
 #vsse_bodywedostudytext{
     opacity:1;
@@ -1008,6 +972,7 @@ header:hover{
 }
 
 .vsse_bodywedothen{
+    margin-top:30px;
     background-color:gray;
     padding:2px 5px;
     color:white;
@@ -1043,6 +1008,14 @@ header:hover{
     display: inline-block;
     font-size:30px;
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -1244,6 +1217,13 @@ header:hover{
 
 
 /*/ what we did */
+
+#vsse_wedidvas{
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
 #vsse_bodywedidbox{
     width:80%;
     margin:0 auto;
@@ -1253,7 +1233,7 @@ header:hover{
     width:80%;
     height:400px;
     /* background:var(--bgcolorgradient);*/
-    margin:0 auto;
+    margin:10% auto;
     overflow: hidden; 
     display:flex;
     flex-direction: row;
@@ -1291,7 +1271,13 @@ header:hover{
     /* display: none; */
 }
 
-
+.vsse_bodywedidfactor{
+    background-color: black;
+    color:white;
+    padding:5px 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
 
 
 

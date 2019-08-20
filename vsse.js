@@ -9,10 +9,10 @@ const constwhoprev = "prev"
 const constwhonext = "next"
 
 var arrywhopic = ['who1.jpg', 'who2.jpg', 'who3.jpg', 'who4.jpg'];
-var arrywhodesc = ['sean connery', 'roger moore', 'pierce brosnan', 'graig daniel'];
+var arrywhodesc = ['Golden Bond', 'Saint Bond', 'Steely Bond', 'Kungfu Bond'];
 var arrywhotrans = [
-    ['left 2000ms, top 1000ms, width 2000ms, opacity 1000ms'],
-    ['left 1000ms, top 2000ms, width 2000ms, opacity 1000ms']]
+    ['left 1000ms, top 500ms, width 2000ms, opacity 1000ms'],
+    ['left 500ms, top 1000ms, width 2000ms, opacity 1000ms']]
 /* array elements: left, top, width */
 var arrywhopos = [
     ["30%", "80%", "30%"],
@@ -209,19 +209,19 @@ imgwherebtnnext.onclick = function () {
 /* function declarations */
 
 /* who */
-function whoselected_click() {
-    switch (this.innerHTML) {
-        case constwhoprev:
-            load_who(-1);
-            break;
-        case constwhonext:
-            load_who(1);
-            break;
-        default:
-            load_who(1);
-            break;
-    }
-}
+// function whoselected_click() {
+//     switch (this.dataset.dir) {
+//         case 'prev':
+//             load_who(-1);
+//             break;
+//         case 'next':
+//             load_who(1);
+//             break;
+//         default:
+//             load_who(1);
+//             break;
+//     }
+// }
 
 function load_who(idxcounter) {
     currwhoimgidx += idxcounter;
@@ -247,17 +247,17 @@ function load_who(idxcounter) {
 
 function rotate_who() {
 
-    switch (this.innerHTML) {
-        case constwhoprev:
+    switch (this.dataset.dir) {
+        case 'prev':
             idxcounter = -1;
             break;
-        case constwhonext:
+        case 'next':
             idxcounter = 1;
             break;
         default:
             break;
     }
-
+ 
     currwhoimgidx += idxcounter;
     if (currwhoimgidx > arrywhopic.length - 1) {
         currwhoimgidx = 0;
@@ -347,18 +347,18 @@ function playactionwords() {
 }
 
 function wedothenemerge() {
-    switch (this.innerHTML) {
-        case '(and then ...)':
+    switch (this.dataset.wedo) {
+        case 'study':
             wedovision.style.opacity = '1';
             wedovisionsvg.style.opacity = '1';
             wedosolutionthen.style.display = 'block';
             break;
-        case '(and then ..)':
+        case 'vision':
             wedobridge.style.opacity = '1';
             wedobridgesvg.style.opacity = '1';
             wedobridgethen.style.display = 'block';
             break;
-        case '(and then .)':
+        case 'bridge':
             wedoimplementation.style.opacity = '1';
             wedoimplementationsvg.style.opacity = '1';
             playactionwords();
