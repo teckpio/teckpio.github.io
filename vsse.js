@@ -22,7 +22,7 @@ var arrywhopos = [
 ]
 
 var whoboximg = document.getElementsByClassName("vsse_bodyweareimg2");
-var currwhoimgidx = 0;
+var currwhoimgidx = -1;
 var whoimgbtn = document.getElementsByClassName("vsse_bodyweareselbtn");
 var whoselected = document.getElementById("vsse_bodyweareselected");
 var whoimgselecteddesc = document.getElementById("vsse_bodyweareselecteddesc");
@@ -93,11 +93,6 @@ var imgwherebtnnext = document.getElementById("vsse_bodywherebtnnext");
 
 /* initial load */
 
-/* we do */
-
-
-
-
 /* we sell */
 
 /* add product categories to menu */
@@ -122,18 +117,70 @@ load_product(arryproductpicyour);
 
 
 /* event management */
+
 /* add event listener to item category AFTER adding all the items (cannot add at the same time of adding innertHTML!) */
 
 vssebody.onscroll = function () {
-    alert('scrolled');
     vssenav.style.display = 'none';
 }
+
+
+/* nav bar */ 
+document.getElementById('vsse_navitemwhy').onclick=function(){
+    window.scrollto(0,0);
+}
+
+/* vision */
+
+document.getElementById('vsse_bodyvisionnavwhy').onclick = function () {
+    window.scrollto(0,0);
+}
+
+
+
 
 
 /* who */
 for (var i = 0; i < whoimgbtn.length; i++) {
     whoimgbtn[i].addEventListener('click', rotate_who);
 }
+
+
+document.getElementById('vsse_bodyweareselectedtest').onclick = function () {
+    const car = document.getElementById('vsse_bodyweareselectedcar');
+    var timerx
+    var timery
+    switch (currwhoimgidx) {
+        case 0:
+            timerx = '10s';
+            timery = 10000;
+            break;
+        case 1:
+            timerx = '5s';
+            timery = 5000;
+            break;
+        case 2:
+            timerx = '3s';
+            timery = 3000;
+            break;
+        case 3:
+            timerx = '1s';
+            timery = 1000;
+            break;
+        default:
+            break;
+    }
+
+    car.style.animation = 'movecar ' + timerx;
+    setTimeout(function () {
+        car.style.animation = 'none';
+    }, timery)
+
+
+}
+
+
+
 
 
 /* do */
@@ -176,19 +223,22 @@ for (var i = 0; i < arryproductcat.length; i++) {
 
 /* where */
 imgwherebtnprev.onclick = function () {
-    imgleft -= 50;
-    sliderimg.style.left = imgleft.toString() + '%';
     if (imgleft == -100) {
         imgleft = 50;
+        sliderimg.style.transition ='left 0';
     }
+    imgleft -= 50;
+    sliderimg.style.left = imgleft.toString() + '%';
+    sliderimg.style.transition ='left 250ms'; 
 }
 
 imgwherebtnnext.onclick = function () {
-    imgleft += 50;
-    sliderimg.style.left = imgleft.toString() + '%';
-    if (imgleft == 50) {
+    if (imgleft == 0) {
         imgleft = -150;
     }
+    imgleft += 50;
+    sliderimg.style.left = imgleft.toString() + '%';
+    
 }
 
 
@@ -257,7 +307,7 @@ function rotate_who() {
         default:
             break;
     }
- 
+
     currwhoimgidx += idxcounter;
     if (currwhoimgidx > arrywhopic.length - 1) {
         currwhoimgidx = 0;
@@ -306,7 +356,7 @@ function rotate_who() {
         whoboximg[idx].style.left = arrywhopos[i][0];
         whoboximg[idx].style.top = arrywhopos[i][1];
         whoboximg[idx].style.width = arrywhopos[i][2];
-        // whoboximg[idx].style.opacity = arrywhopos[i][3];
+        // whoboximg[idx].style.z-index = 55;
 
 
 
@@ -377,7 +427,7 @@ function wedothenemerge() {
 /* we sell */
 function load_product(imgsrc) {
     for (var i = 1; i < 10; i++) {
-        vssebodygrid.children[i - 1].innerHTML = '<a href="home.html"> <figure> <img src="' + imgsrc[i - 1] + '" alt="Your Product"> <figcaption>This is just a sample using "figure" and "figurecaption" </figcaption> </figure></a>';
+        vssebodygrid.children[i - 1].innerHTML = '<img src="' + imgsrc[i - 1] + '" alt="Your Product"> <div>Blah blah blah blah blah</figcaption> </div></a>';
     }
 
 }
