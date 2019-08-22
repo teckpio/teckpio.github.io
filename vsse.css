@@ -52,9 +52,9 @@
         rgb(75, 121, 212),
         rgb(75, 121, 212),
         rgb(75, 121, 212),
+        rgb(133, 165, 231),
         lightblue,
-        white,
-        lightblue,
+        rgb(133, 165, 231),
         rgb(75, 121, 212),
         rgb(75, 121, 212),
         rgb(75, 121, 212),
@@ -1731,7 +1731,7 @@ table, th, td{
 
 /* for mobile */
 /* @media only screen and (min-width: 320px) and (max-width: 767px){ */
-    @media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px){
 
     
         /* invisible div */
@@ -1765,7 +1765,7 @@ table, th, td{
         
         /* header */
         header{
-            /* width:100%; */
+            width:100%;
             display:flex;
             flex-direction:column;
             /* height:var(--headerheight); */
@@ -1833,8 +1833,6 @@ table, th, td{
         }
         
         
-        
-        
         /* bodylink */
         .vsse_bodylink{
             border-top: rgba(200,200,200,.8) solid 3px;
@@ -1857,7 +1855,6 @@ table, th, td{
         h3{
             font-size:12px;
         }
-        
         
         
         
@@ -2018,8 +2015,13 @@ table, th, td{
         
         
         /* who we are */
+#vsse_bodyweare{
+    width:90%;
+    margin:0 auto;
+}
+
         #vsse_vsse_bodywearebox2{
-            width:100%;
+            width:90%;
             min-height:20vh;
             margin:0 auto;
             margin-bottom:10%;
@@ -2181,6 +2183,11 @@ table, th, td{
         
         
         /* we do */
+#vsse_bodywedo{
+    width:90%;
+    margin:0 auto;
+}
+
         #vsse_bodywedobox{
             width:100%;
             margin:0 auto;
@@ -2306,8 +2313,9 @@ table, th, td{
         
         
         /* How */
-        #vsse_bodyhowbox{
-        
+        #vsse_bodyhow{
+        width:90%;
+        margin:0 auto;
             /* display: grid;
             width:70%;
             margin:0 auto;
@@ -2480,7 +2488,11 @@ table, th, td{
         
         
         /*/ what we did */
-        
+        #vsse_bodywedid{
+            width:90%;
+            margin:0 auto;
+        }
+
         #vsse_wedidvaslogo{
             width:100px;
             height:100px;
@@ -2593,7 +2605,12 @@ table, th, td{
         
         
         /* what we sell */
-        
+        #vsse_bodywesell{
+            width:90%;
+            margin:0 auto;
+
+        }
+
         #vsse_bodywesellcat{
             list-style: none;
             font-size: var(--fontsizewesellcat);
@@ -2601,7 +2618,7 @@ table, th, td{
         }
         
         #vsse_bodywesellcatitem{
-            width:80%;
+            width:100%;
             margin:0 auto;
             display:flex;
             flex-direction: row;
@@ -2655,7 +2672,7 @@ table, th, td{
         #vsse_bodygrid{
             background-color:var(--bgcolorbodygrid);
             display: grid;
-            width:80%;
+            width:100%;
             margin:0 auto;
             grid-template-columns: minmax(0,1fr) minmax(0,1fr);/*repeat(3, 1fr);*/
             grid-template-areas:
@@ -2787,24 +2804,27 @@ table, th, td{
         /* where */
         
         #vsse_bodywhere{
+            width:90%;
             margin:0 auto;
         }
         
         #vsse_bodywherebox{
             width:100%;
             margin:0 auto;
+            overflow: hidden;
         }
         
         #vsse_bodywheremap{
             text-align: center;
-            margin:10% auto;
+            width:90%;
+            margin:0% auto;
             background:black;
         }
         
         
         #vsse_bodywhereslider{
             /* width:400px; */
-            width:70%;
+            width:90%;
             height:50vh;
             /* height:300px; */
             /* margin:50px auto; */
@@ -2870,11 +2890,6 @@ table, th, td{
         #vsse_bodywherebtnnext, #vsse_bodywherebtnlblnext{
             right:2%;
             box-shadow: -2px 2px 2px 2px #DDD;
-        }
-        
-        #vsse_bodywheremap{
-            width:80%;
-            overflow: hidden;
         }
         
         #vsse_bodywhereusmap{
