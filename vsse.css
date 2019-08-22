@@ -91,6 +91,8 @@ body{
 /* for mobile */
 /* @media only screen and (min-width: 320px) and (max-width: 767px){ */
 @media only screen and (max-width: 767px){
+
+    
 /* invisible div */
 #vsse_headeradyourad{
     display:none;
@@ -560,15 +562,13 @@ h3{
 
 #vsse_bodywedosvg{
     grid-area: wedodiag;  
-    /* padding-top:30px; */
+    display: block;
     box-sizing: border-box;
     padding:0;
     width:80%;
     margin:0 auto;
+    
     box-shadow: 3px 3px 1px 8px rgba(255,255,255,.5);
-    /* border:black solid 1px; */
-    /* height:auto; */
-    /*padding-left:60px;*/
 }
 
 .vsse_bodywedotext > h3{
