@@ -2316,25 +2316,6 @@ table, th, td{
         #vsse_bodyhow{
         width:90%;
         margin:0 auto;
-            /* display: grid;
-            width:70%;
-            margin:0 auto;
-            grid-template-columns: 5px minmax(1fr,auto) minmax(1fr,auto) minmax(1fr,auto) minmax(1fr,auto) minmax(1fr,auto) minmax(1fr,auto) 5px;
-            grid-gap:5px;
-            
-            grid-template-areas: 
-            ". . . . . paramountain paramountain paramountain"
-            ". . . . . . imgmountain imgmountain"
-            "imgdesert imgdesert imgdesert imgdesert imgdesert imgdesert imgmountain imgmountain"
-            "paradesert paradesert paradesert paradesert . . imgmountain imgmountain"
-            ". . . . . . imgmountain imgmountain"
-            ". imgjungle imgjungle imgjungle imgjungle imgjungle . . "
-            ". imgjungle imgjungle imgjungle imgjungle imgjungle parajungle parajungle "
-            ". imgjungle imgjungle imgjungle imgjungle imgjungle parajungle parajungle "
-            ". imgjungle imgjungle imgjungle imgjungle imgjungle . . "
-            ". parasea parasea parasea parasea parasea parasea ."
-            "imgsea imgsea imgsea imgsea imgsea imgsea imgsea imgsea"; */
-            
         }
         
         #vsse_bodyhowbox > h3{
@@ -2421,8 +2402,6 @@ table, th, td{
         #vsse_bodyhowsuccess2{
             font-size:30px;
         }
-        
-        
         
         #vsse_bodyhowimgdesert{
             grid-area: imgdesert;
@@ -2680,7 +2659,7 @@ table, th, td{
                 "body3 body4"
                 "body5 body6"
                 "body7 body8"
-                "body9 body9";
+                "body9 .";
             grid-gap:5px;
         }
         
