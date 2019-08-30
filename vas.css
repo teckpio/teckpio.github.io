@@ -11,7 +11,7 @@ body{
         white,
         white,
         white,
-        lightgray,
+        lightblue,
         white,
         white,
         white);
@@ -57,7 +57,8 @@ header{
 }
 
 #main_content nav{
-    flex-basis:40%;
+    margin:0 1%;
+    flex-basis:45%;
     /* background-color:lightblue; */
     font-size:1.1em;
     color:darkblue;
@@ -75,41 +76,55 @@ header{
         white); */
 }
 
-
-#main_content nav ul{
-    font-style:bold;
-    list-style: none;
+nav div:hover{
+    cursor: pointer;
 }
 
-#main_content nav svg{
-    width:30%;
+.navdiffitem{
+    display:flex;
+    margin:2%;
+    padding:2%;
+    border-bottom:solid 1px gray;
+}
+
+.navdiffitem svg{
+    flex-basis: 40%;
     background-color:yellow;
     box-shadow: 0 0 2px 2px gray;
-    margin:0;
+    margin:0 2%;
     padding:0;
-    
 }
 
-#main_content nav ul li{
+
+.navdiffitem div{
+    flex-basis: 60%;
     font-size:1em;
     color:red;
-    margin-top:2%;
+    margin:2%;
     font-style:italic;
-    padding-left:3%;
-    text-align:right;
-    border-bottom:solid 1px gray;
-    
+    padding:3% 3%;
+    text-align:center;
 }
 
-#main_content nav ul li:hover{
+.navdiffitem:hover{
     cursor: pointer;
     font-style:bold;
     color:darkred;
     text-shadow: 1px 1px 2px gray;
 }
 
+/* #main_content nav div{
+    align-self: center;
+    justify-self: flex-end;
+    text-align:right;
+    background-color:black;
+}
+
+
+} */
+
 #main_Content div{
-    flex-basis:60%;
+    flex-basis:55%;
     display: flex;
     flex-direction: column;
 }
