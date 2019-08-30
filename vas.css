@@ -1,84 +1,145 @@
-:root{
-    --leftmargin:20px;
-    --footerheight:50px;
-    --footerheightoffset:-50px;
+--root{
+    --headerheight:50px;
+    --contentheight:70vh;
+    --footerheight:10vh;
 }
 
-html, body{
-    height:100%;
-    margin:0;
-    /*padding:10px;*/
-}
+ 
 
 body{
-    background-image: url(vas.bmp);
-    background-size:cover;
+    background:linear-gradient(45deg,
+        white,
+        white,
+        white,
+        lightgray,
+        white,
+        white,
+        white);
+        
+    font-size:1.2em;
+    letter-spacing: .1em;
 }
 
-.vas_content{
-    min-height: 100%;
-    margin-bottom:var(--footerheightoffset);
-}
 
-.vas_content:after{
-    content:"";
-    display:block;
-}
-
-#vas_footer, .vas_content:after{
-    height:var(--footerheight);
-}
-
-/* VAS Header */
-.vas_header{
-    width:100%;
-    display: flex;
-    flex-direction: row;
-    background-color:rgb(75, 121, 212);
-    box-sizing: border-box;
-    margin:10px --leftmargin 10px --leftmargin;
-    padding:10px;
-    background-image: url(banner_bg2.JPG);
-    background-blend-mode: soft-light;
-    /*position: fixed;*/
-    height:100px;
-}
-
-.vas_headeroffset{
-    content:"";
-    display:block;
-    height:100px;
-}
-
-.vas_headertext:before{
-    content: "V Software Solution: Elegance";
+header{
+    background-color:black;
     color:white;
-    font-size: 25px;
-    padding:10px;
-}
-
-.vas_heardersearch{
-    justify-self:flex-end;
-}
-
-/* VAS Footer */
-.vas_footer{
-    background-color:rgba(0, 85, 5, 0.836);
-    box-sizing: border-box;
-    height:var(--footerheight);
-    margin:0 --leftmargin 0 --leftmargin;
-    padding:3px;
-    background-image: url(banner_bg6.JPG);
-    background-blend-mode: overlay;
     display:flex;
-    align-items:flex-end;
-    justify-content:flex-end;
+    max-height:var(--headerheight);
 }
 
-.vas_footertext:before{
-    /*display:block;*/
-    content:"Copyright 2019: VSSE";
+#main_content{
+    height:var(--contentheight);
+}
+
+#header_svgbox{
+    flex-basis:8%;
+    margin-left:2%;
+    align-self:flex-end;
+}
+
+#header_svgbox svg{
+    width:60%;
+}
+
+#header_text{
+    flex-basis:92%;
+    font-size:1.8em;
+    align-self:center;
+    padding-left:2%; 
+}
+
+#main_content{
+    display:flex;
+    flex-direction: row;
+    margin-top:2%;
+    margin-right:2%;
+}
+
+#main_content nav{
+    flex-basis:40%;
+    /* background-color:lightblue; */
+    font-size:1.1em;
+    color:darkblue;
+    line-height: 1.5em;
+
+    padding-right:5%;
+
+    /* background:linear-gradient(45deg,
+        white,
+        white,
+        white,
+        lightgray,
+        white,
+        white,
+        white); */
+}
+
+
+#main_content nav ul{
+    font-style:bold;
+    list-style: none;
+}
+
+#main_content nav svg{
+    width:30%;
+    background-color:yellow;
+    box-shadow: 0 0 2px 2px gray;
+    margin:0;
+    padding:0;
+    
+}
+
+#main_content nav ul li{
+    font-size:1em;
+    color:red;
+    margin-top:2%;
+    font-style:italic;
+    padding-left:3%;
+    text-align:right;
+    border-bottom:solid 1px gray;
+    
+}
+
+#main_content nav ul li:hover{
+    cursor: pointer;
+    font-style:bold;
+    color:darkred;
+    text-shadow: 1px 1px 2px gray;
+}
+
+#main_Content div{
+    flex-basis:60%;
+    display: flex;
+    flex-direction: column;
+}
+
+#illust_writeup{
+    flex-basis: 30%;
+    min-height: 30%;
+}
+
+#illust_imgcont{
+    flex-basis: 70%;
+    min-height: 70%;
+    max-height:70%;
+    overflow: hidden;
+}
+
+#illust_imgcont img{
+    max-width:100%;
+}
+
+
+
+
+
+footer{
+    height:var(--footerheight);
+    background-color:gray;
     color:white;
-    padding-right:10px;
-    margin-bottom:0;
+    text-align:right;
+    padding:1%;
+    margin-top:2%;
+    /* padding-right:2%; */
 }

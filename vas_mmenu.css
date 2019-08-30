@@ -1,0 +1,84 @@
+:root{
+    --leftmargin:20px;
+    --footerheight:50px;
+    --footerheightoffset:-50px;
+}
+
+html, body{
+    height:100%;
+    margin:0;
+    /*padding:10px;*/
+}
+
+body{
+    background-image: url(vas.bmp);
+    background-size:cover;
+}
+
+.vas_content{
+    min-height: 100%;
+    margin-bottom:var(--footerheightoffset);
+}
+
+.vas_content:after{
+    content:"";
+    display:block;
+}
+
+#vas_footer, .vas_content:after{
+    height:var(--footerheight);
+}
+
+/* VAS Header */
+.vas_header{
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    background-color:rgb(75, 121, 212);
+    box-sizing: border-box;
+    margin:10px --leftmargin 10px --leftmargin;
+    padding:10px;
+    background-image: url(banner_bg2.JPG);
+    background-blend-mode: soft-light;
+    /*position: fixed;*/
+    height:100px;
+}
+
+.vas_headeroffset{
+    content:"";
+    display:block;
+    height:100px;
+}
+
+.vas_headertext:before{
+    content: "V Software Solution: Elegance";
+    color:white;
+    font-size: 25px;
+    padding:10px;
+}
+
+.vas_heardersearch{
+    justify-self:flex-end;
+}
+
+/* VAS Footer */
+.vas_footer{
+    background-color:rgba(0, 85, 5, 0.836);
+    box-sizing: border-box;
+    height:var(--footerheight);
+    margin:0 --leftmargin 0 --leftmargin;
+    padding:3px;
+    background-image: url(banner_bg6.JPG);
+    background-blend-mode: overlay;
+    display:flex;
+    align-items:flex-end;
+    justify-content:flex-end;
+}
+
+.vas_footertext:before{
+    /*display:block;*/
+    content:"Copyright 2019: VSSE";
+    color:white;
+    padding-right:10px;
+    margin-bottom:0;
+}
