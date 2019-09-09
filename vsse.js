@@ -60,19 +60,19 @@ var didimgslidetext = document.getElementById('vsse_bodywedidimgslidetext')
 
 var didimgidx = 0
 var arrydidimg = [
-    ['did1.png', 'V-Accounting-System'],
-    ['did2.png', 'Object-Oriented Navigation'],
-    ['did3.png', 'Object-Oriented Navigation'],
-    ['did4.png', 'Drill-Down Tracing'],
-    ['did5.png', 'Multi-Level Analysis']
+    ['./img/did1.png', 'V-Accounting-System'],
+    ['./img/did2.png', 'Object-Oriented Navigation'],
+    ['./img/did3.png', 'Object-Oriented Navigation'],
+    ['./img/did4.png', 'Drill-Down Tracing'],
+    ['./img/did5.png', 'Multi-Level Analysis']
 ]
 
 
 /* we sell */
 var arryproductcat = ['Watch', 'Shoe', 'Your Products'];
-var arryproductpic1 = ['watch1.jpg', 'watch2.jpg', 'watch3.jpg', 'watch4.jpg', 'watch5.jpg', 'watch6.jpg', 'watch7.jpg', 'watch8.jpg', 'watch9.jpg'];
-var arryproductpic2 = ['Shoe1.jpg', 'Shoe2.jpg', 'Shoe3.jpg', 'Shoe4.jpg', 'Shoe5.jpg', 'Shoe6.jpg', 'Shoe7.jpg', 'Shoe8.jpg', 'Shoe9.jpg'];
-var arryproductpicyour = ['yourproduct.jpg', 'yourproduct.jpg', 'yourproduct.jpg', 'yourproduct.jpg', 'yourproduct.jpg', 'yourproduct.jpg', 'yourproduct.jpg', 'yourproduct.jpg', 'yourproduct.jpg']
+var arryproductpic1 = ['./img/watch1.jpg', './img/watch2.jpg', './img/watch3.jpg', './img/watch4.jpg', './img/watch5.jpg', './img/watch6.jpg', './img/watch7.jpg', './img/watch8.jpg', './img/watch9.jpg'];
+var arryproductpic2 = ['./img/Shoe1.jpg', './img/Shoe2.jpg', './img/Shoe3.jpg', './img/Shoe4.jpg', './img/Shoe5.jpg', './img/Shoe6.jpg', './img/Shoe7.jpg', './img/Shoe8.jpg', './img/Shoe9.jpg'];
+var arryproductpicyour = ['./img/yourproduct.jpg', './img/yourproduct.jpg', './img/yourproduct.jpg', './img/yourproduct.jpg', './img/yourproduct.jpg', './img/yourproduct.jpg', './img/yourproduct.jpg', './img/yourproduct.jpg', './img/yourproduct.jpg']
 
 var productcat = document.getElementById("vsse_bodywesellcatitem");
 var vssebodygrid = document.getElementById("vsse_bodygrid");

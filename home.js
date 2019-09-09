@@ -1,5 +1,10 @@
 var arryfunctions = document.getElementById("home_nav").getElementsByTagName("li");
 var dboardtitle = document.getElementById("home_dboard_title");
+const objEntity = document.getElementById("home_dboard_objectEntity");
+const objTrans = document.getElementById("home_dboard_objectTrans");
+const objReport = document.getElementById("home_dboard_objectReport");
+
+
 
 /* set header and footer */
 var my_header = document.getElementsByClassName("vas_header_text");
@@ -7,10 +12,52 @@ var my_header = document.getElementsByClassName("vas_header_text");
 /*my_header.innerHTML="<h1 style='padding-left:20px;'>Elegant-V Solutions</h1>";*/
 my_header.innerHTML = "V Accounting System"
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Events Management //
 for (i = 0; i < arryfunctions.length; i++) {
     arryfunctions[i].addEventListener("click", function_clicked);
     arryfunctions[i].addEventListener("mouseover", function_mouseover);
 }
+
+objEntity.onclick = function(){
+    window.open('entity.html');
+}
+
+objTrans.onclick = function(){
+    window.open('transdetail.html');
+}
+
+objReport.onclick = function(){
+    window.open('report.html');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Functions //
 
 function function_clicked() {
     switch (this.innerHTML) {
@@ -72,17 +119,3 @@ function function_mouseover() {
     // this.style="border-width:5px;"
 }
 
-/*
-datarequest.onreadystatechange =function(){
-    if (this.readyState==4 && this.status==200){
-        alert("ready state change");
-        var data1=json.parse(datarequest.responseText);
-        alert(data1[0]);
-    }
-};
-*/
-
-/*
-alert("opened");
-datarequest.send;
-*/

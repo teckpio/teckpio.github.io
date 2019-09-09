@@ -1,0 +1,53 @@
+/* header */
+header{
+    background-color:lightsteelblue;
+}
+
+.headernavbar{
+    background-color:lightslategrey;
+    color:white;
+    display:flex;
+    justify-content:space-evenly;
+    
+}
+
+
+
+
+
+
+/* main */
+.main{
+    display:flex;
+    /* justify-content: space-between; */
+}
+
+.navbar{
+    flex-grow: 1;
+    background-color:lightgreen;
+}
+
+.details{
+    flex-grow: 5;
+    background-color:lightgrey;
+}
+
+
+
+
+
+/* navbar */
+#tabledetails{
+    width:100%;
+}
+
+
+
+/* details */
+
+
+/* footer */
+footer{
+    background-color:darkolivegreen;
+    color:white;
+}

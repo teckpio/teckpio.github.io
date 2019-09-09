@@ -1,0 +1,37 @@
+#main{
+    display:flex;
+    background-color:black;
+}
+
+#navbar{
+    flex-grow: 3;
+    background-color: grey;
+}
+
+#content{
+    flex-grow:7;
+    background-color: lightgrey;
+}
+
+#reporttable{
+    width:100%;
+    border: 1px solid blue;
+    /* border-collapse: collapse;
+    padding:2px; */
+}
+
+#reporttable th{
+
+}
+
+/* #reporttable tr:nth-child(odd){
+    background-color:white;
+}
+
+#reporttable tr:nth-child(even){
+    background-color:lightgrey;
+} */
+
+.reporttablerowtotal{
+    background-color:yellow;
+}

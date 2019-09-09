@@ -1,22 +1,74 @@
 <html>
 
 <head>
+    <title>VAS</title>
+    <link rel="stylesheet" type="text/css" href="entity.css">
 </head>
 
 <body>
     <header>
         VAS
     </header>
-    <div id = "navbar">
-        <p>Customer:</p>
-        <select id = "navbarselect" style="width:200px" size = "20"></select>
-        <button type = "button" id = "navbarbutton">Get</button>
+    <nav>
+        <ul class=headernavbar>
+            <li>Function1</li>
+            <li>Function2</li>
+            <li>Function3</li>
+        </ul>
+    </nav>
+
+    <!-- form title -->
+    <div id="title">
+        Customer
     </div>
-    <div>
-        <div>Search Panel</div>
-        <div id = "details">Details</div>
+
+
+    <!-- main is a flex with two columns -->
+    <!-- - navbar + details -->
+    <div class="main">
+
+        <!-- navbar is a flex with 2 rows -->
+        <!--  - search panel (search) + list (navbarselect / navbarlist) -->
+        <div class="navbar">
+
+            <div class="search">Search Panel
+            </div>
+
+            <select id="navbarselect" style="width:200px" size="20"></select>
+            <br><br>
+            <button type="button" id="navbarbutton">Get</button>
+            <button type="button" id="navbarbuttonadd">Add</button>
+
+            <div id="navbarlist">
+                <table id="tablelist">
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Address</th>
+                </table>
+            </div>
+
+        </div>
+
+
+        <!-- detail -->
+        <div class="details">
+
+            <form id="formdetails">
+                Details:
+                <div id=divdetails>
+
+                </div>
+            </form>
+
+        </div>
+
+
+        <script src="entity.js"></script>
     </div>
-    <script src = "entity.js"></script>
+
+    <footer>
+        function 1 / function 2 / function 3
+    </footer>
 </body>
 
 </html>
