@@ -1,15 +1,28 @@
+:root{
+    --fbheader:5vh;
+    --fbtitle:5vh;
+    --fbmain:80vh;
+    --fbfooter:10vh;
+
+    --fbnavbar:1;
+    --fbcontent:5;
+
+    --fbnavbarsearch:2;
+    --fbnavbarlist:8;
+}
+
+
+
 /* header */
 header{
+    height:var(--fbheader);
     background-color:lightsteelblue;
 }
 
-.headernavbar{
-    background-color:lightslategrey;
-    color:white;
-    display:flex;
-    justify-content:space-evenly;
-    
+.title{
+    height:var(--fbtitle)
 }
+
 
 
 
@@ -17,37 +30,71 @@ header{
 
 
 /* main */
-.main{
+/* 2 items: navbar + content */
+main{
+    height:var(--fbmain);
     display:flex;
-    /* justify-content: space-between; */
 }
 
+/* 2 items: search + list */
 .navbar{
-    flex-grow: 1;
+    flex-grow: var(--fbnavbar);
     background-color:lightgreen;
+    display: flex;
+    flex-direction: column;
 }
 
-.details{
-    flex-grow: 5;
+#navbarsearch{
+    flex-grow:var(--fbnavbarsearch);
+    background-color:yellow;
+}
+
+/* not using select element */
+#navbarselect{
+    display:none;
+}
+
+
+#navbarlist{
+    flex-grow: var(--fbnavbarlist);
+}
+
+#navbartable{
+    width:90%;
+    margin:2% auto;
+    border-collapse: collapse;
+}
+
+.narbartabletrodd{
+    background-color:white
+}
+
+.narbartabletreven{
+    background-color:lightgray;
+}
+
+.narbartabletrselected{
+    font-style: italic, bold;
+    background-color:gray;
+    color:white;
+}
+
+#narbartable tr td:hover{
+    cursor:pointer;
+}
+
+#navbartable tr td{
+    border:1px gray solid;
+}
+
+.content{
+    flex-grow: var(--fbcontent);
     background-color:lightgrey;
 }
 
-
-
-
-
-/* navbar */
-#tabledetails{
-    width:100%;
-}
-
-
-
-/* details */
-
-
 /* footer */
 footer{
+    height:var(--fbfooter);
     background-color:darkolivegreen;
     color:white;
 }

@@ -1313,7 +1313,24 @@ table, th, td{
     font-style:italic;
 }
 
+#vsse_bodywedidbox2{
+    width:80%;
+    margin:0 auto;
+}
 
+#vsse_wedidvms{
+    display: inline-block;
+    background: black;
+    color:white;
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    padding:10px;
+    width:100%;
+    margin:5% auto;
+    text-align: right;
+    box-shadow: 2px 2px 2px gray;
+}
 
 
 

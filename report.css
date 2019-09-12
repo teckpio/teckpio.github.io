@@ -16,12 +16,17 @@
 #reporttable{
     width:100%;
     border: 1px solid blue;
+    background-color:white;
+    table-layout: fixed;
+    
     /* border-collapse: collapse;
-    padding:2px; */
+    border-style: solid; */
+    /*padding:2px; */
 }
 
 #reporttable th{
-
+    background-color:black;
+    color:white;
 }
 
 /* #reporttable tr:nth-child(odd){
@@ -32,6 +37,23 @@
     background-color:lightgrey;
 } */
 
+.reporttablerowtitle{
+    background-color:white;
+    color:black;
+    overflow:hidden;
+}
+
+.reporttablerowdata{
+    background-color:white;
+    border:gray solid 1px;
+    overflow:hidden;
+}
+
 .reporttablerowtotal{
-    background-color:yellow;
+    background-color:lightgray;
+    overflow:hidden;
+}
+
+.reporttablerowblank{
+    /* background-color:black; */
 }

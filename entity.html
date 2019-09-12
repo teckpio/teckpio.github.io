@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title>VAS</title>
+    <title>Entity</title>
     <link rel="stylesheet" type="text/css" href="entity.css">
 </head>
 
@@ -9,66 +10,62 @@
     <header>
         VAS
     </header>
-    <nav>
-        <ul class=headernavbar>
-            <li>Function1</li>
-            <li>Function2</li>
-            <li>Function3</li>
-        </ul>
-    </nav>
 
-    <!-- form title -->
-    <div id="title">
+    <div class="title">
         Customer
     </div>
 
-
-    <!-- main is a flex with two columns -->
-    <!-- - navbar + details -->
-    <div class="main">
+    <!-- main is a row flex with items: -->
+    <!-- - navbar + content -->
+    <main>
 
         <!-- navbar is a flex with 2 rows -->
         <!--  - search panel (search) + list (navbarselect / navbarlist) -->
         <div class="navbar">
 
-            <div class="search">Search Panel
-            </div>
 
-            <select id="navbarselect" style="width:200px" size="20"></select>
-            <br><br>
-            <button type="button" id="navbarbutton">Get</button>
-            <button type="button" id="navbarbuttonadd">Add</button>
+            <div id="navbarsearch">Search Panel</div>
+
 
             <div id="navbarlist">
-                <table id="tablelist">
-                    <th>Name</th>
-                    <th>Code</th>
-                    <th>Address</th>
+                <!-- <select id="navbarselect" style="width:200px" size="20"></select> -->
+                <table id="navbartable">
+                    
                 </table>
+
+                <button type="button" id="navbarbuttonget">Get</button>
+                <button type="button" id="navbarbuttonadd">Add</button>
+                <button type="button" id="navbarbuttonpdf">PDF</button>
+                <button type="button" id="navbarbuttonfull">Full List</button>
+
+
             </div>
+        </div>
 
+        <div id="content">
+            <!-- form title -->
+
+            <!-- detail -->
+            <div class="details">
+
+                <form id="formdetails">
+                    Details:
+                    <div id=divdetails>
+
+                    </div>
+                </form>
+
+            </div>
         </div>
 
 
-        <!-- detail -->
-        <div class="details">
-
-            <form id="formdetails">
-                Details:
-                <div id=divdetails>
-
-                </div>
-            </form>
-
-        </div>
-
-
-        <script src="entity.js"></script>
-    </div>
-
+    </main>
     <footer>
-        function 1 / function 2 / function 3
+        Copyright @2019
     </footer>
+    <!-- <script type = "module" src="setting.js"></script>
+        <script type = "module" src="entity.js"></script> -->
+    <script src="entity.js"></script>
 </body>
 
 </html>

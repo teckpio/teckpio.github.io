@@ -1,19 +1,33 @@
 'use strict';
 
-const serverendpoint = 'http://127.0.0.1:3000/Entity'
+// import { serverendpoint, serverendpointcollist } from './setting.js';
+const serverendpoint = 'http://127.0.0.1:3000/Entity';
+const serverendpointcollist = '/DataColList';
+
+const strcsstablerowodd = 'narbartabletrodd';
+const strcsstableroweven = 'narbartabletreven';
+const strcsstablerowselected = 'narbartabletrselected';
 
 const navbarselect = document.getElementById('navbarselect');
 const navbarselectitem = document.getElementsByClassName('navbarselectitem');
-const navbarbutton = document.getElementById('navbarbutton');
+const navbarbuttonget = document.getElementById('navbarbuttonget');
 const navbarbuttonadd = document.getElementById('navbarbuttonadd');
-const tablelist = document.getElementById('tablelist');
+const navbarbuttonpdf = document.getElementById('navbarbuttonpdf');
+
+const tablelist = document.getElementById('navbartable');
 const divdetails = document.getElementById('divdetails');
 
+// -1 to indicate non-selection from list //
 var tablelistselectedid = -1;
 
 
-// initial load list //
+// initial load //
+// navbar table list //
 
+
+
+
+// navbar table list //
 try {
     var req = new XMLHttpRequest();
     req.open('GET', serverendpoint);
@@ -22,27 +36,29 @@ try {
         if (this.readyState == 4 && this.status == 200) {
             try {
                 var listobj = JSON.parse(req.responseText).recordsets;
-                if (listobj[0].length > 0){
+                if (listobj[0].length > 0) {
+                    let cssstyle = '';
                     for (var i = 0; i < listobj[0].length; i++) {
+                        cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
 
-                        // using select element //
-                        navbarselect.innerHTML += `<option value = "${listobj[0][i].ID}" class ="nvabarselectitem">"${listobj[0][i].NName}"</option>`;
-    
+                        // not using select element //
+                        // navbarselect.innerHTML += `<option value = "${listobj[0][i].ID}" class ="nvabarselectitem">"${listobj[0][i].NName}"</option>`;
+
                         // using table element //
                         tablelist.innerHTML +=
-                            `<tr data-objid = '${listobj[0][i].ID}'>
+                            `<tr data-objid = '${listobj[0][i].ID}' class = '${cssstyle}'>
                                 <td>${listobj[0][i].NName}</td>
                                 <td>${listobj[0][i].Code}</td>
                                 <td>${listobj[0][i].Currcy}</td>
                             </tr>
                             `;
-    
+
                     }
-    
-                    SetTableEvent();                    
+
+                    SetTableEvent();
                 }
                 else {
-                    alert('Empty Data.');
+                    tablelist.innerHTML = 'Empty Data.';
                 }
 
             }
@@ -68,29 +84,38 @@ catch (e) {
 
 
 // event management //
+// - tablelist
+// - buttongetdetail
+// - buttonpdf
+// - buttonadd
 
 
-// navbar: table list //
+// navbar: table list onclick //
 function SetTableEvent() {
     for (var i = 0; i < tablelist.rows.length; i++) {
         tablelist.rows[i].onclick = function () {
             tablelistselectedid = this.dataset.objid;
+
+            painttabledatarow();
+            this.classList.add(strcsstablerowselected);
         }
     }
 }
 
 
 // get detail button //
-navbarbutton.onclick = function () {
+navbarbuttonget.onclick = function () {
     // check for non-selection //
-    if (navbarselect.value == null) {
+
+    // using table as selection in navbar //
+    if (tablelistselectedid === -1) {
         alert('No Selected Item.');
     }
     else {
         var req = new XMLHttpRequest();
         // using navbar:select //
         // req.open('GET', `${serverendpoint}/?id='${navbarselect.value}'`);
-
+        // OR //
         // using navbar:tablelist //
         req.open('GET', `${serverendpoint}/?id='${tablelistselectedid}'`);
 
@@ -102,6 +127,8 @@ navbarbutton.onclick = function () {
 
                     RemovePPtInputElement();
 
+                    // get datacollist info from Server:Entity //
+                    console.log(listobj[0][0]);
                     CreatePPtInputElement(listobj[0][0]);
                 }
                 catch (e) {
@@ -116,13 +143,43 @@ navbarbutton.onclick = function () {
     }
 }
 
+
+// pdf button //
+navbarbuttonpdf.onclick = function () {
+    var req = new XMLHttpRequest();
+    req.open('POST', serverendpoint + '/pdf');
+    // req.responseText = "blob";
+    req.onreadystatechange = function () {
+        if (req.readyState === 4 && req.status === 200) {
+            // var blob = req.responseText;
+            // var link = document.createElement('a');
+            // link.href = window.URL.createObjectURL(blob);
+            // link.download = 'PdfName-' + new Date().getTime() + '.pdf';
+
+            // document.body.appendChild(link);
+
+            // link.click();
+
+            try {
+                alert('pdf received: ' + req.response);
+                window.open(req.response);
+            }
+            catch (e) {
+                alert(e);
+            }
+        }
+    }
+    req.send();
+}
+
+
 // add button //
 navbarbuttonadd.onclick = function () {
     var req = new XMLHttpRequest();
     var data = {
-        'ID': '101',
-        'NName': 'ZZZ',
-        'Code': 'CD125',
+        'ID': '103',
+        'NName': 'XYZ',
+        'Code': 'CD126',
         'Currcy': '0'
     };
 
@@ -161,8 +218,26 @@ navbarbuttonadd.onclick = function () {
 
 
 // functions: //
+// - painttabledatarow
+// - RemovePPtInputElement
+// - CreatePPtInputElement
 
-// // remove existing child nodes before adding new nodes //
+
+
+function painttabledatarow() {
+    try {
+        let cssstyle = strcsstablerowodd;
+        for (let i = 0; i < tablelist.rows.length; i++){
+            tablelist.rows[i].className = '';
+            cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
+            tablelist.rows[i].classList.add(cssstyle);
+        }
+    }
+    catch (e) { alert(e); }
+
+}
+
+// remove existing child nodes before adding new nodes //
 function RemovePPtInputElement() {
     while (divdetails.firstChild) {
         divdetails.removeChild(divdetails.firstChild);
@@ -171,33 +246,46 @@ function RemovePPtInputElement() {
 
 // create an input element for each property of entity //
 function CreatePPtInputElement(listobj) {
-    var ppt;
-    for (ppt in listobj) {
-        // wrapping div //
-        var divelement = document.createElement('div');
-        // divelement.setAttribute('class', 'divdetailselement');
-        divelement.setAttribute('style', 'display:flex;');
-        divdetails.appendChild(divelement);
 
-        // label //
-        var labelelement = document.createElement('LABEL');
-        labelelement.setAttribute('style', 'flex-grow:1; background-color:gray;');
-        labelelement.innerHTML = ppt;
-        // labelelement.setAttribute('flex-grow', '1');
-        divelement.appendChild(labelelement);
+    // get the datacol list of entity and match the property (label) 
+    // to the value (inputbox) in listobj //
+    const req = new XMLHttpRequest;
+    req.open('GET', serverendpoint + serverendpointcollist);
+    req.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            var arryPPT = JSON.parse(req.responseText);
 
-        // input box //
-        var inputelement = document.createElement('INPUT');
-        inputelement.setAttribute('type', 'text');
-        inputelement.setAttribute('style', 'flex-grow:3; align-self: flex-start; background-color:blue;');
+            // each property is wrapped in a div with a label + inputbox //
+            arryPPT.forEach(ppt => {
+                // wrapping div //
+                var divelement = document.createElement('div');
+                divelement.setAttribute('style', 'display:flex;');
+                divdetails.appendChild(divelement);
 
-        // inputelement.setAttribute('flex-grow', '1');
-        var newinputelement = divelement.appendChild(inputelement);
-        newinputelement.value = listobj[ppt];
+                // label //
+                var labelelement = document.createElement('LABEL');
+                labelelement.setAttribute('style', 'flex-grow:1; background-color:gray;');
+                labelelement.innerHTML = ppt.Disp;
+                // labelelement.setAttribute('flex-grow', '1');
+                divelement.appendChild(labelelement);
 
-        // // new line //
-        // var brelement = document.createElement('BR');
-        // divdetails.appendChild(brelement);
+                // input box //
+                var inputelement = document.createElement('INPUT');
+                inputelement.setAttribute('type', 'text');
+                inputelement.setAttribute('style', 'flex-grow:3; align-self: flex-start; background-color:blue;');
+
+                // inputelement.setAttribute('flex-grow', '1');
+                var newinputelement = divelement.appendChild(inputelement);
+                newinputelement.value = listobj[ppt.Name];
+
+                // // new line //
+                // var brelement = document.createElement('BR');
+                // divdetails.appendChild(brelement);
+            });
+
+        }
     }
-
+    req.send();
 }
+
+
