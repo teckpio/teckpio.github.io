@@ -338,6 +338,10 @@ function sortarrydata(arrydata, colidx, dir) {
 
 
 function loadtablelist(arryheader, arrydata, tablelistX) {
+    // arryheader - an array of header col descriptions //
+    // arrydata - a json data object //
+    // html element of the table to be created //
+
     // 4 tasks are executed:
     // - load header
     // - load datarow
