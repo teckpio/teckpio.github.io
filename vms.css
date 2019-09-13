@@ -102,7 +102,6 @@ header{
     width:80%;
     margin:10% auto;
     padding:5% 2%;
-    
     font-size:var(--fontsizefunction);
     letter-spacing: 2px;
     box-shadow: 1px 1px 1px white;
@@ -299,12 +298,13 @@ header{
 }
 
 footer{
-    width:100%;
+    width:100vw;
     background-color:var(--colorfooterbg);
     color:var(--colorfooterfg);
-    text-align:right;
+    text-align:center;
     height:var(--heightfooter);
     position:fixed;
     top:calc(100hv-(var(--heightfooter)));
+    left:0;
     padding:1%;
 }

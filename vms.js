@@ -30,6 +30,10 @@ var sampledata = [
     { 'vnum': 'BBC912', 'status': 'x', 'in': 'c', 'out': 'x', 'max': 'x', 'bu': 'B-6-12', 'visit': 'x', 'pp': 'x', 'cat': 'x', 'bl': 'x', 'stt': 'x', 'created': 'AB' },
     { 'vnum': 'WEK567', 'status': 'o', 'in': 'c', 'out': 'x', 'max': 'x', 'bu': 'B-10-1', 'visit': 'x', 'pp': 'x', 'cat': 'x', 'bl': 'x', 'stt': 'x', 'created': 'AB' },
     { 'vnum': 'BHW9182', 'status': 'x', 'in': 'c', 'out': 'x', 'max': 'x', 'bu': 'B-4-9', 'visit': 'x', 'pp': 'x', 'cat': 'x', 'bl': 'x', 'stt': 'x', 'created': 'GH' },
+    { 'vnum': 'PBd615', 'status': 'o', 'in': 'c', 'out': 'x', 'max': 'x', 'bu': 'B-12-1', 'visit': 'x', 'pp': 'x', 'cat': 'x', 'bl': 'x', 'stt': 'x', 'created': 'EF' },
+    { 'vnum': 'PEJ9802', 'status': 'o', 'in': 'c', 'out': 'x', 'max': 'x', 'bu': 'B-10-10', 'visit': 'x', 'pp': 'x', 'cat': 'x', 'bl': 'x', 'stt': 'x', 'created': 'EF' },
+    { 'vnum': 'AHH5647', 'status': 'o', 'in': 'c', 'out': 'x', 'max': 'x', 'bu': 'A-1-12', 'visit': 'x', 'pp': 'x', 'cat': 'x', 'bl': 'x', 'stt': 'x', 'created': 'GH' },
+    { 'vnum': 'BBD913', 'status': 'x', 'in': 'c', 'out': 'x', 'max': 'x', 'bu': 'B-6-12', 'visit': 'x', 'pp': 'x', 'cat': 'x', 'bl': 'x', 'stt': 'x', 'created': 'AB' },
     { 'vnum': 'BBC6633', 'status': 'x', 'in': 'c', 'out': 'x', 'max': 'x', 'bu': 'A-3-10', 'visit': 'x', 'pp': 'x', 'cat': 'x', 'bl': 'x', 'stt': 'x', 'created': 'GH' }
 ]
 
@@ -435,26 +439,6 @@ function loadtablelist(arryheader, arrydata, tablelistX) {
                 [strtablerowidcol]);
             }
         }
-
-        // eventhandler for table datarow //
-        // for (var i = 0; i < tablelist.rows.length; i++) {
-        //     tablelist.rows[i].onclick = function () {
-        //         painttabledatarow();
-        //         alert('table datarow clicked: ' + this.dataset
-        //         [strtablerowidcol]);
-        //         this.classList.add(strcsstabledatarowselected);
-        //     }
-        //     // ! double clicked not working //
-        //     tablelist.rows[i].ondblclick = function () {
-        //         alert('table row double-clicked.');
-        //     }
-        // }
-        // for (var i = 0; i < tabledatarow.length; i++) {
-        //     tabledatarow[i].onclick = function () {
-        //         alert('table datarow clicked: ' + tabledatarow[i].dataset[strtablerowidcol]);
-        //     }
-        // }
-
     }
     catch (e) {
         alert('loadtablelist error: ' + e);
