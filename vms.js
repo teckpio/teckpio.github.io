@@ -84,6 +84,8 @@ const content = document.getElementById('content');
 
 const userprofile = document.getElementById('userprofile');
 const newuser = document.getElementById('newuser');
+
+const listtitle = document.getElementById('listtitle');
 const tablecont = document.getElementById('tablecont');
 const tablelist = document.getElementById('tablelist');
 const tableblacklist = document.getElementById('tableblacklist');
@@ -95,12 +97,14 @@ const tabledatarowbutton = document.getElementsByClassName(strtabledatarowbutton
 const tfncnew = document.getElementById('tablefncNew');
 const tfncblacklist = document.getElementById('tablefncBlacklist');
 const tfncexport = document.getElementById('tablefncExport');
+const tfnchistory = document.getElementById('tablefncHistory');
 
 
 
 // initial load //
 
 // - load current tablelist //
+listtitle.innerHTML = strBlackListWhite;
 loadtablelist(tablecol, sampledata, tablelist);
 sortedtablecol = tablecol.slice();
 
@@ -153,20 +157,24 @@ navbarfncprofile.onclick = function () {
 
     if (this.innerHTML === strUserProfile) {
         // scroll right //
+        listtitle.innerHTML = strUserProfile;
         userprofile.style = 'display:block';
         setTimeout(function () {
             tablelist.style = 'transform: translateX(100%)';
             userprofile.style = 'right:0';
+
         }, numContentScrollDelay);
 
         this.innerHTML = strUserList;
     }
     else {
         // scroll left //
+        listtitle.innerHTML = strBlackListWhite;
         tablelist.style = 'transform: translateX(0)';
         userprofile.style = 'right:-100%';
         setTimeout(function () {
             userprofile.style = 'display:none';
+
         }, numContentScrollDelay * 3);
         this.innerHTML = strUserProfile;
     }
@@ -183,20 +191,24 @@ navbarfncnewuser.onclick = function () {
 
     if (this.innerHTML === strNewUser) {
         // scroll right //
+        listtitle.innerHTML = strNewUser;
         newuser.style = 'display:block';
         setTimeout(function () {
             tablelist.style = 'transform: translateX(100%)';
             newuser.style = 'right:0';
+
         }, numContentScrollDelay);
 
         this.innerHTML = strUserList;
     }
     else {
         // scroll left //
+        listtitle.innerHTML = strBlackListWhite;
         tablelist.style = 'transform: translateX(0)';
         newuser.style = 'right:-100%';
         setTimeout(function () {
             newuser.style = 'display:none';
+
         }, numContentScrollDelay * 3);
         this.innerHTML = strNewUser;
     }
@@ -232,20 +244,26 @@ tfncblacklist.onclick = function () {
     }
     if (this.innerHTML === strBlackListBlack) {
         // scroll up //
+
+        tablecont.style = 'background-color:black';
         tableblacklist.style = 'display:block';
         setTimeout(function () {
             tablelist.style = 'transform: translateY(-100%)';
             tableblacklist.style = 'top:0';
+            listtitle.innerHTML = strBlackListBlack;
         }, numContentScrollDelay);
 
         this.innerHTML = strBlackListWhite;
     }
     else {
         // scroll down //
+
+        tablecont.style = 'background-color:white';
         tablelist.style = 'transform: translateY(0)';
         tableblacklist.style = 'top:100%';
         setTimeout(function () {
             tableblacklist.style = 'display:none';
+            listtitle.innerHTML = strBlackListWhite;
         }, numContentScrollDelay * 3);
         this.innerHTML = strBlackListBlack;
     }
@@ -263,6 +281,10 @@ tfncexport.onclick = function () {
         default:
             break;
     }
+}
+
+tfnchistory.onclick = function () {
+    alert('Retrieve History ...');
 }
 
 

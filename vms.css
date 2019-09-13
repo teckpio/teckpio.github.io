@@ -9,8 +9,8 @@
     --fbcontentofmain:85%;
     
     /* content is a flex with 2 rows: building + listcont */
-    --fbbuildingofcontent:5%;
-    --fblistcontofcontent:95%;
+    --fbbuildingofcontent:3%;
+    --fblistcontofcontent:97%;
 
     /* listcont is a flex with 3 rows: tablecont + tablefunctioncont */
     --fbtablecontoflistcont:85%;
@@ -18,38 +18,49 @@
     --fbtablefunctioncontoflistcont:15%;
 
     --colorheaderbg: lightgrey; /* rgb(158, 204, 231);*/
-    --colorheaderfg:black;
+    --colorheaderfg:darkred ;
     --colorbodyframe:white; /*rgb(170, 206, 211);*/
+
     --colornavbarbg:white;
     --colornavbarfg:black;
     --colornavbarfunctionborder:gray;
     
     --colorfunctionbg:#EEE;
 
+    --coloruserprofitbg:lightgreen;
+    --colornewuserbg:lightblue;
+
+    --colorbuildingtitlefg:darkblue;
+
+    --colorlisttitlebg:gray;
+    --colorlisttitlefg:white;
+
     --colorpagecontrolbg:white;
     --colorpagecontrolfg:black;
     --colortablefunctionbg:white; /*rgb(188, 202, 209);*/
     --colortablefunctionfg:black;
     --colortablefunctionborder:gray;
-    --colorfooterbg:white; /*lightgrey;*/
-    --colorfooterfg:black; /*lightgrey;*/
+    --colorfooterbg:black; /*lightgrey;*/
+    --colorfooterfg:white; /*lightgrey;*/
 
     --fontsizefunction:1em;
     --fontsizefunctionhover:1.2em;
+    --fontsizelisttitle:1.2em;
     --fontsizetabledatarow:.9em;
+
+    --delaytransition:500ms;
 }
 
-
-.disappear{
-    display:none;
-}
 
 header{
     background-color:var(--colorheaderbg);
     color:var(--colorheaderfg);
     box-shadow: 0 5px 0px  var(--colorbodyframe);
+    margin-top:0;
     margin-bottom:5px;
     height:var(--heightheader);
+    background:linear-gradient(lightgray,white,white,white);
+    padding-left:.5%;
 }
 
 #main{
@@ -90,7 +101,8 @@ header{
     text-align:center;
     width:80%;
     margin:10% auto;
-    padding:2%;
+    padding:5% 2%;
+    
     font-size:var(--fontsizefunction);
     letter-spacing: 2px;
     box-shadow: 1px 1px 1px white;
@@ -117,21 +129,23 @@ header{
     flex-basis:var(--fbbuildingofcontent);
     display:flex;
     box-shadow: 0 0 2px gray;
+    background:linear-gradient(white, white, lightgray);
 }
 
 #buildingsvg{
     /* background-color:lightgreen; */
-    width:80%;
-    flex-basis:10%;
+    width:50%;
+    flex-basis:5%;
     margin:1% 1%;
-    background:linear-gradient(lightblue, white, darkgreen);
+    /* background:linear-gradient(lightblue, white, darkgreen); */
 }
 
 #buildingtitle{
     /* background-color:yellow; */
-    flex-basis:90%;
+    flex-basis:95%;
     align-self:center;
     font-style:italic;
+    color:var(--colorbuildingtitlefg)
 }
 
 #listcont{
@@ -144,6 +158,14 @@ header{
     box-shadow: 0 0 2px gray;
 }
 
+#listtitle{
+    font-size:var(--fontsizelisttitle);
+    font-style:bold;
+    background-color:var(--colorlisttitlebg);
+    color:var(--colorlisttitlefg);
+    padding:1%;
+}
+
 #tablecont{
     flex-basis: var(--fbtablecontoflistcont);
     overflow: hidden;
@@ -154,47 +176,47 @@ header{
 #tablelist{
     width:100%;
     border-collapse: collapse;
-    transition: transform 800ms;
+    transition: transform var(--delaytransition);
 }
 
 #tableblacklist{
     width:100%;
-    height:100%;
-    background-color:black;
-    color:white;
+    /* height:100%; */
+    /* background-color:black;
+    color:white; */
     position:absolute;
     top:100%;
-    transition: top 800ms;
+    transition: top var(--delaytransition);
 }
 
 
 #userprofile{
     width:100%;
     height:100%;
-    background-color:lightblue;
+    background-color:var(--coloruserprofitbg);
     color:black;
     position:absolute;
     top:0;
     right: -100%;
-    transition: right 800ms;
+    transition: right var(--delaytransition);
 }
 
 #newuser{
     width:100%;
     height:100%;
-    background-color:lightgoldenrodyellow;
+    background-color:var(--colornewuserbg);
     color:black;
     position:absolute;
     top:0;
     right: 100%;
-    transition: right 800ms;
+    transition: right var(--delaytransition);
 }
 
 
 #tablelist, th, td, 
 #tableblacklist, th, td{
     border: solid lightgray 1px; 
-    padding:.5%;
+    padding:.1% .5%;
     font-size:var(--fontsizetabledatarow);
 }
 
