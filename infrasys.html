@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Infra-Data and System Control</title>
+    <link rel="stylesheet" type="text/css" href="vas.css">
+    <link rel="stylesheet" type="text/css" href="infrasys.css">
+</head>
+
+<body>
+    <!-- body -> header + main + footer -->
+    <header id="vas_header">
+        VAS - Infra Data and System Control
+    </header>
+
+    <!-- vas_main is a row flex with: vas_nav + vas_content -->
+    <div id = "vas_main">
+        <div id="vas_navbar">
+            
+            <div id = "vas_navbartitle">NavBar Title</div>
+
+            <div id = "vas_navbarlist">
+                <select size = "5" style = "width:80%">
+                    <option value = "1">11111111</option>
+                    <option value = "2">22222222</option>
+                    <option value = "3">33333333</option>
+                </select>
+            </div>
+
+            <div id = "vas_navbarfunction"></div>
+
+        </div>
+
+        <!-- vas_content is a column flex with: vas_contenttitle + vas_contentlist + vas_contentfunction -->
+        <div id="vas_content">
+
+            <div id = "vas_contenttitle">content title</div>
+
+            <!-- vas_contentlist is a column flex with: vas_listtitle + vas_listtable -->
+            <div id = "vas_contentdetail">
+                <div id = "vas_contentlisttitle">
+                    listtitle
+                </div>
+                <div id = "vas_contentlist">
+                    <table>
+                        <thead>
+                            <th>col1</th>
+                            <th>col2</th>
+                        </thead>
+                        <tbody>
+                            <tr><td>data1</td><td>data1</td></tr>
+                            <tr><td>data1</td><td>data1</td></tr>
+                            <tr><td>data1</td><td>data1</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id = "vas_contentfunction"></div>
+
+        </div>
+    </div>
+
+    <footer id="vas_footer">
+        footer
+    </footer>
+
+    <script src="infrasys.js"></script>
+</body>
+
+</html>

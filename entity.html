@@ -3,68 +3,72 @@
 
 <head>
     <title>Entity</title>
-    <link rel="stylesheet" type="text/css" href="entity.css">
+    <link rel="stylesheet" type="text/css" href="vas.css">
+    <!-- <link rel="stylesheet" type="text/css" href="entity.css"> -->
 </head>
 
 <body>
-    <header>
+    <header id = "vas_header">
         VAS
     </header>
 
-    <div class="title">
-        Customer
-    </div>
+    <!-- vas_main is a row flex with: vas_navbar + vas_content -->
+    <div id="vas_main">
 
-    <!-- main is a row flex with items: -->
-    <!-- - navbar + content -->
-    <main>
-
-        <!-- navbar is a flex with 2 rows -->
-        <!--  - search panel (search) + list (navbarselect / navbarlist) -->
-        <div class="navbar">
+        <!-- vas_navbar is a column flex with: vas_navbartitle + vas_navbarlist + vas_navbarfunction -->
+        <div id="vas_navbar">
 
 
-            <div id="navbarsearch">Search Panel</div>
+            <div id="vas_navbartitle">Entity</div>
 
 
-            <div id="navbarlist">
-                <!-- <select id="navbarselect" style="width:200px" size="20"></select> -->
+            <div id="vas_navbarlist">
+
                 <table id="navbartable">
-                    
+
                 </table>
 
-                <button type="button" id="navbarbuttonget">Get</button>
-                <button type="button" id="navbarbuttonadd">Add</button>
-                <button type="button" id="navbarbuttonpdf">PDF</button>
-                <button type="button" id="navbarbuttonfull">Full List</button>
-
-
+            </div>
+            <div id="vas_navbarfunction">
+                <div class = "vas_function" id="navbarbuttonget">Get</div>
+                <div class = "vas_function" id="navbarbuttonadd">Add</div>
+                <div class = "vas_function" id="navbarbuttonpdf">PDF</div>
+                <div class = "vas_function" id="navbarbuttonfull">Full List</div>
             </div>
         </div>
 
-        <div id="content">
+        <!-- vas_content is a column flex with: vas_contenttitle + vas_contentdetail + vas_contentfunction -->
+        <div id="vas_content">
             <!-- form title -->
 
             <!-- detail -->
-            <div class="details">
+            <div id="vas_contenttitle">
+            </div>
 
+            <div id="vas_contentdetail">
                 <form id="formdetails">
                     Details:
                     <div id=divdetails>
 
                     </div>
                 </form>
+            </div>
+
+            <div id="vas_contentfunction">
 
             </div>
+
+
         </div>
 
 
-    </main>
-    <footer>
+    </div>
+    <footer id = "vas_footer">
         Copyright @2019
     </footer>
     <!-- <script type = "module" src="setting.js"></script>
         <script type = "module" src="entity.js"></script> -->
+    <script src="setting_web.js"></script>
     <script src="entity.js"></script>
 </body>
 

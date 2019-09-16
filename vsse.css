@@ -1220,7 +1220,8 @@ header{
     height:100px;
     display: inline-block;
 }
-#vsse_wedidvas{
+
+.vsse_wedidprj{
     display: inline-block;
     background: black;
     color:white;
@@ -1233,7 +1234,7 @@ header{
     box-shadow: 2px 2px 2px gray;
 }
 
-#vsse_bodywedidbox{
+.vsse_bodywedidbox{
     width:80%;
     margin:0 auto;
 }
@@ -1295,7 +1296,7 @@ header{
 
 #vsse_bodywedidtable{
     width:80%;
-    margin:0 auto;
+    margin:0 auto 10%;
     font-size:15px;
     box-shadow: 0 0 5px 5px lightgrey;
 }
@@ -1318,19 +1319,8 @@ table, th, td{
     margin:0 auto;
 }
 
-#vsse_wedidvms{
-    display: inline-block;
-    background: black;
-    color:white;
-    font-size: 25px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    padding:10px;
-    width:100%;
-    margin:5% auto;
-    text-align: right;
-    box-shadow: 2px 2px 2px gray;
-}
+
+
 
 
 

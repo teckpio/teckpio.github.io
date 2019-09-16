@@ -1,159 +1,100 @@
 --root{
-    --headerheight:50px;
-    --contentheight:70vh;
+    --headerheight:10vh;
+    --mainheight:80vh;
     --footerheight:10vh;
-}
 
- 
+    --fbmainnavbar:2;
+    --fbmaincontent:8;
 
-body{
-    background:linear-gradient(45deg,
-        white,
-        white,
-        white,
-        lightblue,
-        white,
-        white,
-        white);
-        
-    font-size:1.2em;
-    letter-spacing: .1em;
+    --fbcontenttitle:1;
+    --fbcontentlist:8;
+    --fbcontentfunction:1;
+
+    --fblisttitle:2;
+    --fblisttable:8;
 }
 
 
-header{
+/* applies to both navbarfunction and contentfunction */
+.vas_function{
+    width:80%;
+    margin:2% auto;
+    text-align:center;
+    border-right:solid 2px black;
+    border-bottom:solid 2px black;
+    box-shadow: 0 0 2px gray;
+}
+
+
+/* body: header + main + footer */
+
+#vas_header{
+    height: var(--headerheight);
     background-color:black;
     color:white;
     display:flex;
     max-height:var(--headerheight);
 }
 
-#main_content{
-    height:var(--contentheight);
-}
-
-#header_svgbox{
-    flex-basis:8%;
-    margin-left:2%;
-    align-self:flex-end;
-}
-
-#header_svgbox svg{
-    width:60%;
-}
-
-#header_text{
-    flex-basis:92%;
-    font-size:1.8em;
-    align-self:center;
-    padding-left:2%; 
-}
-
-#main_content{
+/* vas_main is a row flex with: vas_navbar + vas_content */
+#vas_main{
+    height:var(--mainheight);
     display:flex;
-    flex-direction: row;
-    margin-top:2%;
-    margin-right:2%;
 }
 
-#main_content nav{
-    margin:0 1%;
-    flex-basis:45%;
-    /* background-color:lightblue; */
-    font-size:1.1em;
-    color:darkblue;
-    line-height: 1.5em;
-
-    padding-right:5%;
-
-    /* background:linear-gradient(45deg,
-        white,
-        white,
-        white,
-        lightgray,
-        white,
-        white,
-        white); */
-}
-
-nav div:hover{
-    cursor: pointer;
-}
-
-.navdiffitem{
+/* vas_navbar is a column flex with: vas_navbartitle + vas_navbarlist + vas_navbarfunction */
+#vas_navbar{
+    flex-basis:var(--fbmainnavbar);
     display:flex;
-    margin:2%;
-    padding:2%;
-    border-bottom:solid 1px gray;
-}
-
-.navdiffitem svg{
-    flex-basis: 40%;
-    background-color:yellow;
-    box-shadow: 0 0 2px 2px gray;
-    margin:0 2%;
-    padding:0;
-}
-
-
-.navdiffitem div{
-    flex-basis: 60%;
-    font-size:1em;
-    color:red;
-    margin:2%;
-    font-style:italic;
-    padding:3% 3%;
-    text-align:center;
-}
-
-.navdiffitem:hover{
-    cursor: pointer;
-    font-style:bold;
-    color:darkred;
-    text-shadow: 1px 1px 2px gray;
-    box-shadow: 1px 1px 2px gray;
-}
-
-.navdiffitem:hover svg{
-    box-shadow: 0px 0px 3px gray;
-}
-/* #main_content nav div{
-    align-self: center;
-    justify-self: flex-end;
-    text-align:right;
-    background-color:black;
-}
-
-
-} */
-
-#main_Content div{
-    flex-basis:55%;
-    display: flex;
     flex-direction: column;
 }
 
-#illust_writeup{
-    flex-basis: 30%;
-    min-height: 30%;
+#vas_navbartitle{
+
 }
 
-#illust_imgcont{
-    flex-basis: 70%;
-    min-height: 70%;
-    max-height:70%;
-    overflow: hidden;
+#vas_navbarlist{
+
 }
 
-#illust_imgcont img{
-    max-width:100%;
+#vas_navbarfunction{
+    
+}
+
+/* vas_content is a column flex with: vas_contenttitle + vas_contentdetail + vas_contentfunction */
+#vas_content{
+    flex-basis: var(--fbmaincontent);
+    width:100%;
+    display:flex;
+    flex-direction: column;
+}
+
+#vas_contenttitle{
+    flex-basis:var(--fbcontenttitle);
+}
+
+/* vas_contentdetail is a column flex with: vas_contentlisttitle + vas_contentlist */
+#vas_contentdetail{
+    flex-basis:var(--fbcontentlist);
+    display:flex;
+    flex-direction: column;
+}
+
+#vas_contentlisttitle{
+    flex-basis: var(--fblisttitle);
+}
+
+#vas_contentlist{
+    flex-basis: var(--fblisttable);
+}
+
+#vas_contentfunction{
+    flex-basis:var(--fbcontentfunction);
+    display:flex;
 }
 
 
-
-
-
-footer{
+#vas_footer{
     height:var(--footerheight);
     background-color:gray;
     color:white;

@@ -1,4 +1,6 @@
-var arryfunctions = document.getElementById("home_nav").getElementsByTagName("li");
+const navbar_infrasys = document.getElementById('navbar_infrasys');
+
+var arrynavfnc = document.getElementsByClassName("navbar_fnc");
 var dboardtitle = document.getElementById("home_dboard_title");
 const objEntity = document.getElementById("home_dboard_objectEntity");
 const objTrans = document.getElementById("home_dboard_objectTrans");
@@ -10,7 +12,7 @@ const objReport = document.getElementById("home_dboard_objectReport");
 var my_header = document.getElementsByClassName("vas_header_text");
 /*my_header.innerHTML="<img src='c:\vas\setup\vlogo9.bmp' alt='VAS'>"*/
 /*my_header.innerHTML="<h1 style='padding-left:20px;'>Elegant-V Solutions</h1>";*/
-my_header.innerHTML = "V Accounting System"
+my_header.innerHTML = "V Accounting System";
 
 
 
@@ -26,20 +28,19 @@ my_header.innerHTML = "V Accounting System"
 
 
 // Events Management //
-for (i = 0; i < arryfunctions.length; i++) {
-    arryfunctions[i].addEventListener("click", function_clicked);
-    arryfunctions[i].addEventListener("mouseover", function_mouseover);
+for (i = 0; i < arrynavfnc.length; i++) {
+    arrynavfnc[i].addEventListener("click", navfnc_clicked);
 }
 
-objEntity.onclick = function(){
+objEntity.onclick = function () {
     window.open('entity.html');
 }
 
-objTrans.onclick = function(){
+objTrans.onclick = function () {
     window.open('transdetail.html');
 }
 
-objReport.onclick = function(){
+objReport.onclick = function () {
     window.open('report.html');
 }
 
@@ -59,42 +60,9 @@ objReport.onclick = function(){
 
 // Functions //
 
-function function_clicked() {
+function navfnc_clicked() {
     switch (this.innerHTML) {
         case "Sales":
-            
-            try {                
-                var req = new XMLHttpRequest();
-                req.open('GET', 'http://127.0.0.1:3000/customer');
-                req.onreadystatechange=function(){
-                    if (this.readyState == 4 && this.status == 200){
-                        try {
-                            var obj = JSON.parse(req.responseText);
-                            alert(obj.recordsets[0].LLevel);
-                            alert(JSON.stringify(obj));
-                        }
-                        catch (e) {
-                            alert('parse ' + e);
-                        }
-                    }
-                }
-                req.send();
-                // req.onload = function () {
-                //     try {
-                //         alert('onload');
-                //         var data = JSON.parse(req.responseText);
-                //         alert(JSON.stringify(data));
-                //     }
-                //     catch (e) {
-                //         alert('parse ' + e);
-                //     }
-
-                // }                
-            }
-            catch (e) {
-                alert('end ' + e);
-            }
-
             break;
         case "Purchasing":
             alert("Purchasing - Work In Progress ...");
@@ -111,11 +79,10 @@ function function_clicked() {
         case "Accounting and Reporting":
             window.open("accounting.html", "_blank");
             break;
+        case "Infra-Data and System-Control":
+            window.open("infrasys.html", "_blank");
+            break;
         default:
     }
-}
-
-function function_mouseover() {
-    // this.style="border-width:5px;"
 }
 

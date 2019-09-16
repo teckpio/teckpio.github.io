@@ -1,56 +1,61 @@
 <!doctype html>
 <html>
+
 <head>
     <html lang="en">
     <title>V-Accounting System</title>
-    <link rel="stylesheet" type="text/css" href="vas.css"/>
-    <link rel="stylesheet" type="text/css" href="home.css"/>
+    <link rel="stylesheet" type="text/css" href="vas.css" />
+    <link rel="stylesheet" type="text/css" href="home.css" />
 </head>
+
 <body>
-    <div class="vas_content">
-        <header class = "vas_header" class="vas_headertext">
-            <img src="c:\vas\setup\vlogo9.bmp" alt="VAS"; style=width:80px;>
-            <p class="vas_headertext"></p>
-        </header>
-            
-        <div id = "home_container"> 
-            <div id = "home_nav">
-                <ul>
-                    <li title="Sales Functions" style="background-color:blue; color:darkblue; border-color:darkblue; background-image:url(banner_bg.jpg);">Sales</li>
-                    <li style="background-color:brown; color:blue; border-color:darkred; background-image:url(banner_bg2.jpg);">Purchasing</li>
-                    <li style="background-color:greenyellow; color:black; border-color:darkgreen; background-image:url(banner_bg3.jpg)">Finance</li>
-                    <li style="background-color:gray; color:black; border-color:black; background-image:url(banner_bg4.jpg)">Inventory</li>
-                    <li style="background-color:pink; color:red; border-color:purple; background-image:url(banner_bg5.jpg)">Admin</li>
-                    <li style="background-color:salmon; color:darkblue; border-color:darkred; background-image:url(banner_bg6.jpg)">Accounting and Reporting</li>
-                </ul>
+
+    <header class="vas_header">
+        <!-- <img src="c:\vas\setup\vlogo9.bmp" alt="VAS"; style=width:80px;> -->
+        <p class="headertext"></p>
+    </header>
+
+    <!-- main is a row flex with: navbar + content -->
+    <div class="vas_main">
+        <div class="vas_navbar">
+
+            <div class = "navbar_fnc">Sales</div>
+            <div class = "navbar_fnc">Purchasing</div>
+            <div class = "navbar_fnc">Finance</div>
+            <div class = "navbar_fnc">Inventory</div>
+            <div class = "navbar_fnc">Admin</div>
+            <div class = "navbar_fnc">Accounting and Reporting</div>
+            <div class = "navbar_fnc">Infra-Data and System-Control</div>
+
+        </div>
+        <div class="vas_content" )>
+            <div class="dashboard_item" id="dashboard_title">
+                <p>Title</p>
             </div>
-            <div id = "home_dboard")>
-                <div id="home_dboard_title" class="home_dboard_item">
-                    <p >Title</p>
-                </div>
 
-                <div id="home_dboard_object" class="home_dboard_item">
-                    <p>Object</p>
-                    <div id="home_dboard_objectEntity">Entity</div>
-                    <div id="home_dboard_objectTrans">Transaction</div>
-                    <div  id="home_dboard_objectReport">Report</div>
-                </div>
+            <div class="dashboard_item" id="dashboard_object">
+                <p>Object</p>
+                <div id="home_dboard_objectEntity" class="dashboard_fnc">Entity</div>
+                <div id="home_dboard_objectTrans" class="dashboard_fnc">Transaction</div>
+                <div id="home_dboard_objectReport" class="dashboard_fnc">Report</div>
+            </div>
 
-                <div id="home_dboard_trans" class="home_dboard_item">
-                    <p>Transaction</p>
-                </div>
+            <div class="dashboard_item" id="home_dboard_trans">
+                <p>Transaction</p>
+            </div>
 
-                <div id="home_dboard_report" class="home_dboard_item">
-                    <p>Report</p>
-                </div>
+            <div class="dashboard_item" id="home_dboard_report">
+                <p>Report</p>
             </div>
         </div>
     </div>
 
+
     <footer class="vas_footer">
-        <p class="vas_footertext"></p>
+        <p class="footertext"></p>
     </footer>
 
-    <script src="home.js"></script>   
+    <script src="home.js"></script>
 </body>
+
 </html>

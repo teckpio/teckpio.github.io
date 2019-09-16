@@ -1,8 +1,8 @@
 'use strict';
 
-// import { serverendpoint, serverendpointcollist } from './setting.js';
-const serverendpoint = 'http://127.0.0.1:3000/Entity';
-const serverendpointcollist = '/DataColList';
+const serverendpoint = vas_apiEntity;
+const serverendpointcol = vas_apiEntityDataCol;
+const serverendpointcollist = vas_apiEntityDataColList;
 
 const strcsstablerowodd = 'narbartabletrodd';
 const strcsstableroweven = 'narbartabletreven';
@@ -22,59 +22,87 @@ var tablelistselectedid = -1;
 
 
 // initial load //
-// navbar table list //
-
-
 
 
 // navbar table list //
-try {
-    var req = new XMLHttpRequest();
-    req.open('GET', serverendpoint);
 
-    req.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            try {
-                var listobj = JSON.parse(req.responseText).recordsets;
-                if (listobj[0].length > 0) {
-                    let cssstyle = '';
-                    for (var i = 0; i < listobj[0].length; i++) {
-                        cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
+// not using select element //
+// navbarselect.innerHTML += `<option value = "${listobj[0][i].ID}" class ="nvabarselectitem">"${listobj[0][i].NName}"</option>`;
 
-                        // not using select element //
-                        // navbarselect.innerHTML += `<option value = "${listobj[0][i].ID}" class ="nvabarselectitem">"${listobj[0][i].NName}"</option>`;
+// using table element //
 
-                        // using table element //
-                        tablelist.innerHTML +=
-                            `<tr data-objid = '${listobj[0][i].ID}' class = '${cssstyle}'>
-                                <td>${listobj[0][i].NName}</td>
-                                <td>${listobj[0][i].Code}</td>
-                                <td>${listobj[0][i].Currcy}</td>
-                            </tr>
-                            `;
+// get table header //
+var reqheader = new XMLHttpRequest();
+reqheader.open('GET', serverendpointcollist);
+reqheader.onreadystatechange = function () {
+    if (this.readyState === 4 && this.status === 200) {
 
+        var arryheadercol = JSON.parse(reqheader.responseText);
+
+        var strheadercol = '';
+        strheadercol = '<thead><tr>';
+        for (let i = 0; i < arryheadercol.length; i++) {
+            strheadercol += `<th>${arryheadercol[i].Disp}</th>`
+        }
+        strheadercol += '</tr></thead>';
+        
+        alert(strheadercol);
+
+        tablelist.innerHTML += strheadercol
+
+        // get datarow //
+        try {
+            var req = new XMLHttpRequest();
+            req.open('GET', serverendpoint);
+        
+            req.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    try {
+        
+                        var listobj = JSON.parse(req.responseText).recordsets;
+                        if (listobj[0].length > 0) {
+        
+                            // datarow //
+                            let cssstyle = '';
+                            let strdatarow = '';
+                            for (var i = 0; i < listobj[0].length; i++) {
+                                cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
+        
+                                tablelist.innerHTML +=
+                                    `<tr data-objid = '${listobj[0][i].ID}' class = '${cssstyle}'>
+                                        <td>${listobj[0][i].ID}</td>
+                                        <td>${listobj[0][i].NName}</td>    
+                                        </tr>
+                                        `;
+                            }
+                            tablelist.innerHTML += strdatarow;
+        
+                            SetTableEvent();
+                        }
+                        else {
+                            tablelist.innerHTML = 'Empty Data.';
+                        }
+        
                     }
-
-                    SetTableEvent();
+                    catch (e) {
+                        alert('Error in retrieving List: ' + e);
+                    }
                 }
                 else {
-                    tablelist.innerHTML = 'Empty Data.';
+        
                 }
-
             }
-            catch (e) {
-                alert('Error in retrieving List: ' + e);
-            }
+        
+            req.send();
         }
-        else {
-
+        catch (e) {
+            alert(e);
         }
     }
-    req.send();
 }
-catch (e) {
-    alert(e);
-}
+reqheader.send();
+
+
 
 
 
@@ -113,30 +141,33 @@ navbarbuttonget.onclick = function () {
     }
     else {
         var req = new XMLHttpRequest();
+
         // using navbar:select //
         // req.open('GET', `${serverendpoint}/?id='${navbarselect.value}'`);
         // OR //
+
         // using navbar:tablelist //
         req.open('GET', `${serverendpoint}/?id='${tablelistselectedid}'`);
 
         req.onreadystatechange = function () {
+
             if (this.readyState == 4 && this.status == 200) {
                 try {
                     // extract object data //
                     var listobj = JSON.parse(req.responseText).recordsets;
 
+
                     RemovePPtInputElement();
 
                     // get datacollist info from Server:Entity //
-                    console.log(listobj[0][0]);
                     CreatePPtInputElement(listobj[0][0]);
                 }
                 catch (e) {
                     alert('Error in retrieving List: ' + e);
                 }
             }
-            else {
-
+            else if (this.readyState == 4 && this.status == 500) {
+                alert(req.responseText);
             }
         }
         req.send();
@@ -177,10 +208,12 @@ navbarbuttonpdf.onclick = function () {
 navbarbuttonadd.onclick = function () {
     var req = new XMLHttpRequest();
     var data = {
-        'ID': '103',
-        'NName': 'XYZ',
-        'Code': 'CD126',
-        'Currcy': '0'
+        'ID': '109',
+        'NName': 'Queen',
+        'Code': 'CD131',
+        'Currcy': '0',
+        'DebitAcc': '1',
+        'CreditAcc': '2'
     };
 
     try {
@@ -194,22 +227,13 @@ navbarbuttonadd.onclick = function () {
 
     req.onreadystatechange = function () {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-            try {
-                alert('New Entity added.');
-            }
-            catch (e) {
-                alert('Error in Adding New Entity: ' + e);
-            }
+            alert('New Entity added.');
         }
-        else {
-
+        else if (this.readyState == XMLHttpRequest.DONE && this.status === 500) {
+            alert(req.responseText);
         }
     }
     req.send(JSON.stringify(data));
-    alert('send post');
-    // req.send(params);
-
-
 }
 
 
@@ -227,7 +251,7 @@ navbarbuttonadd.onclick = function () {
 function painttabledatarow() {
     try {
         let cssstyle = strcsstablerowodd;
-        for (let i = 0; i < tablelist.rows.length; i++){
+        for (let i = 0; i < tablelist.rows.length; i++) {
             tablelist.rows[i].className = '';
             cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
             tablelist.rows[i].classList.add(cssstyle);
@@ -250,9 +274,10 @@ function CreatePPtInputElement(listobj) {
     // get the datacol list of entity and match the property (label) 
     // to the value (inputbox) in listobj //
     const req = new XMLHttpRequest;
-    req.open('GET', serverendpoint + serverendpointcollist);
+    req.open('GET', serverendpointcol);
     req.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+
             var arryPPT = JSON.parse(req.responseText);
 
             // each property is wrapped in a div with a label + inputbox //
