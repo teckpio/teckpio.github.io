@@ -1,105 +1,188 @@
---root{
-    --headerheight:10vh;
-    --mainheight:80vh;
-    --footerheight:10vh;
+:root{
+    --headerheight:8vh;
+    --maintitleheight:5vh;
+    --mainheight:82vh;
+    --footerheight:5vh;
+    --htmlmargintopbtm:1%;
+    --htmlmarginlftrgh:1%;
 
-    --fbmainnavbar:2;
-    --fbmaincontent:8;
+    --fbmainnavbar:25%;
+    --fbmaincontent:75%;
 
-    --fbcontenttitle:1;
-    --fbcontentlist:8;
-    --fbcontentfunction:1;
+    --fbnavbartitle:10%;
+    --fbnavbarlist:60%;
+    --fbnavbarfunction:30%;
 
-    --fblisttitle:2;
-    --fblisttable:8;
+    --widthnavbaritem:80%;
+
+    --fbcontenttitle:10%;
+    --fbcontentdetail:80%;
+    --fbcontentfunction:10%;
+
+    --widthcontentitem:95%;
+
+    --fbcontentdetailtitle:5%;
+    --fbcontentdetaillist:50%;
+    --fbcontentdetailform:45%;
+
+    --widthcontendetailitem:95%;
+    
+    --marginbtwnvertnavbar:2%;
+    --marginbtwnvertcontent:1%;
+
+    --fontsizehtml:1em;
+    --fontsizefunction:1em;
+    --fontsizefunctionhover:1.2em;
+
+    --fncmargintopbtm:2%;
+    --fncmarginlftrgh:2%;
+    --fncpaddingtopbtm:2%;
+    --fncpaddinglftrgh:2%;
+
+    --colorheaderbg:black;
+    --colorheaderfg:white;
+    --colorfooterbg:gray;
+    --colorfooterfg:white;
 }
 
+html *{
+    box-shadow: 0 0 2px gray;
+    text-align: center;
+    font-size: var(--fontsizehtml);
+}
 
 /* applies to both navbarfunction and contentfunction */
-.vas_function{
-    width:80%;
-    margin:2% auto;
+.vss_function{
+    box-sizing: border-box;
+    margin:var(--fncmargintopbtm) var(--fncmarginlftrgh);
+    padding:var(--fncpaddingtopbtm) var(--fncpaddinglftrgh);
+    /* flex-grow:1; */
     text-align:center;
+    font-size:var(--fontsizefunction);
     border-right:solid 2px black;
     border-bottom:solid 2px black;
     box-shadow: 0 0 2px gray;
+    align-self: center;
 }
 
+.vss_function:hover{
+    border:black 2px solid;
+    box-shadow: 2px 2px 3px gray;
+    font-size:var(--fontsizefunctionhover);
+    font-style:italic;
+}
 
-/* body: header + main + footer */
+/* body: header + maintitle + main + footer */
 
-#vas_header{
+#vss_header{
     height: var(--headerheight);
-    background-color:black;
-    color:white;
-    display:flex;
-    max-height:var(--headerheight);
+    background-color:var(--colorheaderbg);
+    color:var(--colorheaderfg);
+    box-sizing: border-box;
+    margin-bottom:var(--htmlmargintopbtm);
 }
 
-/* vas_main is a row flex with: vas_navbar + vas_content */
-#vas_main{
+#vss_maintitle{
+    height:var(--maintitleheight);
+}
+
+/* vss_main is a row flex with: vss_navbar + vss_content */
+#vss_main{
     height:var(--mainheight);
     display:flex;
 }
 
-/* vas_navbar is a column flex with: vas_navbartitle + vas_navbarlist + vas_navbarfunction */
-#vas_navbar{
+/* vss_navbar is a column flex with: vss_navbartitle + vss_navbarlist + vss_navbarfunction */
+#vss_navbar{
     flex-basis:var(--fbmainnavbar);
     display:flex;
     flex-direction: column;
 }
 
-#vas_navbartitle{
-
+#vss_navbartitle{
+    flex-basis:var(--fbnavbartitle);    
+    width:var(--widthnavbaritem);
+    box-sizing: border-box;
+    margin:var(--marginbtwnvertnavbar) auto;
 }
 
-#vas_navbarlist{
-
+#vss_navbarlist{
+    flex-basis:var(--fbnavbarlist);
+    width:var(--widthnavbaritem);
+    box-sizing: border-box;
+    margin:var(--marginbtwnvertnavbar) auto;
 }
 
-#vas_navbarfunction{
-    
+#vss_navbarfunction{
+    flex-basis:var(--fbnavbarfunction);
+    width:var(--widthnavbaritem);
+    box-sizing: border-box;
+    margin:var(--marginbtwnvertnavbar) auto;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-/* vas_content is a column flex with: vas_contenttitle + vas_contentdetail + vas_contentfunction */
-#vas_content{
+/* vss_content is a column flex with: vss_contenttitle + vss_contentdetail + vss_contentfunction */
+#vss_content{
     flex-basis: var(--fbmaincontent);
-    width:100%;
+    width:var(--widthcontentitem);
     display:flex;
     flex-direction: column;
 }
 
-#vas_contenttitle{
+#vss_contenttitle{
     flex-basis:var(--fbcontenttitle);
+    box-sizing: border-box;
+    width:var(--widthcontentitem);
+    margin:var(--marginbtwnvertcontent) auto;
 }
 
-/* vas_contentdetail is a column flex with: vas_contentlisttitle + vas_contentlist */
-#vas_contentdetail{
-    flex-basis:var(--fbcontentlist);
+/* vss_contentdetail is a column flex with:
+    vss_contentlisttitle + vss_contentlist
+        OR
+    vss_contentform */
+#vss_contentdetail{
+    flex-basis:var(--fbcontentdetail);
+    box-sizing: border-box;
+    width:var(--widthcontentitem);
     display:flex;
     flex-direction: column;
+    margin:var(--marginbtwnvertcontent) auto;
 }
 
-#vas_contentlisttitle{
-    flex-basis: var(--fblisttitle);
+#vss_contentlisttitle{
+    flex-basis: var(--fbcontentdetailtitle);
 }
 
-#vas_contentlist{
-    flex-basis: var(--fblisttable);
+#vss_contentlist{
+    flex-basis: var(--fbcontentdetaillist);
 }
 
-#vas_contentfunction{
+#vss_contentform{
+    flex-basis: var(--fbcontentdetailform);
+}
+
+#vss_contentfunction{
     flex-basis:var(--fbcontentfunction);
+    
+    box-sizing: border-box;
+    width:var(--widthcontentitem);
+
     display:flex;
+    /* align-items:center;  */
+    /* justify-content: center; */
+    margin:var(--marginbtwnvertcontent) auto;
+    /* overflow: hidden; */
+    /* flex-wrap: wrap; */
 }
 
 
-#vas_footer{
+#vss_footer{
     height:var(--footerheight);
-    background-color:gray;
-    color:white;
-    text-align:right;
-    padding:1%;
-    margin-top:2%;
-    /* padding-right:2%; */
+    background-color:var(--colorfooterbg);
+    color:var(--colorfooterfg);
+    box-sizing: border-box;
+    margin-top:var(--htmlmargintopbtm);
 }

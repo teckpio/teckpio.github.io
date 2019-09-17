@@ -24,6 +24,8 @@ var tablelistselectedid = -1;
 // initial load //
 
 
+
+
 // navbar table list //
 
 // not using select element //
@@ -37,67 +39,125 @@ reqheader.open('GET', serverendpointcollist);
 reqheader.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
 
-        var arryheadercol = JSON.parse(reqheader.responseText);
-
-        var strheadercol = '';
-        strheadercol = '<thead><tr>';
-        for (let i = 0; i < arryheadercol.length; i++) {
-            strheadercol += `<th>${arryheadercol[i].Disp}</th>`
-        }
-        strheadercol += '</tr></thead>';
-        
-        alert(strheadercol);
-
-        tablelist.innerHTML += strheadercol
+        // extract col header //
+        var arryheadercol = reqheader.responseText.split(',');
 
         // get datarow //
         try {
             var req = new XMLHttpRequest();
             req.open('GET', serverendpoint);
-        
+
             req.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     try {
-        
+
                         var listobj = JSON.parse(req.responseText).recordsets;
                         if (listobj[0].length > 0) {
-        
-                            // datarow //
-                            let cssstyle = '';
-                            let strdatarow = '';
-                            for (var i = 0; i < listobj[0].length; i++) {
-                                cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
-        
-                                tablelist.innerHTML +=
-                                    `<tr data-objid = '${listobj[0][i].ID}' class = '${cssstyle}'>
-                                        <td>${listobj[0][i].ID}</td>
-                                        <td>${listobj[0][i].NName}</td>    
-                                        </tr>
-                                        `;
-                            }
-                            tablelist.innerHTML += strdatarow;
-        
-                            SetTableEvent();
+
+                            let arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+                            let arrydataid = ['table', 'vnum']
+                            let tableid = 'current';
+                            let boolbutton = true;
+                            let arryoddevenrowclass = [strcsstablerowodd, strcsstableroweven];
+
+                            vssfnc_tablepopulate(arryheadercol, listobj[0], tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
+
+                            // // datarow //
+                            // let cssstyle = '';
+                            // let strdatarow = '';
+                            // for (var i = 0; i < listobj[0].length; i++) {
+                            //     cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
+
+                            //     tablelist.innerHTML +=
+                            //         `<tr data-objid = '${listobj[0][i].ID}' class = '${cssstyle}'>
+                            //             <td>${listobj[0][i].ID}</td>
+                            //             <td>${listobj[0][i].NName}</td>    
+                            //             </tr>
+                            //             `;
+                            // }
+                            // tablelist.innerHTML += strdatarow;
+
+                            // SetTableEvent();
                         }
                         else {
                             tablelist.innerHTML = 'Empty Data.';
                         }
-        
+
                     }
                     catch (e) {
                         alert('Error in retrieving List: ' + e);
                     }
                 }
                 else {
-        
+
                 }
             }
-        
+
             req.send();
         }
         catch (e) {
             alert(e);
         }
+
+
+        // var arryheadercol = reqheader.responseText.split(',');
+        // var strheadercol = '';
+        // strheadercol = '<thead><tr>';
+        // arryheadercol.forEach(headercol => {
+        //     strheadercol += `<th>${headercol}</th>`
+        // })
+        // strheadercol += '</tr></thead>';
+
+        // tablelist.innerHTML += strheadercol
+
+        // // get datarow //
+        // try {
+        //     var req = new XMLHttpRequest();
+        //     req.open('GET', serverendpoint);
+
+        //     req.onreadystatechange = function () {
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             try {
+
+        //                 var listobj = JSON.parse(req.responseText).recordsets;
+        //                 if (listobj[0].length > 0) {
+
+        //                     // datarow //
+        //                     let cssstyle = '';
+        //                     let strdatarow = '';
+        //                     for (var i = 0; i < listobj[0].length; i++) {
+        //                         cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
+
+        //                         tablelist.innerHTML +=
+        //                             `<tr data-objid = '${listobj[0][i].ID}' class = '${cssstyle}'>
+        //                                 <td>${listobj[0][i].ID}</td>
+        //                                 <td>${listobj[0][i].NName}</td>    
+        //                                 </tr>
+        //                                 `;
+        //                     }
+        //                     tablelist.innerHTML += strdatarow;
+
+        //                     SetTableEvent();
+        //                 }
+        //                 else {
+        //                     tablelist.innerHTML = 'Empty Data.';
+        //                 }
+
+        //             }
+        //             catch (e) {
+        //                 alert('Error in retrieving List: ' + e);
+        //             }
+        //         }
+        //         else {
+
+        //         }
+        //     }
+
+        //     req.send();
+        // }
+        // catch (e) {
+        //     alert(e);
+        // }
     }
 }
 reqheader.send();

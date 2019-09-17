@@ -109,12 +109,28 @@ const tfnchistory = document.getElementById('tablefncHistory');
 
 // - load current tablelist //
 listtitle.innerHTML = strBlackListWhite;
-loadtablelist(tablecol, sampledata, tablelist);
+
+let arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+let arrydataid = ['table', 'vnum']
+let tableid = 'current';
+let boolbutton = true;
+let arryoddevenrowclass = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
+
+vssfnc_tablepopulate(tablecol, sampledata, tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
+// loadtablelistX(tablecol, sampledata, tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
 sortedtablecol = tablecol.slice();
 
 // load blacklist tablelist //
-loadtablelist(tablecolBlacklist, sampledataBlacklist, tableblacklist);
+arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+arrydataid = ['table', 'vnum']
+tableid = 'black';
+boolbutton = true;
+arryoddevenrowclass = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
+
+vssfnc_tablepopulate(tablecolBlacklist, sampledataBlacklist, tableblacklist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
+// loadtablelist(tablecolBlacklist, sampledataBlacklist, tableblacklist);
 sortedtablecolblack = tablecolBlacklist.slice();
+
 
 
 // format userprofile + new user //
@@ -311,14 +327,14 @@ function painttabledatarow(tablelistX) {
 }
 
 
-function sortarrydata(arrydata, colidx, dir) {
-    // use the first data object in arrydata to extract the property 
+function sortarrydata(arryJSON, colidx, dir) {
+    // use the first data object in arryJSON to extract the property 
 
     try {
         // compare string
-        return arrydata.sort(function (a, b) {
-            let x = a[Object.keys(arrydata[0])[colidx]].toLowerCase();
-            let y = b[Object.keys(arrydata[0])[colidx]].toLowerCase();
+        return arryJSON.sort(function (a, b) {
+            let x = a[Object.keys(arryJSON[0])[colidx]].toLowerCase();
+            let y = b[Object.keys(arryJSON[0])[colidx]].toLowerCase();
 
             let rtn = 0;
             if (x < y) { rtn = 1; }
@@ -337,10 +353,133 @@ function sortarrydata(arrydata, colidx, dir) {
 }
 
 
-function loadtablelist(arryheader, arrydata, tablelistX) {
+// function loadtablelist(arryheader, arryJSON, tablelistX) {
+//     // arryheader - an array of header col descriptions //
+//     // arryJSON - a json data object //
+//     // tablelistX - html element of the table to be created //
+    
+//     // 4 tasks are executed:
+//     // - load header
+//     // - load datarow
+//     // - paint datarow
+//     // - add eventhandler for:
+//     //      - header
+//     //      - datarow button
+
+//     // strtableheadercol = arryclass[0]
+//     // strtabledataid = arrydataid[0]
+
+//     try {
+//         // load header //
+//         let strHeaderCol = '<thead><tr class = "tablerow">';
+
+//         arryheader.forEach((item, index) => {
+//             strHeaderCol += `<th class = "${strtableheadercol}" data-${strtabledataid} = "${tablelistX.dataset.table}">${item}</th>`;
+//         });
+//         strHeaderCol += '</tr></thead>';
+//         tablelistX.innerHTML = strHeaderCol;
+
+//         // load datarow //
+//         let strVehicleData = '<tbody>'
+//         let boolbtnadded;
+//         let strbtn;
+//         arryJSON.forEach((item, index) => {
+//             // attach vehicle number (index: 0) as an identifier //
+//             strVehicleData += `<tr class = "${strtabledatarow}" data-${strtablerowidcol} = "${Object.values(item)[0]}">`;
+
+//             // data //
+//             // there is an action button for datacol:vehicle number (1st datacol) //
+//             boolbtnadded = false;
+//             strbtn = '';
+//             Object.values(item).forEach((val, index) => {
+//                 // construct str for button element //
+//                 strbtn = boolbtnadded ? '' : `<button class = ${strtabledatarowbutton} data-${strtablerowidcol} = ${Object.values(item)[0]}>..</button>`;
+
+//                 // construct the td element //
+//                 strVehicleData += `<td> ${strbtn} ${val} </td>`;
+//                 boolbtnadded = true;
+//             });
+//             strVehicleData += '</tr>';
+//         });
+//         strVehicleData += '</tbody>';
+//         tablelistX.innerHTML += strVehicleData;
+
+//         // paint table datarow //
+//         painttabledatarow(tablelistX);
+
+//         // add event handler //
+//         // eventhandler for table header //
+//         for (var i = 0; i < tablecolheader.length; i++) {
+//             tablecolheader[i].onclick = function () {
+//                 try {
+//                     // determine the curr / black objects to use //
+//                     var sortedtablecolX;
+//                     let tablecolX, arrydataX, tablelistX;
+
+//                     if (this.dataset[strtabledataid] === strtableidcurr) {
+//                         sortedtablecolX = sortedtablecol;
+//                         tablecolX = tablecol;
+//                         arrydataX = sampledata;
+//                         tablelistX = tablelist;
+//                     }
+//                     else {
+//                         sortedtablecolX = sortedtablecolblack
+//                         tablecolX = tablecolBlacklist;
+//                         arrydataX = sampledataBlacklist;
+//                         tablelistX = tableblacklist;
+//                     }
+
+
+//                     // extract selected col id //
+//                     let colidx = sortedtablecolX.indexOf(this.innerHTML);
+//                     let dir = ((this.innerHTML).indexOf(strSortAsc) < 0 ? -1 : 1);
+
+
+//                     // rewrite sortedtablecol //
+//                     if (this.dataset[strtabledataid] === strtableidcurr) {
+//                         sortedtablecol = tablecolX.slice();
+//                         sortedtablecol[colidx] += (dir < 0) ? strSortAsc : strSortDsc;
+
+//                         // reload table with sorted array
+//                         loadtablelist(sortedtablecol, sortarrydata(arrydataX, colidx, dir), tablelistX);
+//                     }
+//                     else {
+//                         sortedtablecolblack = tablecolX.slice();
+//                         sortedtablecolblack[colidx] += (dir < 0) ? strSortAsc : strSortDsc;
+
+//                         // reload table with sorted array
+//                         loadtablelist(sortedtablecolblack, sortarrydata(arrydataX, colidx, dir), tablelistX);
+//                     }
+//                 }
+//                 catch (e) {
+//                     alert('Add Event Handler for Table Header: ' + e);
+//                 }
+//             }
+//         }
+
+//         // eventhandler for table datarow button //
+//         for (var i = 0; i < tabledatarowbutton.length; i++) {
+//             tabledatarowbutton[i].onclick = function () {
+//                 alert('(vms.js) Enter Exit Time for: ' + this.dataset
+//                 [strtablerowidcol]);
+//             }
+//         }
+//     }
+//     catch (e) {
+//         alert('loadtablelist error: ' + e);
+//     }
+// }
+
+function loadtablelistX(arryheader, arryJSON, tablelistX, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton) {
     // arryheader - an array of header col descriptions //
-    // arrydata - a json data object //
-    // html element of the table to be created //
+    // arryJSON - a json data object //
+    // tablelistX - html element of the table to be created //
+    // tableid - id of source datatable (for sort by column purposes)
+    // arryclass - an array of class - 0:<tr>header, 1:<th>, 2:<tr>data, 3:<tr><button>
+    // arrydataid - an array of data attributes - 0:table
+    // arryoddevenrowclass - an array of 2 classes for datarow - 0:class of odd row, 1:class of even row
+    // boolbutton - true to add a button in the first cell of each row
+
 
     // 4 tasks are executed:
     // - load header
@@ -349,43 +488,44 @@ function loadtablelist(arryheader, arrydata, tablelistX) {
     // - add eventhandler for:
     //      - header
     //      - datarow button
+
     try {
         // load header //
-        let strHeaderCol = '<thead><tr class = "tablerow">';
+        let strHeaderCol = `<thead><tr class = "${arryclass[0]}">`;
 
-        arryheader.forEach((item, index) => {
-            strHeaderCol += `<th class = "${strtableheadercol}" data-${strtabledataid} = "${tablelistX.dataset.table}">${item}</th>`;
+        arryheader.forEach((datacol) => {
+            strHeaderCol += `<th class = "${arryclass[1]}" data-${arrydataid[0]} = "${tableid}">${datacol}</th>`;
         });
         strHeaderCol += '</tr></thead>';
         tablelistX.innerHTML = strHeaderCol;
 
         // load datarow //
-        let strVehicleData = '<tbody>'
+        let strRowData = '<tbody>'
         let boolbtnadded;
         let strbtn;
-        arrydata.forEach((item, index) => {
+        arryJSON.forEach((item, index) => {
             // attach vehicle number (index: 0) as an identifier //
-            strVehicleData += `<tr class = "${strtabledatarow}" data-${strtablerowidcol} = "${Object.values(item)[0]}">`;
+            strRowData += `<tr class = "${arryclass[2]}" data -${arrydataid[1]} = "${Object.values(item)[0]}">`;
 
             // data //
             // there is an action button for datacol:vehicle number (1st datacol) //
-            boolbtnadded = false;
+            boolbtnadded = boolbutton ? false : true;
             strbtn = '';
             Object.values(item).forEach((val, index) => {
                 // construct str for button element //
-                strbtn = boolbtnadded ? '' : `<button class = ${strtabledatarowbutton} data-${strtablerowidcol} = ${Object.values(item)[0]}>..</button>`;
+                strbtn = boolbtnadded ? '' : `<button class = ${arryclass[3]} data-${arrydataid[1]} = ${Object.values(item)[0]}>..</button>`;
 
                 // construct the td element //
-                strVehicleData += `<td> ${strbtn} ${val} </td>`;
+                strRowData += `<td> ${strbtn} ${val} </td>`;
                 boolbtnadded = true;
             });
-            strVehicleData += '</tr>';
+            strRowData += '</tr>';
         });
-        strVehicleData += '</tbody>';
-        tablelistX.innerHTML += strVehicleData;
+        strRowData += '</tbody>';
+        tablelistX.innerHTML += strRowData;
 
         // paint table datarow //
-        painttabledatarow(tablelistX);
+        oddevendatarowX(tablelistX, arryoddevenrowclass[0], arryoddevenrowclass[1]);
 
         // add event handler //
         // eventhandler for table header //
@@ -395,6 +535,7 @@ function loadtablelist(arryheader, arrydata, tablelistX) {
                     // determine the curr / black objects to use //
                     var sortedtablecolX;
                     let tablecolX, arrydataX, tablelistX;
+
                     if (this.dataset[strtabledataid] === strtableidcurr) {
                         sortedtablecolX = sortedtablecol;
                         tablecolX = tablecol;
@@ -440,7 +581,7 @@ function loadtablelist(arryheader, arrydata, tablelistX) {
         for (var i = 0; i < tabledatarowbutton.length; i++) {
             tabledatarowbutton[i].onclick = function () {
                 alert('Enter Exit Time for: ' + this.dataset
-                [strtablerowidcol]);
+                [arrydataid[1]]);
             }
         }
     }
@@ -449,3 +590,14 @@ function loadtablelist(arryheader, arrydata, tablelistX) {
     }
 }
 
+function oddevendatarowX(tablelistX, classoddrow, classevenrow) {
+    try {
+        let cssstyle = classoddrow;
+        for (let i = 0; i < tablelistX.rows.length; i++) {
+            tablelistX.rows[i].className = '';
+            cssstyle = (cssstyle === classevenrow) ? classoddrow : classevenrow;
+            tablelistX.rows[i].classList.add(cssstyle);
+        }
+    }
+    catch (e) { alert(e); }
+}
