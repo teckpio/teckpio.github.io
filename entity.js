@@ -49,14 +49,14 @@ reqheader.onreadystatechange = function () {
 
             req.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    try {
+                    // try {
 
                         var listobj = JSON.parse(req.responseText).recordsets;
                         if (listobj[0].length > 0) {
 
                             let arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
-                            let arrydataid = ['table', 'vnum']
-                            let tableid = 'current';
+                            let arrydataid = ['table', 'ettid']
+                            let tableid = 'Entity';
                             let boolbutton = true;
                             let arryoddevenrowclass = [strcsstablerowodd, strcsstableroweven];
 
@@ -83,10 +83,10 @@ reqheader.onreadystatechange = function () {
                             tablelist.innerHTML = 'Empty Data.';
                         }
 
-                    }
-                    catch (e) {
-                        alert('Error in retrieving List: ' + e);
-                    }
+                    // }
+                    // catch (e) {
+                    //     alert('Error in retrieving List: ' + e);
+                    // }
                 }
                 else {
 

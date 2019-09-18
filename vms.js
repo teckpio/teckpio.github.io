@@ -42,9 +42,11 @@ const tablecolBlacklist = [
 ]
 
 const sampledataBlacklist = [
-    { 'vnum': 'ABC123', 'Date': 'xxx', 'Reason': 'Unknown' },
-    { 'vnum': 'XYZ6789', 'Date': 'xxx', 'Reason': 'Unknown' },
-    { 'vnum': 'DEF4321', 'Date': 'xxx', 'Reason': 'Unknown' }
+    { 'vnum': 'ABC123', 'Date': '123', 'Reason': 'UnknownA' },
+    { 'vnum': 'XYZ6789', 'Date': '012', 'Reason': 'UnknownB' },
+    { 'vnum': 'DEF4321', 'Date': '456', 'Reason': 'UnknownC' },
+    { 'vnum': 'CYZ6789', 'Date': '789', 'Reason': 'UnknownD' },
+    { 'vnum': 'HEF4321', 'Date': '567', 'Reason': 'UnknownE' }
 ]
 
 
@@ -117,6 +119,7 @@ let boolbutton = true;
 let arryoddevenrowclass = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
 
 vssfnc_tablepopulate(tablecol, sampledata, tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
+// let x = new vssfnc_tablepopulate(tablecol, sampledata, tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
 // loadtablelistX(tablecol, sampledata, tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
 sortedtablecol = tablecol.slice();
 
@@ -128,6 +131,7 @@ boolbutton = true;
 arryoddevenrowclass = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
 
 vssfnc_tablepopulate(tablecolBlacklist, sampledataBlacklist, tableblacklist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
+// let y = new vssfnc_tablepopulate(tablecolBlacklist, sampledataBlacklist, tableblacklist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
 // loadtablelist(tablecolBlacklist, sampledataBlacklist, tableblacklist);
 sortedtablecolblack = tablecolBlacklist.slice();
 
@@ -327,37 +331,37 @@ function painttabledatarow(tablelistX) {
 }
 
 
-function sortarrydata(arryJSON, colidx, dir) {
-    // use the first data object in arryJSON to extract the property 
+// function sortarrydata(arryJSON, colidx, dir) {
+//     // use the first data object in arryJSON to extract the property 
 
-    try {
-        // compare string
-        return arryJSON.sort(function (a, b) {
-            let x = a[Object.keys(arryJSON[0])[colidx]].toLowerCase();
-            let y = b[Object.keys(arryJSON[0])[colidx]].toLowerCase();
+//     try {
+//         // compare string
+//         return arryJSON.sort(function (a, b) {
+//             let x = a[Object.keys(arryJSON[0])[colidx]].toLowerCase();
+//             let y = b[Object.keys(arryJSON[0])[colidx]].toLowerCase();
 
-            let rtn = 0;
-            if (x < y) { rtn = 1; }
-            if (x > y) { rtn = -1; }
-            return rtn * dir;
-        });
+//             let rtn = 0;
+//             if (x < y) { rtn = 1; }
+//             if (x > y) { rtn = -1; }
+//             return rtn * dir;
+//         });
 
-        // compare number
+//         // compare number
 
-        // compare date
+//         // compare date
 
-    }
-    catch (e) {
-        alert('sortarrydata error: ' + e);
-    }
-}
+//     }
+//     catch (e) {
+//         alert('sortarrydata error: ' + e);
+//     }
+// }
 
 
 // function loadtablelist(arryheader, arryJSON, tablelistX) {
 //     // arryheader - an array of header col descriptions //
 //     // arryJSON - a json data object //
 //     // tablelistX - html element of the table to be created //
-    
+
 //     // 4 tasks are executed:
 //     // - load header
 //     // - load datarow
@@ -470,134 +474,134 @@ function sortarrydata(arryJSON, colidx, dir) {
 //     }
 // }
 
-function loadtablelistX(arryheader, arryJSON, tablelistX, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton) {
-    // arryheader - an array of header col descriptions //
-    // arryJSON - a json data object //
-    // tablelistX - html element of the table to be created //
-    // tableid - id of source datatable (for sort by column purposes)
-    // arryclass - an array of class - 0:<tr>header, 1:<th>, 2:<tr>data, 3:<tr><button>
-    // arrydataid - an array of data attributes - 0:table
-    // arryoddevenrowclass - an array of 2 classes for datarow - 0:class of odd row, 1:class of even row
-    // boolbutton - true to add a button in the first cell of each row
+// function loadtablelistX(arryheader, arryJSON, tablelistX, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton) {
+//     // arryheader - an array of header col descriptions //
+//     // arryJSON - a json data object //
+//     // tablelistX - html element of the table to be created //
+//     // tableid - id of source datatable (for sort by column purposes)
+//     // arryclass - an array of class - 0:<tr>header, 1:<th>, 2:<tr>data, 3:<tr><button>
+//     // arrydataid - an array of data attributes - 0:table
+//     // arryoddevenrowclass - an array of 2 classes for datarow - 0:class of odd row, 1:class of even row
+//     // boolbutton - true to add a button in the first cell of each row
 
 
-    // 4 tasks are executed:
-    // - load header
-    // - load datarow
-    // - paint datarow
-    // - add eventhandler for:
-    //      - header
-    //      - datarow button
+//     // 4 tasks are executed:
+//     // - load header
+//     // - load datarow
+//     // - paint datarow
+//     // - add eventhandler for:
+//     //      - header
+//     //      - datarow button
 
-    try {
-        // load header //
-        let strHeaderCol = `<thead><tr class = "${arryclass[0]}">`;
+//     try {
+//         // load header //
+//         let strHeaderCol = `<thead><tr class = "${arryclass[0]}">`;
 
-        arryheader.forEach((datacol) => {
-            strHeaderCol += `<th class = "${arryclass[1]}" data-${arrydataid[0]} = "${tableid}">${datacol}</th>`;
-        });
-        strHeaderCol += '</tr></thead>';
-        tablelistX.innerHTML = strHeaderCol;
+//         arryheader.forEach((datacol) => {
+//             strHeaderCol += `<th class = "${arryclass[1]}" data-${arrydataid[0]} = "${tableid}">${datacol}</th>`;
+//         });
+//         strHeaderCol += '</tr></thead>';
+//         tablelistX.innerHTML = strHeaderCol;
 
-        // load datarow //
-        let strRowData = '<tbody>'
-        let boolbtnadded;
-        let strbtn;
-        arryJSON.forEach((item, index) => {
-            // attach vehicle number (index: 0) as an identifier //
-            strRowData += `<tr class = "${arryclass[2]}" data -${arrydataid[1]} = "${Object.values(item)[0]}">`;
+//         // load datarow //
+//         let strRowData = '<tbody>'
+//         let boolbtnadded;
+//         let strbtn;
+//         arryJSON.forEach((item, index) => {
+//             // attach vehicle number (index: 0) as an identifier //
+//             strRowData += `<tr class = "${arryclass[2]}" data -${arrydataid[1]} = "${Object.values(item)[0]}">`;
 
-            // data //
-            // there is an action button for datacol:vehicle number (1st datacol) //
-            boolbtnadded = boolbutton ? false : true;
-            strbtn = '';
-            Object.values(item).forEach((val, index) => {
-                // construct str for button element //
-                strbtn = boolbtnadded ? '' : `<button class = ${arryclass[3]} data-${arrydataid[1]} = ${Object.values(item)[0]}>..</button>`;
+//             // data //
+//             // there is an action button for datacol:vehicle number (1st datacol) //
+//             boolbtnadded = boolbutton ? false : true;
+//             strbtn = '';
+//             Object.values(item).forEach((val, index) => {
+//                 // construct str for button element //
+//                 strbtn = boolbtnadded ? '' : `<button class = ${arryclass[3]} data-${arrydataid[1]} = ${Object.values(item)[0]}>..</button>`;
 
-                // construct the td element //
-                strRowData += `<td> ${strbtn} ${val} </td>`;
-                boolbtnadded = true;
-            });
-            strRowData += '</tr>';
-        });
-        strRowData += '</tbody>';
-        tablelistX.innerHTML += strRowData;
+//                 // construct the td element //
+//                 strRowData += `<td> ${strbtn} ${val} </td>`;
+//                 boolbtnadded = true;
+//             });
+//             strRowData += '</tr>';
+//         });
+//         strRowData += '</tbody>';
+//         tablelistX.innerHTML += strRowData;
 
-        // paint table datarow //
-        oddevendatarowX(tablelistX, arryoddevenrowclass[0], arryoddevenrowclass[1]);
+//         // paint table datarow //
+//         oddevendatarowX(tablelistX, arryoddevenrowclass[0], arryoddevenrowclass[1]);
 
-        // add event handler //
-        // eventhandler for table header //
-        for (var i = 0; i < tablecolheader.length; i++) {
-            tablecolheader[i].onclick = function () {
-                try {
-                    // determine the curr / black objects to use //
-                    var sortedtablecolX;
-                    let tablecolX, arrydataX, tablelistX;
+//         // add event handler //
+//         // eventhandler for table header //
+//         for (var i = 0; i < tablecolheader.length; i++) {
+//             tablecolheader[i].onclick = function () {
+//                 try {
+//                     // determine the curr / black objects to use //
+//                     var sortedtablecolX;
+//                     let tablecolX, arrydataX, tablelistX;
 
-                    if (this.dataset[strtabledataid] === strtableidcurr) {
-                        sortedtablecolX = sortedtablecol;
-                        tablecolX = tablecol;
-                        arrydataX = sampledata;
-                        tablelistX = tablelist;
-                    }
-                    else {
-                        sortedtablecolX = sortedtablecolblack
-                        tablecolX = tablecolBlacklist;
-                        arrydataX = sampledataBlacklist;
-                        tablelistX = tableblacklist;
-                    }
-
-
-                    // extract selected col id //
-                    let colidx = sortedtablecolX.indexOf(this.innerHTML);
-                    let dir = ((this.innerHTML).indexOf(strSortAsc) < 0 ? -1 : 1);
+//                     if (this.dataset[strtabledataid] === strtableidcurr) {
+//                         sortedtablecolX = sortedtablecol;
+//                         tablecolX = tablecol;
+//                         arrydataX = sampledata;
+//                         tablelistX = tablelist;
+//                     }
+//                     else {
+//                         sortedtablecolX = sortedtablecolblack
+//                         tablecolX = tablecolBlacklist;
+//                         arrydataX = sampledataBlacklist;
+//                         tablelistX = tableblacklist;
+//                     }
 
 
-                    // rewrite sortedtablecol //
-                    if (this.dataset[strtabledataid] === strtableidcurr) {
-                        sortedtablecol = tablecolX.slice();
-                        sortedtablecol[colidx] += (dir < 0) ? strSortAsc : strSortDsc;
+//                     // extract selected col id //
+//                     let colidx = sortedtablecolX.indexOf(this.innerHTML);
+//                     let dir = ((this.innerHTML).indexOf(strSortAsc) < 0 ? -1 : 1);
 
-                        // reload table with sorted array
-                        loadtablelist(sortedtablecol, sortarrydata(arrydataX, colidx, dir), tablelistX);
-                    }
-                    else {
-                        sortedtablecolblack = tablecolX.slice();
-                        sortedtablecolblack[colidx] += (dir < 0) ? strSortAsc : strSortDsc;
 
-                        // reload table with sorted array
-                        loadtablelist(sortedtablecolblack, sortarrydata(arrydataX, colidx, dir), tablelistX);
-                    }
-                }
-                catch (e) {
-                    alert('Add Event Handler for Table Header: ' + e);
-                }
-            }
-        }
+//                     // rewrite sortedtablecol //
+//                     if (this.dataset[strtabledataid] === strtableidcurr) {
+//                         sortedtablecol = tablecolX.slice();
+//                         sortedtablecol[colidx] += (dir < 0) ? strSortAsc : strSortDsc;
 
-        // eventhandler for table datarow button //
-        for (var i = 0; i < tabledatarowbutton.length; i++) {
-            tabledatarowbutton[i].onclick = function () {
-                alert('Enter Exit Time for: ' + this.dataset
-                [arrydataid[1]]);
-            }
-        }
-    }
-    catch (e) {
-        alert('loadtablelist error: ' + e);
-    }
-}
+//                         // reload table with sorted array
+//                         loadtablelist(sortedtablecol, sortarrydata(arrydataX, colidx, dir), tablelistX);
+//                     }
+//                     else {
+//                         sortedtablecolblack = tablecolX.slice();
+//                         sortedtablecolblack[colidx] += (dir < 0) ? strSortAsc : strSortDsc;
 
-function oddevendatarowX(tablelistX, classoddrow, classevenrow) {
-    try {
-        let cssstyle = classoddrow;
-        for (let i = 0; i < tablelistX.rows.length; i++) {
-            tablelistX.rows[i].className = '';
-            cssstyle = (cssstyle === classevenrow) ? classoddrow : classevenrow;
-            tablelistX.rows[i].classList.add(cssstyle);
-        }
-    }
-    catch (e) { alert(e); }
-}
+//                         // reload table with sorted array
+//                         loadtablelist(sortedtablecolblack, sortarrydata(arrydataX, colidx, dir), tablelistX);
+//                     }
+//                 }
+//                 catch (e) {
+//                     alert('Add Event Handler for Table Header: ' + e);
+//                 }
+//             }
+//         }
+
+//         // eventhandler for table datarow button //
+//         for (var i = 0; i < tabledatarowbutton.length; i++) {
+//             tabledatarowbutton[i].onclick = function () {
+//                 alert('Enter Exit Time for: ' + this.dataset
+//                 [arrydataid[1]]);
+//             }
+//         }
+//     }
+//     catch (e) {
+//         alert('loadtablelist error: ' + e);
+//     }
+// }
+
+// function oddevendatarowX(tablelistX, classoddrow, classevenrow) {
+//     try {
+//         let cssstyle = classoddrow;
+//         for (let i = 0; i < tablelistX.rows.length; i++) {
+//             tablelistX.rows[i].className = '';
+//             cssstyle = (cssstyle === classevenrow) ? classoddrow : classevenrow;
+//             tablelistX.rows[i].classList.add(cssstyle);
+//         }
+//     }
+//     catch (e) { alert(e); }
+// }
