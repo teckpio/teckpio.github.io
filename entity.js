@@ -4,6 +4,7 @@ const serverendpoint = vas_apiEntity;
 const serverendpointcol = vas_apiEntityDataCol;
 const serverendpointcollist = vas_apiEntityDataColList;
 
+const strdatarowdataid = 'ettid';
 const strcsstablerowodd = 'narbartabletrodd';
 const strcsstableroweven = 'narbartabletreven';
 const strcsstablerowselected = 'narbartabletrselected';
@@ -43,61 +44,74 @@ reqheader.onreadystatechange = function () {
         var arryheadercol = reqheader.responseText.split(',');
 
         // get datarow //
-        try {
-            var req = new XMLHttpRequest();
-            req.open('GET', serverendpoint);
+        // try {
+        var req = new XMLHttpRequest();
+        req.open('GET', serverendpoint);
 
-            req.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    // try {
+        req.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // try {
 
-                        var listobj = JSON.parse(req.responseText).recordsets;
-                        if (listobj[0].length > 0) {
+                var listobj = JSON.parse(req.responseText).recordsets;
+                if (listobj[0].length > 0) {
 
-                            let arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
-                            let arrydataid = ['table', 'ettid']
-                            let tableid = 'Entity';
-                            let boolbutton = true;
-                            let arryoddevenrowclass = [strcsstablerowodd, strcsstableroweven];
+                    let objparam = vssfnc_tablepopulate_param();
+                    objparam.htmltable = tablelist;
+                    objparam.htmltableid = 'Entity';
+                    objparam.arryjsondata = listobj[0];
+                    objparam.arryheadercol = ['ID', 'Name'];
+                    objparam.arrydataid = ['table', strdatarowdataid];
+                    objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+                    objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
+                    objparam.arrysortind = [' (v)', ' (^)'];
+                    objparam.addbutton = false;
+                    objparam.fncdatarowclicked = datarowclicked;
+                    vssfnc_tablepopulate(objparam);
 
-                            vssfnc_tablepopulate(arryheadercol, listobj[0], tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
+                    // let arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+                    // let arrydataid = ['table', 'ettid'];
+                    // let tableid = 'Entity';
+                    // let arrysortind = [' (v)', ' (^)'];
+                    // let boolbutton = true;
+                    // let arryoddevenrowclass = [strcsstablerowodd, strcsstableroweven];
+                    // vssfnc_tablepopulate(arryheadercol, listobj[0], tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, arrysortind, boolbutton);
 
-                            // // datarow //
-                            // let cssstyle = '';
-                            // let strdatarow = '';
-                            // for (var i = 0; i < listobj[0].length; i++) {
-                            //     cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
+                    // // datarow //
+                    // let cssstyle = '';
+                    // let strdatarow = '';
+                    // for (var i = 0; i < listobj[0].length; i++) {
+                    //     cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
 
-                            //     tablelist.innerHTML +=
-                            //         `<tr data-objid = '${listobj[0][i].ID}' class = '${cssstyle}'>
-                            //             <td>${listobj[0][i].ID}</td>
-                            //             <td>${listobj[0][i].NName}</td>    
-                            //             </tr>
-                            //             `;
-                            // }
-                            // tablelist.innerHTML += strdatarow;
-
-                            // SetTableEvent();
-                        }
-                        else {
-                            tablelist.innerHTML = 'Empty Data.';
-                        }
-
+                    //     tablelist.innerHTML +=
+                    //         `<tr data-objid = '${listobj[0][i].ID}' class = '${cssstyle}'>
+                    //             <td>${listobj[0][i].ID}</td>
+                    //             <td>${listobj[0][i].NName}</td>    
+                    //             </tr>
+                    //             `;
                     // }
-                    // catch (e) {
-                    //     alert('Error in retrieving List: ' + e);
-                    // }
+                    // tablelist.innerHTML += strdatarow;
+
+                    // SetTableEvent();
                 }
                 else {
-
+                    tablelist.innerHTML = 'Empty Data.';
                 }
-            }
 
-            req.send();
+                // }
+                // catch (e) {
+                //     alert('Error in retrieving List: ' + e);
+                // }
+            }
+            else {
+
+            }
         }
-        catch (e) {
-            alert(e);
-        }
+
+        req.send();
+        // }
+        // catch (e) {
+        //     alert(e);
+        // }
 
 
         // var arryheadercol = reqheader.responseText.split(',');
@@ -179,16 +193,23 @@ reqheader.send();
 
 
 // navbar: table list onclick //
-function SetTableEvent() {
-    for (var i = 0; i < tablelist.rows.length; i++) {
-        tablelist.rows[i].onclick = function () {
-            tablelistselectedid = this.dataset.objid;
-
-            painttabledatarow();
-            this.classList.add(strcsstablerowselected);
-        }
-    }
+function datarowclicked() {
+    tablelistselectedid = this.dataset[strdatarowdataid];
 }
+
+// function SetTableEvent() {
+//     for (var i = 0; i < tablelist.rows.length; i++) {
+//         tablelist.rows[i].onclick = function () {
+
+//             alert('entity.js - clicked');
+
+//             tablelistselectedid = this.dataset.objid;
+
+//             painttabledatarow();
+//             this.classList.add(strcsstablerowselected);
+//         }
+//     }
+// }
 
 
 // get detail button //

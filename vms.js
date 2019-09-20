@@ -1,5 +1,3 @@
-'use strict';
-
 const tablecol = [
     'Vehicle Number',
     'Status',
@@ -42,11 +40,11 @@ const tablecolBlacklist = [
 ]
 
 const sampledataBlacklist = [
-    { 'vnum': 'ABC123', 'Date': '123', 'Reason': 'UnknownA' },
-    { 'vnum': 'XYZ6789', 'Date': '012', 'Reason': 'UnknownB' },
-    { 'vnum': 'DEF4321', 'Date': '456', 'Reason': 'UnknownC' },
-    { 'vnum': 'CYZ6789', 'Date': '789', 'Reason': 'UnknownD' },
-    { 'vnum': 'HEF4321', 'Date': '567', 'Reason': 'UnknownE' }
+    { 'vnum': 'ABC123', 'Date': 123, 'Reason': 'UnknownA' },
+    { 'vnum': 'XYZ6789', 'Date': 112, 'Reason': 'UnknownB' },
+    { 'vnum': 'DEF4321', 'Date': 456, 'Reason': 'UnknownC' },
+    { 'vnum': 'CYZ6789', 'Date': 789, 'Reason': 'UnknownD' },
+    { 'vnum': 'HEF4321', 'Date': 567, 'Reason': 'UnknownE' }
 ]
 
 
@@ -106,34 +104,66 @@ const tfncexport = document.getElementById('tablefncExport');
 const tfnchistory = document.getElementById('tablefncHistory');
 
 
-
+// 
 // initial load //
+// 
+
 
 // - load current tablelist //
 listtitle.innerHTML = strBlackListWhite;
 
-let arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
-let arrydataid = ['table', 'vnum']
-let tableid = 'current';
-let boolbutton = true;
-let arryoddevenrowclass = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
 
-vssfnc_tablepopulate(tablecol, sampledata, tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
-// let x = new vssfnc_tablepopulate(tablecol, sampledata, tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
-// loadtablelistX(tablecol, sampledata, tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
-sortedtablecol = tablecol.slice();
+let objparam1 = vssfnc_tablepopulate_param();
+objparam1.htmltable = tablelist;
+objparam1.htmltableid = 'Current';
+objparam1.arryjsondata = sampledata;
+objparam1.arryheadercol = tablecol;
+objparam1.arrydataid = ['table', 'vnum'];
+objparam1.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+objparam1.arryclassdatarow = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
+objparam1.arrysortind = [' (v)', ' (^)'];
+objparam1.addbutton = true;
+objparam1.fncdatarowclicked=undefined;
+vssfnc_tablepopulate(objparam1);
+
+// let arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+// let arrydataid = ['table', 'vnum']
+// let tableid = 'current';
+// let arrysortind = [' (v)', ' (^)'];
+// let boolbutton = true;
+// let arryoddevenrowclass = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
+// vssfnc_tablepopulate(tablecol, sampledata, tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, arrysortind, boolbutton);
+
+// sortedtablecol = tablecol.slice();
 
 // load blacklist tablelist //
-arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
-arrydataid = ['table', 'vnum']
-tableid = 'black';
-boolbutton = true;
-arryoddevenrowclass = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
 
-vssfnc_tablepopulate(tablecolBlacklist, sampledataBlacklist, tableblacklist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
+
+let objparam2 = vssfnc_tablepopulate_param();
+objparam2.htmltable = tableblacklist;
+objparam2.htmltableid = 'Black';
+objparam2.arryjsondata = sampledataBlacklist;
+objparam2.arryheadercol = tablecolBlacklist;
+objparam2.arrydataid = ['table', 'vnum'];
+objparam2.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+objparam2.arryclassdatarow = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
+objparam2.arrysortind = [' (v)', ' (^)'];
+objparam2.addbutton = true;
+objparam2.fncbuttonclicked=function(){
+    alert ('vms button clicked.');
+}
+vssfnc_tablepopulate(objparam2);
+
+// let arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+// let arrydataid = ['table', 'vnum']
+// let tableid = 'black';
+// let arrysortind = [' (v)', ' (^)'];
+// let boolbutton = true;
+// let arryoddevenrowclass = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
+// vssfnc_tablepopulate(tablecolBlacklist, sampledataBlacklist, tableblacklist, tableid, arryclass, arrydataid, arryoddevenrowclass, arrysortind, boolbutton);
 // let y = new vssfnc_tablepopulate(tablecolBlacklist, sampledataBlacklist, tableblacklist, tableid, arryclass, arrydataid, arryoddevenrowclass, boolbutton);
 // loadtablelist(tablecolBlacklist, sampledataBlacklist, tableblacklist);
-sortedtablecolblack = tablecolBlacklist.slice();
+// sortedtablecolblack = tablecolBlacklist.slice();
 
 
 
@@ -156,8 +186,10 @@ tfncblacklist.innerHTML = strBlackListBlack;
 
 
 
-
+// 
 // Event Management //
+// 
+
 // * event on table is done during loadtablelist, which (after the initial loading) is called and refreshed at every column sortings //
 
 // - navbar function profile
@@ -318,17 +350,17 @@ tfnchistory.onclick = function () {
 // - loadtablelist
 
 
-function painttabledatarow(tablelistX) {
-    try {
-        let cssstyle = strcsstabledatarowodd;
-        for (let i = 0; i < tablelistX.rows.length; i++) {
-            tablelistX.rows[i].className = '';
-            cssstyle = (cssstyle === strcsstabledataroweven) ? strcsstabledatarowodd : strcsstabledataroweven;
-            tablelistX.rows[i].classList.add(cssstyle);
-        }
-    }
-    catch (e) { alert(e); }
-}
+// function painttabledatarow(tablelistX) {
+//     try {
+//         let cssstyle = strcsstabledatarowodd;
+//         for (let i = 0; i < tablelistX.rows.length; i++) {
+//             tablelistX.rows[i].className = '';
+//             cssstyle = (cssstyle === strcsstabledataroweven) ? strcsstabledatarowodd : strcsstabledataroweven;
+//             tablelistX.rows[i].classList.add(cssstyle);
+//         }
+//     }
+//     catch (e) { alert(e); }
+// }
 
 
 // function sortarrydata(arryJSON, colidx, dir) {
