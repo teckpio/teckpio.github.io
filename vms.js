@@ -1,16 +1,16 @@
 const tablecol = [
-    'Vehicle Number',
-    'Status',
-    'Time In',
-    'Check Out',
-    'Max Time Out',
-    'Block/Unit',
-    'Visitor Detail',
-    'Purpose',
-    'Category',
-    'Blacklist',
-    'Status',
-    'Created By'
+    ['Vehicle Number', , -1],
+    ['Status', , 0],
+    ['Time In', , -1],
+    ['Check Out', '0%', -1],
+    ['Max Time Out', , -1],
+    ['Block/Unit', , 0],
+    ['Visitor Detail', , -1],
+    ['Purpose', , -1],
+    ['Category', , -1],
+    ['Blacklist', , 0],
+    ['Status', , 0],
+    ['Created By', , 1]
 ]
 
 var sampledata = [
@@ -36,7 +36,9 @@ var sampledata = [
 ]
 
 const tablecolBlacklist = [
-    'Vehicle Number', 'Date Blacklisted', 'Reason'
+    ['Vehicle Number', '20%', -1],
+    ['Date Blacklisted', '20%', -1],
+    ['Reason', '50%', -1]
 ]
 
 const sampledataBlacklist = [
@@ -112,18 +114,18 @@ const tfnchistory = document.getElementById('tablefncHistory');
 // - load current tablelist //
 listtitle.innerHTML = strBlackListWhite;
 
-
 let objparam1 = vssfnc_tablepopulate_param();
+objparam1.caption = "Current List";
 objparam1.htmltable = tablelist;
 objparam1.htmltableid = 'Current';
 objparam1.arryjsondata = sampledata;
 objparam1.arryheadercol = tablecol;
 objparam1.arrydataid = ['table', 'vnum'];
-objparam1.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+objparam1.arryclass = ['tablecaption', 'tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton', 'tablefooter'];
 objparam1.arryclassdatarow = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
 objparam1.arrysortind = [' (v)', ' (^)'];
 objparam1.addbutton = true;
-objparam1.fncdatarowclicked=undefined;
+objparam1.fncdatarowclicked = undefined;
 vssfnc_tablepopulate(objparam1);
 
 // let arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
@@ -140,17 +142,19 @@ vssfnc_tablepopulate(objparam1);
 
 
 let objparam2 = vssfnc_tablepopulate_param();
+objparam2.caption = "Black List";
 objparam2.htmltable = tableblacklist;
 objparam2.htmltableid = 'Black';
 objparam2.arryjsondata = sampledataBlacklist;
 objparam2.arryheadercol = tablecolBlacklist;
 objparam2.arrydataid = ['table', 'vnum'];
-objparam2.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+objparam2.arryclass = ['tablecaption', 'tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton', 'tablefooter'];
 objparam2.arryclassdatarow = [strcsstabledatarowodd, strcsstabledataroweven, strcsstabledatarowselected];
 objparam2.arrysortind = [' (v)', ' (^)'];
 objparam2.addbutton = true;
-objparam2.fncbuttonclicked=function(){
-    alert ('vms button clicked.');
+objparam2.arryfooter = 'black list footer';
+objparam2.fncbuttonclicked = function () {
+    alert('vms button clicked.');
 }
 vssfnc_tablepopulate(objparam2);
 

@@ -88,8 +88,29 @@ main{
 }
 
 .content{
-    flex-grow: var(--fbcontent);
+    /* flex-grow: var(--fbcontent); */
     background-color:lightgrey;
+}
+
+.contentcaption{
+    background-color:black;
+    color:white;
+}
+
+.contentlabel{
+    background-color:lightblue;
+    text-align:left;
+}
+
+.contentinput{
+    background-color:pink;
+    text-align:left;
+}
+
+.contentbutton{
+    background-color:black;
+    color:white;
+    width:10%;
 }
 
 /* footer */

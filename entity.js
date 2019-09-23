@@ -16,6 +16,7 @@ const navbarbuttonadd = document.getElementById('navbarbuttonadd');
 const navbarbuttonpdf = document.getElementById('navbarbuttonpdf');
 
 const tablelist = document.getElementById('navbartable');
+const formdetails = document.getElementById('formdetails');
 const divdetails = document.getElementById('divdetails');
 
 // -1 to indicate non-selection from list //
@@ -49,6 +50,7 @@ reqheader.onreadystatechange = function () {
         req.open('GET', serverendpoint);
 
         req.onreadystatechange = function () {
+
             if (this.readyState == 4 && this.status == 200) {
                 // try {
 
@@ -56,10 +58,12 @@ reqheader.onreadystatechange = function () {
                 if (listobj[0].length > 0) {
 
                     let objparam = vssfnc_tablepopulate_param();
+                    objparam.caption = "Entity";
                     objparam.htmltable = tablelist;
                     objparam.htmltableid = 'Entity';
                     objparam.arryjsondata = listobj[0];
-                    objparam.arryheadercol = ['ID', 'Name'];
+                    objparam.arryheadercol = [['ID', '0%', 0], ['Name', '100%',]];
+                    objparam.arryfooter = ['Item Count']
                     objparam.arrydataid = ['table', strdatarowdataid];
                     objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
                     objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
@@ -233,19 +237,28 @@ navbarbuttonget.onclick = function () {
         req.onreadystatechange = function () {
 
             if (this.readyState == 4 && this.status == 200) {
-                try {
-                    // extract object data //
-                    var listobj = JSON.parse(req.responseText).recordsets;
+                // try {
+                // extract object data //
+                var listobj = JSON.parse(req.responseText).recordsets;
 
 
-                    RemovePPtInputElement();
+                let objparam = vssfnc_formpopulate_param();
+                objparam.caption = 'Entity Details'
+                objparam.actionurl = serverendpoint;
+                objparam.arryjsondata = listobj[0][0];
+                objparam.htmlform = formdetails;
+                objparam.arryclass = ['contentcaption', 'contentlabel', 'contentinput', 'contentbutton'];
+                // objparam.fncbuttonclicked = addEntity();
+                vssfnc_formpopulate(objparam);
 
-                    // get datacollist info from Server:Entity //
-                    CreatePPtInputElement(listobj[0][0]);
-                }
-                catch (e) {
-                    alert('Error in retrieving List: ' + e);
-                }
+                // RemovePPtInputElement();
+
+                // // get datacollist info from Server:Entity //
+                // CreatePPtInputElement(listobj[0][0]);
+                // }
+                // catch (e) {
+                //     alert('Error in retrieving List: ' + e);
+                // }
             }
             else if (this.readyState == 4 && this.status == 500) {
                 alert(req.responseText);
@@ -286,35 +299,36 @@ navbarbuttonpdf.onclick = function () {
 
 
 // add button //
-navbarbuttonadd.onclick = function () {
-    var req = new XMLHttpRequest();
-    var data = {
-        'ID': '109',
-        'NName': 'Queen',
-        'Code': 'CD131',
-        'Currcy': '0',
-        'DebitAcc': '1',
-        'CreditAcc': '2'
-    };
+// navbarbuttonadd.onclick = function () {
+function addEntity() {
+    // var req = new XMLHttpRequest();
+    // var data = {
+    //     'ID': '109',
+    //     'NName': 'Queen',
+    //     'Code': 'CD131',
+    //     'Currcy': '0',
+    //     'DebitAcc': '1',
+    //     'CreditAcc': '2'
+    // };
 
-    try {
-        req.open('POST', serverendpoint);
-        req.setRequestHeader('Content-Type', 'application/json');
-    }
-    catch (e) {
-        alert('Error Sending POST Request.');
-    }
+    // try {
+    //     req.open('POST', serverendpoint);
+    //     req.setRequestHeader('Content-Type', 'application/json');
+    // }
+    // catch (e) {
+    //     alert('Error Sending POST Request.');
+    // }
 
 
-    req.onreadystatechange = function () {
-        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-            alert('New Entity added.');
-        }
-        else if (this.readyState == XMLHttpRequest.DONE && this.status === 500) {
-            alert(req.responseText);
-        }
-    }
-    req.send(JSON.stringify(data));
+    // req.onreadystatechange = function () {
+    //     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+    //         alert('New Entity added.');
+    //     }
+    //     else if (this.readyState == XMLHttpRequest.DONE && this.status === 500) {
+    //         alert(req.responseText);
+    //     }
+    // }
+    // req.send(JSON.stringify(data));
 }
 
 
@@ -370,7 +384,7 @@ function CreatePPtInputElement(listobj) {
 
                 // label //
                 var labelelement = document.createElement('LABEL');
-                labelelement.setAttribute('style', 'flex-grow:1; background-color:gray;');
+                labelelement.setAttribute('style', 'flex-basis:1fr; background-color:gray;');
                 labelelement.innerHTML = ppt.Disp;
                 // labelelement.setAttribute('flex-grow', '1');
                 divelement.appendChild(labelelement);
@@ -378,7 +392,7 @@ function CreatePPtInputElement(listobj) {
                 // input box //
                 var inputelement = document.createElement('INPUT');
                 inputelement.setAttribute('type', 'text');
-                inputelement.setAttribute('style', 'flex-grow:3; align-self: flex-start; background-color:blue;');
+                inputelement.setAttribute('style', 'flex-basis:3fr; align-self: flex-start; background-color:blue;');
 
                 // inputelement.setAttribute('flex-grow', '1');
                 var newinputelement = divelement.appendChild(inputelement);
