@@ -5,6 +5,7 @@
 // vssfnc_tablepopulate
 // vssfnc_paintoddevenrow
 // vssfnc_sortarrydata
+
 // vssfnc_formpopulate_param
 // vssfnc_formpopulate
 
@@ -383,17 +384,20 @@ function vssfnc_formpopulate_param() {
     // within divlabel is a label element and within divinput is an input element
     // 
     // caption - caption of form (optional)
-    // actionurl - url to add
-    // arrykey - a 2-dim array of  [key[description strings, requird, type]]
+    // actionurl - url to add / edit
+    // arrydatacol - a 2-dim array of  [key[description strings, requird, type]]
     // arryJSON - a json data object 
     // arryfooter - ??
-    // tablelistX - html element of the table to be created 
-    // tableid - id of source datatable (for sorting by column purposes - obsolete?)
+    // htmlform - html element of the form container
+    // formid - id of source datatable (for sorting by column purposes - obsolete?)
+    // arrylabelinput - a 2-dim array of [[label:[width ration, text-align]],[input[width ratio, text-align]] between label:input 
+    //                          - [xx%, -1]
+    //                          - text-align - -1:left, 0:center, 1:right
     // arryclass - an array of css classes - 
     //          0:caption
     //          1:label
     //          2:input
-    //          3:button
+    //          3:divbutton
     // arryclassdatarow - an array of 3 classes for datarow - 
     //          0:odd-numbered row
     //          1:even-numbered row
@@ -404,28 +408,31 @@ function vssfnc_formpopulate_param() {
     // arrysortind - an array of 2 strings indicator for column sorting - 
     //          0:ascending
     //          1:descending
-    // boolbutton - true to add a button in the first cell of each row
+    // arrybutton - a 2-dim array of [button[(0)type, (1)text, (2)class, (3)clickedfunction]]
     // fncdatarowclicked - function to call on datarow clicked
     // fncbuttonclicked - function to call on datarow button clicked
 
     return {
         caption: null,
         actionurl: null,
-        arrykey: null,
+        arrydatacol: null,
         arryjsondata: null,
         arryfooter: null,
         htmlform: null,
         htmlformid: null,
+        arrylabelinput: null,
         arryclass: null,
         arryclassdatarow: null,
         arrydataid: null,
         arrysortind: null,
-        addbutton: false,
+        arrybutton: null,
         fncdatarowclicked: undefined,
         fncbuttonclicked: undefined
     }
 }
 
+
+// used to populate a form (display / addition / edit) for a single object with multiple properties //
 function vssfnc_formpopulate(objparam) {
 
     // 
@@ -439,10 +446,10 @@ function vssfnc_formpopulate(objparam) {
 
     // 
     // format form //
-    // 
+    // a form is a flex (row / col) with one div for each property //
 
-    console.log(objparam.actionurl);
-
+    // form action url //
+    // if an url for form action is provided, it's a POST request //
     if (objparam.actionurl) {
         objparam.htmlform.method = 'POST';
         objparam.htmlform.action = objparam.actionurl;
@@ -451,7 +458,7 @@ function vssfnc_formpopulate(objparam) {
     objparam.htmlform.style.display = 'flex';
     objparam.htmlform.style.flexDirection = 'column';
 
-    // caption
+    // caption //
     if (objparam.caption) {
         let captionelement = document.createElement('div');
         captionelement.innerHTML = objparam.caption;
@@ -467,6 +474,7 @@ function vssfnc_formpopulate(objparam) {
     // 
 
     var ppt;
+    var idxarrydatacol = 0;
     for (ppt in objparam.arryjsondata) {
 
         // property wrapper - a div (row/column flex) with: divlabel + divinput //
@@ -477,11 +485,20 @@ function vssfnc_formpopulate(objparam) {
 
         // label //
         var divlabel = document.createElement('div');
-        divlabel.setAttribute('style', 'flex-basis:50%;');
+        divlabel.style.flexBasis = objparam.arrylabelinput[0][0];
+        divlabel.style.textAlign = objparam.arrylabelinput[0][1] === 0 ? 'center' : (objparam.arrylabelinput[0][1] === 1 ? 'right' : 'left');
+        // divlabel.setAttribute('style', `flex-basis:${objparam.arrylabelinput[0][0]};
+        //                                 text-align:${objparam.arrylabelinput[0][1]===0?'center':(objparam.arrylabelinput[0][1]===1?'right':'left')}`);
 
         var labelelement = document.createElement('LABEL');
         labelelement.width = '100%';
-        labelelement.innerHTML = ppt;
+        if (objparam.arrydatacol[idxarrydatacol][0]) {
+            labelelement.innerHTML = objparam.arrydatacol[idxarrydatacol][0];
+        }
+        else {
+            labelelement.innerHTML = ppt;
+        }
+
         if (objparam.arryclass[1]) {
             labelelement.classList.add(objparam.arryclass[1]);
         }
@@ -491,16 +508,21 @@ function vssfnc_formpopulate(objparam) {
 
         // input box //
         var divinput = document.createElement('div');
-        divinput.setAttribute('style', 'flex-basis:50%');
+        divinput.setAttribute('style', `flex-basis:${objparam.arrylabelinput[1][0]};`);
+
 
         var inputelement = document.createElement('INPUT');
-        inputelement.setAttribute('type', 'text');
+        inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][2]);
         inputelement.setAttribute('name', ppt);
+        inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);
+
+
         if (objparam.arryclass[2]) {
             inputelement.classList.add(objparam.arryclass[2]);
         }
         inputelement.value = objparam.arryjsondata[ppt];
-        inputelement.setAttribute('style', 'width:100%;')
+        inputelement.setAttribute('style', `width:100%;
+                                            text-align:${objparam.arrylabelinput[1][1] === 0 ? 'center' : (objparam.arrylabelinput[1][1] === 1 ? 'right' : 'left')}`);
         divinput.appendChild(inputelement);
 
 
@@ -510,24 +532,30 @@ function vssfnc_formpopulate(objparam) {
 
         objparam.htmlform.appendChild(divwrapper);
 
+
         // // new line //
         // var brelement = document.createElement('BR');
         // objparam.htmlform.appendChild(brelement);
+        idxarrydatacol++
     }
 
-    // submit button //
+    //  button //
     let divbutton = document.createElement('div');
+    divbutton.setAttribute('style', 'display:flex; justify-content:space-around;');
+    divbutton.classList.add(objparam.arryclass[3]);
 
-    var buttonelement = document.createElement('button');
-    buttonelement.setAttribute('type', 'submit');
-    buttonelement.value= 'Add';
-    buttonelement.classList.add(objparam.arryclass[3]);
-    // buttonelement.formAction=objparam.actionurl;
-    // objparam.htmlform.appendChild(buttonelement);
-    // buttonelement.onclick = objparam.fncbuttonclicked;
+    for (let i = 0; i < objparam.arrybutton.length; i++) {
+        var buttonelement = document.createElement('button');
+        buttonelement.setAttribute('type', objparam.arrybutton[i][0]);
+        buttonelement.innerHTML = objparam.arrybutton[i][1];
 
-    divbutton.appendChild(buttonelement);
+        buttonelement.classList.add(objparam.arryclass[i][2]);
+        // buttonelement.formAction=objparam.actionurl;
+        if(objparam.arrybutton[i][0] !== 'submit' && objparam.arrybutton[i][0] !== 'reset' ){
+            buttonelement.onclick = objparam.arrybutton[i][3];
+        }
+        divbutton.appendChild(buttonelement);
+    }
+
     objparam.htmlform.appendChild(divbutton);
-
-
 }

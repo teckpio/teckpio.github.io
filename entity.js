@@ -58,7 +58,7 @@ reqheader.onreadystatechange = function () {
                 if (listobj[0].length > 0) {
 
                     let objparam = vssfnc_tablepopulate_param();
-                    objparam.caption = "Entity";
+                    // objparam.caption = "Entity";
                     objparam.htmltable = tablelist;
                     objparam.htmltableid = 'Entity';
                     objparam.arryjsondata = listobj[0];
@@ -245,10 +245,24 @@ navbarbuttonget.onclick = function () {
                 let objparam = vssfnc_formpopulate_param();
                 objparam.caption = 'Entity Details'
                 objparam.actionurl = serverendpoint;
+                // [description strings, requird, type]]
+                objparam.arrydatacol = [['ID', false, 'text'],
+                                        ['Name', true, 'text'],
+                                        ['Code', true, 'text'],
+                                        ['Currency', true, 'radio'],
+                                        ['Debit Account', true, 'check'],
+                                        ['Credit Account', true, 'text']];
                 objparam.arryjsondata = listobj[0][0];
                 objparam.htmlform = formdetails;
+                objparam.arrylabelinput = [['30%', -1],
+                                            ['70%', -1]];
                 objparam.arryclass = ['contentcaption', 'contentlabel', 'contentinput', 'contentbutton'];
-                // objparam.fncbuttonclicked = addEntity();
+                
+
+                objparam.arrybutton = [['submit', 'Add', 'contentbutton', undefined],
+                                        ['reset', 'Reset', 'contentbutton', undefined],
+                                        ['', 'X', 'contentbutton', function(){alert('X-button-clicked.')}]
+                                    ];
                 vssfnc_formpopulate(objparam);
 
                 // RemovePPtInputElement();

@@ -10,14 +10,14 @@
     --fbmaincontent:75%;
 
     --fbnavbartitle:10%;
-    --fbnavbarlist:60%;
-    --fbnavbarfunction:30%;
+    --fbnavbarlist:75%;
+    --fbnavbarfunction:15%;
 
     --widthnavbaritem:80%;
 
     --fbcontenttitle:10%;
-    --fbcontentdetail:80%;
-    --fbcontentfunction:10%;
+    --fbcontentdetail:70%;
+    --fbcontentfunction:20%;
 
     --widthcontentitem:95%;
 
@@ -53,16 +53,20 @@ html *{
 
 /* applies to both navbarfunction and contentfunction */
 .vss_function{
+    font-size:var(--fontsizefunction);
+
     box-sizing: border-box;
     margin:var(--fncmargintopbtm) var(--fncmarginlftrgh);
     padding:var(--fncpaddingtopbtm) var(--fncpaddinglftrgh);
-    /* flex-grow:1; */
+    
     text-align:center;
-    font-size:var(--fontsizefunction);
+    vertical-align: middle;
+
     border-right:solid 2px black;
     border-bottom:solid 2px black;
     box-shadow: 0 0 2px gray;
-    align-self: center;
+    /* why required? */
+    transition-delay: 100ms;
 }
 
 .vss_function:hover{
@@ -111,6 +115,7 @@ html *{
     width:var(--widthnavbaritem);
     box-sizing: border-box;
     margin:var(--marginbtwnvertnavbar) auto;
+    overflow-y: auto;
 }
 
 #vss_navbarfunction{
@@ -121,7 +126,8 @@ html *{
     display: flex;
     align-items:center;
     justify-content: center;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
+    overflow-x:auto;
 }
 
 /* vss_content is a column flex with: vss_contenttitle + vss_contentdetail + vss_contentfunction */
@@ -173,7 +179,8 @@ html *{
     display:flex;
     /* align-items:center;  */
     /* justify-content: center; */
-    margin:var(--marginbtwnvertcontent) auto;
+    /* margin:var(--marginbtwnvertcontent) auto; */
+    overflow-x:auto;
     /* overflow: hidden; */
     /* flex-wrap: wrap; */
 }
