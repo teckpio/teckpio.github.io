@@ -23,9 +23,9 @@
     --bgcolorfooter:rgba(0, 85, 5, 0.836);
     --bgcolorbodywesellcat:#EEE;
 
-    --forecolorheaderad:rgb(255, 166, 0);
-    --forecolorheader:#E1E6F9;
-    --forecolorheadernav:yellow;
+    --forecolorheaderad:white;
+    --forecolorheader:white; /*#E1E6F9;*/
+    --forecolorheadernav:rgb(247, 66, 75);
     --forecolorheadernavhover:red;
     --forecolornav:white;
     --forecolorbody:black;
@@ -35,7 +35,7 @@
     --forecolorwesellcatitem:darkblue;
     --forecolorwesellcatitemselected:red;
 
-    --fontsizeheader:2em;
+    --fontsizeheader:1.5em;
     --fontsizeheadertextE:1.5em;
     --fontsizenavitem:1em;
     --fontsizenavitemselected:1.5em;
@@ -48,14 +48,17 @@
     --bgcolorgradient:linear-gradient(
         45deg,
         darkblue,
+        darkblue,
+        darkblue,
+        darkblue,
+        darkblue,
+        darkblue,
         rgb(15, 15, 228),
-        rgb(75, 121, 212),
         rgb(75, 121, 212),
         rgb(75, 121, 212),
         rgb(133, 165, 231),
         lightblue,
         rgb(133, 165, 231),
-        rgb(75, 121, 212),
         rgb(75, 121, 212),
         rgb(75, 121, 212),
         rgb(15, 15, 228),
@@ -161,9 +164,9 @@ body{
 #vsse_headerad{
     background-color:var(--bgcolorheaderad);
     color:var(--forecolorheaderad);
-    font-size:20px;
+    font-size:12px;
     padding:10px;
-    background:var(--bgcolorgradient);
+    /* background:var(--bgcolorgradient); */
     background-size: 300%;
     background-position: left;
     animation: gradient-animation 20s infinite alternate;
@@ -222,7 +225,7 @@ header{
     font-weight: bold;
     font-style:italic;
     font-size:var(--fontsizeheadertextE);
-    background:linear-gradient(45deg, red, yellow, red);
+    background:linear-gradient(45deg, gold, white, gold);
     background-clip: text;
     -webkit-background-clip: text;
     color:transparent;
@@ -644,7 +647,7 @@ header{
 
 #vsse_bodyvisioniobj{
     margin-top:0;
-    margin-left:-350px;
+    margin-left:-500px;
 
     padding-top:0;
 
@@ -687,7 +690,7 @@ header{
 }
 
 @keyframes slidei{
-    0%{margin-left:-350px;}
+    0%{margin-left:-500px;}
     100%{margin-left:35%;}
 }
 
@@ -757,7 +760,6 @@ header{
     transform: translateX(-50%);
     font-size: 22px;
     letter-spacing: 2px;
-    z-index:99;
 }
 
 .vsse_bodyweareservice2 span{
@@ -1381,8 +1383,8 @@ table, th, td{
 #vsse_bodywesellcatitem li:hover{
     cursor:pointer;
     font-style:italic;
-    font-weight: bold;
-    font-size:var(--fontsizewesellcatitemselected);
+    /* font-weight: bold; */
+    /* font-size:var(--fontsizewesellcatitemselected); */
     color:var(--forecolorwesellcatitemselected);
 }
 
@@ -1947,13 +1949,13 @@ table, th, td{
         }
         
         @keyframes slidein{
-            0%{margin-left:-300px;}
+            0%{margin-left:-200%;}
             100%{margin-left:25%;}
         }
         
         #vsse_bodyvisioniobj{
             margin-top:0;
-            margin-left:-350px;
+            margin-left:-200%;
         
             padding-top:0;
         
@@ -1996,7 +1998,7 @@ table, th, td{
         }
         
         @keyframes slidei{
-            0%{margin-left:-350px;}
+            0%{margin-left:-200%;}
             100%{margin-left:40%;}
         }
         
@@ -2501,7 +2503,7 @@ table, th, td{
         
         #vsse_bodywedidbox{
             width:90%;
-            margin:0 auto;
+            margin:5% auto;
         }
     
 
@@ -2574,7 +2576,19 @@ table, th, td{
             padding:5px;
             font-style:italic;
         }
+
+        #vsse_wedidvmslogo{
+            width:100px;
+            height:100px;
+            display: inline-block;
+        }
         
+#vsse_wedidpaylogo{
+    /* display: none; */
+            width:20px;
+            height:20px;
+            display: inline-block;
+        }
         
         
         

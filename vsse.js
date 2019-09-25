@@ -120,8 +120,12 @@ load_product(arryproductpicyour);
 
 /* add event listener to item category AFTER adding all the items (cannot add at the same time of adding innertHTML!) */
 
-vssebody.onscroll = function () {
-    vssenav.style.display = 'none';
+window.onscroll = function () {
+    // vssenav.style.display = 'none';
+    // this.setTimeout(function(){
+    //     vssenav.style.display = 'block';
+    //     clearTimeout(this);
+    // },200);
 }
 
 
