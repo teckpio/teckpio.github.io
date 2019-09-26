@@ -512,9 +512,24 @@ function vssfnc_formpopulate(objparam) {
 
 
         var inputelement = document.createElement('INPUT');
-        inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][2]);
+        // inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][2]);
+        inputelement.setAttribute('type', 'text');
         inputelement.setAttribute('name', ppt);
         inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);
+        if (objparam.arrydatacol[idxarrydatacol][2]==='datalist'){
+            inputelement.setAttribute('list', 'xx');
+            
+            var dlist = document.createElement('datalist');
+            dlist.id = 'xx';
+            inputelement.appendChild(dlist);
+            
+            var opt = document.createElement('option');
+            opt.value = 'xxx';
+            dlist.appendChild(opt);
+            var opt2 = document.createElement('option');
+            opt2.value = 'yyy';
+            dlist.appendChild(opt2);
+        }
 
 
         if (objparam.arryclass[2]) {

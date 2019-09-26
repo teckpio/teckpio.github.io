@@ -35,151 +35,60 @@ var tablelistselectedid = -1;
 
 // using table element //
 
-// get table header //
-var reqheader = new XMLHttpRequest();
-reqheader.open('GET', serverendpointcollist);
-reqheader.onreadystatechange = function () {
-    if (this.readyState === 4 && this.status === 200) {
 
-        // extract col header //
-        var arryheadercol = reqheader.responseText.split(',');
+// get datarow //
+// try {
+var req = new XMLHttpRequest();
+req.open('GET', serverendpoint);
 
-        // get datarow //
+req.onreadystatechange = function () {
+
+    if (this.readyState == 4 && this.status == 200) {
         // try {
-        var req = new XMLHttpRequest();
-        req.open('GET', serverendpoint);
 
-        req.onreadystatechange = function () {
-
-            if (this.readyState == 4 && this.status == 200) {
-                // try {
-
-                var listobj = JSON.parse(req.responseText).recordsets;
-                if (listobj[0].length > 0) {
-
-                    let objparam = vssfnc_tablepopulate_param();
-                    // objparam.caption = "Entity";
-                    objparam.htmltable = tablelist;
-                    objparam.htmltableid = 'Entity';
-                    objparam.arryjsondata = listobj[0];
-                    objparam.arryheadercol = [['ID', '0%', 0], ['Name', '100%',]];
-                    objparam.arryfooter = ['Item Count']
-                    objparam.arrydataid = ['table', strdatarowdataid];
-                    objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
-                    objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
-                    objparam.arrysortind = [' (v)', ' (^)'];
-                    objparam.addbutton = false;
-                    objparam.fncdatarowclicked = datarowclicked;
-                    vssfnc_tablepopulate(objparam);
-
-                    // let arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
-                    // let arrydataid = ['table', 'ettid'];
-                    // let tableid = 'Entity';
-                    // let arrysortind = [' (v)', ' (^)'];
-                    // let boolbutton = true;
-                    // let arryoddevenrowclass = [strcsstablerowodd, strcsstableroweven];
-                    // vssfnc_tablepopulate(arryheadercol, listobj[0], tablelist, tableid, arryclass, arrydataid, arryoddevenrowclass, arrysortind, boolbutton);
-
-                    // // datarow //
-                    // let cssstyle = '';
-                    // let strdatarow = '';
-                    // for (var i = 0; i < listobj[0].length; i++) {
-                    //     cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
-
-                    //     tablelist.innerHTML +=
-                    //         `<tr data-objid = '${listobj[0][i].ID}' class = '${cssstyle}'>
-                    //             <td>${listobj[0][i].ID}</td>
-                    //             <td>${listobj[0][i].NName}</td>    
-                    //             </tr>
-                    //             `;
-                    // }
-                    // tablelist.innerHTML += strdatarow;
-
-                    // SetTableEvent();
-                }
-                else {
-                    tablelist.innerHTML = 'Empty Data.';
-                }
-
-                // }
-                // catch (e) {
-                //     alert('Error in retrieving List: ' + e);
-                // }
-            }
-            else {
-
-            }
+        // var listobj = JSON.parse(req.responseText).recordsets;
+        let jsonresp = JSON.parse(req.responseText)
+        let listobj = jsonresp.recordset;
+        let headercol = jsonresp.datacol;
+        
+        // if (listobj[0].length > 0) {
+        if (listobj.length > 0) {
+            let objparam = vssfnc_tablepopulate_param();
+            // objparam.caption = "Entity";
+            objparam.htmltable = tablelist;
+            objparam.htmltableid = 'Entity';
+            objparam.arryjsondata = listobj;
+            // objparam.arryjsondata = listobj[0];
+            // objparam.arryheadercol = [['ID', '0%', 0], ['Name', '100%',]];
+            objparam.arryheadercol = [[headercol[0], '0%', 0], [headercol[1], '100%',]];
+            objparam.arryfooter = ['Item Count']
+            objparam.arrydataid = ['table', strdatarowdataid];
+            objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+            objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
+            objparam.arrysortind = [' (v)', ' (^)'];
+            objparam.addbutton = false;
+            objparam.fncdatarowclicked = datarowclicked;
+            vssfnc_tablepopulate(objparam);
+        }
+        else {
+            tablelist.innerHTML = 'Empty Data.';
         }
 
-        req.send();
         // }
         // catch (e) {
-        //     alert(e);
-        // }
-
-
-        // var arryheadercol = reqheader.responseText.split(',');
-        // var strheadercol = '';
-        // strheadercol = '<thead><tr>';
-        // arryheadercol.forEach(headercol => {
-        //     strheadercol += `<th>${headercol}</th>`
-        // })
-        // strheadercol += '</tr></thead>';
-
-        // tablelist.innerHTML += strheadercol
-
-        // // get datarow //
-        // try {
-        //     var req = new XMLHttpRequest();
-        //     req.open('GET', serverendpoint);
-
-        //     req.onreadystatechange = function () {
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             try {
-
-        //                 var listobj = JSON.parse(req.responseText).recordsets;
-        //                 if (listobj[0].length > 0) {
-
-        //                     // datarow //
-        //                     let cssstyle = '';
-        //                     let strdatarow = '';
-        //                     for (var i = 0; i < listobj[0].length; i++) {
-        //                         cssstyle = (cssstyle === strcsstableroweven) ? strcsstablerowodd : strcsstableroweven;
-
-        //                         tablelist.innerHTML +=
-        //                             `<tr data-objid = '${listobj[0][i].ID}' class = '${cssstyle}'>
-        //                                 <td>${listobj[0][i].ID}</td>
-        //                                 <td>${listobj[0][i].NName}</td>    
-        //                                 </tr>
-        //                                 `;
-        //                     }
-        //                     tablelist.innerHTML += strdatarow;
-
-        //                     SetTableEvent();
-        //                 }
-        //                 else {
-        //                     tablelist.innerHTML = 'Empty Data.';
-        //                 }
-
-        //             }
-        //             catch (e) {
-        //                 alert('Error in retrieving List: ' + e);
-        //             }
-        //         }
-        //         else {
-
-        //         }
-        //     }
-
-        //     req.send();
-        // }
-        // catch (e) {
-        //     alert(e);
+        //     alert('Error in retrieving List: ' + e);
         // }
     }
-}
-reqheader.send();
+    else {
 
+    }
+}
+
+req.send();
+// }
+// catch (e) {
+//     alert(e);
+// }
 
 
 
@@ -239,30 +148,33 @@ navbarbuttonget.onclick = function () {
             if (this.readyState == 4 && this.status == 200) {
                 // try {
                 // extract object data //
-                var listobj = JSON.parse(req.responseText).recordsets;
-
+                
+                var listobj = JSON.parse(req.responseText);
+                console.log(listobj.account.recordset);    
+                
 
                 let objparam = vssfnc_formpopulate_param();
                 objparam.caption = 'Entity Details'
                 objparam.actionurl = serverendpoint;
                 // [description strings, requird, type]]
                 objparam.arrydatacol = [['ID', false, 'text'],
-                                        ['Name', true, 'text'],
-                                        ['Code', true, 'text'],
-                                        ['Currency', true, 'radio'],
-                                        ['Debit Account', true, 'check'],
-                                        ['Credit Account', true, 'text']];
-                objparam.arryjsondata = listobj[0][0];
+                ['Name', true, 'text'],
+                ['Code', true, 'text'],
+                ['Currency', true, 'radio'],
+                ['Debit Account', true, 'datalist'],
+                ['Credit Account', true, 'text']];
+                // objparam.arryjsondata = listobj[0][0];
+                objparam.arryjsondata = listobj.recordset[0];
                 objparam.htmlform = formdetails;
                 objparam.arrylabelinput = [['30%', -1],
-                                            ['70%', -1]];
+                ['70%', -1]];
                 objparam.arryclass = ['contentcaption', 'contentlabel', 'contentinput', 'contentbutton'];
-                
+
 
                 objparam.arrybutton = [['submit', 'Add', 'contentbutton', undefined],
-                                        ['reset', 'Reset', 'contentbutton', undefined],
-                                        ['', 'X', 'contentbutton', function(){alert('X-button-clicked.')}]
-                                    ];
+                ['reset', 'Reset', 'contentbutton', undefined],
+                ['', 'X', 'contentbutton', function () { alert('X-button-clicked.') }]
+                ];
                 vssfnc_formpopulate(objparam);
 
                 // RemovePPtInputElement();
