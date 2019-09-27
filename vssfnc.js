@@ -390,6 +390,7 @@ function vssfnc_formpopulate_param() {
     // arryfooter - ??
     // htmlform - html element of the form container
     // formid - id of source datatable (for sorting by column purposes - obsolete?)
+    // arryitemdata - an array of constituent json data object 
     // arrylabelinput - a 2-dim array of [[label:[width ration, text-align]],[input[width ratio, text-align]] between label:input 
     //                          - [xx%, -1]
     //                          - text-align - -1:left, 0:center, 1:right
@@ -420,6 +421,7 @@ function vssfnc_formpopulate_param() {
         arryfooter: null,
         htmlform: null,
         htmlformid: null,
+        arryitemdata: [],
         arrylabelinput: null,
         arryclass: null,
         arryclassdatarow: null,
@@ -442,7 +444,6 @@ function vssfnc_formpopulate(objparam) {
     while (objparam.htmlform.firstChild) {
         objparam.htmlform.removeChild(objparam.htmlform.firstChild);
     }
-
 
     // 
     // format form //
@@ -510,32 +511,44 @@ function vssfnc_formpopulate(objparam) {
         var divinput = document.createElement('div');
         divinput.setAttribute('style', `flex-basis:${objparam.arrylabelinput[1][0]};`);
 
-
         var inputelement = document.createElement('INPUT');
-        // inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][2]);
-        inputelement.setAttribute('type', 'text');
         inputelement.setAttribute('name', ppt);
         inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);
-        if (objparam.arrydatacol[idxarrydatacol][2]==='datalist'){
-            inputelement.setAttribute('list', 'xx');
-            
-            var dlist = document.createElement('datalist');
-            dlist.id = 'xx';
-            inputelement.appendChild(dlist);
-            
-            var opt = document.createElement('option');
-            opt.value = 'xxx';
-            dlist.appendChild(opt);
-            var opt2 = document.createElement('option');
-            opt2.value = 'yyy';
-            dlist.appendChild(opt2);
+        if (isNaN(objparam.arrydatacol[idxarrydatacol][2])) {
+            // instrinsic input type //
+            inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][2]);
+            inputelement.value = objparam.arryjsondata[ppt];
         }
+        else {
+            // supporting data //
+            var listname = 'list' + ppt;
+            inputelement.setAttribute('list', listname);
 
-
+            var dlist = document.createElement('datalist');
+            dlist.id = listname;
+            inputelement.appendChild(dlist);
+            objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]].forEach(value => {
+                var opt = document.createElement('option');
+                opt.value = value.NName;
+                dlist.appendChild(opt);
+            })
+            console.log(objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]]);
+            console.log(objparam.arryjsondata[ppt]);
+            var dataobjX = objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]].find(function (dataobj) {
+                return dataobj.ID === objparam.arryjsondata[ppt];
+            })
+            if (dataobjX){
+                inputelement.value = dataobjX.NName;
+            }
+            else{
+                inputelement.value = '';
+            }
+            
+        }
         if (objparam.arryclass[2]) {
             inputelement.classList.add(objparam.arryclass[2]);
         }
-        inputelement.value = objparam.arryjsondata[ppt];
+
         inputelement.setAttribute('style', `width:100%;
                                             text-align:${objparam.arrylabelinput[1][1] === 0 ? 'center' : (objparam.arrylabelinput[1][1] === 1 ? 'right' : 'left')}`);
         divinput.appendChild(inputelement);
@@ -566,7 +579,7 @@ function vssfnc_formpopulate(objparam) {
 
         buttonelement.classList.add(objparam.arryclass[i][2]);
         // buttonelement.formAction=objparam.actionurl;
-        if(objparam.arrybutton[i][0] !== 'submit' && objparam.arrybutton[i][0] !== 'reset' ){
+        if (objparam.arrybutton[i][0] !== 'submit' && objparam.arrybutton[i][0] !== 'reset') {
             buttonelement.onclick = objparam.arrybutton[i][3];
         }
         divbutton.appendChild(buttonelement);

@@ -150,7 +150,7 @@ navbarbuttonget.onclick = function () {
                 // extract object data //
                 
                 var listobj = JSON.parse(req.responseText);
-                console.log(listobj.account.recordset);    
+                
                 
 
                 let objparam = vssfnc_formpopulate_param();
@@ -158,23 +158,26 @@ navbarbuttonget.onclick = function () {
                 objparam.actionurl = serverendpoint;
                 // [description strings, requird, type]]
                 objparam.arrydatacol = [['ID', false, 'text'],
-                ['Name', true, 'text'],
-                ['Code', true, 'text'],
-                ['Currency', true, 'radio'],
-                ['Debit Account', true, 'datalist'],
-                ['Credit Account', true, 'text']];
+                                    ['Name', true, 'text'],
+                                    ['Code', true, 'text'],
+                                    ['Currency', true, 'radio'],
+                                    ['Debit Account', true, 0],
+                                    ['Credit Account', true, 1]];
                 // objparam.arryjsondata = listobj[0][0];
                 objparam.arryjsondata = listobj.recordset[0];
                 objparam.htmlform = formdetails;
                 objparam.arrylabelinput = [['30%', -1],
                 ['70%', -1]];
                 objparam.arryclass = ['contentcaption', 'contentlabel', 'contentinput', 'contentbutton'];
-
-
                 objparam.arrybutton = [['submit', 'Add', 'contentbutton', undefined],
                 ['reset', 'Reset', 'contentbutton', undefined],
                 ['', 'X', 'contentbutton', function () { alert('X-button-clicked.') }]
                 ];
+                // console.log(listobj.account);
+                // objparam.arryitemdata.push(listobj.account.recordset);
+                // objparam.arryitemdata.push(listobj.account.recordset);
+                objparam.arryitemdata.push(listobj.account);
+                objparam.arryitemdata.push(listobj.account);
                 vssfnc_formpopulate(objparam);
 
                 // RemovePPtInputElement();
