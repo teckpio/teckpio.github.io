@@ -1,0 +1,188 @@
+:root{
+    --colorheaderbg:black;
+    --colorheaderfg:white;
+
+    --colorcontentlistbg:rgb(127, 201, 166);
+
+    --colormainnavbg:gray;
+    --colormainnavfg:white;
+
+    --colorlistbg:white;
+    --colorlistfg:black;
+
+    --colorcontentdetailbg:lightgray;
+    --colorcontentdetailfg:black;
+
+    --colorfooterbg:black;
+    --colorfooterfg:white;
+
+    --heightheader:8vh;
+    --heightmain:87vh;
+    --heightfooter:5vh;
+
+    --fontsizeheader:1.2em;
+    --fontsizebody:1em;
+    --fontsizefooter:.8em;
+    --fontsizemainnav:1em;
+
+    --fbmainnav:6%;
+    --fbmaincontent:94%;
+
+    --fblisttitle:5%;
+    --fblisttable:90%;
+    --fblistfunction:5%;
+
+    --fbcontentlist:30%;
+    --fbcontentdetail:70%;
+}
+
+html{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.ipheader{
+    height:var(--heightheader);
+    background-color:var(--colorheaderbg);
+    color:var(--colorheaderfg);
+
+    font-size: var(--fontsizeheader);
+}
+
+/* ipmain is a column flex of: mainnav + maincontent */
+.ipmain{
+    height:var(--heightmain);
+
+    font-size: var(--fontsizebody);
+
+    display:flex;
+    flex-direction: column;
+}
+
+/* mainnav is a row flex of: Employee + Pay Item + Statutory Item + Process*/
+#mainnav{
+    flex:0 0 var(--fbmainnav);
+    background-color:var(--colormainnavbg);
+    
+    display: flex;
+    justify-content: space-evenly;
+}
+
+/* mainnavitem is a class with row flex of: an svg and a text span */
+.mainnavitem{
+    color:var(--colormainnavfg);
+    font-size:var(--fontsizemainnav);
+    box-shadow: 0 0 2px white;
+    /* border-right:solid gray 2px; */
+    text-align:center;
+    flex-grow: 1;
+
+    display:flex;
+    justify-content: space-evenly;
+    
+}
+
+.mainnavitem:hover{
+    cursor:pointer;
+    font-style:italic;
+}
+
+.mainnavitem:last-child{
+    border-right:none;
+}
+
+
+/* maincontent is a row flex of: contentlist + contentdetail */
+#maincontent{
+    flex:0 0 var(--fbmaincontent);
+    display:flex;
+}
+
+#contentlist{
+    flex-basis:var(--fbcontentlist);
+    background-color:var(--colorcontentlistbg);
+    color:white;
+
+    display:flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+    padding:2%;
+}
+
+/* contentlist is a column flex of: listtitle + listtable */
+#listtitle{
+    flex:0 0 var(--fblisttitle);
+
+}
+
+#listtable{
+    flex:0 0 var(--fblisttable);
+    /* border:white solid 1px; */
+    background-color:var(--colorlistbg);
+    color:var(--colorlistfg);
+    /* box-shadow: 0 0 2px gray; */
+}
+
+/* when list is in select element */
+.listtableinselect{
+    width:100%;
+    
+}
+
+/* when list is in table element */
+.listtableintable{
+    width:100%;
+    /* border: black solid 1px; */
+}
+
+.listtableintable th{
+    background-color:black;
+    color:white;
+}
+
+.listtableintable th, td{
+    /* border-right:gray 1px solid; */
+    /* border:gray 1px solid;
+    border-collapse: collapse; */
+}
+
+.listtableintable tr:nth-child(odd){
+    background-color:white;
+}
+
+.listtableintable tr:nth-child(even){
+    background-color:lightgray;
+}
+
+#contentdetail{
+    flex-basis:var(--fbcontentdetail);
+    background-color:var(--colorcontentdetailbg);
+    color:var(--colorcontentdetailfg);
+}
+
+#contentdetaillogo{
+    margin:auto auto;
+    /* padding-top:10%; */
+    width:100%;
+}
+
+#contentdetaillogopath{
+    stroke-dasharray: 1700px; /* get full length */
+    stroke-dashoffset: 2000px;
+    animation: fillline 2000ms ease forwards infinite;
+}
+
+@keyframes fillline{
+    to{
+        stroke-dashoffset:0;
+    }
+}
+
+.ipfooter{
+    height:var(--heightfooter);
+    background-color:var(--colorfooterbg);
+    color:var(--colorfooterfg);
+
+    font-size: var(--fontsizefooter);
+}

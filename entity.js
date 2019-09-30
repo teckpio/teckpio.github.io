@@ -173,9 +173,6 @@ navbarbuttonget.onclick = function () {
                 ['reset', 'Reset', 'contentbutton', undefined],
                 ['', 'X', 'contentbutton', function () { alert('X-button-clicked.') }]
                 ];
-                // console.log(listobj.account);
-                // objparam.arryitemdata.push(listobj.account.recordset);
-                // objparam.arryitemdata.push(listobj.account.recordset);
                 objparam.arryitemdata.push(listobj.account);
                 objparam.arryitemdata.push(listobj.account);
                 vssfnc_formpopulate(objparam);
