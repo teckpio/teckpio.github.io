@@ -279,9 +279,10 @@ html{
 }
 
 #contentdetaillogo{
+    box-sizing: border-box;
     margin:auto auto;
     /* padding-top:10%; */
-    width:100%;
+    width:50%;
 }
 
 /* #contentdetaillogopath{
@@ -291,14 +292,14 @@ html{
 } */
 
 #contentdetaillogopath{
-    stroke-dasharray: 100px; /* get full length */
+    stroke-dasharray: 3000px; /* get full length */
     stroke-dashoffset: 200px;
-    animation: fillline 1000ms forwards infinite;
+    /* animation: fillline 300ms forwards infinite; */
 }
 
 @keyframes fillline{
     to{
-        stroke-dashoffset:0;
+        stroke-dashoffset:0px;
     }
 }
 
