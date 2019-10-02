@@ -11,7 +11,10 @@ const employee = [
 
 const employeedetail = [
     { ID: '101', FullName: 'Ali Ali', PayType: 'Monthly', Address1: '33, Jalan K', Address2: '', Address3: '', IC: '890910-08-1289', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Malay', Religion: 'Islam' },
-    { ID: '104', FullName: 'Wong Ah Meng', PayType: 'Monthly', Address1: '68, Jalan Long', Address2: '', Address3: '', IC: '901098-08-8798', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist' }
+    { ID: '102', FullName: 'Muthu', PayType: 'Monthly', Address1: '68, Jalan Long', Address2: '', Address3: '', IC: '897998-08-8798', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist' },
+    { ID: '104', FullName: 'Ah Meng', PayType: 'Monthly', Address1: '6, Jalan Mid Road', Address2: '', Address3: '', IC: '901098-08-8798', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist' },
+    { ID: '105', FullName: 'Siti', PayType: 'Monthly', Address1: '36, Jalan KKM', Address2: '', Address3: '', IC: '091810-08-1289', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Malay', Religion: 'Islam' },
+    { ID: '106', FullName: 'Ah Loong', PayType: 'Monthly', Address1: '8, Jalan Short', Address2: '', Address3: '', IC: '635798-08-8798', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist' }
 ]
 
 const arryemployeeinfocat = [
@@ -37,9 +40,9 @@ const salaryitem = [
 ]
 
 const arrysalaryitemcat = [
-    ['General', entitypersonal_clicked],
-    ['Calculation Basis', entitysalarystruct_clicked],
-    ['Valid Period', entitysalaryhistory_clicked]
+    ['General Info', salaryitemgeneral_clicked],
+    ['Calculation', salaryitemcalc_clicked],
+    ['Valid Period', salaryitemvalid_clicked]
 ]
 
 const salaryitemdetail = [
@@ -71,12 +74,6 @@ const arryEmployeeInfo = [
     ['Salary History', entitysalaryhistory_clicked]
 ]
 
-const arrySalaryItemInfo = [
-    ['General Info', entitypersonal_clicked],
-    ['Calculation', entitysalarystruct_clicked],
-    ['Valid Period', entitysalaryhistory_clicked]
-]
-
 const arryProcess = [
     ['Mid-Month Processing', processmidmonth_clicked],
     ['End-Month Processing', processendmonth_clicked],
@@ -91,8 +88,8 @@ const arryOutput = [
     ['Payslip - SOCSO Borang 3', outputSOCSO3_clicked]
 ]
 
-// html element //
-const strDivContentDetailInfo = 'contentdetailinfo';
+// id of manipulatable html element //
+const strDivContentDetailID = 'contentdetailinfo';
 const strDetailNavID = 'contentdetailnav';
 const strListTableID = 'listtableid';
 const strListTableNavItem = 'listtablenavitem';
@@ -102,6 +99,7 @@ const strClsListInSelect = 'listtableinselect';
 const strClsListInTable = 'listtableintable';
 const strClsListFunction = 'listfunction';
 const strClsContentDetail = 'contentdetail';
+const strClsContentDetailTitle = 'contentdetailtitle';
 const strClsContentFunction = 'contentfunction';
 const strClsDivContentImg = 'contentimgdiv';
 const strClsContentImg = 'contentimg';
@@ -126,19 +124,23 @@ const navitemstatitem = document.getElementById('navitemstatitem');
 const navitemprocess = document.getElementById('navitemprocess');
 const navitemoutput = document.getElementById('navitemoutput');
 
+const contenttitle = document.getElementById('contenttitle');
 const contentlist = document.getElementById('contentlist');
 const contentlisttitle = document.getElementById('listtitle');
 const contentlisttable = document.getElementById('listtable');
 const contentlistfunction = document.getElementById('listfunction');
 
 const contentdetail = document.getElementById('contentdetail');
+const contentdetailtitle = document.getElementById('contentdetailtitle');
 const contentdetailform = document.getElementById('contentdetailform');
 const contentdetaillogo = document.getElementById('contentdetaillogo');
-var contentdetailinfo = document.getElementById(strDivContentDetailInfo);
+var contentdetailinfo = document.getElementById(strDivContentDetailID);
 
 // 
 // initial load //
 // 
+
+contenttitle.style.display='none';
 contentlisttitle.innerHTML = '';
 
 
@@ -157,28 +159,42 @@ navitemoutput.onclick = navitem_clicked;
 // 
 // function //
 // 
-// navitememployee_clicked
-// navitemsalaryitem_clicked
-// navitemstatitem_clicked
-// navitemprocess_clicked
+// toggle_logoinfo
+// navitem_clicked
 // employeedatarow_clicked
-// loadentitypersonal_init
+// salaryitemdatarow_clicked
+// process_clicked
+// output_clicked
+// init_divcontent
 // loadnavdetail
 // loademployeeimg
 // loadcontentcat
 // entitypersonal_clicked
 // entitysalarystruct_clicked
+// entitysalaryhistory_clicked
 // populatetable
 // populateform
-// newentity_clicked
-// 
+// navitememployee_clicked
+// addemployee_clicked
+// editemployee_clicked
+// processmidmonth_clicked
+// processendmont_clicked
+// processyearend_clicked
+// outputmidpayslip_clicked
+// outputendpayslip_clicked
+// ouputEPFA_clicked
+// outputSOCSO2_clicked
+// outputSOCSO3_clicked
+// salaryitemgeneral_clicked
+// salaryitemcalc_clicked
+// salaryitemvalid_clicked
 
 function toggle_logoinfo(boolSwitchNavItem) {
     //!! doesn't work if put outside of if statement !!//
-    // contentdetailinfo = document.getElementById(strDivContentDetailInfo);
+    // contentdetailinfo = document.getElementById(strDivContentDetailID);
 
     if (boolSwitchNavItem) {
-        contentdetailinfo = document.getElementById(strDivContentDetailInfo);
+        contentdetailinfo = document.getElementById(strDivContentDetailID);
 
         if (contentdetailinfo !== null) {
             contentdetailinfo.style.display = 'none';
@@ -188,7 +204,7 @@ function toggle_logoinfo(boolSwitchNavItem) {
         }
     }
     else {
-        contentdetailinfo = document.getElementById(strDivContentDetailInfo);
+        contentdetailinfo = document.getElementById(strDivContentDetailID);
 
         if (contentdetailinfo !== null) {
             contentdetailinfo.style.display = 'block';
@@ -239,7 +255,7 @@ function navitem_clicked() {
             let fncNew = document.createElement('div');
             fncNew.innerHTML = 'New';
             fncNew.classList.add(strClsListFunction);
-            fncNew.onclick = newentity_clicked;
+            fncNew.onclick = newemployee_clicked;
             contentlistfunction.appendChild(fncNew);
             break;
     }
@@ -258,7 +274,7 @@ function navitem_clicked() {
 //         return dataobj.ID === this;
 //     }, this.dataset[strListID]);
 
-//     initcontentdiv(this.dataset[strListID], dataobj);
+//     init_divcontent(this.dataset[strListID], dataobj);
 // }
 
 function employeedatarow_clicked() {
@@ -268,7 +284,11 @@ function employeedatarow_clicked() {
     }, this.dataset[strListID]);
 
     // initial detail display area //
-    initcontentdiv(this.dataset[strListID], dataobj);
+    init_divcontent(this.dataset[strListID], dataobj);
+
+    // update content title //
+    document.getElementById(strClsContentDetailTitle).innerHTML=dataobj.FullName;
+    
 }
 
 function salaryitemdatarow_clicked() {
@@ -278,7 +298,10 @@ function salaryitemdatarow_clicked() {
     }, this.dataset[strListID]);
 
     // initial detail display area //
-    initcontentdiv(this.dataset[strListID], dataobj);
+    init_divcontent(this.dataset[strListID], dataobj);
+
+    // update content title //
+    document.getElementById(strClsContentDetailTitle).innerHTML=dataobj.FullName;
 }
 
 function process_clicked() {
@@ -327,12 +350,13 @@ function output_clicked() {
     })
 }
 
-// divcontentdetail is a row flex of: detailnav + detailform //
-function initcontentdiv(listID, dataobj) {
+// divcontentdetail is a column flex of: detailtitle + detailbox //
+// divcontentbox is a row flex of: detailnav + detailform //
+function init_divcontent(listID, dataobj) {
 
     toggle_logoinfo(false);
 
-    let divcontentdetail = document.getElementById(strDivContentDetailInfo);
+    let divcontentdetail = document.getElementById(strDivContentDetailID);
     if (divcontentdetail) {
         while (divcontentdetail.firstChild) {
             divcontentdetail.removeChild(divcontentdetail.firstChild);
@@ -340,16 +364,37 @@ function initcontentdiv(listID, dataobj) {
     }
     else {
         divcontentdetail = document.createElement('div');
-        divcontentdetail.id = strDivContentDetailInfo;
+        divcontentdetail.id = strDivContentDetailID;
         divcontentdetail.classList.add(strClsContentDetail);
     }
-    divcontentdetail.style.width = '95%';
+    divcontentdetail.style.width = '100%';
     divcontentdetail.style.margin = '1% auto';
     divcontentdetail.style.display = 'flex';
-    divcontentdetail.style.flexDirection = 'row';
+    divcontentdetail.style.flexDirection = 'column';
+
+
+    // contentdetailtitle //
+    let divcontenttitle = document.createElement('div');
+    // divcontenttitle.innerHTML = dataobj.Name;
+    divcontenttitle.id = strClsContentDetailTitle;
+    divcontenttitle.classList.add(strClsContentDetailTitle);
+    divcontentdetail.appendChild(divcontenttitle);
+
+
+
+    // contentbox //
+    let divcontentbox = document.createElement('div');
+    // divcontentdetail.id = strDivContentDetailID;
+    // divcontentdetail.classList.add(strClsContentDetail);
+
+    divcontentbox.style.width = '95%';
+    divcontentbox.style.margin = '1% auto';
+    divcontentbox.style.display = 'flex';
+    divcontentbox.style.flexDirection = 'row';//
+
 
     // navdetail //
-    divcontentdetail.appendChild(loadnavdetail(listID, './img/watch1.jpg'));
+    divcontentbox.appendChild(loadnavdetail(listID, './img/banner_bg.jpg'));
 
     // formdetail //
     let newform = populateform(dataobj, listID === '-1' ? true : false);
@@ -375,8 +420,9 @@ function initcontentdiv(listID, dataobj) {
     }
     newform.appendChild(divdetailfunction);
 
-    divcontentdetail.appendChild(newform);
+    divcontentbox.appendChild(newform);
 
+    divcontentdetail.appendChild(divcontentbox);
     contentdetail.appendChild(divcontentdetail);
 }
 
@@ -402,7 +448,7 @@ function loadnavdetail(listID, imgsrc) {
         return navitem[0] === this;
     }, tlist.dataset[strListTableNavItem])
 
-    
+
     // detailnavelement.appendChild(loadcontentcat(listID, arryemployeeinfocat));
     detailnavelement.appendChild(loadcontentcat(listID, navitemX[3]));
 
@@ -446,7 +492,7 @@ function entitypersonal_clicked() {
         return employee.ID === this;
     }, this.dataset[strListID]);
 
-    initcontentdiv(this.dataset[strListID], dataobj);
+    init_divcontent(this.dataset[strListID], dataobj);
 }
 
 function entitysalarystruct_clicked() {
@@ -455,7 +501,7 @@ function entitysalarystruct_clicked() {
         return employee.ID === this;
     }, this.dataset[strListID]);
 
-    initcontentdiv(this.dataset[strListID], dataobj);
+    init_divcontent(this.dataset[strListID], dataobj);
 }
 
 function entitysalaryhistory_clicked() {
@@ -541,8 +587,8 @@ function populateform(dataobj, boolpost) {
     return formelement;
 }
 
-function newentity_clicked() {
-    initcontentdiv('-1', employeedetail[0]);
+function newemployee_clicked() {
+    init_divcontent('-1', employeedetail[0]);
 }
 
 function addemployee_clicked() {
@@ -583,4 +629,19 @@ function outputSOCSO2_clicked() {
 
 function outputSOCSO3_clicked() {
     alert('WIP ...');
+}
+
+function salaryitemgeneral_clicked() {
+    alert('WIP ...');
+
+}
+
+function salaryitemcalc_clicked() {
+    alert('WIP ...');
+
+}
+
+function salaryitemvalid_clicked() {
+    alert('WIP ...');
+
 }

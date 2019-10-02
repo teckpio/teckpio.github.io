@@ -32,8 +32,11 @@
     --fontsizefooter:.8em;
     --fontsizemainnav:1em;
 
-    --fbmainnav:6%;
-    --fbmaincontent:94%;
+    --fbcontenttitle:0%;
+    --fbcontentbox:100%;
+
+    --fbcontentnav:6%;
+    --fbcontentcontent:94%;
 
     --fblisttitle:5%;
     --fblisttable:90%;
@@ -76,7 +79,7 @@ html{
 
 /* mainnav is a row flex of: Employee + Pay Item + Statutory Item + Process + etc */
 #mainnav{
-    flex:0 0 var(--fbmainnav);
+    flex:0 0 var(--fbcontentnav);
     background-color:var(--colormainnavbg);
     
     display: flex;
@@ -120,12 +123,25 @@ html{
 }
 
 
-/* maincontent is a row flex of: contentlist + contentdetail */
+/* maincontent is a column flex of: contenttitle + contentbox */
 #maincontent{
-    flex:0 0 var(--fbmaincontent);
+    flex:0 0 var(--fbcontentcontent);
+    width:100%;
     display:flex;
+    flex-direction:column;
 }
 
+#contenttitle{
+    flex-basis:var(--fbcontenttitle);
+}
+
+
+/* contentbox is a row flex of: contentlist + contentdetail */
+#contentbox{
+    /* flex-basis:var(--fbcontentbox); */
+    flex:0 0 var(--fbcontentbox);
+    display:flex;
+}
 
 #contentlist{
     flex-basis:var(--fbcontentlist);

@@ -63,7 +63,6 @@
             <div class="mainnavitem" id="navitemstatitem">
                 <svg viewBox="0 0 600 600" width="20" height="20" xmlns="http://www.w3.org/2000/svg"
                     xmlns:svg="http://www.w3.org/2000/svg">
-                    <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
                     <g class="layer">
                         <path
                             d="m194.5,233.5c8,83 76,149 126,149c50,0 135,-66 134,-77c-1,-11 -105,-30 -111,-86c-6,-56 72,-104 72,-97c0,7 -83,-57 -130,-50c-47,7 -99,78 -91,161z"
@@ -76,7 +75,6 @@
             <div class="mainnavitem" id="navitemprocess">
                 <svg viewBox="0 0 600 600" width="20" height="20" xmlns="http://www.w3.org/2000/svg"
                     xmlns:svg="http://www.w3.org/2000/svg">
-                    <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
                     <g class="layer">
                         <path
                             d="m358.5,48.5c66,13 139,224 132,241c-7,17 -196,118 -243,102c-47,-16 -124,-163 -117,-202c7,-39 162,-154 228,-141z"
@@ -89,7 +87,6 @@
             <div class="mainnavitem" id="navitemoutput">
                 <svg viewBox="0 0 600 600" width="20" height="20" xmlns="http://www.w3.org/2000/svg"
                     xmlns:svg="http://www.w3.org/2000/svg">
-                    <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
                     <g class="layer">
                         <path
                             d="m358.5,48.5c66,13 139,224 132,241c-7,17 -196,118 -243,102c-47,-16 -124,-163 -117,-202c7,-39 162,-154 228,-141z"
@@ -101,8 +98,13 @@
             </div>
         </div>
 
-        <!-- maincontent is a row flex of: contentlist + contentdetail -->
+        <!-- maincontent is a column flex of: contenttitle + contentbox -->
         <div id="maincontent">
+
+            <div id = "contenttitle"></div>
+
+            <!--  contentbox is a row flex of: contentlist + contentdetail  -->
+            <div id = "contentbox">
 
             <!-- contentlist is a column flex of: listtitle + listtable -->
             <div id="contentlist">
@@ -111,6 +113,7 @@
                 <div id=listfunction></div>
             </div>
 
+            <!-- contentdetail is a column flex of contentdetailtitle and (a holding logo or a flex-row div with nav and form) -->
             <div id="contentdetail">
                 <div id="contentdetaillogo">
                     <svg viewBox="0 0 600 600" width="500" height="500" xmlns="http://www.w3.org/2000/svg"
@@ -122,10 +125,10 @@
                                 stroke-linecap="null" stroke-linejoin="null" stroke-width="5" />
                         </g>
                     </svg>
+
                 </div>
             </div>
-
-        </div>
+            </div>
     </main>
 
     <footer class="ipfooter">
