@@ -70,15 +70,16 @@ function vssfnc_tablepopulate(objparam) {
 
 
     // try {
+    let boolReturnElem = false;
+    if (objparam.htmltable) {
+        objparam.htmltable.innerHTML = "";
+    }
+    else {
+        objparam.htmltable = document.createElement('table');
+        boolReturnElem = true;
+    }
 
-    // 
-    // load header //
-    //
-
-    // objparam.htmltable.style.tableLayout = 'fixed';
-    // objparam.htmltable.style.width = '20%';
-
-    objparam.htmltable.innerHTML = "";
+    // caption //
 
     if (objparam.caption) {
         let strcaption = `<caption class = ${objparam.arryclass[0]}>${objparam.caption}</caption>`;
@@ -88,11 +89,24 @@ function vssfnc_tablepopulate(objparam) {
     objparam.htmltable.innerHTML += '<colgroup><col style = "font-style:italic"><col style = "font-style:italic"><col style = "font-style:italic"></colgroup>';
 
     let strHeaderCol = `<thead><tr class = "${objparam.arryclass[1]}">`;
-    objparam.arryheadercol.forEach((datacol, index) => {
-        strHeaderCol += `<th class = "${objparam.arryclass[2]}" id = ${index} data-${objparam.arrydataid[0]} = "${objparam.htmltableid}" style = "width:${objparam.arryheadercol[index][1]} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}" >${datacol[0]}</th>`;
-        // strHeaderCol += `<th class = "${objparam.arryclass[2]}" id = ${index} data-${objparam.arrydataid[0]} = "${objparam.htmltableid}" style = "width:${objparam.arryheadercol[index][1]}" >${datacol[0]}</th>`;
-        // strHeaderCol += `<th style = "width:${objparam.arryheadercol[index][1]}" class = "${objparam.arryclass[2]}" id = ${index} data-${objparam.arrydataid[0]} = "${objparam.htmltableid}">${datacol[0]}</th>`;
-    });
+    if (objparam.arryheadercol) {
+        objparam.arryheadercol.forEach((datacol, index) => {
+            strHeaderCol += `<th class = "${objparam.arryclass[2]}" id = ${index} data-${objparam.arrydataid[0]} = "${objparam.htmltableid}" style = "width:${objparam.arryheadercol[index][1]} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}" >${datacol[0]}</th>`;
+        });
+    }
+    else {
+        // extract header col from json object //
+        objparam.arryheadercol = [];
+        let header;
+        let index = 1;
+
+        // objparam.arryheadercol = [[headercol[0], '0%', 0], [headercol[1], '100%',]];
+        for (header in objparam.arryjsondata[0]) {
+
+            strHeaderCol += `<th class = "${objparam.arryclass[2]}" id = ${index} data-${objparam.arrydataid[0]} = "${objparam.htmltableid}">${header}</th>`;
+            objparam.arryheadercol.push([header, '10%', 0]);
+        }
+    }
     strHeaderCol += '</tr></thead>';
     objparam.htmltable.innerHTML += strHeaderCol;
 
@@ -115,7 +129,7 @@ function vssfnc_tablepopulate(objparam) {
 
             // construct the td element //
             strRowData += `<td style = 'text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}'> ${strbtn} ${val} </td>`;
-            // strRowData += `<td style = 'text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')}'> ${strbtn} ${val} </td>`;
+
             boolbtnadded = true;
         });
         strRowData += '</tr>';
@@ -199,6 +213,11 @@ function vssfnc_tablepopulate(objparam) {
 
         }
     }
+
+    if (boolReturnElem) {
+        return objparam.htmltable;
+    }
+
 }
 
 // }
@@ -206,136 +225,7 @@ function vssfnc_tablepopulate(objparam) {
 //     alert('loadtablelist error: ' + e);
 // }
 
-// function vssfnc_tablepopulate(objparam) {
-//     // 4 tasks are executed:
-//     // - load caption <caption>
-//     // - load header <thead>
-//     // - load body + datarow <tbody>
-//     // - load footer <tfoot>
-//     // - add eventhandler for datarow
-//     // - paint datarow (odd/even)
-//     // - add eventhandler for:
-//     //      - header
-//     //      - datarow button
 
-
-//     // try {
-
-//     // 
-//     // load header //
-//     //
-
-//     if (objparam.caption) {
-//         let strcaption = `<caption>${objparam.caption}</caption>`
-//         objparam.htmltable.innerHTML = strcaption;
-//     }
-
-//     let strHeaderCol = `<thead><tr class = "${objparam.arryclass[0]}">`;
-//     objparam.arryheadercol.forEach((datacol, index) => {
-//         strHeaderCol += `<th class = "${objparam.arryclass[1]}" id = ${index} data-${objparam.arrydataid[0]} = "${objparam.htmltableid}">${datacol}</th>`;
-//     });
-//     strHeaderCol += '</tr></thead>';
-//     objparam.htmltable.innerHTML += strHeaderCol;
-
-//     // 
-//     // load datarow //
-//     // 
-
-//     let strRowData = '<tbody>'
-//     let boolbtnadded;
-//     let strbtn;
-//     objparam.arryjsondata.forEach((item, index) => {
-//         // attach vehicle number (index: 0) as an identifier //
-//         strRowData += `<tr class = ${objparam.arryclass[2]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>`;
-
-//         // data //
-//         // there is an action button for datacol:vehicle number (1st datacol) //
-//         boolbtnadded = objparam.addbutton ? false : true;
-//         strbtn = '';
-//         Object.values(item).forEach((val, index) => {
-//             // construct str for button element //
-//             strbtn = boolbtnadded ? '' : `<button class = ${objparam.arryclass[3]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>..</button>`;
-
-//             // construct the td element //
-//             strRowData += `<td> ${strbtn} ${val} </td>`;
-//             boolbtnadded = true;
-//         });
-//         strRowData += '</tr>';
-//     });
-//     strRowData += '</tbody>';
-//     objparam.htmltable.innerHTML += strRowData;
-
-//     objparam.htmltable.innerHTML += '<tfoot>Footer</tfoot>';
-
-//     // 
-//     // eventhandler for table datarow clicked //
-//     // ! do it before formatting odd/even row, which changes the class of the datarow !//
-//     // 
-//     let tabledatarow = document.getElementsByClassName(objparam.arryclass[2]);
-//     for (var i = 0; i < tabledatarow.length; i++) {
-//         if (objparam.fncdatarowclicked === undefined) {
-//             tabledatarow[i].onclick = function () {
-
-//                 // <tr> -> <tbody> -> <table> //
-//                 let parent = this.parentElement.parentElement;
-//                 vssfnc_paintoddevenrow(parent, objparam.arryclassdatarow[0], objparam.arryclassdatarow[1], objparam.arryclassdatarow[2]);
-//                 this.classList.add(objparam.arryclassdatarow[2]);
-//             }
-//         }
-//         else {
-//             tabledatarow[i].onclick = objparam.fncdatarowclicked;
-//         }
-//     }
-
-//     //
-//     // paint table datarow - odd/even //
-//     // 
-//     vssfnc_paintoddevenrow(objparam.htmltable, objparam.arryclassdatarow[0], objparam.arryclassdatarow[1], objparam.arryclassdatarow[2]);
-
-
-//     // add event handler //
-
-//     // eventhandler for table header sort //
-//     let tablecolheaderX = objparam.htmltable.getElementsByClassName(objparam.arryclass[1]);
-//     for (var i = 0; i < tablecolheaderX.length; i++) {
-//         tablecolheaderX[i].onclick = function () {
-//             // try {
-
-//             let colidx = this.id;
-//             let dir = ((this.innerHTML).indexOf(objparam.arrysortind[0]) < 0 ? -1 : 1);
-
-//             // revert sortedtablecol to original headercol //
-//             let sortedtablecol = objparam.arryheadercol.map(function (datacol) {
-//                 return datacol.includes(objparam.arrysortind[0]) ? datacol.replace(objparam.arrysortind[0], '') : datacol.includes(objparam.arrysortind[1]) ? datacol.replace(objparam.arrysortind[1], '') : datacol;
-//             })
-
-//             // rename sorted headercol //
-//             sortedtablecol[colidx] += (dir < 0) ? objparam.arrysortind[0] : objparam.arrysortind[1];
-
-//             // reload sorted table //
-//             objparam.arryheadercol = sortedtablecol;
-//             objparam.arryjsondata = vssfnc_sortarrydata(objparam.arryjsondata, colidx, dir);
-//             vssfnc_tablepopulate(objparam);
-//         }
-//     }
-
-
-//     // eventhandler for table datarow button //
-//     if (objparam.addbutton) {
-//         let tablerowbutton = objparam.htmltable.getElementsByClassName(objparam.arryclass[3]);
-//         for (var i = 0; i < tablerowbutton.length; i++) {
-//             if (objparam.fncbuttonclicked === undefined) {
-//                 tablerowbutton[i].onclick = function () {
-//                     alert('(vssfnc) Enter Exit Time for: ' + this.dataset[objparam.arrydataid[1]]);
-//                 }
-//             }
-//             else {
-//                 tablerowbutton[i].onclick = objparam.fncbuttonclicked;
-//             }
-
-//         }
-//     }
-// }
 
 
 function vssfnc_paintoddevenrow(tablex, classoddrow, classevenrow, classselectedrow) {
@@ -437,20 +327,27 @@ function vssfnc_formpopulate_param() {
 // used to populate a form (display / addition / edit) for a single object with multiple properties //
 function vssfnc_formpopulate(objparam) {
 
-    // 
-    // remove existing elements //
-    // 
 
-    while (objparam.htmlform.firstChild) {
-        objparam.htmlform.removeChild(objparam.htmlform.firstChild);
+
+    let boolReturnElem = false;
+    if (objparam.htmlform) {
+        // remove existing elements //
+        while (objparam.htmlform.firstChild) {
+            objparam.htmlform.removeChild(objparam.htmlform.firstChild);
+        }
     }
+    else {
+        objparam.htmlform = document.createElement('form');
+        boolReturnElem = true;
+    }
+
 
     // 
     // format form //
-    // a form is a flex (row / col) with one div for each property //
+    // a form is a flex (row or col depending on layout) with one div for each property //
 
     // form action url //
-    // if an url for form action is provided, it's a POST request //
+    // if an url for form action is provided, it's a POST request, else default to GET //
     if (objparam.actionurl) {
         objparam.htmlform.method = 'POST';
         objparam.htmlform.action = objparam.actionurl;
@@ -459,7 +356,10 @@ function vssfnc_formpopulate(objparam) {
     objparam.htmlform.style.display = 'flex';
     objparam.htmlform.style.flexDirection = 'column';
 
+    // 
     // caption //
+    // 
+
     if (objparam.caption) {
         let captionelement = document.createElement('div');
         captionelement.innerHTML = objparam.caption;
@@ -478,18 +378,16 @@ function vssfnc_formpopulate(objparam) {
     var idxarrydatacol = 0;
     for (ppt in objparam.arryjsondata) {
 
-        // property wrapper - a div (row/column flex) with: divlabel + divinput //
+        // property wrapper - a div (row or column flex depending on layout) with: divlabel + divinput //
         var divwrapper = document.createElement('div');
         divwrapper.width = '100%';
         divwrapper.setAttribute('style', 'display:flex;');
 
 
-        // label //
+        // label - a label element in a div element //
         var divlabel = document.createElement('div');
         divlabel.style.flexBasis = objparam.arrylabelinput[0][0];
         divlabel.style.textAlign = objparam.arrylabelinput[0][1] === 0 ? 'center' : (objparam.arrylabelinput[0][1] === 1 ? 'right' : 'left');
-        // divlabel.setAttribute('style', `flex-basis:${objparam.arrylabelinput[0][0]};
-        //                                 text-align:${objparam.arrylabelinput[0][1]===0?'center':(objparam.arrylabelinput[0][1]===1?'right':'left')}`);
 
         var labelelement = document.createElement('LABEL');
         labelelement.width = '100%';
@@ -507,63 +405,112 @@ function vssfnc_formpopulate(objparam) {
         divlabel.appendChild(labelelement);
 
 
-        // input box //
+        // data input box - an input OR select element in a div element //
         var divinput = document.createElement('div');
         divinput.setAttribute('style', `flex-basis:${objparam.arrylabelinput[1][0]};`);
 
-        var inputelement = document.createElement('INPUT');
-        inputelement.setAttribute('name', ppt);
-        inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);
+        // dataobj vs non-dataobj //
+        // non-dataobj -> checkbox vs text //
+        let inputelement;
+
+        // dataobj vs non-dataobj //
         if (isNaN(objparam.arrydatacol[idxarrydatacol][2])) {
-            // instrinsic input type //
-            inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][2]);
-            inputelement.value = objparam.arryjsondata[ppt];
+
+            // non-dataobj -> checkbox vs text //
+            if (objparam.arrydatacol[idxarrydatacol][2] === 'radio') {
+                // radio button //
+                // inputelement for radio is a div with 2 radio
+                inputelement = document.createElement('div');
+
+                const idradioYes = 'rY';
+                const idradioNo = 'rN';
+
+                // yes radio //
+                let radioY = document.createElement('INPUT');
+                radioY.setAttribute('name', ppt);
+                radioY.required = objparam.arrydatacol[idxarrydatacol][1];
+                radioY.setAttribute('type', objparam.arrydatacol[idxarrydatacol][2]);
+                radioY.value = 1;
+                radioY.id = idradioYes;
+                inputelement.appendChild(radioY);
+
+                let labelY = document.createElement('label');
+                labelY.setAttribute('for', idradioYes);
+                labelY.innerHTML = 'YES';
+                inputelement.appendChild(labelY);
+
+                // no radio //
+                let radioN = document.createElement('INPUT');
+                radioN.setAttribute('name', ppt);
+                radioN.required = objparam.arrydatacol[idxarrydatacol][1];
+                radioN.setAttribute('type', objparam.arrydatacol[idxarrydatacol][2]);
+                radioN.value = 0;
+                radioN.id = idradioNo;
+                inputelement.appendChild(radioN);
+
+                let labelN = document.createElement('label');
+                labelN.setAttribute('for', idradioNo);
+                labelN.innerHTML = 'NO';
+                inputelement.appendChild(labelN);
+
+                if (objparam.arryjsondata[ppt]) {
+                    radioY.checked = true;
+                }
+                else {
+                    radioN.checked = true;
+                }
+            }
+            else {
+                // text //
+                inputelement = document.createElement('INPUT');
+                inputelement.setAttribute('name', ppt);
+                inputelement.required = objparam.arrydatacol[idxarrydatacol][1];
+
+                // / doesn't work !! required is a reflected property //
+                // inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);//
+
+                inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][2]);
+                inputelement.value = objparam.arryjsondata[ppt];
+            }
         }
         else {
-            // supporting data //
-            var listname = 'list' + ppt;
-            inputelement.setAttribute('list', listname);
+            // supporting data by id //
+            inputelement = document.createElement('select');
+            inputelement.setAttribute('name', ppt);
+            inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);
 
-            var dlist = document.createElement('datalist');
-            dlist.id = listname;
-            inputelement.appendChild(dlist);
+            // populate select list item //
             objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]].forEach(value => {
                 var opt = document.createElement('option');
-                opt.value = value.NName;
-                dlist.appendChild(opt);
+                opt.value = value.ID;
+                opt.text = value.NName;
+                inputelement.add(opt);
             })
-            console.log(objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]]);
-            console.log(objparam.arryjsondata[ppt]);
+
+            // find the data in the list //
             var dataobjX = objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]].find(function (dataobj) {
                 return dataobj.ID === objparam.arryjsondata[ppt];
             })
-            if (dataobjX){
-                inputelement.value = dataobjX.NName;
+            if (dataobjX) {
+                inputelement.value = dataobjX.ID;
             }
-            else{
+            else {
                 inputelement.value = '';
             }
-            
         }
         if (objparam.arryclass[2]) {
             inputelement.classList.add(objparam.arryclass[2]);
         }
 
         inputelement.setAttribute('style', `width:100%;
-                                            text-align:${objparam.arrylabelinput[1][1] === 0 ? 'center' : (objparam.arrylabelinput[1][1] === 1 ? 'right' : 'left')}`);
+            text-align:${objparam.arrylabelinput[1][1] === 0 ? 'center' : (objparam.arrylabelinput[1][1] === 1 ? 'right' : 'left')}`);
         divinput.appendChild(inputelement);
-
-
 
         divwrapper.appendChild(divlabel);
         divwrapper.appendChild(divinput);
 
         objparam.htmlform.appendChild(divwrapper);
 
-
-        // // new line //
-        // var brelement = document.createElement('BR');
-        // objparam.htmlform.appendChild(brelement);
         idxarrydatacol++
     }
 
@@ -586,4 +533,19 @@ function vssfnc_formpopulate(objparam) {
     }
 
     objparam.htmlform.appendChild(divbutton);
+
+    // onsubmit is required to convert checkbox / radio value //
+    // objparam.htmlform.onsubmit = function (evt) {
+    //     let eleminput = this.querySelectorAll('input');
+    //     eleminput.forEach(elem => {
+    //         if (elem.type == 'checkbox') {
+    //             elem.value = elem.checked ? 1 : 0;
+    //         }
+    //     })
+    //     // evt.preventDefault();
+    // }
+
+    if (boolReturnElem){
+        return objparam.htmlform;
+    }
 }

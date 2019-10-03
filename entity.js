@@ -46,12 +46,10 @@ req.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
         // try {
 
-        // var listobj = JSON.parse(req.responseText).recordsets;
         let jsonresp = JSON.parse(req.responseText)
         let listobj = jsonresp.recordset;
         let headercol = jsonresp.datacol;
-        
-        // if (listobj[0].length > 0) {
+
         if (listobj.length > 0) {
             let objparam = vssfnc_tablepopulate_param();
             // objparam.caption = "Entity";
@@ -80,7 +78,7 @@ req.onreadystatechange = function () {
         // }
     }
     else {
-
+        alert('Connection failed.');
     }
 }
 
@@ -148,22 +146,20 @@ navbarbuttonget.onclick = function () {
             if (this.readyState == 4 && this.status == 200) {
                 // try {
                 // extract object data //
-                
+
                 var listobj = JSON.parse(req.responseText);
-                
-                
 
                 let objparam = vssfnc_formpopulate_param();
                 objparam.caption = 'Entity Details'
                 objparam.actionurl = serverendpoint;
                 // [description strings, requird, type]]
                 objparam.arrydatacol = [['ID', false, 'text'],
-                                    ['Name', true, 'text'],
-                                    ['Code', true, 'text'],
-                                    ['Currency', true, 'radio'],
-                                    ['Debit Account', true, 0],
-                                    ['Credit Account', true, 1]];
-                // objparam.arryjsondata = listobj[0][0];
+                ['Name', true, 'text'],
+                ['Code', true, 'text'],
+                ['Currency', true, 'text'],
+                ['Debit Account', true, 0],
+                ['Credit Account', true, 1],
+                ['Taxable', false, 'radio']];
                 objparam.arryjsondata = listobj.recordset[0];
                 objparam.htmlform = formdetails;
                 objparam.arrylabelinput = [['30%', -1],
@@ -266,8 +262,6 @@ function addEntity() {
 // - painttabledatarow
 // - RemovePPtInputElement
 // - CreatePPtInputElement
-
-
 
 function painttabledatarow() {
     try {

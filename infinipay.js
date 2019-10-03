@@ -160,31 +160,41 @@ navitemoutput.onclick = navitem_clicked;
 // function //
 // 
 // toggle_logoinfo
+
 // navitem_clicked
 // employeedatarow_clicked
 // salaryitemdatarow_clicked
+
 // process_clicked
 // output_clicked
+
 // init_divcontent
 // loadnavdetail
 // loademployeeimg
 // loadcontentcat
+
 // entitypersonal_clicked
 // entitysalarystruct_clicked
 // entitysalaryhistory_clicked
+
 // populatetable
 // populateform
+
 // navitememployee_clicked
+
 // addemployee_clicked
 // editemployee_clicked
+
 // processmidmonth_clicked
 // processendmont_clicked
 // processyearend_clicked
+
 // outputmidpayslip_clicked
 // outputendpayslip_clicked
 // ouputEPFA_clicked
 // outputSOCSO2_clicked
 // outputSOCSO3_clicked
+
 // salaryitemgeneral_clicked
 // salaryitemcalc_clicked
 // salaryitemvalid_clicked
