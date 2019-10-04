@@ -52,6 +52,7 @@ html *{
     box-shadow: 0 0 2px gray;
     text-align: center;
     font-size: var(--fontsizehtml);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* applies to both navbarfunction and contentfunction */

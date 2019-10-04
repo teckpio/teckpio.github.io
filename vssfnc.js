@@ -1,6 +1,5 @@
 'use strict';
 
-
 // vssfnc_tablepopulate_param
 // vssfnc_tablepopulate
 // vssfnc_paintoddevenrow
@@ -14,9 +13,11 @@ function vssfnc_tablepopulate_param() {
     // arryheadercol - a 2-dim array of  [header col[description strings, col-width, text-alignment]]
     //                  (col-width: set to '0%' to hide column - col-width is checked in both <th> and <td> to determine whether to <display:none>)
     //                  (text-alignment - 0:center, -1:left, 1:right (default - left))
+    //               - if arryheadercol is not provided, header col info will be extracted from arryJSON's properties - col-width will be defaulted, text-alignment - ?)
     // arryJSON - a json data object 
-    // arryfooter - ??
-    // tablelistX - html element of the table to be created 
+    // arryfooteragg - an array of aggregate functions (sum or ave) on required column
+    // boolitemcount - a boolean to indicate whether to list number of items at the bottom of table
+    // tablelistX - html element of the table to be created (if the html table element is not provided, the function will return a table element)
     // tableid - id of source datatable (for sorting by column purposes - obsolete?)
     // arryclass - an array of css classes - 
     //          0:<caption> 
@@ -43,7 +44,8 @@ function vssfnc_tablepopulate_param() {
         caption: null,
         arryheadercol: null,
         arryjsondata: null,
-        arryfooter: null,
+        arryfooteragg: null,
+        boolitemcount: false,
         htmltable: null,
         htmltableid: null,
         arryclass: null,
@@ -76,7 +78,19 @@ function vssfnc_tablepopulate(objparam) {
     }
     else {
         objparam.htmltable = document.createElement('table');
+        objparam.htmltable.id = objparam.arrydataid[0];
         boolReturnElem = true;
+    }
+
+    // handling of null param //
+    if (!objparam.arryclass) {
+        objparam.arryclass = [];
+    }
+    if (!objparam.arryclassdatarow) {
+        objparam.arryclassdatarow = [];
+    }
+    if (!objparam.arrydataid) {
+        objparam.arrydataid = [];
     }
 
     // caption //
@@ -86,7 +100,7 @@ function vssfnc_tablepopulate(objparam) {
         objparam.htmltable.innerHTML += strcaption;
     }
 
-    objparam.htmltable.innerHTML += '<colgroup><col style = "font-style:italic"><col style = "font-style:italic"><col style = "font-style:italic"></colgroup>';
+    // objparam.htmltable.innerHTML += '<colgroup><col style = "font-style:italic"><col style = "font-style:italic"><col style = "font-style:italic"></colgroup>';
 
     let strHeaderCol = `<thead><tr class = "${objparam.arryclass[1]}">`;
     if (objparam.arryheadercol) {
@@ -98,13 +112,14 @@ function vssfnc_tablepopulate(objparam) {
         // extract header col from json object //
         objparam.arryheadercol = [];
         let header;
-        let index = 1;
+        let index = 0;
 
         // objparam.arryheadercol = [[headercol[0], '0%', 0], [headercol[1], '100%',]];
         for (header in objparam.arryjsondata[0]) {
 
             strHeaderCol += `<th class = "${objparam.arryclass[2]}" id = ${index} data-${objparam.arrydataid[0]} = "${objparam.htmltableid}">${header}</th>`;
             objparam.arryheadercol.push([header, '10%', 0]);
+            index += 1;
         }
     }
     strHeaderCol += '</tr></thead>';
@@ -117,6 +132,16 @@ function vssfnc_tablepopulate(objparam) {
     let strRowData = '<tbody>'
     let boolbtnadded;
     let strbtn;
+
+    // an array for total for each datacol of arrjJSON item //
+    let arrydatasum = new Array(Object.keys(objparam.arryjsondata[0]).length);
+    if (objparam.arryfooteragg) {
+        // initialise arrydatasum //
+        for (var i = 0; i < arrydatasum.length; i++) {
+            arrydatasum[i] = 0;
+        }
+    }
+
     objparam.arryjsondata.forEach((item, index) => {
         strRowData += `<tr class = ${objparam.arryclass[3]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>`;
 
@@ -126,21 +151,52 @@ function vssfnc_tablepopulate(objparam) {
         Object.values(item).forEach((val, index) => {
             // construct str for button element //
             strbtn = boolbtnadded ? '' : `<button class = ${objparam.arryclass[4]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>..</button>`;
+            boolbtnadded = true;
 
             // construct the td element //
             strRowData += `<td style = 'text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}'> ${strbtn} ${val} </td>`;
 
-            boolbtnadded = true;
+            // collect aggregate details (count and total) //
+            if (objparam.arryfooteragg) {
+                arrydatasum[index] = parseInt(arrydatasum[index]) + parseInt(isNaN(val) ? 0 : val);
+            }
         });
         strRowData += '</tr>';
     });
     strRowData += '</tbody>';
     objparam.htmltable.innerHTML += strRowData;
 
-    if (objparam.arryfooter) {
-        objparam.htmltable.innerHTML += `<tfoot><tr class = ${objparam.arryclass[5]}><td>${objparam.arryjsondata.length}</td>${objparam.arryfooter}</tr></tfoot>`;
+    // table footer //
+    let strfooterhtml = '<tfoot>';
+
+    // aggregate function
+    if (objparam.arryfooteragg) {
+        strfooterhtml += `<tr class = ${objparam.arryclass[5]}>`
+        objparam.arryfooteragg.forEach((fnc, index) => {
+            strfooterhtml += '<td>'
+            switch (fnc) {
+                case 'sum':
+                    strfooterhtml += arrydatasum[index];
+                    break;
+                case 'ave':
+                    strfooterhtml += (arrydatasum[index] / objparam.arryjsondata.length).toFixed(2);
+                    break;
+                default:
+                    break;
+            }
+            strfooterhtml += '</td>'
+        })
+        // objparam.htmltable.innerHTML += `<tfoot><tr class = ${objparam.arryclass[5]}><td>${objparam.arryjsondata.length}</td>${objparam.arryfooter}</tr></tfoot>`;
+        strfooterhtml += '</tr>'
     }
 
+
+    // item count //
+    // if (objparam.boolitemcount) {
+    //     objparam.htmltable.innerHTML += `<tr class = ${objparam.arryclass[5]}><td>Count: ${objparam.arryjsondata.length}</td></tr>`;
+    // }
+    strfooterhtml += '</tfoot>'
+    objparam.htmltable.innerHTML += strfooterhtml;
 
     // 
     // eventhandler for table datarow clicked //
@@ -184,7 +240,7 @@ function vssfnc_tablepopulate(objparam) {
             // revert sortedtablecol to original headercol //
             let sortedtablecol = objparam.arryheadercol.map(function (datacol) {
                 datacol[0] = datacol[0].includes(objparam.arrysortind[0]) ? datacol[0].replace(objparam.arrysortind[0], '') : datacol[0].includes(objparam.arrysortind[1]) ? datacol[0].replace(objparam.arrysortind[1], '') : datacol[0];
-                return datacol
+                return datacol;
             })
 
             // rename sorted headercol //
@@ -278,7 +334,7 @@ function vssfnc_formpopulate_param() {
     // arrydatacol - a 2-dim array of  [key[description strings, requird, type]]
     // arryJSON - a json data object 
     // arryfooter - ??
-    // htmlform - html element of the form container
+    // htmlform - html element of the form container (if a form html is not provided, a form element will be returned)
     // formid - id of source datatable (for sorting by column purposes - obsolete?)
     // arryitemdata - an array of constituent json data object 
     // arrylabelinput - a 2-dim array of [[label:[width ration, text-align]],[input[width ratio, text-align]] between label:input 
@@ -545,7 +601,34 @@ function vssfnc_formpopulate(objparam) {
     //     // evt.preventDefault();
     // }
 
-    if (boolReturnElem){
+    if (boolReturnElem) {
         return objparam.htmlform;
+    }
+}
+
+
+function vssfnc_scrollright(){
+    if (this.innerHTML === strUserProfile) {
+        // scroll right //
+        listtitle.innerHTML = strUserProfile;
+        userprofile.style = 'display:block';
+        setTimeout(function () {
+            tablelist.style = 'transform: translateX(100%)';
+            userprofile.style = 'right:0';
+
+        }, numContentScrollDelay);
+
+        this.innerHTML = strUserList;
+    }
+    else {
+        // scroll left //
+        listtitle.innerHTML = strBlackListWhite;
+        tablelist.style = 'transform: translateX(0)';
+        userprofile.style = 'right:-100%';
+        setTimeout(function () {
+            userprofile.style = 'display:none';
+
+        }, numContentScrollDelay * 3);
+        this.innerHTML = strUserProfile;
     }
 }

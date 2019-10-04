@@ -14,6 +14,7 @@ const navbarselectitem = document.getElementsByClassName('navbarselectitem');
 const navbarbuttonget = document.getElementById('navbarbuttonget');
 const navbarbuttonadd = document.getElementById('navbarbuttonadd');
 const navbarbuttonpdf = document.getElementById('navbarbuttonpdf');
+const navbarbuttonexcel = document.getElementById('navbarbuttonexcel');
 
 const tablelist = document.getElementById('navbartable');
 const formdetails = document.getElementById('formdetails');
@@ -60,6 +61,7 @@ req.onreadystatechange = function () {
             // objparam.arryheadercol = [['ID', '0%', 0], ['Name', '100%',]];
             objparam.arryheadercol = [[headercol[0], '0%', 0], [headercol[1], '100%',]];
             objparam.arryfooter = ['Item Count']
+            objparam.boolitemcount = true;
             objparam.arrydataid = ['table', strdatarowdataid];
             objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
             objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
@@ -221,40 +223,37 @@ navbarbuttonpdf.onclick = function () {
 
 
 // add button //
-// navbarbuttonadd.onclick = function () {
-function addEntity() {
-    // var req = new XMLHttpRequest();
-    // var data = {
-    //     'ID': '109',
-    //     'NName': 'Queen',
-    //     'Code': 'CD131',
-    //     'Currcy': '0',
-    //     'DebitAcc': '1',
-    //     'CreditAcc': '2'
-    // };
+navbarbuttonadd.onclick = function () {
+    // alert('add clicked');
+    let elem = document.getElementById('vss_content');
 
-    // try {
-    //     req.open('POST', serverendpoint);
-    //     req.setRequestHeader('Content-Type', 'application/json');
-    // }
-    // catch (e) {
-    //     alert('Error Sending POST Request.');
-    // }
-
-
-    // req.onreadystatechange = function () {
-    //     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-    //         alert('New Entity added.');
-    //     }
-    //     else if (this.readyState == XMLHttpRequest.DONE && this.status === 500) {
-    //         alert(req.responseText);
-    //     }
-    // }
-    // req.send(JSON.stringify(data));
+    // elem.scroll({
+    //     top:100,
+    //     left:100,
+    //     behaviour:'smooth'
+    // });
+    // elem.style = 'transform:translateX (100)';
+    elem.setAttribute('style', 'transform:translateX(100)');
+    // elem.setAttribute('style', 'display:none');
 }
 
 
+navbarbuttonadd.oncontextmenu = function (evt) {
+    evt.preventDefault();
+}
 
+
+navbarbuttonexcel.onclick = function () {
+    let filename = 'excel_data.xls';
+    let downloadlink = document.createElement('a');
+
+    document.body.appendChild(downloadlink);
+    // replace space with %20 to ensure the browser will display text properly //
+    downloadlink.href = 'data:' + 'applicatin/vnd.ms-excel' + ', ' + tablelist.outerHTML.replace(/ /g, '%20');
+
+    downloadlink.download = filename;
+    downloadlink.click();
+}
 
 
 

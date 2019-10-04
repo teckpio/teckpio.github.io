@@ -25,7 +25,7 @@
 
     --forecolorheaderad:white;
     --forecolorheader:white; /*#E1E6F9;*/
-    --forecolorheadernav:rgb(247, 66, 75);
+    --forecolorheadernav:rgb(230, 226, 7);
     --forecolorheadernavhover:red;
     --forecolornav:white;
     --forecolorbody:black;
@@ -262,6 +262,7 @@ header{
     background:rgba(255,255,255,.2);
     box-shadow: 1px 1px 1px 1px gray;
 }
+
 
 .vsse_headernavitem:hover{
     font-style:italic;

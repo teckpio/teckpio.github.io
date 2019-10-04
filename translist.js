@@ -1,5 +1,5 @@
 var translist_table = document.getElementById("translist_tbl");
-
+const btnexportexcel = document.getElementById('exportexcel') ;
 
 try {
     const input = document.querySelector('input[type="file"]');
@@ -20,11 +20,11 @@ try {
             // objparam.arryjsondata = listobj[0];
             // objparam.arryheadercol = [['ID', '0%', 0], ['Name', '100%',]];
             // objparam.arryheadercol = [[headercol[0], '0%', 0], [headercol[1], '100%',]];
-            objparam.arryfooter = ['Item Count']
-            // objparam.arrydataid = ['table', strdatarowdataid];
+            objparam.arryfooteragg = ['sum', '', '', '', 'sum', '', 'ave', 'ave', 'sum', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
+            objparam.boolitemcount = true;
             objparam.arrydataid = ['table', 'strdatarowdataid'];
-            objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
-            objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
+            // objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+            // objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
             objparam.arrysortind = [' (v)', ' (^)'];
             objparam.addbutton = false;
             objparam.fncdatarowclicked = undefined;
@@ -33,6 +33,7 @@ try {
             // tbl.appendChild(vssfnc_tablepopulate(objparam));
 
             vssfnc_tablepopulate(objparam);
+            // document.getElementsByClassName('vas_content')[0].appendChild(vssfnc_tablepopulate(objparam));
 
 
             // for(var i=0; i < jsondata.length; i++){
@@ -65,4 +66,20 @@ try {
 }
 catch (e) {
     alert(e);
+}
+
+btnexportexcel.onclick = function(){
+    let filename = 'excel_data.xls';
+    let downloadlink = document.createElement('a');
+    document.body.appendChild(downloadlink);
+
+    let tbl = document.getElementById('table');
+    
+    // replace space with %20 to ensure the browser will display text properly //
+    // downloadlink.href = 'data:' + 'applicatin/vnd.ms-excel' + ', ' + tbl.outerHTML.replace(/ /g, '%20');
+    downloadlink.href = 'data:' + 'applicatin/vnd.ms-excel' + ', ' + translist_table.outerHTML.replace(/ /g, '%20');
+    downloadlink.download = filename;
+    
+
+    downloadlink.click();
 }
