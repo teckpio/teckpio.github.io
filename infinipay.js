@@ -23,7 +23,7 @@ const arryemployeeinfocat = [
     ['Salary History', entitysalaryhistory_clicked]
 ]
 
-const salarystruct = [
+const payprofile = [
     { ID: '101', Name: 'Monthly', Allowances: 'Managerial', Accomodation: 'Yes', CompanyCar: 'No' },
     { ID: '104', Name: 'Daily', Allowances: 'Clerical', Accomodation: 'No', CompanyCar: 'No' }
 ]
@@ -33,10 +33,16 @@ const wagestruct = [
     { ID: '104', Name: 'Clerical' }
 ]
 
-const salaryitem = [
-    { ID: '101', Name: 'Car Allowance' },
-    { ID: '102', Name: 'Accommodation Allowance' },
-    { ID: '104', Name: 'Medical Claims' },
+const payunit = [
+    { ID: '101', Name: 'pay_month' },
+    { ID: '102', Name: 'pay_day' },
+    { ID: '103', Name: 'npl_day' },
+    { ID: '104', Name: 'abs_day' },
+    { ID: '105', Name: 'pbh_day' },
+    { ID: '106', Name: 'pay_hour' },
+    { ID: '107', Name: 'ot_hour1' },
+    { ID: '108', Name: 'ot_hour2' }
+
 ]
 
 const arrysalaryitemcat = [
@@ -45,9 +51,13 @@ const arrysalaryitemcat = [
     ['Valid Period', salaryitemvalid_clicked]
 ]
 
-const salaryitemdetail = [
-    { ID: '101', FullName: 'Car Allowance', PayType: 'Monthly', Rate: '5%', Amount: 'RM300' },
-    { ID: '104', FullName: 'Medical Claims', PayType: 'By Bill', Rate: '', Amount: 'RM300' },
+const payitem = [
+    { ID: '101', Name: 'Basic', Remark: '', PayType: 'Monthly', Quantity: 'pay_month', Rate: [5000], RateBase: '' },
+    // { ID: '102', Name: 'Basic Executive', Remark:'', PayType: 'Monthly', Quantity:'pay_month', Rate: [2500], RateBase: '' },
+    // { ID: '103', Name: 'Basic Clerical', Remark:'', PayType: 'Monthly', Quantity:'pay_month', Rate: [1200], RateBase: '' },
+    { ID: '104', Name: 'Car Allowance', Remark: '', PayType: 'Monthly', Quantity: 'pay_month', Rate: ['2000-3000:300', '3001-5000:500', '5001-?:800'], RateBase: 'Basic' },
+    { ID: '105', Name: 'Mileage Claims', Remark: '', PayType: 'Monthly', Quantity: 'user_input', Rate: ['50-100:0.2', '101-?:0.15'], RateBase: 'Mileage Claims' },
+    { ID: '106', Name: 'Medical Claims', Remark: '', PayType: 'By Bill', Quantity: 'user_input', Rate: [], RateBase: '' }
 ]
 
 const statitem = [
@@ -61,7 +71,7 @@ const statitem = [
 // array main nav item //
 const arryMainNavItem = [
     ['navitememployee', 'Employee Listing', employee, arryemployeeinfocat, employeedatarow_clicked],
-    ['navitemsalaryitem', 'Salary Item Listing', salaryitem, arrysalaryitemcat, salaryitemdatarow_clicked],
+    ['navitemsalaryitem', 'Salary Item Listing', payitem, arrysalaryitemcat, salaryitemdatarow_clicked],
     ['navitemsalarystruct', 'Salary Structure Listing', wagestruct, undefined, salaryitemdatarow_clicked],
     ['navitemstatitem', 'Stat Item Listing', statitem, undefined, salaryitemdatarow_clicked],
     ['navitemprocess', 'Process', undefined, undefined, process_clicked],
@@ -140,7 +150,7 @@ var contentdetailinfo = document.getElementById(strDivContentDetailID);
 // initial load //
 // 
 
-contenttitle.style.display='none';
+contenttitle.style.display = 'none';
 contentlisttitle.innerHTML = '';
 
 
@@ -237,15 +247,26 @@ function navitem_clicked() {
         case arryMainNavItem[5][0]:
             // do nothing //
             break;
+
+        // pay item //
+        case arryMainNavItem[1][0]:
+            let arryitemlist = payitem.map(item => {
+                return { ID: item.ID, Name: item.Name }
+            })
+            let tablelist = populatetable( arryMainNavItem[1][1], arryitemlist,  arryMainNavItem[1][4]);
+            tablelist.dataset[strListTableNavItem] =  arryMainNavItem[1][0];
+            tablelist.classList.add(strClsListInTable);
+            contentlisttable.appendChild(tablelist);
+            break;
+
         default:
             let navitemX = arryMainNavItem.find(function (navitem) {
                 return navitem[0] === this;
             }, this.id)
-            let tablelist = populatetable(navitemX[1], navitemX[2], navitemX[4]);
-            // let tablelist = populatetable(navitemX[1], navitemX[2], tabledatarow_clicked);
-            tablelist.dataset[strListTableNavItem] = navitemX[0];
-            tablelist.classList.add(strClsListInTable);
-            contentlisttable.appendChild(tablelist);
+            let tablelist2 = populatetable(navitemX[1], navitemX[2], navitemX[4]);
+            tablelist2.dataset[strListTableNavItem] = navitemX[0];
+            tablelist2.classList.add(strClsListInTable);
+            contentlisttable.appendChild(tablelist2);
             break;
     }
 
@@ -297,21 +318,21 @@ function employeedatarow_clicked() {
     init_divcontent(this.dataset[strListID], dataobj);
 
     // update content title //
-    document.getElementById(strClsContentDetailTitle).innerHTML=dataobj.FullName;
-    
+    document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.FullName;
+
 }
 
 function salaryitemdatarow_clicked() {
     // load salary item detail by ID //
-    let dataobj = salaryitemdetail.find(function (salaryitem) {
-        return salaryitem.ID === this;
+    let dataobj = payitem.find(function (item) {
+        return item.ID === this;
     }, this.dataset[strListID]);
 
     // initial detail display area //
     init_divcontent(this.dataset[strListID], dataobj);
 
     // update content title //
-    document.getElementById(strClsContentDetailTitle).innerHTML=dataobj.FullName;
+    document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.FullName;
 }
 
 function process_clicked() {
@@ -507,7 +528,7 @@ function entitypersonal_clicked() {
 
 function entitysalarystruct_clicked() {
     // load employee detail by ID //
-    let dataobj = salarystruct.find(function (employee) {
+    let dataobj = payprofile.find(function (employee) {
         return employee.ID === this;
     }, this.dataset[strListID]);
 
