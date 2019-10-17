@@ -1,4 +1,7 @@
 const tasklist = document.getElementById('tasklist');
+const systembuild = document.getElementById('systembuild');
+const payitem = document.getElementById('payitem');
+
 
 
 const arrytasklist = [
@@ -66,67 +69,86 @@ const arrytasklist = [
     { ID: 62, Desc1: "Database design", Desc2: "", Desc3: "", TimeRequired: 1 }
 
 ]
-// const arrytasklist2 = [
-//     {
-//         ID: 1,
-//         Description: 'Pages to populate tables',
-//         TimeRequired:1
-//     },
-//     {
-//         ID: 2,
-//         Description: 'Pages to enter live data',
-//         TimeRequired:1
-//     },
-//     {
-//         ID: 3,
-//         Description: 'Output: Payslip, Government Forms, Reporting',
-//         TimeRequired:1
-//     },
-//     {
-//         ID: 4,
-//         Description: 'Pages to initiate process - half-monthly and monthly',
-//         TimeRequired:1
-//     },
-//     {
-//         ID: 5,
-//         Description: 'One API for each statutory requirement',
-//         TimeRequired:1
-//     },
-//     {
-//         ID: 6,
-//         Description: 'Pages to input internal formulae and live data',
-//         TimeRequired:1
-//     },
-//     {
-//         ID: 7,
-//         Description: 'One API for each type of document / form / report',
-//         TimeRequired:1
-//     },
-//     {
-//         ID: 7,
-//         Description: 'One API for each type of document / form / report',
-//         TimeRequired:1
-//     },
-//     {
-//         ID: 8,
-//         Description: 'One API for each process - half-monthly and monthly',
-//         TimeRequired:1
-//     },
-//     {
-//         ID: 9,
-//         Description: 'Database Design',
-//         TimeRequired:1
-//     }
-// ];
 
+const arrysystembuild = [
+    { Object:"Empoyee", Desc:"Personal Info of Employee and tags to stat items", Built:"Employees"},
+    { Object:"Pay Item", Desc:"Pay item with info on 1. how pay quantity is extracted and 2. the pay rate to apply to the extracted pay quantity.", Built:"Pay Items to be attached to Pay Profile"},
+    { Object:"", Desc:"Properties include: valid period, ", Built:""},
+    { Object:"Pay Profile", Desc:"Can be categorised into monthly, daily, hourly, contract etc", Built:"A list of Pay Item"},
+    { Object:"", Desc:"Properties include: valid period, ", Built:""},
+    { Object:"Calc Sheet", Desc:"A formula to convert work time recorded to pay quantity", Built:"pay_month,"},
+    { Object:"", Desc:"", Built:"pay_day, npl_day, al_day, travel_day,"},
+    { Object:"", Desc:"", Built:"pay_shift, pay_shift1, pay_shift2,"},
+    { Object:"", Desc:"", Built:"pay_hour, ot_hour1, ot_hour2,"},
+    { Object:"", Desc:"", Built:"pay_piece1, pay_piece2"},
+    { Object:"Payroll Process1", Desc:"A process which takes as input from 1. Pay Item (for pay rate) and 2. Calc Sheet (for pay quantity) and process tha pay amount", Built:"* hard-coded"},
+    { Object:"Payroll Process2", Desc:"Takes the output from Payroll Process1 and applies stat requirements", Built:"* hard-coded"},
+    { Object:"Payroll Process3", Desc:"Checks with Leave Management for any required calculation", Built:"* hard-coded"}
+]
 
+const arrypayitem =[
+    {Item:"Monthly Basic", Quantity:"pay_month", Rate:5000, Base:""},
+    {Item:"Daily Basic", Quantity:"pay_day", Rate:40, Base:""},
+    {Item:"Hourly Rate1", Quantity:"pay_hour1", Rate:4, Base:""},
+    {Item:"Hourly Rate2", Quantity:"pay_hour2", Rate:4.50, Base:""},
+    {Item:"Piece Rate 1", Quantity:"pay_piece1", Rate:0.80, Base:""},
+    {Item:"Piece Rate 2", Quantity:"pay_piece2", Rate:1.00, Base:""},
+    {Item:"Car Allowance", Quantity:"pay_month", Rate:5000, Base:""},
+    {Item:"Meal Allowance", Quantity:"pay_month", Rate:"1000-2000: 200", Base:"Monthly Basic"},
+    {Item:"", Quantity:"", Rate:"2001-3000: 250", Base:""},
+    {Item:"", Quantity:"", Rate:"3001-?: 300", Base:""},
+    {Item:"Mileage Claims", Quantity:"*User Input", Rate:"0-300: 0.20", Base:"Mileage Claims"},
+    {Item:"", Quantity:"", Rate:"301-?: 0.15", Base:""},
+    {Item:"Full Attendance", Quantity:"npl_day", Rate:"0: 500", Base:""},
+    {Item:"", Quantity:"", Rate:"1-?: 0", Base:""},
+    {Item:"OT Hour1", Quantity:"ot_hour1", Rate:6.00, Base:""},
+    {Item:"OT Hour2", Quantity:"ot_hour2", Rate:9.00, Base:""}
+]
+
+// task list //
+///////////////
 let objparam = vssfnc_tablepopulate_param();
 // objparam.caption = "Entity";
 objparam.htmltable = tasklist;
 objparam.htmltableid = 'tasklist';
 objparam.arryjsondata = arrytasklist;
-// objparam.arryheadercol = [['Task ID', '10%', 0], ['Description', '80%',], ['Time', '10%', 0]];
 objparam.arryheadercol = [['Task ID', '5%', 0], ['User Interface', '30%',], ['API L1', '20%',], ['API L2', '40%',], ['Time Required', '5%', 0]];
+objparam.arryfooter = ['Item Count']
+objparam.arrydataid = ['table', ''];
+objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
+objparam.arrysortind = [' (v)', ' (^)'];
+objparam.addbutton = false;
+// objparam.fncdatarowclicked = datarowclicked;
+vssfnc_tablepopulate(objparam);
+
+
+// system building //
+/////////////////////
+objparam = vssfnc_tablepopulate_param();
+// objparam.caption = "Entity";
+objparam.htmltable = systembuild;
+objparam.htmltableid = 'systembuild';
+objparam.arryjsondata = arrysystembuild;
+objparam.arryheadercol = [['Object', '20%', -1], ['Description', '60%',], ['Built', '20%',]];
+objparam.arryfooter = ['Item Count']
+objparam.arrydataid = ['table', ''];
+objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
+objparam.arrysortind = [' (v)', ' (^)'];
+objparam.addbutton = false;
+// objparam.fncdatarowclicked = datarowclicked;
+vssfnc_tablepopulate(objparam);
+
+
+// pay item //
+/////////////////////
+objparam = vssfnc_tablepopulate_param();
+// objparam.caption = "Entity";
+objparam.htmltable = payitem;
+objparam.htmltableid = 'payitem';
+objparam.arryjsondata = arrypayitem;
+objparam.arryheadercol = [['Item', '40%', -1], ['Quantity', '20%',], ['Rate', '20%',], ['Base', '20%',]];
 objparam.arryfooter = ['Item Count']
 objparam.arrydataid = ['table', ''];
 objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];

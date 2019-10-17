@@ -3,21 +3,26 @@
     margin: 0 auto;
 }
 
-#tasklist{
+svg{
+    width:80%;
+    margin: 0 auto;
+}
+
+table{
     width:80%; 
     margin:0 auto; 
     box-shadow: 0 0 2px gray;
 }
 
-#tasklist th{
+table th{
     background-color:black;
     color:white;
 }
  
-#tasklist tr:nth-child(odd){
+table tr:nth-child(odd){
     background-color:white;
 }
 
-#tasklist tr:nth-child(even){
+table tr:nth-child(even){
     background-color:#EEE;
 }
