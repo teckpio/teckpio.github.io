@@ -82,6 +82,12 @@ function vssfnc_tablepopulate(objparam) {
         boolReturnElem = true;
     }
 
+    // set css style of table element //
+    if(true) {
+        // set default if table class not set 
+        objparam.htmltable.style.borderCollapse='collapse';
+    }
+
     // handling of null param //
     if (!objparam.arryclass) {
         objparam.arryclass = [];
@@ -99,8 +105,6 @@ function vssfnc_tablepopulate(objparam) {
         let strcaption = `<caption class = ${objparam.arryclass[0]}>${objparam.caption}</caption>`;
         objparam.htmltable.innerHTML += strcaption;
     }
-
-    // objparam.htmltable.innerHTML += '<colgroup><col style = "font-style:italic"><col style = "font-style:italic"><col style = "font-style:italic"></colgroup>';
 
     let strHeaderCol = `<thead><tr class = "${objparam.arryclass[1]}">`;
     if (objparam.arryheadercol) {
@@ -285,14 +289,43 @@ function vssfnc_tablepopulate(objparam) {
 
 
 function vssfnc_paintoddevenrow(tablex, classoddrow, classevenrow, classselectedrow) {
-    let cssstyle = classoddrow;
-    for (let i = 0; i < tablex.rows.length; i++) {
-        // remove selected row class, if any //
-        tablex.rows[i].classList.remove(classselectedrow);
+    // if user-set css class //
+    if (classoddrow && classevenrow && classselectedrow) {
+        let cssstyle = classoddrow;
+        for (let i = 0; i < tablex.rows.length; i++) {
+            // remove selected row class, if any //
+            tablex.rows[i].classList.remove(classselectedrow);
 
-        cssstyle = (cssstyle === classevenrow) ? classoddrow : classevenrow;
-        tablex.rows[i].classList.add(cssstyle);
+            cssstyle = (cssstyle === classevenrow) ? classoddrow : classevenrow;
+            tablex.rows[i].classList.add(cssstyle);
+        }
     }
+    else {
+        // default style //
+
+        tablex.style.border = 'solid 1px white';
+
+        // header row //
+        tablex.rows[0].style.color = 'white';
+        tablex.rows[0].style.backgroundColor = 'black';
+        for (var cell of tablex.rows[0].cells) {
+            cell.style.border = 'solid 1px gray';
+            cell.style.padding = '5px';
+        }
+
+        // data row //
+        let odd = true;
+        for (let i = 1; i < tablex.rows.length; i++) {
+            tablex.rows[i].style.color = 'black';
+            tablex.rows[i].style.backgroundColor = odd ? 'white' : 'lightgrey';
+            odd = odd ? false : true;
+
+            for (var cell of tablex.rows[i].cells) {
+                cell.style.border = 'solid 1px gray';
+            }
+        }
+    }
+
 }
 
 function vssfnc_sortarrydata(arryJSON, colidx, dir) {
@@ -607,7 +640,7 @@ function vssfnc_formpopulate(objparam) {
 }
 
 
-function vssfnc_scrollright(){
+function vssfnc_scrollright() {
     if (this.innerHTML === strUserProfile) {
         // scroll right //
         listtitle.innerHTML = strUserProfile;
