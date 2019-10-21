@@ -36,9 +36,10 @@ function vssfnc_tablepopulate_param() {
     // arrysortind - an array of 2 strings indicator for column sorting - 
     //          0:ascending
     //          1:descending
-    // boolbutton - true to add a button in the first cell of each row
+    //x boolbutton - true to add a button in the first cell of each row
+    // arrybutton - an array of 0: button text, 1: button column, 2: button_clicked function
     // fncdatarowclicked - function to call on datarow clicked
-    // fncbuttonclicked - function to call on datarow button clicked
+    //x fncbuttonclicked - function to call on datarow button clicked
 
     return {
         caption: null,
@@ -52,9 +53,10 @@ function vssfnc_tablepopulate_param() {
         arryclassdatarow: null,
         arrydataid: null,
         arrysortind: null,
-        addbutton: false,
+        arrybutton: null,
+        // boolbutton: false,
         fncdatarowclicked: undefined,
-        fncbuttonclicked: undefined
+        // fncbuttonclicked: undefined
     }
 }
 
@@ -83,9 +85,9 @@ function vssfnc_tablepopulate(objparam) {
     }
 
     // set css style of table element //
-    if(true) {
+    if (true) {
         // set default if table class not set 
-        objparam.htmltable.style.borderCollapse='collapse';
+        objparam.htmltable.style.borderCollapse = 'collapse';
     }
 
     // handling of null param //
@@ -138,24 +140,37 @@ function vssfnc_tablepopulate(objparam) {
     let strbtn;
 
     // an array for total for each datacol of arrjJSON item //
-    let arrydatasum = new Array(Object.keys(objparam.arryjsondata[0]).length);
-    if (objparam.arryfooteragg) {
-        // initialise arrydatasum //
-        for (var i = 0; i < arrydatasum.length; i++) {
-            arrydatasum[i] = 0;
+    if (objparam.arryjsondata.length > 0) {
+        let arrydatasum = new Array(Object.keys(objparam.arryjsondata[0]).length);
+        if (objparam.arryfooteragg) {
+            // initialise arrydatasum //
+            for (var i = 0; i < arrydatasum.length; i++) {
+                arrydatasum[i] = 0;
+            }
         }
     }
+
 
     objparam.arryjsondata.forEach((item, index) => {
         strRowData += `<tr class = ${objparam.arryclass[3]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>`;
 
-        // datarow button (1st datacol), if any //
-        boolbtnadded = objparam.addbutton ? false : true;
+        // datarow button, if any //
+        // boolbtnadded = objparam.boolbutton ? false : true;
+        boolbtnadded = objparam.arrybutton ? false : true;
         strbtn = '';
         Object.values(item).forEach((val, index) => {
             // construct str for button element //
-            strbtn = boolbtnadded ? '' : `<button class = ${objparam.arryclass[4]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>..</button>`;
-            boolbtnadded = true;
+            if (boolbtnadded) {
+                strbtn='';
+            } else{
+                if (objparam.arrybutton) {
+                    let btncolumn = objparam.arrybutton[1] ? objparam.arrybutton[1] : 0;
+                    if (index === btncolumn) {
+                        strbtn = boolbtnadded ? '' : `<button class = ${objparam.arryclass[4]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>..</button>`;
+                        boolbtnadded = true;
+                    }
+                }
+            }
 
             // construct the td element //
             strRowData += `<td style = 'text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}'> ${strbtn} ${val} </td>`;
@@ -259,18 +274,12 @@ function vssfnc_tablepopulate(objparam) {
 
 
     // eventhandler for table datarow button //
-    if (objparam.addbutton) {
+    if (objparam.arrybutton) {
         let tablerowbutton = objparam.htmltable.getElementsByClassName(objparam.arryclass[4]);
         for (var i = 0; i < tablerowbutton.length; i++) {
-            if (objparam.fncbuttonclicked === undefined) {
-                tablerowbutton[i].onclick = function () {
-                    alert('(vssfnc) Enter Exit Time for: ' + this.dataset[objparam.arrydataid[1]]);
-                }
+            if (objparam.arrybutton[2]) {
+                tablerowbutton[i].onclick = objparam.arrybutton[2];
             }
-            else {
-                tablerowbutton[i].onclick = objparam.fncbuttonclicked;
-            }
-
         }
     }
 

@@ -1,9 +1,13 @@
 'use strict';
 // const sample_data= require('./infinipay_data');
 
+// import employee from ('./infinipay_data');
+// console.log(employee[0]);
+
+
 const arryemployeeinfocat = [
     ['Personal Info', entitypersonal_clicked],
-    ['Salary Structure', entitysalarystruct_clicked],
+    ['Salary Profile', entitysalarystruct_clicked],
     ['Salary History', entitysalaryhistory_clicked]
 ]
 
@@ -16,10 +20,11 @@ const arrysalaryitemcat = [
 // array main nav item //
 const arryMainNavItem = [
     ['navitememployee', 'Employee Listing', employee, arryemployeeinfocat, employeedatarow_clicked],
-    ['navitemsalaryitem', 'Salary Item Listing', payitem, arrysalaryitemcat, salaryitemdatarow_clicked],
-    ['navitemsalarystruct', 'Salary Structure Listing', payprofile, undefined, payprofile_clicked],
-    ['navitemstatitem', 'Stat Item Listing', statitem, undefined, salaryitemdatarow_clicked],
+    ['navitemsalaryitem', 'Salary Item Listing', payitem, arrysalaryitemcat, payitemdatarow_clicked],
+    ['navitemsalarystruct', 'Salary Profile Listing', payprofile, undefined, payprofiledatarow_clicked],
+    ['navitemstatitem', 'Stat Item Listing', statitem, undefined, payitemdatarow_clicked],
     ['navitemprocess', 'Process', undefined, undefined, process_clicked],
+    ['navitemcalcsheet', 'Calculation Sheet', undefined, undefined, calcsheet_clicked],
     ['navitemoutput', 'Output Listing', undefined, undefined, output_clicked]
 ];
 
@@ -77,6 +82,7 @@ const navitemsalaryitem = document.getElementById('navitemsalaryitem');
 const navitemsalarystruct = document.getElementById('navitemsalarystruct');
 const navitemstatitem = document.getElementById('navitemstatitem');
 const navitemprocess = document.getElementById('navitemprocess');
+const navitemcalcsheet = document.getElementById('navitemcalcsheet');
 const navitemoutput = document.getElementById('navitemoutput');
 
 const contenttitle = document.getElementById('contenttitle');
@@ -107,6 +113,7 @@ navitemsalaryitem.onclick = navitem_clicked;
 navitemsalarystruct.onclick = navitem_clicked;
 navitemstatitem.onclick = navitem_clicked;
 navitemprocess.onclick = navitem_clicked;
+navitemcalcsheet.onclick = navitem_clicked;
 navitemoutput.onclick = navitem_clicked;
 
 
@@ -118,8 +125,8 @@ navitemoutput.onclick = navitem_clicked;
 
 // navitem_clicked
 // employeedatarow_clicked
-// salaryitemdatarow_clicked
-// payprofile_clicked
+// payitemdatarow_clicked
+// payprofiledatarow_clicked
 
 // process_clicked
 // output_clicked
@@ -197,7 +204,9 @@ function navitem_clicked() {
 
         // employee //
         case arryMainNavItem[0][0]:
-            let arryeeelist = employee.map(eee => {
+            let eee = employee;
+            // let eee = smp_data.employee;
+            let arryeeelist = eee.map(eee => {
                 return { ID: eee.ID, Name: eee.Name }
             })
             let tablelist3 = populatetable(arryMainNavItem[0][1], arryeeelist, arryMainNavItem[0][4]);
@@ -297,37 +306,54 @@ function employeedatarow_clicked() {
     }, this.dataset[strListID]);
 
     // initial detail display area //
-    init_divcontent(this.dataset[strListID], dataobj, null);
+    init_divcontent(this.dataset[strListID], dataobj, null, [['Edit', editemployee_clicked]]);
 
     // update content title //
     document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.FullName;
 
 }
 
-function salaryitemdatarow_clicked() {
+function payitemdatarow_clicked() {
     // load salary item detail by ID //
     let dataobj = payitem.find(function (item) {
         return item.ID === this;
     }, this.dataset[strListID]);
 
     // initial detail display area //
-    init_divcontent(this.dataset[strListID], dataobj, null);
+    init_divcontent(this.dataset[strListID], dataobj, null, [['Edit', payitemedit_clicked]]);
 
     // update content title //
     document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.FullName;
 }
 
-function payprofile_clicked() {
-    // load payprofile detail by ID //
-    let dataobj = payprofile.find(function (item) {
+function payprofiledatarow_clicked() {
+    let profileid = this.dataset[strListID];
+
+    // load payprofile by ID //
+    let profiledata = payprofile.find(function (item) {
         return item.ID === this;
     }, this.dataset[strListID]);
 
+    // load payprofile detail //
+    let profileitem = payprofileitem.filter(item => {
+        return item.PayProfile === profileid; //?? why cannot use this like profiledata ??//
+    }, profileid)
+    // insert name of payitem //
+    let profiledetaildata = profileitem.map(item => {
+        return {
+            ID: item.ID,
+            // PayProfile: item.PayProfile,
+            // PayItemID: item.PayItem,
+            PayItem: payitem.find(pi => { return pi.ID === item.PayItem }).Name,
+            PayRate: item.PayRate
+        };
+    })
+
     // initial detail display area //
-    init_divcontent(this.dataset[strListID], dataobj, [dataobj]);
+    init_divcontent(this.dataset[strListID], profiledata, profiledetaildata, [['Edit', payprofileedit_clicked]], [['..', payprofileitemedit_clicked]]);
 
     // update content title //
-    document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.FullName;
+    document.getElementById(strClsContentDetailTitle).innerHTML = profiledata.FullName;
 }
 
 function process_clicked() {
@@ -378,7 +404,7 @@ function output_clicked() {
 
 // divcontentdetail is a column flex of: detailtitle + detailbox //
 // divcontentbox is a row flex of: detailnav + detailform //
-function init_divcontent(listID, dataobj_form, arrydataobj_table) {
+function init_divcontent(listID, dataobj_form, dataobj_table, arrybutton_form, arrybutton_table) {
 
     toggle_logoinfo(false);
 
@@ -414,13 +440,14 @@ function init_divcontent(listID, dataobj_form, arrydataobj_table) {
     divcontentbox.style.display = 'flex';
     divcontentbox.style.flexDirection = 'row';//
 
-    
+    let newform;
     if (dataobj_form) {
         // navdetail //
         divcontentbox.appendChild(loadnavdetail(listID, './img/banner_bg.jpg'));
 
         // formdetail //
-        let newform = populateform(dataobj_form, listID === '-1' ? true : false);
+        // let newform = populateform(dataobj_form, listID === '-1' ? true : false);
+        newform = populateform(dataobj_form, listID === '-1' ? true : false);
 
         // detail functions //
         let divdetailfunction = document.createElement('div');
@@ -433,28 +460,18 @@ function init_divcontent(listID, dataobj_form, arrydataobj_table) {
         divdetailfunction.style.boxShadow = '0 0 2px';
         divdetailfunction.style.marginTop = '2%';
 
-        if (listID === '-1') {
-            // detail functions //
-            btn = document.createElement('button');
-            btn.innerHTML = 'Add';
-            btn.onclick = addemployee_clicked;
-            divdetailfunction.appendChild(btn);
+        if (arrybutton_form && arrybutton_form.length > 0) {
+            arrybutton_form.forEach(btnX => {
+                btn = document.createElement('button');
+                btn.dataset.ID = listID;
+                btn.innerHTML = btnX[0];
+                btn.onclick = btnX[1];
+                divdetailfunction.appendChild(btn);
+            })
+            newform.appendChild(divdetailfunction);
         }
-        else {
-            btn = document.createElement('button');
-            btn.innerHTML = 'Edit';
-            btn.onclick = editemployee_clicked;
-            divdetailfunction.appendChild(btn);
-
-            btn = document.createElement('button');
-            btn.innerHTML = 'Detail';
-            btn.onclick = editemployee_clicked;
-            divdetailfunction.appendChild(btn);
-        }
-        newform.appendChild(divdetailfunction);
 
         divcontentbox.appendChild(newform);
-
     }
 
     if (dataobj_table) {
@@ -467,13 +484,32 @@ function init_divcontent(listID, dataobj_form, arrydataobj_table) {
         // objparam.arryheadercol = [['ID', '50%', 0], ['Name', '50%', 0]];
         objparam.arryfooter = ['Item Count']
         objparam.boolitemcount = true;
-        objparam.arrydataid = ['table', ''];
+        objparam.arrydataid = ['table', 'ID'];
         objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
         // objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
         objparam.arrysortind = [' (v)', ' (^)'];
-        objparam.addbutton = false;
+        if (arrybutton_table) {
+            objparam.arrybutton = ['..', 2, payprofileitemedit_clicked];
+            // let arrybtn = ['..', 0, payprofileitemedit_clicked];
+            // objparam.arrybutton.push(arrybtn);
+            // objparam.boolbutton = true;
+            // objparam.fncbuttonclicked = payprofileitemedit_clicked;
+        }
         // objparam.fncdatarowclicked = datarowclicked;
-        divcontentbox.appendChild(vssfnc_tablepopulate(objparam));
+
+        //  append to form element if both form and table element are required //
+        if (dataobj_form) {
+            let detailtable = vssfnc_tablepopulate(objparam);
+            detailtable.style.margin = '2% auto';
+            detailtable.style.width = '80%';
+            newform.appendChild(detailtable);
+        }
+        else {
+            let detailtable = vssfnc_tablepopulate(objparam);
+            detailtable.style.margin = '2% auto';
+            detailtable.style.width = '90%';
+            divcontentbox.appendChild(detailtable);
+        }
     }
 
     divcontentdetail.appendChild(divcontentbox);
@@ -539,6 +575,49 @@ function loadcontentcat(listID, arrydata) {
         })
     }
     return divcontentnav;
+}
+
+function payitemedit_clicked(e) {
+    let payitemX = payitem.find(item => {
+        return item.ID === this.dataset.ID;
+    });
+    ;
+    let form = this.parentElement.parentElement;
+    let inputelem = form.getElementsByTagName('input');
+    if (inputelem) {
+        var ppt;
+        for (ppt in payitemX) {
+            if (ppt === 'Rate') {
+                payitemX[ppt] = [];
+                let arryrate = [];
+                let arrystr = form.elements[ppt].value.split(',');
+                let x = 1;
+                for (var i = 0; i < arrystr.length; i++) {
+                    arryrate.push(arrystr[i]);
+                    if (x === 3) {
+                        x = 1;
+                        payitemX[ppt].push(arryrate);
+                        arryrate = [];
+                    }
+                    else {
+                        if (arrystr.length === 1) {
+                            payitemX[ppt].push(arryrate)
+                            alert(arryrate);
+                        }
+                        else {
+                            x++;
+                        }
+                    }
+                }
+            }
+            else {
+                payitemX[ppt] = form.elements[ppt].value;
+            }
+
+        }
+    }
+    // without saving the edited data, prevent page refresh //
+    e.preventDefault();
 }
 
 function entitypersonal_clicked() {
@@ -627,6 +706,7 @@ function populateform(dataobj, boolpost) {
 
         // data // 
         dataelement = document.createElement('input');
+        dataelement.name = ppt;
         if (boolpost) {
             dataelement.value = '';
         }
@@ -640,6 +720,36 @@ function populateform(dataobj, boolpost) {
     }
 
     return formelement;
+}
+
+function payprofileedit_clicked(e) {
+    let payprofileX = payprofile.find(item => {
+        return item.ID === this.dataset.ID;
+    });
+    ;
+    let form = this.parentElement.parentElement;
+    let inputelem = form.getElementsByTagName('input');
+    if (inputelem) {
+        var ppt;
+        for (ppt in payprofileX) {
+            payprofileX[ppt] = form.elements[ppt].value;
+        }
+    }
+    // without saving the edited data, prevent page refresh //
+    e.preventDefault();
+}
+
+function payprofileitemedit_clicked(e) {
+
+    let newrate = prompt('Enter New PayRate:');
+    let ppfitem = payprofileitem.find(item => {
+        return item.ID === this.dataset.id
+    });
+    ppfitem.PayRate = newrate;
+
+
+    // without saving the edited data, prevent page refresh //
+    e.preventDefault();
 }
 
 function newemployee_clicked() {
@@ -678,14 +788,14 @@ function processendmonth_clicked() {
         })
         if (pprofile) {
             // extract PayItem (ID only) of PayProfile //
-            let arrypayitem = payprofileitem.filter(pfitem => {
+            let arryprofilepayitem = payprofileitem.filter(pfitem => {
                 return pfitem.PayProfile === pprofile.ID;
             })
 
-            if (arrypayitem) {
+            if (arryprofilepayitem) {
                 // extract info (PayRate) of PayItem and then
                 // apply extracted PayQuantity to PayRate to get PayAmount //
-                arrypayitem.forEach(profilepayitem => {
+                arryprofilepayitem.forEach(profilepayitem => {
                     let pitemX = payitem.find(item => {
                         return item.ID === profilepayitem.PayItem;
                     })
@@ -694,28 +804,6 @@ function processendmonth_clicked() {
                     let payqty, payrate;
 
                     // extract pay quantity
-                    let calcsheet = [
-                        {
-                            employee: '101',
-                            pay_quantity: [['101', 1], ['102', 26]]
-                        },
-                        {
-                            employee: '102',
-                            pay_quantity: [['101', 1], ['102', 26]]
-                        },
-                        {
-                            employee: '104',
-                            pay_quantity: [['101', 1], ['102', 26]]
-                        },
-                        {
-                            employee: '105',
-                            pay_quantity: [['101', 1], ['102', 26]]
-                        },
-                        {
-                            employee: '106',
-                            pay_quantity: [['101', 1], ['102', 23]]
-                        }
-                    ];
                     let eeecalcsheet = calcsheet.find(calc => {
                         return calc.employee === eee.ID;
                     });
@@ -725,24 +813,45 @@ function processendmonth_clicked() {
 
 
                     // extract payrate
-                    // extract from payitem //
-                    if (profilepayitem.PayRate === null) {
-                        let piBase = payrollobj.find(pi => {
+                    // precedence:
+                    // - PayRate of PayProfileItem
+                    // - Rate of RateBase of PayItem
+                    // - Rate will be 1 of 3
+                    //      - flat / percentage / range
+
+                    if (profilepayitem.PayRate && profilepayitem.PayRate != null) {
+                        // user-defined in payprofile //
+                        payrate = profilepayitem.PayRate;
+                    }
+                    else {
+                        // extract from payitem - find calculated base item and payrate of payitem //
+                        let piCalcBase = payrollobj.find(pi => {
                             return pi.PayItemID === pitemX.RateBase && pi.Name === eee.Name;
                         });
 
-                        if (piBase) {
-                            // console.log(piBase.PayAmount);
-                            payrate = pitemX.Rate.find(rangeX => { return piBase.PayAmount >= rangeX[0] && piBase.PayAmount <= rangeX[1] })[2];
+                        if (piCalcBase) {
+                            if (Array.isArray(pitemX.Rate)) {
+                                console.log(pitemX.Rate);
+                                if (pitemX.Rate.length > 1) {
+                                    let raterange = pitemX.Rate.find(rangeX => { return piCalcBase.PayAmount >= rangeX[0] && piCalcBase.PayAmount <= rangeX[1] });
+                                    if (raterange) {
+                                        payrate = raterange[2];
+                                    }
+                                }
+                                else {
+                                    payrate = pitemX.Rate[0];
+                                }
+                            }
+                            else {
+                                payrate = pitemX.Rate;
+                            }
+
                         }
                         else {
-
+                            // if PayItem Base is not yet calculated/processed, used set PayItem Base //
+                            payrate = pitemX.Rate;
                         }
 
-                    }
-                    // user-defined //
-                    else {
-                        payrate = profilepayitem.PayRate;
                     }
 
                     // load payroll table //
@@ -767,10 +876,9 @@ function processendmonth_clicked() {
         }
     })
 
-    init_divcontent('', null, payrollobj);
+    init_divcontent('', null, payrollobj, null, null);
     // console.log(payrollobj);
 }
-
 
 
 function processyearend_clicked() {
@@ -810,4 +918,30 @@ function salaryitemcalc_clicked() {
 function salaryitemvalid_clicked() {
     alert('WIP ...');
 
+}
+
+function calcsheet_clicked() {
+    // let quantitymap = calcsheet.map(item => {
+    //     let eecalcsheet = []
+    //     item.pay_quantity.forEach(qtyitem => {
+    //         eecalcsheet.push({
+    //             Employee: item.employee,
+    //             PayUnit: payunit.find(item => { return item.ID = qtyitem[0] }).Name,
+    //             PayQuantity: qtyitem[1]
+    //         });
+    //     })
+    //     console.log(eecalcsheet);
+    //     return eecalcsheet;
+    // })
+    let quantitymap=[];
+    calcsheet.forEach(item=>{
+        item.pay_quantity.forEach(qty=>{
+            quantitymap.push({
+                Employee: employee.find(ee=> ee.ID === item.employee).Name,
+                PayUnit: payunit.find(item => item.ID === qty[0] ).Name,
+                PayQuantity: qty[1]
+            });
+        })
+    })
+    init_divcontent('', null, quantitymap, null, null);
 }
