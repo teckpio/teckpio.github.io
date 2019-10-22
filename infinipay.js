@@ -51,8 +51,10 @@ const arryOutput = [
 // id of manipulatable html element //
 const strDivContentDetailID = 'contentdetailinfo';
 const strDetailNavID = 'contentdetailnav';
+const strDivTableFunctionID = 'contentdetailtablefunction';
 const strListTableID = 'listtableid';
 const strListTableNavItem = 'listtablenavitem';
+
 
 // css classes //
 const strClsListInSelect = 'listtableinselect';
@@ -96,6 +98,9 @@ const contentdetailtitle = document.getElementById('contentdetailtitle');
 const contentdetailform = document.getElementById('contentdetailform');
 const contentdetaillogo = document.getElementById('contentdetaillogo');
 var contentdetailinfo = document.getElementById(strDivContentDetailID);
+
+// working data //
+var calcsheet_curr = [];
 
 // 
 // initial load //
@@ -267,7 +272,7 @@ function navitem_clicked() {
         case arryMainNavItem[4][0]:
             arryMainNavItem[4][4]();
             break;
-        
+
         // output //
         case arryMainNavItem[6][0]:
             arryMainNavItem[6][4]();
@@ -853,13 +858,10 @@ function payprofileitemedit_clicked(e) {
 function calcsheetitemedit_clicked(e) {
 
     let newqty = prompt('Enter Pay Quantity:');
-    let csitem = calcsheet.find(item => {
-        return item.Employee === this.dataset.id;
+    let csitem = calcsheet_curr.find(item => {
+        return item.ID === this.dataset.id;
     });
-    csitem.pay_quantity.find(pq=>pq[0]===)
-    // csitem.PayRate = newrate;
-
-console.log(csitem);
+    csitem.PayQuantity = newqty;
 
     // without saving the edited data, prevent page refresh //
     e.preventDefault();
@@ -1035,12 +1037,16 @@ function salaryitemvalid_clicked() {
 }
 
 function calcsheetdatarow_clicked() {
-    let quantitymap = [];
+    // remove previously added update button //
+    let btnnode = document.getElementById(strDivTableFunctionID)
+    if (btnnode){btnnode.parentNode.removeChild(btnnode)}
+
+    calcsheet_curr = [];
     let eeecalcsheet = calcsheet.filter(item => item.Employee === this.dataset.id);
 
     payunit.forEach(item => {
-        quantitymap.push({
-            ID:'',
+        calcsheet_curr.push({
+            ID: item.ID,
             Employee: '',
             PayUnitID: item.ID,
             PayUnit: item.Name,
@@ -1052,15 +1058,38 @@ function calcsheetdatarow_clicked() {
     // Employee: '102',
     // pay_quantity: [['101', 1], ['102', 26]]
 
-    quantitymap.forEach(item => {
-        item.ID = eeecalcsheet[0].Employee;
+    calcsheet_curr.forEach(item => {
+        // item.ID = eeecalcsheet[0].Employee;
         item.Employee = employee.find(ee => ee.ID === this.dataset.id).Name;
         let arrypayqty = eeecalcsheet[0].pay_quantity.find(pq => pq[0] === item.PayUnitID);
         item.PayQuantity = arrypayqty ? arrypayqty[1] : 0;
     })
 
     let dataobj_table = init_divcontent_getdataobjtable;
-    dataobj_table[0] = quantitymap;
+    dataobj_table[0] = calcsheet_curr;
     dataobj_table[2] = [['=', 4, calcsheetitemedit_clicked]];
     init_divcontent('', null, dataobj_table, null, null);
+
+    // add update button //
+    let divfunction = document.createElement('div');
+    divfunction.id = strDivTableFunctionID;
+    divfunction.setAttribute('style', 'width:90%; border:1px solid gray; box-sizing:box-border; padding:2%');
+    
+
+    let btnupdate = document.createElement('button');
+    btnupdate.innerHTML = 'Update';
+    btnupdate.dataset.id = this.dataset.id;
+    btnupdate.onclick = calcsheetupdate_clicked;
+
+    divfunction.appendChild(btnupdate);
+    contentdetail.appendChild(divfunction);
+
+}
+
+function calcsheetupdate_clicked() {
+    let eeecalcsheet = calcsheet.find(item => item.Employee === this.dataset.id);
+    eeecalcsheet.pay_quantity = [];
+    calcsheet_curr.forEach(pq => {
+        eeecalcsheet.pay_quantity.push([pq.PayUnitID, pq.PayQuantity]);
+    })
 }
