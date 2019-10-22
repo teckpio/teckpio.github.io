@@ -62,23 +62,28 @@ var payunit = [
 
 var calcsheet = [
     {
-        employee: '101',
+        ID: '1',
+        Employee: '101',
         pay_quantity: [['101', 1], ['102', 26]]
     },
     {
-        employee: '102',
-        pay_quantity: [['101', 1], ['102', 26]]
+        ID: '2',
+        Employee: '102',
+        pay_quantity: [['101', 1], ['102', 25]]
     },
     {
-        employee: '104',
-        pay_quantity: [['101', 1], ['102', 26]]
+        ID: '3',
+        Employee: '104',
+        pay_quantity: [['101', 1], ['102', 24]]
     },
     {
-        employee: '105',
-        pay_quantity: [['101', 1], ['102', 26]]
+        ID: '4',
+        Employee: '105',
+        pay_quantity: [['101', 1], ['102', 22], ['107', 5], ['108', 3]]
     },
     {
-        employee: '106',
+        ID: '5',
+        Employee: '106',
         pay_quantity: [['101', 1], ['102', 23]]
     }
 ];

@@ -17,7 +17,7 @@
     --colorfunctionfg: white;
     --colorfunctionhover:yellow;
 
-    --colorcontentdetailbg:white;
+    --colorcontentdetailbg:#FFE;
     --colorcontentdetailfg:black;
 
     --colorfooterbg:black;
@@ -309,5 +309,5 @@ html{
     color:var(--colorfooterfg);
 
     font-size: var(--fontsizefooter);
-    text-align: right;
+    text-align: center;
 }

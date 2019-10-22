@@ -24,7 +24,7 @@ const arryMainNavItem = [
     ['navitemsalarystruct', 'Salary Profile Listing', payprofile, undefined, payprofiledatarow_clicked],
     ['navitemstatitem', 'Stat Item Listing', statitem, undefined, payitemdatarow_clicked],
     ['navitemprocess', 'Process', undefined, undefined, process_clicked],
-    ['navitemcalcsheet', 'Calculation Sheet', undefined, undefined, calcsheet_clicked],
+    ['navitemcalcsheet', 'Calculation Sheet', undefined, undefined, calcsheetdatarow_clicked],
     ['navitemoutput', 'Output Listing', undefined, undefined, output_clicked]
 ];
 
@@ -198,7 +198,6 @@ function navitem_clicked() {
     switch (this.id) {
         // process //
         case arryMainNavItem[4][0]:
-        case arryMainNavItem[5][0]:
             // do nothing //
             break;
 
@@ -209,10 +208,10 @@ function navitem_clicked() {
             let arryeeelist = eee.map(eee => {
                 return { ID: eee.ID, Name: eee.Name }
             })
-            let tablelist3 = populatetable(arryMainNavItem[0][1], arryeeelist, arryMainNavItem[0][4]);
-            tablelist3.dataset[strListTableNavItem] = arryMainNavItem[0][0];
-            tablelist3.classList.add(strClsListInTable);
-            contentlisttable.appendChild(tablelist3);
+            let tablelist0 = populatetable(arryMainNavItem[0][1], arryeeelist, arryMainNavItem[0][4]);
+            tablelist0.dataset[strListTableNavItem] = arryMainNavItem[0][0];
+            tablelist0.classList.add(strClsListInTable);
+            contentlisttable.appendChild(tablelist0);
             break;
 
         // pay item //
@@ -220,10 +219,10 @@ function navitem_clicked() {
             let arryitemlist = payitem.map(item => {
                 return { ID: item.ID, Name: item.Name }
             })
-            let tablelist = populatetable(arryMainNavItem[1][1], arryitemlist, arryMainNavItem[1][4]);
-            tablelist.dataset[strListTableNavItem] = arryMainNavItem[1][0];
-            tablelist.classList.add(strClsListInTable);
-            contentlisttable.appendChild(tablelist);
+            let tablelist1 = populatetable(arryMainNavItem[1][1], arryitemlist, arryMainNavItem[1][4]);
+            tablelist1.dataset[strListTableNavItem] = arryMainNavItem[1][0];
+            tablelist1.classList.add(strClsListInTable);
+            contentlisttable.appendChild(tablelist1);
             break;
 
         // pay profile //
@@ -231,20 +230,31 @@ function navitem_clicked() {
             let arryprofilelist = payprofile.map(item => {
                 return { ID: item.ID, Name: item.Name }
             })
-            let tablelist4 = populatetable(arryMainNavItem[2][1], arryprofilelist, arryMainNavItem[2][4]);
-            tablelist4.dataset[strListTableNavItem] = arryMainNavItem[2][0];
-            tablelist4.classList.add(strClsListInTable);
-            contentlisttable.appendChild(tablelist4);
+            let tablelist2 = populatetable(arryMainNavItem[2][1], arryprofilelist, arryMainNavItem[2][4]);
+            tablelist2.dataset[strListTableNavItem] = arryMainNavItem[2][0];
+            tablelist2.classList.add(strClsListInTable);
+            contentlisttable.appendChild(tablelist2);
+            break;
+
+        // calc sheet //
+        case arryMainNavItem[5][0]:
+            let arrycalcsheet = calcsheet.map(item => {
+                return { ID: item.Employee, Name: employee.find(eee => eee.ID === item.Employee).Name }
+            })
+            let tablelist5 = populatetable(arryMainNavItem[5][1], arrycalcsheet, arryMainNavItem[5][4]);
+            tablelist5.dataset[strListTableNavItem] = arryMainNavItem[5][0];
+            tablelist5.classList.add(strClsListInTable);
+            contentlisttable.appendChild(tablelist5);
             break;
 
         default:
             let navitemX = arryMainNavItem.find(function (navitem) {
                 return navitem[0] === this;
             }, this.id)
-            let tablelist2 = populatetable(navitemX[1], navitemX[2], navitemX[4]);
-            tablelist2.dataset[strListTableNavItem] = navitemX[0];
-            tablelist2.classList.add(strClsListInTable);
-            contentlisttable.appendChild(tablelist2);
+            let tablelist = populatetable(navitemX[1], navitemX[2], navitemX[4]);
+            tablelist.dataset[strListTableNavItem] = navitemX[0];
+            tablelist.classList.add(strClsListInTable);
+            contentlisttable.appendChild(tablelist);
             break;
     }
 
@@ -257,9 +267,12 @@ function navitem_clicked() {
         case arryMainNavItem[4][0]:
             arryMainNavItem[4][4]();
             break;
-        case arryMainNavItem[5][0]:
-            arryMainNavItem[5][4]();
+        
+        // output //
+        case arryMainNavItem[6][0]:
+            arryMainNavItem[6][4]();
             break;
+
         default:
             let divfunction = document.createElement('div');
             divfunction.setAttribute('style', 'display:flex');
@@ -306,7 +319,28 @@ function employeedatarow_clicked() {
     }, this.dataset[strListID]);
 
     // initial detail display area //
-    init_divcontent(this.dataset[strListID], dataobj, null, [['Edit', editemployee_clicked]]);
+
+    let dataobj_form = init_divcontent_getdataobjform;
+    dataobj_form[0] = dataobj;
+    dataobj_form[1] = [['ID', false, 'text'],
+    ['Name', true, 'text'],
+    ['PayType', true, 'text'],
+    ['Address1', true, 'text'],
+    ['Address2', true, 'text'],
+    ['Address3', true, 'text'],
+    ['IC', true, 'text'],
+    ['Passport', true, 'text'],
+    ['Tel1', true, 'text'],
+    ['Tel2', true, 'text'],
+    ['Permit', true, 'text'],
+    ['Marital', true, 'text'],
+    ['DOB', true, 'text'],
+    ['Nationality', true, 'text'],
+    ['Race', true, 'text'],
+    ['Religion', true, 'text'],
+    ['PayProfile', true, 0]];
+    dataobj_form[2] = [payprofile];
+    init_divcontent(this.dataset[strListID], dataobj_form, null);
 
     // update content title //
     document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.FullName;
@@ -320,7 +354,20 @@ function payitemdatarow_clicked() {
     }, this.dataset[strListID]);
 
     // initial detail display area //
-    init_divcontent(this.dataset[strListID], dataobj, null, [['Edit', payitemedit_clicked]]);
+    let dataobj_form = init_divcontent_getdataobjform;
+    dataobj_form[0] = dataobj;
+    dataobj_form[1] = [['ID', false, 'text'],
+    ['Name', true, 'text'],
+    ['Remark', true, 'text'],
+    ['PayType', true, 'text'],
+    ['PayUnit', true, 'text'],
+    ['Rate', true, 'text'],
+    ['RateBase', true, 0],
+    ];
+    dataobj_form[2] = [payitem];
+    dataobj_form[3] = [[null, 'Edit', null, payitemedit_clicked]]
+
+    init_divcontent(this.dataset[strListID], dataobj_form, null);
 
     // update content title //
     document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.FullName;
@@ -350,7 +397,22 @@ function payprofiledatarow_clicked() {
     })
 
     // initial detail display area //
-    init_divcontent(this.dataset[strListID], profiledata, profiledetaildata, [['Edit', payprofileedit_clicked]], [['..', payprofileitemedit_clicked]]);
+    let dataobj_form = init_divcontent_getdataobjform();
+    dataobj_form[0] = profiledata;
+    dataobj_form[1] = [['ID', false, 'text'],
+    ['Name', true, 'text'],
+    ['Accommodation', true, 'text'],
+    ['Companycar', true, 'text']
+    ];
+    dataobj_form[2] = null;
+    dataobj_form[3] = [[null, 'Edit', null, payprofileedit_clicked]]
+
+
+    let dataobj_table = init_divcontent_getdataobjtable();
+    dataobj_table[0] = profiledetaildata
+    // arrybutton - an array of 0: button text, 1: button column, 2: button_clicked function
+    dataobj_table[2] = [['=', 2, payprofileitemedit_clicked]];
+    init_divcontent(this.dataset[strListID], dataobj_form, dataobj_table, null);
 
     // update content title //
     document.getElementById(strClsContentDetailTitle).innerHTML = profiledata.FullName;
@@ -404,7 +466,25 @@ function output_clicked() {
 
 // divcontentdetail is a column flex of: detailtitle + detailbox //
 // divcontentbox is a row flex of: detailnav + detailform //
-function init_divcontent(listID, dataobj_form, dataobj_table, arrybutton_form, arrybutton_table) {
+// 
+// dataobj_form is an array of 
+//  [
+//  - 0. dataobj of form
+//  - 1. datacol properties 
+//  - 2. dataobj of value-datacol
+//  - 3. array of button info
+//  ]
+// 
+// dataobj_table is an array of
+//  [
+//  - 0. dataobj of table
+//  - 1. header col properties
+//  - 2. array of button info [0-button for datarow; 2-button for table]
+//  ]
+// 
+function init_divcontent_getdataobjform() { return [null, null, null, null] }
+function init_divcontent_getdataobjtable() { return [null, null, null, null] }
+function init_divcontent(dataobj_ID, dataobj_form, dataobj_table, arrybutton_form, arrybutton_table) {
 
     toggle_logoinfo(false);
 
@@ -441,45 +521,59 @@ function init_divcontent(listID, dataobj_form, dataobj_table, arrybutton_form, a
     divcontentbox.style.flexDirection = 'row';//
 
     let newform;
-    if (dataobj_form) {
+    if (dataobj_form && dataobj_form[0]) {
         // navdetail //
-        divcontentbox.appendChild(loadnavdetail(listID, './img/banner_bg.jpg'));
+        divcontentbox.appendChild(loadnavdetail(dataobj_ID, './img/banner_bg.jpg'));
 
         // formdetail //
-        // let newform = populateform(dataobj_form, listID === '-1' ? true : false);
-        newform = populateform(dataobj_form, listID === '-1' ? true : false);
+        // newform = populateform(dataobj_form, dataobj_ID === '-1' ? true : false);
+
+        let objparam = vssfnc_formpopulate_param();
+        // objparam.caption = 'Entity Details'
+        // objparam.actionurl = serverendpoint;
+        // [description strings, requird, type]]
+        objparam.arrydatacol = dataobj_form[1];
+        objparam.arryjsondata = dataobj_form[0];
+        objparam.arrydataid = [dataobj_ID];
+        // objparam.htmlform = formdetails;
+        objparam.arrylabelinput = [['30%', -1],
+        ['70%', -1]];
+        objparam.arryitemdata = dataobj_form[2];
+        // objparam.arryclass = ['contentcaption', 'contentlabel', 'contentinput', 'contentbutton'];
+        objparam.arrybutton = dataobj_form[3];
+        newform = vssfnc_formpopulate(objparam);
 
         // detail functions //
-        let divdetailfunction = document.createElement('div');
-        let btn;
+        // let divdetailfunction = document.createElement('div');
+        // let btn;
 
-        divdetailfunction.style.textAlign = 'right';
-        divdetailfunction.style.padding = '2%';
-        divdetailfunction.style.display = 'flex';
-        divdetailfunction.style.justifyContent = 'space-evenly';
-        divdetailfunction.style.boxShadow = '0 0 2px';
-        divdetailfunction.style.marginTop = '2%';
+        // divdetailfunction.style.textAlign = 'right';
+        // divdetailfunction.style.padding = '2%';
+        // divdetailfunction.style.display = 'flex';
+        // divdetailfunction.style.justifyContent = 'space-evenly';
+        // divdetailfunction.style.boxShadow = '0 0 2px';
+        // divdetailfunction.style.marginTop = '2%';
 
-        if (arrybutton_form && arrybutton_form.length > 0) {
-            arrybutton_form.forEach(btnX => {
-                btn = document.createElement('button');
-                btn.dataset.ID = listID;
-                btn.innerHTML = btnX[0];
-                btn.onclick = btnX[1];
-                divdetailfunction.appendChild(btn);
-            })
-            newform.appendChild(divdetailfunction);
-        }
+        // if (arrybutton_form && arrybutton_form.length > 0) {
+        //     arrybutton_form.forEach(btnX => {
+        //         btn = document.createElement('button');
+        //         btn.dataset.ID = listID;
+        //         btn.innerHTML = btnX[0];
+        //         btn.onclick = btnX[1];
+        //         divdetailfunction.appendChild(btn);
+        //     })
+        //     newform.appendChild(divdetailfunction);
+        // }
 
         divcontentbox.appendChild(newform);
     }
 
-    if (dataobj_table) {
+    if (dataobj_table && dataobj_table[0]) {
         let objparam = vssfnc_tablepopulate_param();
         // objparam.caption = "Entity";
         // objparam.htmltable = tablelist;
         // objparam.htmltableid = 'Entity';
-        objparam.arryjsondata = dataobj_table;
+        objparam.arryjsondata = dataobj_table[0];
 
         // objparam.arryheadercol = [['ID', '50%', 0], ['Name', '50%', 0]];
         objparam.arryfooter = ['Item Count']
@@ -488,8 +582,8 @@ function init_divcontent(listID, dataobj_form, dataobj_table, arrybutton_form, a
         objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
         // objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
         objparam.arrysortind = [' (v)', ' (^)'];
-        if (arrybutton_table) {
-            objparam.arrybutton = ['..', 2, payprofileitemedit_clicked];
+        if (dataobj_table[2]) {
+            objparam.arrybutton = dataobj_table[2][0] //['=', 2, payprofileitemedit_clicked];
             // let arrybtn = ['..', 0, payprofileitemedit_clicked];
             // objparam.arrybutton.push(arrybtn);
             // objparam.boolbutton = true;
@@ -602,7 +696,6 @@ function payitemedit_clicked(e) {
                     else {
                         if (arrystr.length === 1) {
                             payitemX[ppt].push(arryrate)
-                            alert(arryrate);
                         }
                         else {
                             x++;
@@ -617,6 +710,7 @@ function payitemedit_clicked(e) {
         }
     }
     // without saving the edited data, prevent page refresh //
+    alert('Record edited.');
     e.preventDefault();
 }
 
@@ -626,7 +720,9 @@ function entitypersonal_clicked() {
         return employee.ID === this;
     }, this.dataset[strListID]);
 
-    init_divcontent(this.dataset[strListID], dataobj, null);
+    let dataobj_form = init_divcontent_getdataobjform()
+    dataobj_form[0] = dataobj;
+    init_divcontent(this.dataset[strListID], dataobj_form, null);
 }
 
 function entitysalarystruct_clicked() {
@@ -635,7 +731,9 @@ function entitysalarystruct_clicked() {
         return employee.ID === this;
     }, this.dataset[strListID]);
 
-    init_divcontent(this.dataset[strListID], dataobj, null);
+    let dataobj_form = init_divcontent_getdataobjform()
+    dataobj_form[0] = dataobj;
+    init_divcontent(this.dataset[strListID], dataobj_form, null);
 }
 
 function entitysalaryhistory_clicked() {
@@ -752,9 +850,24 @@ function payprofileitemedit_clicked(e) {
     e.preventDefault();
 }
 
+function calcsheetitemedit_clicked(e) {
+
+    let newqty = prompt('Enter Pay Quantity:');
+    let csitem = calcsheet.find(item => {
+        return item.Employee === this.dataset.id;
+    });
+    csitem.pay_quantity.find(pq=>pq[0]===)
+    // csitem.PayRate = newrate;
+
+console.log(csitem);
+
+    // without saving the edited data, prevent page refresh //
+    e.preventDefault();
+}
+
+
 function newemployee_clicked() {
     alert('new employee clicked');
-    init_divcontent('-1', employeedetail[0], null);
 }
 
 function fulllist_clicked() {
@@ -805,7 +918,7 @@ function processendmonth_clicked() {
 
                     // extract pay quantity
                     let eeecalcsheet = calcsheet.find(calc => {
-                        return calc.employee === eee.ID;
+                        return calc.Employee === eee.ID;
                     });
                     payqty = eeecalcsheet.pay_quantity.find(payqty => {
                         return payqty[0] === pitemX.PayUnit;
@@ -876,8 +989,9 @@ function processendmonth_clicked() {
         }
     })
 
-    init_divcontent('', null, payrollobj, null, null);
-    // console.log(payrollobj);
+    let dataobj_table = init_divcontent_getdataobjtable()
+    dataobj_table[0] = payrollobj;
+    init_divcontent('', null, dataobj_table, null, null);
 }
 
 
@@ -920,28 +1034,33 @@ function salaryitemvalid_clicked() {
 
 }
 
-function calcsheet_clicked() {
-    // let quantitymap = calcsheet.map(item => {
-    //     let eecalcsheet = []
-    //     item.pay_quantity.forEach(qtyitem => {
-    //         eecalcsheet.push({
-    //             Employee: item.employee,
-    //             PayUnit: payunit.find(item => { return item.ID = qtyitem[0] }).Name,
-    //             PayQuantity: qtyitem[1]
-    //         });
-    //     })
-    //     console.log(eecalcsheet);
-    //     return eecalcsheet;
-    // })
-    let quantitymap=[];
-    calcsheet.forEach(item=>{
-        item.pay_quantity.forEach(qty=>{
-            quantitymap.push({
-                Employee: employee.find(ee=> ee.ID === item.employee).Name,
-                PayUnit: payunit.find(item => item.ID === qty[0] ).Name,
-                PayQuantity: qty[1]
-            });
-        })
+function calcsheetdatarow_clicked() {
+    let quantitymap = [];
+    let eeecalcsheet = calcsheet.filter(item => item.Employee === this.dataset.id);
+
+    payunit.forEach(item => {
+        quantitymap.push({
+            ID:'',
+            Employee: '',
+            PayUnitID: item.ID,
+            PayUnit: item.Name,
+            PayQuantity: 0
+        });
     })
-    init_divcontent('', null, quantitymap, null, null);
+
+    // ID:'2',
+    // Employee: '102',
+    // pay_quantity: [['101', 1], ['102', 26]]
+
+    quantitymap.forEach(item => {
+        item.ID = eeecalcsheet[0].Employee;
+        item.Employee = employee.find(ee => ee.ID === this.dataset.id).Name;
+        let arrypayqty = eeecalcsheet[0].pay_quantity.find(pq => pq[0] === item.PayUnitID);
+        item.PayQuantity = arrypayqty ? arrypayqty[1] : 0;
+    })
+
+    let dataobj_table = init_divcontent_getdataobjtable;
+    dataobj_table[0] = quantitymap;
+    dataobj_table[2] = [['=', 4, calcsheetitemedit_clicked]];
+    init_divcontent('', null, dataobj_table, null, null);
 }

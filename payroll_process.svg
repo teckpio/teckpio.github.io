@@ -53,12 +53,17 @@
      id="layer1"
      transform="translate(0,-164.70832)">
     <g
-       id="g947">
+       id="g985">
+      <path
+         inkscape:connector-curvature="0"
+         id="path935"
+         d="M 151.54182,206.12835 140.85104,189.82491"
+         style="fill:none;stroke:#000000;stroke-width:0.52916666;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
       <path
          inkscape:connector-curvature="0"
          id="path903"
          d="m 145.92916,216.55186 -22.71791,38.48681"
-         style="fill:none;stroke:#000000;stroke-width:0.52916666;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="fill:none;stroke:#000000;stroke-width:0.52916664;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          inkscape:connector-curvature="0"
          id="path5461"
@@ -288,6 +293,34 @@
            x="42.617302"
            id="tspan5353-8"
            sodipodi:role="line">=&gt;</tspan></text>
+      <ellipse
+         ry="12.085209"
+         rx="22.909624"
+         cy="183.27679"
+         cx="139.24744"
+         id="path5343-6"
+         style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:0.68027502;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         id="text5122-89-0"
+         y="181.50256"
+         x="139.52132"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan929"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+           y="181.50256"
+           x="139.52132"
+           sodipodi:role="line">Accrued</tspan><tspan
+           id="tspan933"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+           y="190.32201"
+           x="139.52132"
+           sodipodi:role="line">Item</tspan><tspan
+           id="tspan5193-9"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+           y="199.14145"
+           x="139.52132"
+           sodipodi:role="line" /></text>
     </g>
   </g>
 </svg>

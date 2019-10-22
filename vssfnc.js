@@ -37,7 +37,9 @@ function vssfnc_tablepopulate_param() {
     //          0:ascending
     //          1:descending
     //x boolbutton - true to add a button in the first cell of each row
-    // arrybutton - an array of 0: button text, 1: button column, 2: button_clicked function
+    // arrybutton - a 2-dim array of 
+    // [0: datarow button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
+    // ?? [1: table button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
     // fncdatarowclicked - function to call on datarow clicked
     //x fncbuttonclicked - function to call on datarow button clicked
 
@@ -161,8 +163,8 @@ function vssfnc_tablepopulate(objparam) {
         Object.values(item).forEach((val, index) => {
             // construct str for button element //
             if (boolbtnadded) {
-                strbtn='';
-            } else{
+                strbtn = '';
+            } else {
                 if (objparam.arrybutton) {
                     let btncolumn = objparam.arrybutton[1] ? objparam.arrybutton[1] : 0;
                     if (index === btncolumn) {
@@ -173,7 +175,14 @@ function vssfnc_tablepopulate(objparam) {
             }
 
             // construct the td element //
-            strRowData += `<td style = 'text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}'> ${strbtn} ${val} </td>`;
+            let boolinput=false
+            if(boolinput){
+                strRowData+='<td><select style="width:100%"></select></td>';
+            }
+            else{
+                strRowData += `<td style = 'text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}'> ${strbtn} ${val} </td>`;
+            }
+            
 
             // collect aggregate details (count and total) //
             if (objparam.arryfooteragg) {
@@ -392,8 +401,7 @@ function vssfnc_formpopulate_param() {
     //          1:even-numbered row
     //          2:selected row
     // arrydataid - an array of data attributes - 
-    //          0:table id
-    //          1:datarow id
+    //          0:dataobj id (id of record of form)
     // arrysortind - an array of 2 strings indicator for column sorting - 
     //          0:ascending
     //          1:descending
@@ -417,7 +425,7 @@ function vssfnc_formpopulate_param() {
         arrysortind: null,
         arrybutton: null,
         fncdatarowclicked: undefined,
-        fncbuttonclicked: undefined
+        // fncbuttonclicked: undefined
     }
 }
 
@@ -426,6 +434,7 @@ function vssfnc_formpopulate_param() {
 function vssfnc_formpopulate(objparam) {
 
 
+    // set default for null parameter //
 
     let boolReturnElem = false;
     if (objparam.htmlform) {
@@ -439,6 +448,27 @@ function vssfnc_formpopulate(objparam) {
         boolReturnElem = true;
     }
 
+    // css class of form
+    if (true) {
+        objparam.htmlform.style.width = '90%';
+    }
+
+    // datacol 
+    if (!objparam.arrydatacol) {
+        // objparam.arrydatacol=[];
+        // var ppt;
+        // let record=[];
+        // for(ppt in objparam.arryjsondata[0]){
+
+        // }
+        // objparam.arrydatacol = [['ID', false, 'text'],
+        // ['Name', true, 'text'],
+        // ['Code', true, 'text'],
+        // ['Currency', true, 'text'],
+        // ['Debit Account', true, 0],
+        // ['Credit Account', true, 1],
+        // ['Taxable', false, 'radio']];
+    }
 
     // 
     // format form //
@@ -489,14 +519,14 @@ function vssfnc_formpopulate(objparam) {
 
         var labelelement = document.createElement('LABEL');
         labelelement.width = '100%';
-        if (objparam.arrydatacol[idxarrydatacol][0]) {
+        if (objparam.arrydatacol && objparam.arrydatacol[idxarrydatacol][0]) {
             labelelement.innerHTML = objparam.arrydatacol[idxarrydatacol][0];
         }
         else {
             labelelement.innerHTML = ppt;
         }
 
-        if (objparam.arryclass[1]) {
+        if (objparam.arryclass && objparam.arryclass[1]) {
             labelelement.classList.add(objparam.arryclass[1]);
         }
         labelelement.setAttribute('style', 'width:100%;')
@@ -512,7 +542,7 @@ function vssfnc_formpopulate(objparam) {
         let inputelement;
 
         // dataobj vs non-dataobj //
-        if (isNaN(objparam.arrydatacol[idxarrydatacol][2])) {
+        if (objparam.arrydatacol && isNaN(objparam.arrydatacol[idxarrydatacol][2])) {
 
             // non-dataobj -> checkbox vs text //
             if (objparam.arrydatacol[idxarrydatacol][2] === 'radio') {
@@ -575,28 +605,43 @@ function vssfnc_formpopulate(objparam) {
             // supporting data by id //
             inputelement = document.createElement('select');
             inputelement.setAttribute('name', ppt);
-            inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);
+            if (objparam.arrydatacol) {
+                inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);
+            }
 
             // populate select list item //
-            objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]].forEach(value => {
-                var opt = document.createElement('option');
-                opt.value = value.ID;
-                opt.text = value.NName;
-                inputelement.add(opt);
-            })
+            if (objparam.arryitemdata && objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]]) {
+                objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]].forEach(value => {
+                    var opt = document.createElement('option');
+                    // asuumption: ppt0 = ID, ppt1 = Name //
+                    let ppt;
+                    let i = 0;
+                    for (ppt in value) {
+                        switch (i) {
+                            case 0: opt.value = value[ppt]; break;
+                            case 1: opt.text = value[ppt]; break;
+                            default: break;
+                        }
+                        if (i > 1) { break } else { i++ }
+                    }
+                    // opt.value = value.ID;
+                    // opt.text = value.Name;
+                    inputelement.add(opt);
+                })
+                // find the data in the list //
+                var dataobjX = objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]].find(function (dataobj) {
+                    return dataobj.ID === objparam.arryjsondata[ppt];
+                })
+                if (dataobjX) {
+                    inputelement.value = dataobjX.ID;
+                }
+                else {
+                    inputelement.value = '';
+                }
+            }
 
-            // find the data in the list //
-            var dataobjX = objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]].find(function (dataobj) {
-                return dataobj.ID === objparam.arryjsondata[ppt];
-            })
-            if (dataobjX) {
-                inputelement.value = dataobjX.ID;
-            }
-            else {
-                inputelement.value = '';
-            }
         }
-        if (objparam.arryclass[2]) {
+        if (objparam.arryclass && objparam.arryclass[2]) {
             inputelement.classList.add(objparam.arryclass[2]);
         }
 
@@ -614,23 +659,40 @@ function vssfnc_formpopulate(objparam) {
 
     //  button //
     let divbutton = document.createElement('div');
-    divbutton.setAttribute('style', 'display:flex; justify-content:space-around;');
-    divbutton.classList.add(objparam.arryclass[3]);
-
-    for (let i = 0; i < objparam.arrybutton.length; i++) {
-        var buttonelement = document.createElement('button');
-        buttonelement.setAttribute('type', objparam.arrybutton[i][0]);
-        buttonelement.innerHTML = objparam.arrybutton[i][1];
-
-        buttonelement.classList.add(objparam.arryclass[i][2]);
-        // buttonelement.formAction=objparam.actionurl;
-        if (objparam.arrybutton[i][0] !== 'submit' && objparam.arrybutton[i][0] !== 'reset') {
-            buttonelement.onclick = objparam.arrybutton[i][3];
-        }
-        divbutton.appendChild(buttonelement);
+    if (objparam.arryclass && objparam.arryclass[3] && objparam.arryclass[3] != null) {
+        divbutton.classList.add(objparam.arryclass[3]);
+    }
+    else {
+        divbutton.setAttribute('style',
+            `box-sizing:border-box;
+            width:100%; 
+            margin:2% auto;
+            display:flex;
+            border: 1px solid gray;
+            justify-content:space-around;
+            padding:2%;`);
     }
 
-    objparam.htmlform.appendChild(divbutton);
+    if (objparam.arrybutton) {
+        for (let i = 0; i < objparam.arrybutton.length; i++) {
+            var buttonelement = document.createElement('button');
+            buttonelement.setAttribute('type', objparam.arrybutton[i][0]);
+            buttonelement.innerHTML = objparam.arrybutton[i][1];
+            buttonelement.dataset.ID = objparam.arrydataid[0];
+
+            if (objparam.arryclass && objparam.arryclass[i]) {
+                buttonelement.classList.add(objparam.arryclass[i][2]);
+            }
+
+            // buttonelement.formAction=objparam.actionurl;
+            if (objparam.arrybutton[i][0] !== 'submit' && objparam.arrybutton[i][0] !== 'reset') {
+                buttonelement.onclick = objparam.arrybutton[i][3];
+            }
+            divbutton.appendChild(buttonelement);
+        }
+
+        objparam.htmlform.appendChild(divbutton);
+    }
 
     // onsubmit is required to convert checkbox / radio value //
     // objparam.htmlform.onsubmit = function (evt) {
