@@ -468,7 +468,7 @@ function payprofiledatarow_clicked() {
     // new function //
     let divfunctionnew = document.createElement('div');
     divfunctionnew.setAttribute('style',
-                            `width:90%;
+        `width:90%;
                             box-sizing:box-border;
                             padding:2%;
                             margin:2% auto;
@@ -968,14 +968,21 @@ function processendmonth_clicked() {
                     let eeecalcsheet = calcsheet.find(calc => {
                         return calc.Employee === eee.ID;
                     });
-                    payqty = eeecalcsheet.pay_quantity.find(payqty => {
+
+                    let calcqty = eeecalcsheet.pay_quantity.find(payqty => {
                         return payqty[0] === payitemX.PayUnit;
-                    })[1];
+                    });
+                    if (calcqty) {
+                        payqty = calcqty[1];
+                    } else {
+                        payqty = 0;
+                    }
+
 
 
                     // extract payrate
 
-                    payrate = processendmonth_getPayRate(eee, profilepayitem, payrollobj, payitemX);
+                    payrate = processendmonth_getPayRate(eee, eeecalcsheet, profilepayitem, payrollobj, payitemX);
 
 
                     // load payroll table //
@@ -1005,7 +1012,7 @@ function processendmonth_clicked() {
     init_divcontent('', null, dataobj_table, null, null);
 }
 
-function processendmonth_getPayRate(eee, profilepayitem, payrollobj, payitemX) {
+function processendmonth_getPayRate(eee, eeecalcsheet, profilepayitem, payrollobj, payitemX) {
     // precedence:
     // - 1. PayRate of PayProfileItem
     // - 2. Rate of PayItem
@@ -1014,7 +1021,7 @@ function processendmonth_getPayRate(eee, profilepayitem, payrollobj, payitemX) {
 
     let payrate;
 
-    if (profilepayitem.PayRate && profilepayitem.PayRate != null) {
+    if (profilepayitem.PayRate && !isNaN(profilepayitem.PayRate)) {
         // user-defined in payprofile //
         // - 1. PayRate of PayProfileItem
         payrate = profilepayitem.PayRate;
@@ -1033,7 +1040,6 @@ function processendmonth_getPayRate(eee, profilepayitem, payrollobj, payitemX) {
                 });
 
                 if (processedRateBaseItem) {
-                    // console.log(processedRateBaseItem);
                     payrate = payitemX.PerRate * processedRateBaseItem.PayAmount;
                 }
                 else {
@@ -1061,12 +1067,26 @@ function processendmonth_getPayRate(eee, profilepayitem, payrollobj, payitemX) {
                     RangeBase = processedRateBaseItem.PayAmount;
                 }
                 else {
-                    let basepayitem = payitem.find(pi => pi.ID === payitemX.RangeBase);
-                    if (basepayitem) {
-                        RangeBase = basepayitem.Rate;
+                    if(payitemX.RangeBase === payitemX.ID){
+                        // {
+                        //     ID: '1',
+                        //     Employee: '101',
+                        //     pay_quantity: [['101', 1], ['102', 26]]
+                        // }
+                        
+                        RangeBase = eeecalcsheet.pay_quantity.find(arrypq=>{
+                            return arrypq[0] === payitemX.RangeBase;
+                        })[1];
                     }
-                    else {
+                    else{
+                        let basepayitem = payitem.find(pi => pi.ID === payitemX.RangeBase);
+                        if (basepayitem) {
+                            RangeBase = basepayitem.Rate;
+                        }
+                        else {
+                        }
                     }
+                    
                 }
                 let arryRange = processendmonth_getArryRange(payitemX.Range);
                 if (arryRange.length > 1) {
@@ -1200,15 +1220,19 @@ function calcsheetupdate_clicked() {
     calcsheet_curr.forEach(pq => {
         eeecalcsheet.pay_quantity.push([pq.PayUnitID, pq.PayQuantity]);
     })
+    alert('Record edited.');
 }
 
 function payprofileitemupdate_clicked(e) {
     payprofileitem_curr.forEach(pfitem => {
-        payprofileitem.find(pfi => {
+        let ppitem = payprofileitem.find(pfi => {
             pfi.ID === pfitem.ID;
-        }).PayRate = pfitem.PayRate;
+        })
+        if (ppitem) {
+            ppitem.PayRate = pfitem.PayRate;
+        }
     })
-    // let ppfitem = payprofileitem.find(item => item.)
+    alert('Record edited.');
     e.preventDefault();
 }
 
@@ -1221,6 +1245,7 @@ function payprofileitem_selectchanged() {
 function payprofileitemunew_clicked(e) {
     payprofileitem.push(payprofileitem_new);
     payprofileitem_new = null;
+    alert('Record edited.');
     e.preventDefault();
 }
 

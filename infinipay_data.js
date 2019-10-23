@@ -24,9 +24,10 @@ var payprofileitem = [
     { ID: '4', PayProfile: '102', PayItem: '101', PayRate: 3000 },
     { ID: '5', PayProfile: '102', PayItem: '104', PayRate: null },
     { ID: '6', PayProfile: '103', PayItem: '102', PayRate: 50 },
-    { ID: '5', PayProfile: '103', PayItem: '104', PayRate: null },
-    { ID: '7', PayProfile: '104', PayItem: '103', PayRate: 3500 },
-    { ID: '8', PayProfile: '104', PayItem: '103', PayRate: null },
+    { ID: '7', PayProfile: '103', PayItem: '104', PayRate: null },
+    { ID: '8', PayProfile: '102', PayItem: '110', PayRate: null },
+    { ID: '9', PayProfile: '104', PayItem: '103', PayRate: 3500 },
+    { ID: '10', PayProfile: '104', PayItem: '103', PayRate: null },
 ]
 
 var payitem = [
@@ -95,7 +96,7 @@ var payitem = [
         PayType: 'Daily',
         PayUnit: '101',
         Range: '0,1000,50;1001,2500,80;2501,10000,100',
-        RangeBase: '102',
+        RangeBase: '101',
         PerRate: 0,
         PerBase: '102',
         Rate: 0,
@@ -189,12 +190,12 @@ var payitem = [
         Name: 'Mileage Claims',
         Remark: '',
         PayType: 'Daily',
-        PayUnit: '101',
-        Range: '',
-        RangeBase: '',
+        PayUnit: '110',
+        Range: '0,1000,.3;1001,3000,.2;3001,5000,.1',
+        RangeBase: '110',
         PerRate: 0,
         PerBase: '',
-        Rate: 80,
+        Rate: 0,
         MinMax: '',
         ValidPeriod: '',
         AccruedItem: '',
@@ -233,7 +234,8 @@ var payunit = [
     { ID: '106', Name: 'pay_hour' },
     { ID: '107', Name: 'ot_hour1' },
     { ID: '108', Name: 'ot_hour2' },
-    { ID: '109', Name: 'contract_pcs' }
+    { ID: '109', Name: 'contract_pcs' },
+    { ID: '110', Name: 'mileage' }
 ]
 
 var calcsheet = [
