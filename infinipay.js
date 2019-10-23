@@ -101,6 +101,8 @@ var contentdetailinfo = document.getElementById(strDivContentDetailID);
 
 // working data //
 var calcsheet_curr = [];
+var payprofileitem_curr = [];
+var payprofileitem_new;
 
 // 
 // initial load //
@@ -328,25 +330,30 @@ function employeedatarow_clicked() {
     let dataobj_form = init_divcontent_getdataobjform;
     dataobj_form[0] = dataobj;
     dataobj_form[1] = [['ID', false, 'text'],
-    ['Name', true, 'text'],
-    ['PayType', true, 'text'],
-    ['Address1', true, 'text'],
-    ['Address2', true, 'text'],
-    ['Address3', true, 'text'],
-    ['IC', true, 'text'],
-    ['Passport', true, 'text'],
-    ['Tel1', true, 'text'],
-    ['Tel2', true, 'text'],
-    ['Permit', true, 'text'],
-    ['Marital', true, 'text'],
-    ['DOB', true, 'text'],
-    ['Nationality', true, 'text'],
-    ['Race', true, 'text'],
-    ['Religion', true, 'text'],
-    ['PayProfile', true, 0]];
+    ['Name', false, 'text'],
+    ['PayType', false, 'text'],
+    ['Address1', false, 'text'],
+    ['Address2', false, 'text'],
+    ['Address3', false, 'text'],
+    ['IC', false, 'text'],
+    ['Passport', false, 'text'],
+    ['Tel1', false, 'text'],
+    ['Tel2', false, 'text'],
+    ['Permit', false, 'text'],
+    ['Marital', false, 'text'],
+    ['DOB', false, 'text'],
+    ['Nationality', false, 'text'],
+    ['Race', false, 'text'],
+    ['Religion', false, 'text'],
+    ['PayProfile', false, 0]];
     dataobj_form[2] = [payprofile];
-    init_divcontent(this.dataset[strListID], dataobj_form, null);
+    // arrybutton - a 2-dim array of [button[(0)type, (1)text, (2)class, (3)clickedfunction]]
+    dataobj_form[3] = [[null, '<<', null, functionudefined_clicked],
+    [null, 'Edit', null, functionudefined_clicked],
+    [null, 'New', null, functionudefined_clicked],
+    [null, '>>', null, functionudefined_clicked]];
 
+    init_divcontent(this.dataset[strListID], dataobj_form, null);
     // update content title //
     document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.FullName;
 
@@ -365,12 +372,21 @@ function payitemdatarow_clicked() {
     ['Name', true, 'text'],
     ['Remark', true, 'text'],
     ['PayType', true, 'text'],
-    ['PayUnit', true, 'text'],
+    ['PayUnit', true, 0],
+    ['Range', true, 'text'],
+    ['RangeBase', true, 1],
+    ['PerRate', true, 'text'],
+    ['PerBase', true, 1],
     ['Rate', true, 'text'],
-    ['RateBase', true, 0],
-    ];
-    dataobj_form[2] = [payitem];
-    dataobj_form[3] = [[null, 'Edit', null, payitemedit_clicked]]
+    ['Min-Max', true, 'text'],
+    ['Valid Period', true, 'text'],
+    ['Accrued Item', true, 'text'],
+    ['Stat Requirment', true, 'text']]
+    dataobj_form[2] = [payunit, payitem];
+    dataobj_form[3] = [[null, '<<', null, functionudefined_clicked],
+    [null, 'Edit', null, payitemedit_clicked],
+    [null, 'New', null, functionudefined_clicked],
+    [null, '>>', null, functionudefined_clicked]];
 
     init_divcontent(this.dataset[strListID], dataobj_form, null);
 
@@ -386,12 +402,13 @@ function payprofiledatarow_clicked() {
         return item.ID === this;
     }, this.dataset[strListID]);
 
-    // load payprofile detail //
-    let profileitem = payprofileitem.filter(item => {
+    // load payprofile item //
+    payprofileitem_curr = [];
+    payprofileitem_curr = payprofileitem.filter(item => {
         return item.PayProfile === profileid; //?? why cannot use this like profiledata ??//
     }, profileid)
     // insert name of payitem //
-    let profiledetaildata = profileitem.map(item => {
+    let profiledetaildata = payprofileitem_curr.map(item => {
         return {
             ID: item.ID,
             // PayProfile: item.PayProfile,
@@ -401,7 +418,8 @@ function payprofiledatarow_clicked() {
         };
     })
 
-    // initial detail display area //
+    // init detail display area //
+    // profile form //
     let dataobj_form = init_divcontent_getdataobjform();
     dataobj_form[0] = profiledata;
     dataobj_form[1] = [['ID', false, 'text'],
@@ -410,14 +428,74 @@ function payprofiledatarow_clicked() {
     ['Companycar', true, 'text']
     ];
     dataobj_form[2] = null;
-    dataobj_form[3] = [[null, 'Edit', null, payprofileedit_clicked]]
+    dataobj_form[3] = [[null, '<<', null, functionudefined_clicked],
+    [null, 'Edit', null, payprofileedit_clicked],
+    [null, 'New', null, functionudefined_clicked],
+    [null, '>>', null, functionudefined_clicked]];
 
-
+    // profile item table //
     let dataobj_table = init_divcontent_getdataobjtable();
     dataobj_table[0] = profiledetaildata
     // arrybutton - an array of 0: button text, 1: button column, 2: button_clicked function
-    dataobj_table[2] = [['=', 2, payprofileitemedit_clicked]];
-    init_divcontent(this.dataset[strListID], dataobj_form, dataobj_table, null);
+    // dataobj_table[2] = [['=', 2, payprofileitemedit_clicked]];
+
+    // [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function]]]
+    dataobj_table[1] = [
+        ['ID', '10%', 0, null],
+        ['Pay Item', '70%', 0, null],
+        ['Pay Rate', '20%', 0, [1, null, payprofileitemedit_clicked]]
+    ];
+    let divdetail = init_divcontent(this.dataset[strListID], dataobj_form, dataobj_table, null);
+
+    // create funtions for profile payitem table //
+    // edit function //
+    let divfunctionedit = document.createElement('div');
+    divfunctionedit.setAttribute('style',
+        `width:90%;
+                            box-sizing:box-border;
+                            padding:2%;
+                            margin:2% auto;
+                            display:flex;
+                            justify-content:space-around;
+                            border:1px solid gray`);
+    let btnEdit = document.createElement('button');
+    btnEdit.innerHTML = 'Edit';
+    btnEdit.dataset.id = profileid;
+    btnEdit.onclick = payprofileitemupdate_clicked;
+    divfunctionedit.appendChild(btnEdit);
+    divdetail.appendChild(divfunctionedit);
+
+    // new function //
+    let divfunctionnew = document.createElement('div');
+    divfunctionnew.setAttribute('style',
+                            `width:90%;
+                            box-sizing:box-border;
+                            padding:2%;
+                            margin:2% auto;
+                            display:flex;
+                            justify-content:space-around;
+                            border:1px solid gray`);
+    // select for pay item //
+    let payitemselect = document.createElement('select');
+    payitemselect.style.width = '60%';
+    payitemselect.dataset.id = profileid;
+    payitem.forEach(item => {
+        let selectoption = document.createElement('option');
+        selectoption.text = item.Name;
+        selectoption.setAttribute('value', item.ID);
+        payitemselect.appendChild(selectoption);
+    })
+    payitemselect.onchange = payprofileitem_selectchanged;
+
+    divfunctionnew.appendChild(payitemselect);
+
+    // new button //
+    let btnNew = document.createElement('button');
+    btnNew.innerHTML = 'New'
+    btnNew.onclick = payprofileitemunew_clicked;
+    divfunctionnew.appendChild(btnNew);
+
+    divdetail.appendChild(divfunctionnew);
 
     // update content title //
     document.getElementById(strClsContentDetailTitle).innerHTML = profiledata.FullName;
@@ -525,6 +603,7 @@ function init_divcontent(dataobj_ID, dataobj_form, dataobj_table, arrybutton_for
     divcontentbox.style.display = 'flex';
     divcontentbox.style.flexDirection = 'row';//
 
+    // form content //
     let newform;
     if (dataobj_form && dataobj_form[0]) {
         // navdetail //
@@ -548,39 +627,17 @@ function init_divcontent(dataobj_ID, dataobj_form, dataobj_table, arrybutton_for
         objparam.arrybutton = dataobj_form[3];
         newform = vssfnc_formpopulate(objparam);
 
-        // detail functions //
-        // let divdetailfunction = document.createElement('div');
-        // let btn;
-
-        // divdetailfunction.style.textAlign = 'right';
-        // divdetailfunction.style.padding = '2%';
-        // divdetailfunction.style.display = 'flex';
-        // divdetailfunction.style.justifyContent = 'space-evenly';
-        // divdetailfunction.style.boxShadow = '0 0 2px';
-        // divdetailfunction.style.marginTop = '2%';
-
-        // if (arrybutton_form && arrybutton_form.length > 0) {
-        //     arrybutton_form.forEach(btnX => {
-        //         btn = document.createElement('button');
-        //         btn.dataset.ID = listID;
-        //         btn.innerHTML = btnX[0];
-        //         btn.onclick = btnX[1];
-        //         divdetailfunction.appendChild(btn);
-        //     })
-        //     newform.appendChild(divdetailfunction);
-        // }
-
         divcontentbox.appendChild(newform);
     }
 
+    // table content //
     if (dataobj_table && dataobj_table[0]) {
         let objparam = vssfnc_tablepopulate_param();
         // objparam.caption = "Entity";
         // objparam.htmltable = tablelist;
         // objparam.htmltableid = 'Entity';
         objparam.arryjsondata = dataobj_table[0];
-
-        // objparam.arryheadercol = [['ID', '50%', 0], ['Name', '50%', 0]];
+        objparam.arryheadercol = dataobj_table[1];
         objparam.arryfooter = ['Item Count']
         objparam.boolitemcount = true;
         objparam.arrydataid = ['table', 'ID'];
@@ -613,6 +670,15 @@ function init_divcontent(dataobj_ID, dataobj_form, dataobj_table, arrybutton_for
 
     divcontentdetail.appendChild(divcontentbox);
     contentdetail.appendChild(divcontentdetail);
+
+    if (dataobj_form && dataobj_table) {
+        return newform;
+    }
+    else {
+        return divcontentdetail;
+    }
+
+    // return divcontentbox;
 }
 
 
@@ -686,27 +752,8 @@ function payitemedit_clicked(e) {
     if (inputelem) {
         var ppt;
         for (ppt in payitemX) {
-            if (ppt === 'Rate') {
-                payitemX[ppt] = [];
-                let arryrate = [];
-                let arrystr = form.elements[ppt].value.split(',');
-                let x = 1;
-                for (var i = 0; i < arrystr.length; i++) {
-                    arryrate.push(arrystr[i]);
-                    if (x === 3) {
-                        x = 1;
-                        payitemX[ppt].push(arryrate);
-                        arryrate = [];
-                    }
-                    else {
-                        if (arrystr.length === 1) {
-                            payitemX[ppt].push(arryrate)
-                        }
-                        else {
-                            x++;
-                        }
-                    }
-                }
+            if (ppt === 'Rate' || ppt === 'PerRate') {
+                payitemX[ppt] = parseFloat(form.elements[ppt].value).toFixed(2);
             }
             else {
                 payitemX[ppt] = form.elements[ppt].value;
@@ -838,30 +885,28 @@ function payprofileedit_clicked(e) {
             payprofileX[ppt] = form.elements[ppt].value;
         }
     }
+
+    alert('Record edited.');
+
     // without saving the edited data, prevent page refresh //
     e.preventDefault();
 }
 
 function payprofileitemedit_clicked(e) {
-
-    let newrate = prompt('Enter New PayRate:');
-    let ppfitem = payprofileitem.find(item => {
+    let ppfitem = payprofileitem_curr.find(item => {
         return item.ID === this.dataset.id
     });
-    ppfitem.PayRate = newrate;
-
-
+    ppfitem.PayRate = parseFloat(this.value).toFixed(2);
+    console.log(payprofileitem_curr);
     // without saving the edited data, prevent page refresh //
     e.preventDefault();
 }
 
 function calcsheetitemedit_clicked(e) {
-
-    let newqty = prompt('Enter Pay Quantity:');
     let csitem = calcsheet_curr.find(item => {
         return item.ID === this.dataset.id;
     });
-    csitem.PayQuantity = newqty;
+    csitem.PayQuantity = this.value;
 
     // without saving the edited data, prevent page refresh //
     e.preventDefault();
@@ -911,7 +956,7 @@ function processendmonth_clicked() {
                 // extract info (PayRate) of PayItem and then
                 // apply extracted PayQuantity to PayRate to get PayAmount //
                 arryprofilepayitem.forEach(profilepayitem => {
-                    let pitemX = payitem.find(item => {
+                    let payitemX = payitem.find(item => {
                         return item.ID === profilepayitem.PayItem;
                     })
 
@@ -919,63 +964,27 @@ function processendmonth_clicked() {
                     let payqty, payrate;
 
                     // extract pay quantity
+
                     let eeecalcsheet = calcsheet.find(calc => {
                         return calc.Employee === eee.ID;
                     });
                     payqty = eeecalcsheet.pay_quantity.find(payqty => {
-                        return payqty[0] === pitemX.PayUnit;
+                        return payqty[0] === payitemX.PayUnit;
                     })[1];
 
 
                     // extract payrate
-                    // precedence:
-                    // - PayRate of PayProfileItem
-                    // - Rate of RateBase of PayItem
-                    // - Rate will be 1 of 3
-                    //      - flat / percentage / range
 
-                    if (profilepayitem.PayRate && profilepayitem.PayRate != null) {
-                        // user-defined in payprofile //
-                        payrate = profilepayitem.PayRate;
-                    }
-                    else {
-                        // extract from payitem - find calculated base item and payrate of payitem //
-                        let piCalcBase = payrollobj.find(pi => {
-                            return pi.PayItemID === pitemX.RateBase && pi.Name === eee.Name;
-                        });
+                    payrate = processendmonth_getPayRate(eee, profilepayitem, payrollobj, payitemX);
 
-                        if (piCalcBase) {
-                            if (Array.isArray(pitemX.Rate)) {
-                                console.log(pitemX.Rate);
-                                if (pitemX.Rate.length > 1) {
-                                    let raterange = pitemX.Rate.find(rangeX => { return piCalcBase.PayAmount >= rangeX[0] && piCalcBase.PayAmount <= rangeX[1] });
-                                    if (raterange) {
-                                        payrate = raterange[2];
-                                    }
-                                }
-                                else {
-                                    payrate = pitemX.Rate[0];
-                                }
-                            }
-                            else {
-                                payrate = pitemX.Rate;
-                            }
-
-                        }
-                        else {
-                            // if PayItem Base is not yet calculated/processed, used set PayItem Base //
-                            payrate = pitemX.Rate;
-                        }
-
-                    }
 
                     // load payroll table //
                     payrollobj.push(
                         {
                             Name: eee.Name,
                             Profile: pprofile.Name,
-                            PayItemID: pitemX.ID,
-                            PayItem: pitemX.Name,
+                            PayItemID: payitemX.ID,
+                            PayItem: payitemX.Name,
                             PayQuantity: payqty,
                             PayRate: payrate,
                             PayAmount: payqty * payrate
@@ -996,11 +1005,104 @@ function processendmonth_clicked() {
     init_divcontent('', null, dataobj_table, null, null);
 }
 
+function processendmonth_getPayRate(eee, profilepayitem, payrollobj, payitemX) {
+    // precedence:
+    // - 1. PayRate of PayProfileItem
+    // - 2. Rate of PayItem
+    // - 3. PerRate on PerBase of PayItem
+    // - 4. Extract from Range
+
+    let payrate;
+
+    if (profilepayitem.PayRate && profilepayitem.PayRate != null) {
+        // user-defined in payprofile //
+        // - 1. PayRate of PayProfileItem
+        payrate = profilepayitem.PayRate;
+    }
+    else {
+        // - 2. Rate of PayItem
+        if (payitemX.Rate && payitemX.Rate > 0) {
+            payrate = payitemX.Rate;
+        }
+        else {
+            // - 3. PerRate on PerBase of PayItem
+            if (payitemX.PerRate && payitemX.PerRate > 0) {
+                // extract RateBase from ProcessPayroll Object, if none, extract from PayItem 
+                let processedRateBaseItem = payrollobj.find(pi => {
+                    return pi.PayItemID === payitemX.PerBase && pi.Name === eee.Name;
+                });
+
+                if (processedRateBaseItem) {
+                    // console.log(processedRateBaseItem);
+                    payrate = payitemX.PerRate * processedRateBaseItem.PayAmount;
+                }
+                else {
+                    // if PayItem Base is not yet calculated/processed, used set PayItem Base //
+                    let rBaseItem = payitem.find(itm => itm.ID === payitemX.PerBase);
+                    if (rBaseItem) {
+                        payrate = payitemX.PerRate * rBaseItem.Rate;
+                    }
+                    else {
+
+                    }
+                }
+
+            }
+            else {
+                // - 4. Extract from Range
+
+                // extract RateBase from ProcessPayroll Object, if none, extract from PayItem 
+                let processedRateBaseItem = payrollobj.find(pi => {
+                    return pi.PayItemID === payitemX.RangeBase && pi.Name === eee.Name;
+                });
+
+                let RangeBase;
+                if (processedRateBaseItem) {
+                    RangeBase = processedRateBaseItem.PayAmount;
+                }
+                else {
+                    let basepayitem = payitem.find(pi => pi.ID === payitemX.RangeBase);
+                    if (basepayitem) {
+                        RangeBase = basepayitem.Rate;
+                    }
+                    else {
+                    }
+                }
+                let arryRange = processendmonth_getArryRange(payitemX.Range);
+                if (arryRange.length > 1) {
+                    let raterange = arryRange.find(rangeX => { return RangeBase >= rangeX[0] && RangeBase <= rangeX[1] });
+                    if (raterange) {
+                        payrate = raterange[2];
+                    }
+                }
+                else {
+                }
+            }
+        }
+    }
+    return payrate;
+}
+
+function processendmonth_getArryRange(strRange) {
+    // Range: '0,1000,50;1001,2500,80;2501,10000,100;',
+    let arryRange = strRange.split(';');
+    let arryRangeM = [];
+    if (arryRange) {
+        arryRange.forEach(strR => {
+            arryRangeM.push(strR.split(','));
+        })
+    }
+    return arryRangeM;
+}
 
 function processyearend_clicked() {
     alert('Year end Processing ...');
 }
 
+function functionudefined_clicked(e) {
+    alert('undefined function');
+    e.preventDefault();
+}
 function outputmidpayslip_clicked() {
     alert('WIP ...');
 }
@@ -1039,7 +1141,7 @@ function salaryitemvalid_clicked() {
 function calcsheetdatarow_clicked() {
     // remove previously added update button //
     let btnnode = document.getElementById(strDivTableFunctionID)
-    if (btnnode){btnnode.parentNode.removeChild(btnnode)}
+    if (btnnode) { btnnode.parentNode.removeChild(btnnode) }
 
     calcsheet_curr = [];
     let eeecalcsheet = calcsheet.filter(item => item.Employee === this.dataset.id);
@@ -1067,14 +1169,21 @@ function calcsheetdatarow_clicked() {
 
     let dataobj_table = init_divcontent_getdataobjtable;
     dataobj_table[0] = calcsheet_curr;
+    // [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function]]]
+    dataobj_table[1] = [
+        ['ID', '10%', 0, null],
+        ['Employee', '50%', 0, null],
+        ['UnitID', '10%', 0, null],
+        ['Unit', '20%', 0, null],
+        ['Quantity', '10%', 0, [1, null, calcsheetitemedit_clicked]]
+    ];
     dataobj_table[2] = [['=', 4, calcsheetitemedit_clicked]];
-    init_divcontent('', null, dataobj_table, null, null);
+    let divcontent = init_divcontent('', null, dataobj_table, null, null);
 
     // add update button //
     let divfunction = document.createElement('div');
     divfunction.id = strDivTableFunctionID;
-    divfunction.setAttribute('style', 'width:90%; border:1px solid gray; box-sizing:box-border; padding:2%');
-    
+    divfunction.setAttribute('style', 'width:50%; padding:2%; margin:2% auto; border:1px solid gray; box-sizing:box-border;');
 
     let btnupdate = document.createElement('button');
     btnupdate.innerHTML = 'Update';
@@ -1082,8 +1191,7 @@ function calcsheetdatarow_clicked() {
     btnupdate.onclick = calcsheetupdate_clicked;
 
     divfunction.appendChild(btnupdate);
-    contentdetail.appendChild(divfunction);
-
+    divcontent.appendChild(divfunction);
 }
 
 function calcsheetupdate_clicked() {
@@ -1092,4 +1200,36 @@ function calcsheetupdate_clicked() {
     calcsheet_curr.forEach(pq => {
         eeecalcsheet.pay_quantity.push([pq.PayUnitID, pq.PayQuantity]);
     })
+}
+
+function payprofileitemupdate_clicked(e) {
+    payprofileitem_curr.forEach(pfitem => {
+        payprofileitem.find(pfi => {
+            pfi.ID === pfitem.ID;
+        }).PayRate = pfitem.PayRate;
+    })
+    // let ppfitem = payprofileitem.find(item => item.)
+    e.preventDefault();
+}
+
+function payprofileitem_selectchanged() {
+    // { ID: '1', PayProfile: '101', PayItem: '101', PayRate: 500 },
+    payprofileitem_new = { ID: payprofileitem_getnewid(), PayProfile: this.dataset.id, PayItem: this.value, PayRate: 0 };
+
+}
+
+function payprofileitemunew_clicked(e) {
+    payprofileitem.push(payprofileitem_new);
+    payprofileitem_new = null;
+    e.preventDefault();
+}
+
+function payprofileitem_getnewid() {
+    let maxid = 0;
+    payprofileitem.forEach(item => {
+        if (parseInt(item.ID) > maxid) {
+            maxid = parseInt(item.ID);
+        }
+    })
+    return maxid + 1;
 }

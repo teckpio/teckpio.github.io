@@ -8,11 +8,18 @@
 // vssfnc_formpopulate_param
 // vssfnc_formpopulate
 
+
+
+
+
+
 function vssfnc_tablepopulate_param() {
     // caption - caption of table (optional)
-    // arryheadercol - a 2-dim array of  [header col[description strings, col-width, text-alignment]]
-    //                  (col-width: set to '0%' to hide column - col-width is checked in both <th> and <td> to determine whether to <display:none>)
+    // arryheadercol - a 2-dim array of:
+    //                  [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function]]]
+    //                  (col-width - set to '0%' to hide column - col-width is checked in both <th> and <td> to determine whether to <display:none>)
     //                  (text-alignment - 0:center, -1:left, 1:right (default - left))
+    //                  (input type - 1: input element, 2: select element)
     //               - if arryheadercol is not provided, header col info will be extracted from arryJSON's properties - col-width will be defaulted, text-alignment - ?)
     // arryJSON - a json data object 
     // arryfooteragg - an array of aggregate functions (sum or ave) on required column
@@ -36,12 +43,10 @@ function vssfnc_tablepopulate_param() {
     // arrysortind - an array of 2 strings indicator for column sorting - 
     //          0:ascending
     //          1:descending
-    //x boolbutton - true to add a button in the first cell of each row
     // arrybutton - a 2-dim array of 
     // [0: datarow button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
     // ?? [1: table button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
     // fncdatarowclicked - function to call on datarow clicked
-    //x fncbuttonclicked - function to call on datarow button clicked
 
     return {
         caption: null,
@@ -56,9 +61,7 @@ function vssfnc_tablepopulate_param() {
         arrydataid: null,
         arrysortind: null,
         arrybutton: null,
-        // boolbutton: false,
         fncdatarowclicked: undefined,
-        // fncbuttonclicked: undefined
     }
 }
 
@@ -157,7 +160,6 @@ function vssfnc_tablepopulate(objparam) {
         strRowData += `<tr class = ${objparam.arryclass[3]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>`;
 
         // datarow button, if any //
-        // boolbtnadded = objparam.boolbutton ? false : true;
         boolbtnadded = objparam.arrybutton ? false : true;
         strbtn = '';
         Object.values(item).forEach((val, index) => {
@@ -168,21 +170,25 @@ function vssfnc_tablepopulate(objparam) {
                 if (objparam.arrybutton) {
                     let btncolumn = objparam.arrybutton[1] ? objparam.arrybutton[1] : 0;
                     if (index === btncolumn) {
-                        strbtn = boolbtnadded ? '' : `<button class = ${objparam.arryclass[4]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>..</button>`;
+                        strbtn = boolbtnadded ? '' : `<button class = ${objparam.arryclass[4]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>${objparam.arrybutton[0]}</button>`;
                         boolbtnadded = true;
                     }
                 }
             }
 
             // construct the td element //
-            let boolinput=false
-            if(boolinput){
-                strRowData+='<td><select style="width:100%"></select></td>';
+            // td is either for display or input //
+            // 3: [input type, input data, onchange function]]
+            if (objparam.arryheadercol[index][3]) {
+                // for input //
+                let inputtype = objparam.arryheadercol[index][3][0] === 2 ? 'select' : 'input';
+                strRowData += `<td><${inputtype} value=${val} style='width:100%; text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')}' data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}></${inputtype}></td>`;
             }
-            else{
+            else {
+                // for display //
                 strRowData += `<td style = 'text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}'> ${strbtn} ${val} </td>`;
             }
-            
+
 
             // collect aggregate details (count and total) //
             if (objparam.arryfooteragg) {
@@ -281,6 +287,22 @@ function vssfnc_tablepopulate(objparam) {
         }
     }
 
+    // eventhandler for table input field //
+    // [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function]]]
+    if(objparam.arryheadercol){
+        objparam.arryheadercol.forEach(headercol=>{
+            if(headercol[3]){
+                //?? how to extract input/select elements of specific column //
+                let tableinput = objparam.htmltable.getElementsByTagName('Input');
+                if(tableinput){
+                    for(var i = 0; i < tableinput.length; i++){
+                        tableinput[i].onchange = headercol[3][2];
+                    }   
+                }
+            }
+        })
+    }
+
 
     // eventhandler for table datarow button //
     if (objparam.arrybutton) {
@@ -292,10 +314,11 @@ function vssfnc_tablepopulate(objparam) {
         }
     }
 
+
+
     if (boolReturnElem) {
         return objparam.htmltable;
     }
-
 }
 
 // }
