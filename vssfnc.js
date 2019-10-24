@@ -289,15 +289,15 @@ function vssfnc_tablepopulate(objparam) {
 
     // eventhandler for table input field //
     // [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function]]]
-    if(objparam.arryheadercol){
-        objparam.arryheadercol.forEach(headercol=>{
-            if(headercol[3]){
+    if (objparam.arryheadercol) {
+        objparam.arryheadercol.forEach(headercol => {
+            if (headercol[3]) {
                 //?? how to extract input/select elements of specific column //
                 let tableinput = objparam.htmltable.getElementsByTagName('Input');
-                if(tableinput){
-                    for(var i = 0; i < tableinput.length; i++){
+                if (tableinput) {
+                    for (var i = 0; i < tableinput.length; i++) {
                         tableinput[i].onchange = headercol[3][2];
-                    }   
+                    }
                 }
             }
         })
@@ -634,6 +634,15 @@ function vssfnc_formpopulate(objparam) {
 
             // populate select list item //
             if (objparam.arryitemdata && objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]]) {
+
+                // a null value as option if data field not required //
+                if (!objparam.arrydatacol[idxarrydatacol][1]) {
+                    var opt = document.createElement('option');
+                    opt.value = null;
+                    opt.text = '';
+                    inputelement.add(opt);
+                }
+
                 objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][2]].forEach(value => {
                     var opt = document.createElement('option');
                     // asuumption: ppt0 = ID, ppt1 = Name //
@@ -647,8 +656,6 @@ function vssfnc_formpopulate(objparam) {
                         }
                         if (i > 1) { break } else { i++ }
                     }
-                    // opt.value = value.ID;
-                    // opt.text = value.Name;
                     inputelement.add(opt);
                 })
                 // find the data in the list //

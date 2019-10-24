@@ -75,6 +75,7 @@ html{
 
     display:flex;
     flex-direction: column;
+
 }
 
 /* mainnav is a row flex of: Employee + Pay Item + Statutory Item + Process + etc */
@@ -310,4 +311,26 @@ html{
 
     font-size: var(--fontsizefooter);
     text-align: center;
+}
+
+/* logo page */
+#contentdetaillogo{
+    width:50%;
+    /* background-color:gray; */
+    background:linear-gradient(-45deg, gray, black, gray);
+    box-shadow: 5px 5px 2px darkmagenta;
+}
+
+#logoinfinipay{
+    margin:30% auto;
+    padding:5%;
+    letter-spacing: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size:3.5em;
+    background:linear-gradient(180deg, purple, pink, rgb(207, 11, 207));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color:transparent;
+    
 }

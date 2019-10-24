@@ -18,7 +18,7 @@ var payprofile = [
 ]
 
 var payprofileitem = [
-    { ID: '1', PayProfile: '101', PayItem: '101', PayRate: 500 },
+    { ID: '1', PayProfile: '101', PayItem: '101', PayRate: 5000 },
     { ID: '2', PayProfile: '101', PayItem: '104', PayRate: null },
     { ID: '3', PayProfile: '101', PayItem: '108', PayRate: null },
     { ID: '4', PayProfile: '102', PayItem: '101', PayRate: 3000 },
@@ -202,20 +202,6 @@ var payitem = [
         StatRequired: ''
     }
 ]
-
-// var payitem2 = [
-//     { ID: '101', Name: 'Monthly Basic', Remark: '', PayType: 'Monthly', PayUnit: '101', Rate: 2500, RateBase: '101' },
-
-//     { ID: '102', Name: 'Daily Rated', Remark: '', PayType: 'Daily', PayUnit: '102', Rate: 50, RateBase: '102' },
-
-//     { ID: '103', Name: 'Car Allowance', Remark: '', PayType: 'Monthly', PayUnit: '101', Rate: [[1000, 3000, 300], [3001, 5000, 500], [5001, 10000, 800]], RateBase: '101' },
-
-//     { ID: '104', Name: 'Car Allowance2', Remark: '', PayType: 'Monthly', PayUnit: '101', Rate: [[1000, 3000, 200], [3001, 5000, 300], [5001, 10000, 500]], RateBase: '102' },
-
-//     { ID: '105', Name: 'Mileage Claims', Remark: '', PayType: 'Monthly', PayUnit: '101', Rate: [[2000, 3000, 350], [3001, 5000, 550], [5001, 10000, 850]], RateBase: '105' },
-
-//     { ID: '106', Name: 'Travelling Allowance', Remark: '', PayType: 'Monthly', PayUnit: '101', Rate: [[2000, 3000, 100], [3001, 5000, 150], [5001, 10000, 200]], RateBase: '101' }
-// ]
 
 var statitem = [
     { ID: '101', Name: 'EPF' },
