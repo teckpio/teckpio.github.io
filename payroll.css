@@ -26,3 +26,7 @@ table tr:nth-child(odd){
 table tr:nth-child(even){
     background-color:#EEE;
 }
+
+table td{
+    border:1px solid lightgray;
+}

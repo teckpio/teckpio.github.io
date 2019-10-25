@@ -109,14 +109,35 @@ function vssfnc_tablepopulate(objparam) {
     // caption //
 
     if (objparam.caption) {
-        let strcaption = `<caption class = ${objparam.arryclass[0]}>${objparam.caption}</caption>`;
-        objparam.htmltable.innerHTML += strcaption;
+        let caption = document.createElement('caption');
+        caption.classList.add(objparam.arryclass[0]);
+        caption.innerHTML = objparam.caption;
+        objparam.htmltable.appendChild(caption);
+
+
+        // let strcaption = `<caption class = ${objparam.arryclass[0]}>${objparam.caption}</caption>`;
+        // objparam.htmltable.innerHTML += strcaption;
     }
 
-    let strHeaderCol = `<thead><tr class = "${objparam.arryclass[1]}">`;
+    let thead = document.createElement('thead');
+
+    let trheader = document.createElement('tr');
+    trheader.classList.add(objparam.arryclass[1]);
+    // =>
+    // let strHeaderCol = `<thead><tr class = "${objparam.arryclass[1]}">`;
     if (objparam.arryheadercol) {
         objparam.arryheadercol.forEach((datacol, index) => {
-            strHeaderCol += `<th class = "${objparam.arryclass[2]}" id = ${index} data-${objparam.arrydataid[0]} = "${objparam.htmltableid}" style = "width:${objparam.arryheadercol[index][1]} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}" >${datacol[0]}</th>`;
+            let th = document.createElement('th');
+            th.classList.add(objparam.arryclass[2]);
+            th.id = index;
+            th.dataset[objparam.arrydataid[0]] = objparam.htmltableid
+            th.setAttribute('style', "width:${objparam.arryheadercol[index][1]} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}");
+            th.innerHTML = datacol[0];
+            trheader.appendChild(th);
+
+            // =>
+            // strHeaderCol += `<th class = "${objparam.arryclass[2]}" id = ${index} data-${objparam.arrydataid[0]} = "${objparam.htmltableid}" style = "width:${objparam.arryheadercol[index][1]} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}" >${datacol[0]}</th>`;
+
         });
     }
     else {
@@ -127,22 +148,33 @@ function vssfnc_tablepopulate(objparam) {
 
         // objparam.arryheadercol = [[headercol[0], '0%', 0], [headercol[1], '100%',]];
         for (header in objparam.arryjsondata[0]) {
+            let th = document.createElement('th');
+            th.classList.add(objparam.arryclass[2]);
+            th.id = index;
+            th.dataset[objparam.arrydataid[0]] = objparam.htmltableid;
+            th.innerHTML = header;
+            trheader.appendChild(th);
 
-            strHeaderCol += `<th class = "${objparam.arryclass[2]}" id = ${index} data-${objparam.arrydataid[0]} = "${objparam.htmltableid}">${header}</th>`;
+            // =>
+            // strHeaderCol += `<th class = "${objparam.arryclass[2]}" id = ${index} data-${objparam.arrydataid[0]} = "${objparam.htmltableid}">${header}</th>`;
             objparam.arryheadercol.push([header, '10%', 0]);
             index += 1;
+
         }
     }
-    strHeaderCol += '</tr></thead>';
-    objparam.htmltable.innerHTML += strHeaderCol;
+    // strHeaderCol += '</tr></thead>';
+    thead.appendChild(trheader);
+    objparam.htmltable.appendChild(thead);
+    // objparam.htmltable.innerHTML += strHeaderCol;
 
     // 
     // load datarow //
     //
-
-    let strRowData = '<tbody>'
+    let tbody = document.createElement('tbody');
+    // =>
+    // let strRowData = '<tbody>'
     let boolbtnadded;
-    let strbtn;
+    // let strbtn;
 
     // an array for total for each datacol of arrjJSON item //
     if (objparam.arryjsondata.length > 0) {
@@ -157,20 +189,32 @@ function vssfnc_tablepopulate(objparam) {
 
 
     objparam.arryjsondata.forEach((item, index) => {
-        strRowData += `<tr class = ${objparam.arryclass[3]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>`;
+
+        let tr = document.createElement('tr');
+        tr.classList.add(objparam.arryclass[3]);
+        tr.dataset[objparam.arrydataid[1]] = Object.values(item)[0];
+        // =>
+        // strRowData += `<tr class = ${objparam.arryclass[3]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>`;
 
         // datarow button, if any //
         boolbtnadded = objparam.arrybutton ? false : true;
-        strbtn = '';
+        // strbtn = '';
         Object.values(item).forEach((val, index) => {
             // construct str for button element //
+            let td = document.createElement('td');
             if (boolbtnadded) {
-                strbtn = '';
+                // strbtn = '';
             } else {
                 if (objparam.arrybutton) {
                     let btncolumn = objparam.arrybutton[1] ? objparam.arrybutton[1] : 0;
                     if (index === btncolumn) {
-                        strbtn = boolbtnadded ? '' : `<button class = ${objparam.arryclass[4]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>${objparam.arrybutton[0]}</button>`;
+                        let button = document.createElement('button');
+                        button.classList.add(objparam.arryclass[4]);
+                        button.dataset[objparam.arrydataid[1]] = Object.values(item)[0];
+                        button.innerHTML = objparam.arrybutton[0];
+                        // =>
+                        // strbtn = boolbtnadded ? '' : `<button class = ${objparam.arryclass[4]} data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}>${objparam.arrybutton[0]}</button>`;
+                        td.appendChild(button);
                         boolbtnadded = true;
                     }
                 }
@@ -182,32 +226,56 @@ function vssfnc_tablepopulate(objparam) {
             if (objparam.arryheadercol[index][3]) {
                 // for input //
                 let inputtype = objparam.arryheadercol[index][3][0] === 2 ? 'select' : 'input';
-                strRowData += `<td><${inputtype} value=${val} style='width:100%; text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')}' data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}></${inputtype}></td>`;
+                let inputelem = document.createElement(inputtype);
+                inputelem.value = val;
+                inputelem.setAttribute('style', `width:100%; text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')}`);
+                inputelem.dataset[objparam.arrydataid[1]] = Object.values(item)[0];
+                // =>
+                // strRowData += `<td><${inputtype} value=${val} style='width:100%; text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')}' data-${objparam.arrydataid[1]} = ${Object.values(item)[0]}></${inputtype}></td>`;
+
+                td.appendChild(inputelem);
             }
             else {
                 // for display //
-                strRowData += `<td style = 'text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}'> ${strbtn} ${val} </td>`;
+                td.setAttribute('style',
+                    `text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')};
+                     ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}'`);
+                td.innerHTML = val;
+                // =>
+                // strRowData += `<td style = 'text-align:${objparam.arryheadercol[index][2] === 1 ? 'right' : (objparam.arryheadercol[index][2] === 0 ? 'center' : 'left')} ${objparam.arryheadercol[index][1] === '0%' ? ';display:none' : ''}'> ${strbtn} ${val} </td>`;
             }
-
 
             // collect aggregate details (count and total) //
             if (objparam.arryfooteragg) {
                 arrydatasum[index] = parseInt(arrydatasum[index]) + parseInt(isNaN(val) ? 0 : val);
             }
+            tr.appendChild(td);
         });
-        strRowData += '</tr>';
+
+        tbody.appendChild(tr);
+        // strRowData += ' </tr>';
     });
-    strRowData += '</tbody>';
-    objparam.htmltable.innerHTML += strRowData;
+
+    objparam.htmltable.appendChild(tbody);
+
+    // strRowData += '</tbody>';
+    // objparam.htmltable.innerHTML += strRowData;
 
     // table footer //
-    let strfooterhtml = '<tfoot>';
+    let tfoot = document.createElement('tfoot');
+    // =>
+    // let strfooterhtml = '<tfoot>';
 
     // aggregate function
     if (objparam.arryfooteragg) {
-        strfooterhtml += `<tr class = ${objparam.arryclass[5]}>`
+        let trfooter = document.createElement('tr');
+        trfooter.classList.add(objparam.arryclass[5]);
+        // =>
+        // strfooterhtml += `<tr class = ${objparam.arryclass[5]}>`
         objparam.arryfooteragg.forEach((fnc, index) => {
-            strfooterhtml += '<td>'
+            let td = document.createElement('td');
+
+            // strfooterhtml += '<td>'
             switch (fnc) {
                 case 'sum':
                     strfooterhtml += arrydatasum[index];
@@ -218,10 +286,14 @@ function vssfnc_tablepopulate(objparam) {
                 default:
                     break;
             }
-            strfooterhtml += '</td>'
+            td.innerHTML = strfooterhtml;
+            // =>
+            // strfooterhtml += '</td>'
         })
         // objparam.htmltable.innerHTML += `<tfoot><tr class = ${objparam.arryclass[5]}><td>${objparam.arryjsondata.length}</td>${objparam.arryfooter}</tr></tfoot>`;
-        strfooterhtml += '</tr>'
+        // strfooterhtml += '</tr>'
+        trfooter.appendChild(td);
+        tfoot.appendChild(trfooter);
     }
 
 
@@ -229,15 +301,24 @@ function vssfnc_tablepopulate(objparam) {
     // if (objparam.boolitemcount) {
     //     objparam.htmltable.innerHTML += `<tr class = ${objparam.arryclass[5]}><td>Count: ${objparam.arryjsondata.length}</td></tr>`;
     // }
-    strfooterhtml += '</tfoot>'
-    objparam.htmltable.innerHTML += strfooterhtml;
+
+    // =>
+    // strfooterhtml += '</tfoot>'
+    // objparam.htmltable.innerHTML += strfooterhtml;
+
+
+
+
 
     // 
     // eventhandler for table datarow clicked //
     // ! do it before formatting odd/even row, which changes the class of the datarow !//
     // 
 
-    let tabledatarow = document.getElementsByClassName(objparam.arryclass[3]);
+    // !! cannot use getElementsByClassName(objparam.arryclass[3] !!
+    // !! if arryclass is not specified, all elements will have same class name !!
+    // let tabledatarow = document.getElementsByClassName(objparam.arryclass[3]);
+    let tabledatarow = objparam.htmltable.getElementsByTagName('tr');
     for (var i = 0; i < tabledatarow.length; i++) {
         if (objparam.fncdatarowclicked === undefined) {
             tabledatarow[i].onclick = function () {
@@ -258,14 +339,24 @@ function vssfnc_tablepopulate(objparam) {
     // 
     vssfnc_paintoddevenrow(objparam.htmltable, objparam.arryclassdatarow[0], objparam.arryclassdatarow[1], objparam.arryclassdatarow[2]);
 
+
+
+
+
+
+
     // 
     // add event handler //
     // 
 
     // eventhandler for table header click-sort //
-    let tablecolheaderX = objparam.htmltable.getElementsByClassName(objparam.arryclass[2]);
+    // !! cannot use getElementsByClassName(objparam.arryclass[2] !!
+    // !! if arryclass is not specified, all elements will have same class name !!
+    // let tablecolheaderX = objparam.htmltable.getElementsByClassName(objparam.arryclass[2]);
+    let tablecolheaderX = objparam.htmltable.getElementsByTagName('th');
     for (var i = 0; i < tablecolheaderX.length; i++) {
         tablecolheaderX[i].onclick = function () {
+            // ?? why header clicked triggered when datarow is clicked ?? //
             // try {
 
             let colidx = this.id;
@@ -277,13 +368,15 @@ function vssfnc_tablepopulate(objparam) {
                 return datacol;
             })
 
-            // rename sorted headercol //
-            sortedtablecol[colidx][0] += (dir < 0) ? objparam.arrysortind[0] : objparam.arrysortind[1];
+            if (sortedtablecol[colidx] && objparam.arrysortind) {
+                // rename sorted headercol //
+                sortedtablecol[colidx][0] += (dir < 0) ? objparam.arrysortind[0] : objparam.arrysortind[1];
 
-            // reload sorted table //
-            objparam.arryheadercol = sortedtablecol;
-            objparam.arryjsondata = vssfnc_sortarrydata(objparam.arryjsondata, colidx, dir);
-            vssfnc_tablepopulate(objparam);
+                // reload sorted table //
+                objparam.arryheadercol = sortedtablecol;
+                objparam.arryjsondata = vssfnc_sortarrydata(objparam.arryjsondata, colidx, dir);
+                vssfnc_tablepopulate(objparam);
+            }
         }
     }
 
@@ -424,7 +517,8 @@ function vssfnc_formpopulate_param() {
     //          1:even-numbered row
     //          2:selected row
     // arrydataid - an array of data attributes - 
-    //          0:dataobj id (id of record of form)
+    //          0:form id
+    //          1:dataobj id (id of record of form)
     // arrysortind - an array of 2 strings indicator for column sorting - 
     //          0:ascending
     //          1:descending
@@ -468,6 +562,7 @@ function vssfnc_formpopulate(objparam) {
     }
     else {
         objparam.htmlform = document.createElement('form');
+        objparam.htmlform.id = objparam.arrydataid[0];
         boolReturnElem = true;
     }
 
@@ -542,6 +637,13 @@ function vssfnc_formpopulate(objparam) {
 
         var labelelement = document.createElement('LABEL');
         labelelement.width = '100%';
+        // if (objparam.arrydatacol) {
+        //     if (objparam.arrydatacol[idxarrydatacol][0]) {
+        //         labelelement.innerHTML = objparam.arrydatacol[idxarrydatacol][0];
+        //     }
+        //     else { labelelement.innerHTML = ppt; }
+        // }
+        // else { labelelement.innerHTML = ppt; }
         if (objparam.arrydatacol && objparam.arrydatacol[idxarrydatacol][0]) {
             labelelement.innerHTML = objparam.arrydatacol[idxarrydatacol][0];
         }
@@ -708,7 +810,7 @@ function vssfnc_formpopulate(objparam) {
             var buttonelement = document.createElement('button');
             buttonelement.setAttribute('type', objparam.arrybutton[i][0]);
             buttonelement.innerHTML = objparam.arrybutton[i][1];
-            buttonelement.dataset.ID = objparam.arrydataid[0];
+            buttonelement.dataset.ID = objparam.arrydataid[1];
 
             if (objparam.arryclass && objparam.arryclass[i]) {
                 buttonelement.classList.add(objparam.arryclass[i][2]);

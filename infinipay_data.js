@@ -211,6 +211,13 @@ var statitem = [
     { ID: '106', Name: 'FOMEMA' }
 ]
 
+var accrueditem = [
+    { ID: '101', Name: 'Advance', Date: '', Balance: 0 },
+    { ID: '102', Name: 'Loan', Date: '', Balance: 0 },
+    { ID: '104', Name: 'Ex-Gratia', Date: '', Balance: 0 },
+    { ID: '105', Name: 'Retirement', Date: '', Balance: 0 }
+]
+
 var payunit = [
     { ID: '101', Name: 'pay_month' },
     { ID: '102', Name: 'pay_day' },
@@ -222,6 +229,12 @@ var payunit = [
     { ID: '108', Name: 'ot_hour2' },
     { ID: '109', Name: 'contract_pcs' },
     { ID: '110', Name: 'mileage' }
+]
+
+var payprocess = [
+    {ID: '101', Name: 'Mid-Month Process', Setting1:'', Setting2:''},
+    {ID: '102', Name: 'End-Month Process', Setting1:'', Setting2:''},
+    {ID: '103', Name: 'Year-End Process', Setting1:'', Setting2:''}  
 ]
 
 var calcsheet = [

@@ -73,26 +73,49 @@ const arrytasklist = [
 
 const arrypayrateextract = [
     {
-        'ProfilePayItem PayRate':'x',
+        'ProfilePayItem PayRate':'r',
         'PayItem Rate': '',
-        'PayItem PayUnit': '',
         'PayItem Per + PerBase': '',
         'PayItem Range + RangeBase': '',
-        'Processed PayUnit':'',
-        'PayItem Rate':'',
-        'PayRate':'x'
+        'PayItem PayUnit (if null -> PayQty defaulted to 1)': 'q',
+        'Processed PayQty of PayItem PayUnit':'q',
+        'Processed PayAmount (if null -> PayItem Rate)':'',
+        'PayRate':'R',
+        'PayQty':'Q'
+    },
+    {
+        'ProfilePayItem PayRate':'',
+        'PayItem Rate': 'r',
+        'PayItem Per + PerBase': '',
+        'PayItem Range + RangeBase': '',
+        'PayItem PayUnit (if null -> Processed PayQty ignored and PayQty defaulted to 1)': 'q',
+        'Processed PayQty of PayItem PayUnit':'q',
+        'Processed PayAmount (if null -> PayItem Rate)':'',
+        'PayRate':'R',
+        'PayQty':'Q'
     },
     {
         'ProfilePayItem PayRate':'',
         'PayItem Rate': '',
-        'PayItem PayUnit': '',
-        'PayItem Per + PerBase': 'x',
+        'PayItem Per + PerBase': 'r',
         'PayItem Range + RangeBase': '',
-        'Processed PayUnit':'',
-        'PayItem Rate':'',
-        'PayRate':'x',
-        'Processed PayQty':'x',
+        'PayItem PayUnit (if null -> Processed PayQty ignored and PayQty defaulted to 1)': 'q',
+        'Processed PayQty of PayItem PayUnit':'q',
+        'Processed PayAmount (if null -> PayItem Rate)':'r',
+        'PayRate':'R',
+        'PayQty':'Q'
     },
+    {
+        'ProfilePayItem PayRate':'',
+        'PayItem Rate': '',
+        'PayItem Per + PerBase': '',
+        'PayItem Range + RangeBase ($ OR %)': 'r',
+        'PayItem PayUnit (if null -> Processed PayQty ignored and PayQty defaulted to 1)': 'q',
+        'Processed PayQty of PayItem PayUnit':'q',
+        'Processed PayAmount (if null -> PayItem Rate)':'r',
+        'PayRate':'R',
+        'PayQty':'Q'
+    }
 ]
 
 const arrysystembuild = [
