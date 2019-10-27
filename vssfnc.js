@@ -92,7 +92,11 @@ function vssfnc_tablepopulate(objparam) {
     // set css style of table element //
     if (true) {
         // set default if table class not set 
-        objparam.htmltable.style.borderCollapse = 'collapse';
+        // objparam.htmltable.style.borderCollapse = 'collapse';
+        objparam.htmltable.setAttribute('style',
+            `border-collapse:collapse;
+            width:100%;
+            margin: 0 auto;`);
     }
 
     // handling of null param //

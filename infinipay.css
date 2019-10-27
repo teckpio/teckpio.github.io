@@ -28,7 +28,7 @@
     --colorcontentdetailtitlebg:black;
     --colorcontentdetailtitlefg:yellow;
 
-    --colorcontentdetailbg:#FFE;
+    --colorcontentdetailbg:rgb(232, 239, 240);
     --colorcontentdetailfg:black;
 
     --colorfooterbg:black;
@@ -266,6 +266,7 @@ html{
     flex-basis:var(--fbcontentdetail);
     background-color:var(--colorcontentdetailbg);
     color:var(--colorcontentdetailfg);
+    margin:0 auto;
 }
 
 .contentimgdiv{

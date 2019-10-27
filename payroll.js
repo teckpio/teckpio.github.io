@@ -75,7 +75,7 @@ const arrypayrateextract = [
     {
         'ProfilePayItem PayRate':'r',
         'PayItem Rate': '',
-        'PayItem Per + PerBase': '',
+        'PayItem Per + PerBase + PerBaseRate': '',
         'PayItem Range + RangeBase': '',
         'PayItem PayUnit (if null -> PayQty defaulted to 1)': 'q',
         'Processed PayQty of PayItem PayUnit':'q',
@@ -86,7 +86,7 @@ const arrypayrateextract = [
     {
         'ProfilePayItem PayRate':'',
         'PayItem Rate': 'r',
-        'PayItem Per + PerBase': '',
+        'PayItem Per + PerBase + PerBaseRate': '',
         'PayItem Range + RangeBase': '',
         'PayItem PayUnit (if null -> Processed PayQty ignored and PayQty defaulted to 1)': 'q',
         'Processed PayQty of PayItem PayUnit':'q',
@@ -97,7 +97,7 @@ const arrypayrateextract = [
     {
         'ProfilePayItem PayRate':'',
         'PayItem Rate': '',
-        'PayItem Per + PerBase': 'r',
+        'PayItem Per + PerBase + PerBaseRate': 'r',
         'PayItem Range + RangeBase': '',
         'PayItem PayUnit (if null -> Processed PayQty ignored and PayQty defaulted to 1)': 'q',
         'Processed PayQty of PayItem PayUnit':'q',
@@ -108,7 +108,7 @@ const arrypayrateextract = [
     {
         'ProfilePayItem PayRate':'',
         'PayItem Rate': '',
-        'PayItem Per + PerBase': '',
+        'PayItem Per + PerBase + PerBaseRate': '',
         'PayItem Range + RangeBase ($ OR %)': 'r',
         'PayItem PayUnit (if null -> Processed PayQty ignored and PayQty defaulted to 1)': 'q',
         'Processed PayQty of PayItem PayUnit':'q',
