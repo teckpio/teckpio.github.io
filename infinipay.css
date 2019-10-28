@@ -1,17 +1,20 @@
 :root{
     --heightheader:8vh;
     --heightmain:84vh;
-    /* --heightcontenttitle:5hv; */
     --heightfooter:8vh;
 
     --colorheaderbg:black;
     --colorheaderfg:white;
 
-    --colorcontentlistbg:rgb(127, 201, 166);
+    --colorbordercontentbox:darkgray;
+
+    --colorcontentlistbg:rgb(185, 226, 207);
 
     --colormainnavbg:gray;
     --colormainnavfg:white;
 
+    --colormaincontentbg:black;
+    
     --colorcontenttitlebg:black;
     --colorcontenttitlefg:yellow;
 
@@ -141,6 +144,7 @@ html{
     width:100%;
     display:flex;
     flex-direction:column;
+    background-color:var(--colormaincontentbg);
 }
 
 #contenttitle{
@@ -172,7 +176,8 @@ html{
     box-sizing: border-box;
     padding:2%;
 
-    border:  var(--colorcontentdetailbg) solid 2px;
+    border:  var(--colorbordercontentbox) solid 1px;
+    /* border:  var(--colorcontentdetailbg) solid 2px; */
 }
 
 #contentdetailtitle{
@@ -180,6 +185,7 @@ html{
     color: var(--colorcontentdetailtitlefg);
     box-sizing: border-box;
     padding:1%;
+    margin:0% 1%;
 }
 
 /* contentlist is a column flex of: listtitle + listtable */
@@ -267,6 +273,7 @@ html{
     background-color:var(--colorcontentdetailbg);
     color:var(--colorcontentdetailfg);
     margin:0 auto;
+    border:1px solid var(--colorbordercontentbox);
 }
 
 .contentimgdiv{

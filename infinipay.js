@@ -34,7 +34,7 @@ const arryMainNavItem = [
     ['navitemsalaryitem', 'Salary Item', payitem, arrysalaryitemcat, dataobjlistdatarow_clicked, payitem_loaddetail],
     ['navitemsalarystruct', 'Salary Profile', payprofile, undefined, dataobjlistdatarow_clicked, payprofile_loaddetail],
     ['navitemaccrueditem', 'Accrued Item', accrueditem, undefined, dataobjlistdatarow_clicked, accrueditem_loaddetail],
-    ['navitemstatitem', 'Stat Item', statitem, undefined, dataobjlistdatarow_clicked, undefined],
+    ['navitemstatitem', 'Stat Item', statitem, undefined, dataobjlistdatarow_clicked, statitem_loaddetail],
     ['navitempayunit', 'Work Unit', payunit, arrysalaryitemcat, dataobjlistdatarow_clicked, payunit_loaddetail],
     ['navitemcalcsheet', 'Work Sheet', undefined, undefined, dataobjlistdatarow_clicked, calcsheet_loaddetail],
     ['navitemprocess', 'Process', payprocess, undefined, dataobjlistdatarow_clicked, payprocess_loaddetail],
@@ -70,6 +70,7 @@ const strDivTableFunctionID = 'contentdetailtablefunction';
 const strListTableID = 'listtableid';
 const strListTableNavItem = 'listtablenavitem';
 const strDivEeePayrollID = 'diveeepayroll';
+const strDivStatProfileEeeItemID = 'divstatprofileeeeitem';
 
 // css classes //
 const strClsListInSelect = 'listtableinselect';
@@ -80,6 +81,8 @@ const strClsContentDetailTitle = 'contentdetailtitle';
 const strClsContentFunction = 'contentfunction';
 const strClsDivContentImg = 'contentimgdiv';
 const strClsContentImg = 'contentimg';
+
+const strDivButtonStyle = 'width:90%;box-sizing:box-border;padding:2%;margin:2% auto;display:flex;justify-content:space-around;border:1px solid gray';
 
 // element dataset //
 const strListID = 'id';
@@ -120,11 +123,14 @@ var contentdetailinfo = document.getElementById(strDivContentDetailID);
 var calcsheet_curr = [];
 var payprofileitem_curr = [];
 var payprofileitem_new;
+var statitem_curr = [];
+var statprofile_curr;
 
 var dataid_curr; // id of datatype (ie employee or payitem etc)
 var dataobjlist_curr;
 var dataobjid_curr; // id of current object of current datatype
 var payrollobj_curr;
+
 
 // 
 // initial load //
@@ -196,7 +202,7 @@ navitemoutput.onclick = navitem_clicked;
 // salaryitemvalid_clicked
 
 // toggle between logo and content in the content area //
-function toggle_logoinfo(boolSwitchNavItem) {
+function toggle_logoinfo(boolSwitchNavItem, boolonlogo) {
     //!! doesn't work if put outside of if statement !!//
     // contentdetailinfo = document.getElementById(strDivContentDetailID);
 
@@ -211,12 +217,46 @@ function toggle_logoinfo(boolSwitchNavItem) {
         }
     }
     else {
-        contentdetailinfo = document.getElementById(strDivContentDetailID);
+        // contentdetailinfo = document.getElementById(strDivContentDetailID);
+        // if (contentdetaillogo.style.display === 'none') {
+        //     contentdetaillogo.style.display = 'block';
+        //     if (contentdetailinfo !== null) {
+        //         contentdetailinfo.style.display = 'none';
+        //     }
+        // } else {
+        //     contentdetaillogo.style.display = 'none';
+        //     if (contentdetailinfo !== null) {
+        //         contentdetailinfo.style.display = 'block';
+        //     }
+        // }
 
+        contentdetailinfo = document.getElementById(strDivContentDetailID);
         if (contentdetailinfo !== null) {
             contentdetailinfo.style.display = 'block';
         }
         contentdetaillogo.style.display = 'none';
+
+        if (boolonlogo) {
+            contentdetailinfo.style.display = 'none';
+            contentdetaillogo.style.display = 'block';
+        }
+        // contentdetailinfo = document.getElementById(strDivContentDetailID);
+        // if (contentdetailinfo !== null) {
+        //     if (boolonlogo) {
+        //         contentdetailinfo.style.display = 'none';
+        //         contentdetaillogo.style.display = 'block';
+        //     }
+        //     else {
+        //         // contentdetailinfo.style.display = 'block';
+        //         // contentdetaillogo.style.display = 'none';
+        //     }
+        // }
+        // else {
+        //     contentdetailinfo.style.display = 'block';
+        //     contentdetaillogo.style.display = 'none';
+        // }
+        // contentdetaillogo.style.display = 'none';
+
     }
 }
 
@@ -296,11 +336,15 @@ function navitem_clicked() {
             break;
     }
 
+
+
     // !! SHORTCUT FOR TESTING !! //
     if (this.id === arryMainNavItem[objectid.output][0]) {
         processendmonth_clicked();
     }
     // !! SHORTCUT FOR TESTING !! //
+
+
 
     // content title //
     contenttitle.innerHTML = arryMainNavItem[dataid_curr][1]
@@ -413,11 +457,11 @@ function payitem_loaddetail(currid) {
         ['Name', true, 'text'],
         ['Remark', true, 'text'],
         ['PayType', true, 'text'],
-        ['PayUnit', false, 0],
         ['PayQty', false, 'text'],
+        ['PayUnit', false, 0],
         ['Range', false, 'text'],
         ['RangeBase', false, 1],
-        ['RangeQty', false, 'text'],
+        ['RangeQty', false, 0],
         ['PerRate', false, 'text'],
         ['PerBase', false, 1],
         ['PerBaseRate', false, 1],
@@ -641,9 +685,135 @@ function payprofile_loaddetail(profileid) {
     divfunctionnew.appendChild(btnNew);
 
     divdetail.appendChild(divfunctionnew);
+    // divfunctionedit.appendChild(divfunctionnew);
+
+    // divdetail.appendChild(divfunctionedit);
 
     // update content title //
     document.getElementById(strClsContentDetailTitle).innerHTML = profiledata.Name;
+}
+
+function statitem_loaddetail(statid) {
+
+    // load payprofile by ID //
+    let statobj = statitem.find(function (item) {
+        return item.ID === this;
+    }, statid);
+
+
+    // load payprofile item //
+    statitem_curr = [];
+    statprofile_curr = statprofile.filter(item => {
+        return item.StatItem === statid;
+    }, statid)
+    // // insert name of payitem //
+    // let profiledetaildata = payprofileitem_curr.map(item => {
+    //     return {
+    //         ID: item.ID,
+    //         // PayProfile: item.PayProfile,
+    //         // PayItemID: item.PayItem,
+    //         PayItem: payitem.find(pi => { return pi.ID === item.PayItem }).Name,
+    //         PayRate: item.PayRate
+    //     };
+    // })
+
+    // init detail display area //
+    // profile form //
+    let dataobj_form = init_divcontent_getdataobjform();
+    dataobj_form[0] = statobj;
+    dataobj_form[1] = [['ID', false, 'text'],
+    ['Name', false, 'text'],
+    ['Person In Charge', false, 'text'],
+    ];
+    dataobj_form[2] = null;
+    dataobj_form[3] = [[null, '<<', null, dataobjprev_clicked],
+    [null, 'Edit', null, undefined],
+    ['RESET', 'Reset', null, undefined],
+    [null, 'New', null, undefined],
+    [null, '>>', null, dataobjnext_clicked]];
+
+    // profile item table //
+    let dataobj_table = init_divcontent_getdataobjtable();
+    dataobj_table[0] = statprofile_curr;
+    // arrybutton - an array of 0: button text, 1: button column, 2: button_clicked function
+    // // dataobj_table[2] = [['=', 2, payprofileitemedit_clicked]];
+    dataobj_table[1] = [
+        ['ID', '5%', 0, ,],
+        ['Name', '35%', -1, ,],
+        ['Stat Item', '5%', 0, ,],
+        ['Rate', '55%', -1, ,]
+    ];
+    // // [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function]]]
+    // dataobj_table[1] = [
+    //     ['ID', '10%', 0, null],
+    //     ['Pay Item', '70%', 0, null],
+    //     ['Pay Rate', '20%', 0, [1, null, payprofileitemedit_clicked]]
+    // ];
+
+    // a 2-dim array of 
+    // [0: datarow button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
+    // ?? [1: table button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
+    // dataobj_table[2] = [['..', 3, statitemprofilerange_clicked,]];
+
+
+    dataobj_table[3] = statitemprofile_clicked;
+    let divdetail = init_divcontent(statid, dataobj_form, dataobj_table);
+
+
+
+    // create funtions for profile payitem table //
+    let divfunction = document.createElement('div');
+    divfunction.setAttribute('style',
+        `width:90%;
+                        box-sizing:box-border;
+                        padding:2%;
+                        margin:2% auto;
+                        display:flex;
+                        justify-content:space-around;
+                        border:1px solid gray`);
+
+    // edit function //
+    let btnEdit = document.createElement('button');
+    btnEdit.innerHTML = 'Edit';
+    btnEdit.dataset.id = statid;
+    btnEdit.onclick = payprofileitemupdate_clicked;
+    divfunction.appendChild(btnEdit);
+
+    // new button //
+    let btnNew = document.createElement('button');
+    btnNew.innerHTML = 'New'
+    btnNew.onclick = payprofileitemnew_clicked;
+    divfunction.appendChild(btnNew);
+
+    divdetail.appendChild(divfunction);
+
+    // // new function //
+    // let divfunctionnew = document.createElement('div');
+    // divfunctionnew.setAttribute('style',
+    //     `width:90%;
+    //                     box-sizing:box-border;
+    //                     padding:2%;
+    //                     margin:2% auto;
+    //                     display:flex;
+    //                     justify-content:space-around;
+    //                     border:1px solid gray`);
+    // // select for pay item //
+    // let payitemselect = document.createElement('select');
+    // payitemselect.style.width = '60%';
+    // payitemselect.dataset.id = profileid;
+    // payitem.forEach(item => {
+    //     let selectoption = document.createElement('option');
+    //     selectoption.text = item.Name;
+    //     selectoption.setAttribute('value', item.ID);
+    //     payitemselect.appendChild(selectoption);
+    // })
+    // payitemselect.onchange = payprofileitem_selectchanged;
+
+    // divfunctionnew.appendChild(payitemselect);
+
+
+    // update content title //
+    document.getElementById(strClsContentDetailTitle).innerHTML = statobj.Name;
 }
 
 function output_clicked(e) {
@@ -772,11 +942,7 @@ function init_divcontent(dataobj_ID, dataobj_form, dataobj_table) {
         // [0: datarow button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
         // ?? [1: table button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
         if (dataobj_table[2]) {
-            objparam.arrybutton = dataobj_table[2][0] //['=', 2, payprofileitemedit_clicked];
-            // let arrybtn = ['..', 0, payprofileitemedit_clicked];
-            // objparam.arrybutton.push(arrybtn);
-            // objparam.boolbutton = true;
-            // objparam.fncbuttonclicked = payprofileitemedit_clicked;
+            objparam.arrybutton = dataobj_table[2][0];
         }
         objparam.fncdatarowclicked = dataobj_table[3];
 
@@ -784,13 +950,15 @@ function init_divcontent(dataobj_ID, dataobj_form, dataobj_table) {
         if (dataobj_form) {
             let detailtable = vssfnc_tablepopulate(objparam);
             detailtable.style.margin = '2% auto';
-            detailtable.style.width = '80%';
+            detailtable.style.width = '100%';
             newform.appendChild(detailtable);
+            // contentdetail.style.flexDirection='columns';
+            // divcontentbox.appendChild(detailtable);
         }
         else {
             let detailtable = vssfnc_tablepopulate(objparam);
             detailtable.style.margin = '2% auto';
-            detailtable.style.width = '90%';
+            detailtable.style.width = '100%';
             divcontentbox.appendChild(detailtable);
         }
     }
@@ -804,8 +972,6 @@ function init_divcontent(dataobj_ID, dataobj_form, dataobj_table) {
     else {
         return divcontentdetail;
     }
-
-    // return divcontentbox;
 }
 
 
@@ -890,7 +1056,7 @@ function payitemedit_clicked(e) {
     }
     // without saving the edited data, prevent page refresh //
     alert('Pay Item edited.');
-    toggle_logoinfo(true);
+    toggle_logoinfo(false, true);
     e.preventDefault();
 }
 
@@ -909,7 +1075,7 @@ function payunitedit_clicked(e) {
     }
     // without saving the edited data, prevent page refresh //
     alert('Pay Unit edited.');
-    toggle_logoinfo(true);
+    toggle_logoinfo(false, true);
     e.preventDefault();
 }
 
@@ -1074,8 +1240,8 @@ function payprofileedit_clicked(e) {
         }
     }
 
-    alert('Record edited.');
-
+    alert('Salary Profile edited.');
+    toggle_logoinfo(false, true);
     // without saving the edited data, prevent page refresh //
     e.preventDefault();
 }
@@ -1086,6 +1252,8 @@ function payprofileitemedit_clicked(e) {
     });
     ppfitem.PayRate = parseFloat(this.value).toFixed(2);
 
+    alert('Salary Profile Item edited.');
+    toggle_logoinfo(false, true);
     // without saving the edited data, prevent page refresh //
     e.preventDefault();
 }
@@ -1103,6 +1271,8 @@ function calcsheetitemedit_clicked(e) {
 
 function newemployee_clicked() {
     alert('new employee clicked');
+
+    promptmessage('Hello World');
 }
 
 function fulllist_clicked() {
@@ -1161,43 +1331,19 @@ function processendmonth_clicked(e) {
                     // 
 
                     let payqty, payrate;
-                    
-                    // PAYQTY //
                     eeecalcsheet = calcsheet.find(calc => calc.Employee === eee.ID);
-                    
-                    // an undefined/null PayUnit of PayItem indicates a lump sum PayItem that's not dependant on any quantity //
 
-                    // ?? why null need to be in quote, doesn't work when edited after run ?? //
-                    if(payitemX.PayQty > 0 ){
-                        payqty = payitemX.PayQty;
-                    }
-                    else{
-                        if (payitemX.PayUnit && payitemX.PayUnit !== 'null') {
-                            // eeecalcsheet = calcsheet.find(calc => calc.Employee === eee.ID);
-    
-                            let calcqty = eeecalcsheet.pay_quantity.find(payqty => {
-                                return payqty[0] === payitemX.PayUnit;
-                            });
-    
-                            if (calcqty) {
-                                payqty = calcqty[1];
-                            } else {
-                                payqty = 0;
-                            }
-                        }
-                        else {
-                            payqty = 1;
-                        }    
-                    }
-                    
+
+                    // PAYQTY //
+                    payqty = processendmonth_getPayQty(payitemX, eeecalcsheet);
+
 
                     // PAYRATE //
-
                     payrate = processendmonth_getPayRate(eee, eeecalcsheet, profilepayitem, payrollobj, payitemX);
 
-                    let payu = payunit.find(unit => unit.ID === payitemX.PayUnit);
 
                     // load payroll table //
+                    let payu = payunit.find(unit => unit.ID === payitemX.PayUnit);
                     payrollobj.push(
                         {
                             ID: eee.ID,
@@ -1213,7 +1359,7 @@ function processendmonth_clicked(e) {
 
                     // if PayItem is attached to an Accrued Item //
                     if (payitemX.AccruedItem) {
-                        alert(`Update balance of Accrued Item ${payitemX.Name} ...`)
+                        // alert(`Update balance of Accrued Item ${payitemX.Name} ...`)
                     }
                 })
             }
@@ -1267,6 +1413,8 @@ function processendmonth_eeeclicked(e) {
         while (diveeepayroll.firstChild) {
             diveeepayroll.firstChild.parentNode.removeChild(diveeepayroll.firstChild);
         }
+        diveeepayroll.setAttribute('style',
+            'width:90%;margin:0 auto; border:1px solid gray;padding:2%;');
 
         let title = document.createElement('h3');
         title.innerHTML = payrollobj_eee[0].Name;
@@ -1278,7 +1426,7 @@ function processendmonth_eeeclicked(e) {
         objparam.arrydataid = ['table', strListID];
         objparam.arrysortind = [' (v)', ' (^)'];
         let tbl = vssfnc_tablepopulate(objparam);
-        tbl.setAttribute('style', 'width:90%; margin:0 auto; border-collapse:collapse;');
+        tbl.setAttribute('style', 'width:100%; margin:0 auto; border-collapse:collapse;');
         diveeepayroll.appendChild(tbl);
 
         let btnback = document.createElement('button');
@@ -1298,6 +1446,38 @@ function processendmonth_eeeclicked(e) {
     e.preventDefault();
 }
 
+function processendmonth_getPayQty(payitemX, eeecalcsheet) {
+
+    // precendence: PayItem.PayQty -> pay_quantity of PayItem.PayUnit (1 if null)//
+
+    let payqty;
+
+    if (payitemX.PayQty > 0) {
+        // Default PayQty (ignore CalcSheet) //
+        payqty = payitemX.PayQty;
+    }
+    else {
+        // ?? why null need to be in quote, doesn't work when edited after run ?? //
+        if (payitemX.PayUnit && payitemX.PayUnit !== 'null') {
+            // eeecalcsheet = calcsheet.find(calc => calc.Employee === eee.ID);
+
+            let calcqty = eeecalcsheet.pay_quantity.find(payqty => {
+                return payqty[0] === payitemX.PayUnit;
+            });
+
+            if (calcqty) {
+                payqty = calcqty[1];
+            } else {
+                payqty = 0;
+            }
+        }
+        else {
+            payqty = 1;
+        }
+    }
+
+    return payqty;
+}
 
 function processendmonth_getPayRate(eee, eeecalcsheet, profilepayitem, payrollobj, payitemX) {
     // precedence:
@@ -1332,7 +1512,7 @@ function processendmonth_getPayRate(eee, eeecalcsheet, profilepayitem, payrollob
             }
             else {
                 // - 5: Extract from Range 
-                
+
                 // extract RateBase from ProcessPayroll Object, if none, extract from PayItem 
                 let processedCalcBaseItem = payrollobj.find(pi => {
                     return pi.PayItemID === payitemX.RangeBase && pi.Name === eee.Name;
@@ -1343,19 +1523,15 @@ function processendmonth_getPayRate(eee, eeecalcsheet, profilepayitem, payrollob
                     CalcBase = processedCalcBaseItem.PayAmount;
                 }
                 else {
-                    if (payitemX.RangeBase === payitemX.ID) {
+                    if (payitemX.RangeQty) {
                         // use quantity instaed of amount as criteria //
                         // eg Mileage Claim //
                         // { ID: '1', Employee: '101', pay_quantity: [['101', 1], ['102', 26]] } //
                         let calcsheetqty = eeecalcsheet.pay_quantity.find(arrypq => {
-                            return arrypq[0] === payitemX.PayUnit;
+                            return arrypq[0] === payitemX.RangeQty;
                         })
 
                         if (calcsheetqty) {
-                            // if(payitemX.ID ==='105'){
-                            //     alert(payitemX.Name + ' - ' + calcsheetqty[1]);
-                            // }
-            
                             CalcBase = calcsheetqty[1];
                         }
                         else {
@@ -1625,8 +1801,8 @@ function calcsheetupdate_clicked() {
     calcsheet_curr.forEach(pq => {
         eeecalcsheet.pay_quantity.push([pq.PayUnitID, pq.PayQuantity]);
     })
-    toggle_logoinfo(false);
-    alert('Calculation Sheet edited.');
+    toggle_logoinfo(false, true);
+    alert('Work Sheet edited.');
 }
 
 function payprofileitemupdate_clicked(e) {
@@ -1638,8 +1814,8 @@ function payprofileitemupdate_clicked(e) {
             ppitem.PayRate = pfitem.PayRate;
         }
     })
-    alert('Pay Profile Item edited.');
-    toggle_logoinfo(false);
+    alert('Salary Profile Item edited.');
+    toggle_logoinfo(false, true);
     e.preventDefault();
 }
 
@@ -1652,8 +1828,8 @@ function payprofileitem_selectchanged() {
 function payprofileitemnew_clicked(e) {
     payprofileitem.push(payprofileitem_new);
     payprofileitem_new = null;
-    alert('Pay Profile Item edited.');
-    toggle_logoinfo(false);
+    alert('New Pay Profile Item added.');
+    toggle_logoinfo(false, true);
     e.preventDefault();
 }
 
@@ -1738,7 +1914,7 @@ function dataobj_new(e) {
         data.push(newdataobj);
 
         alert('New ' + dataname + ' added.');
-        toggle_logoinfo(false);
+        toggle_logoinfo(false, true);
         e.preventDefault();
     }
     catch (ex) { alert(ex); }
@@ -1806,7 +1982,9 @@ function dataobjlistdatarow_clicked() {
     arryMainNavItem[dataid_curr][5](this.dataset[strListID]);
 }
 
-function accrueditemedit_clicked() { }
+function accrueditemedit_clicked(e) {
+    e.preventDefault();
+}
 
 function payprofileitemdelete_clicked(e) {
     let pfitemIdx;
@@ -1819,10 +1997,164 @@ function payprofileitemdelete_clicked(e) {
     payprofileitem.splice(pfitemIdx, 1);
 
     alert('Pay Profile Item deleted.');
-    toggle_logoinfo(false);
+    toggle_logoinfo(false, true);
     e.preventDefault();
 }
 
 function payitemformula_clicked() {
     alert('Show Formula of PayItem Rate Calculation ...');
+}
+
+function statitemprofile_clicked(e) {
+    let profileeeeitem = statprofileiemployeeitem.filter(item => {
+        return item.StatProfile === this.dataset[strListID];
+    })
+
+    if (profileeeeitem) {
+        let divcontentdetail = document.getElementById(strDivContentDetailID);
+        //     // let tablepayroll = document.getElementById(strDetailTableID);
+        //     // tablepayroll.style.display = 'none';
+
+        let divprofileeeeitem = document.getElementById(strDivStatProfileEeeItemID);
+        if (divprofileeeeitem) {
+            while (divprofileeeeitem.firstChild) {
+                divprofileeeeitem.firstChild.parentNode.removeChild(divprofileeeeitem.firstChild);
+            }
+            divprofileeeeitem.style.display = 'block';
+        }
+        else {
+            divprofileeeeitem = document.createElement('div');
+            divprofileeeeitem.id = strDivStatProfileEeeItemID;
+        }
+
+        divprofileeeeitem.setAttribute('style',
+            'border:1px solid lightgrey;padding:1%;');
+
+        // title //
+        let title = document.createElement('h3');
+        title.innerHTML = statprofile.find(prf => prf.ID === profileeeeitem[0].StatProfile).Name;
+        divprofileeeeitem.appendChild(title);
+
+        // profile employee item //
+        let objparam = vssfnc_tablepopulate_param();
+        // objparam.caption = payrollobj_eee[0].Name;
+        objparam.arryheadercol = [
+            ['ID', '5%', 0, null],
+            ['Stat Profile', '30%', 0, null],
+            ['Employee Data', '30%', 0, null],
+            ['Operator', '5%', 0, null],
+            ['Operand', '10%', 0, null],
+            ['Criteria', '10%', 0, null]
+        ];
+        objparam.arryjsondata = profileeeeitem;
+        objparam.arrydataid = ['table', strListID];
+        objparam.arrysortind = [' (v)', ' (^)'];
+        let tbl = vssfnc_tablepopulate(objparam);
+        tbl.setAttribute('style', 'width:90%; margin:0 auto; border-collapse:collapse;');
+        divprofileeeeitem.appendChild(tbl);
+
+
+        // new profile employee item form //
+        objparam = vssfnc_formpopulate_param();
+        // objparam.caption = 'New Stat Employee Item:';
+        // objparam.actionurl = serverendpoint;
+        // [description strings, requird, type]]
+        objparam.arrydatacol = [
+            ['ID', false, 'text'],
+            ['Stat Profile', false, 0],
+            ['Employee ProfileItem', false, 1],
+            ['Operator', false, 'text'],
+            ['Operand', false, 'text'],
+            ['Criteria', false, 'text']
+        ];
+        objparam.arryjsondata = { ID: '', StatProfile: '', ProfileItem: '', Operator: '', Criteria: '' };
+        objparam.arrydataid = [strDetailFormID, strDetailFormID];
+        // objparam.htmlform = formdetails;
+        objparam.arrylabelinput = [['30%', -1],
+        ['70%', -1]];
+        objparam.arryitemdata = [statprofile, employeeitem];
+        // objparam.arryclass = ['contentcaption', 'contentlabel', 'contentinput', 'contentbutton'];
+        objparam.arrybutton = [
+            [null, '<<', null, dataobjprev_clicked],
+            [null, 'Edit', null, functionudefined_clicked],
+            ['RESET', 'Reset', null, undefined],
+            ['POST', 'New', null, functionudefined_clicked],
+            [null, '>>', null, dataobjnext_clicked]
+        ];
+        let newform = vssfnc_formpopulate(objparam);
+        newform.setAttribute('style', 'width:80%; margin:2% auto');
+        divprofileeeeitem.appendChild(newform);
+
+        // back to list button //
+        let btnback = document.createElement('button');
+        btnback.innerHTML = 'Back to List';
+        btnback.setAttribute('style', 'margin:2% 0 0 85%;');
+        btnback.onclick = function () {
+            let divstatprofileeeeitem = document.getElementById(strDivStatProfileEeeItemID);
+            divstatprofileeeeitem.style.display = 'none';
+        }
+        divprofileeeeitem.appendChild(btnback);
+
+        divcontentdetail.appendChild(divprofileeeeitem);
+    }
+    e.preventDefault();
+}
+
+function promptmessage(strmessage) {
+
+    let shielddiv = document.createElement('div');
+    shielddiv.id = 'vssPromptMsg';
+    shielddiv.setAttribute('style',
+        `width:100%;
+    height:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    background-color:rgba(255,255,255,0.8);
+    `);
+
+    let promptdiv = document.createElement('div');
+    promptdiv.setAttribute('style',
+        `width:50%;
+    height:50%;
+    position:absolute;
+    top:25%;
+    left:25%;
+    background-color:white;
+    box-shadow:0 0 10px gray;
+    `);
+
+    let msgdiv = document.createElement('div');
+    msgdiv.setAttribute('style',
+        `width:50%;
+    height:50%;
+    position:absolute;
+    top:25%;
+    left:25%;
+    `);
+    msgdiv.innerHTML = strmessage;
+    promptdiv.appendChild(msgdiv);
+
+    let btnback = document.createElement('button');
+    btnback.setAttribute('style',
+        `position:absolute;
+    bottom:2%;
+    right:2%;`);
+    btnback.innerHTML = 'Back';
+    btnback.onclick = function () {
+        let divshield = document.getElementById('vssPromptMsg');
+        divshield.parentNode.removeChild(divshield);
+    }
+
+    promptdiv.appendChild(btnback);
+
+    shielddiv.appendChild(promptdiv);
+
+    document.getElementsByTagName('body')[0].appendChild(shielddiv);
+    btnback.focus();
+}
+
+function statitemprofilerange_clicked() {
+    let arryrange = processendmonth_getArryRange('0,5000,11%,13%;5001,1000,11%,12%');
+    promptmessage(arryrange);
 }

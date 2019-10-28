@@ -201,18 +201,18 @@ vssfnc_tablepopulate(objparam);
 
 // pay rate extract //
 /////////////////////
-objparam = vssfnc_tablepopulate_param();
-objparam.htmltable = payrateextract;
-objparam.htmltableid = 'payrateextract';
-objparam.arryjsondata = arrypayrateextract;
-// objparam.arryheadercol = [['Task ID', '5%', 0], ['User Interface', '30%',], ['API L1', '20%',], ['API L2', '40%',], ['Time Required', '5%', 0]];
-objparam.arryfooter = ['Item Count']
-objparam.arrydataid = ['table', ''];
-objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
-objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
-objparam.arrysortind = [' (v)', ' (^)'];
-objparam.addbutton = false;
-vssfnc_tablepopulate(objparam);
+// objparam = vssfnc_tablepopulate_param();
+// objparam.htmltable = payrateextract;
+// objparam.htmltableid = 'payrateextract';
+// objparam.arryjsondata = arrypayrateextract;
+// // objparam.arryheadercol = [['Task ID', '5%', 0], ['User Interface', '30%',], ['API L1', '20%',], ['API L2', '40%',], ['Time Required', '5%', 0]];
+// objparam.arryfooter = ['Item Count']
+// objparam.arrydataid = ['table', ''];
+// objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
+// objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
+// objparam.arrysortind = [' (v)', ' (^)'];
+// objparam.addbutton = false;
+// vssfnc_tablepopulate(objparam);
 
 // pay item //
 /////////////////////

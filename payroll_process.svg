@@ -53,12 +53,13 @@
      id="layer1"
      transform="translate(0,-164.70832)">
     <g
-       id="g992">
+       id="g997"
+       transform="translate(-4.0090429)">
       <path
          inkscape:connector-curvature="0"
          id="path933"
          d="m 155.01633,182.34136 36.61592,-0.26727 -0.26727,74.83547"
-         style="fill:none;stroke:#000000;stroke-width:0.52916666;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+         style="fill:none;stroke:#000000;stroke-width:0.52916664;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          inkscape:connector-curvature="0"
          id="path935"
@@ -77,7 +78,7 @@
       <path
          inkscape:connector-curvature="0"
          id="path5377"
-         d="M 157.03129,255.84048 156.76402,217.0864"
+         d="m 152.22044,256.10775 -0.26727,-38.75408"
          style="fill:none;stroke:#000000;stroke-width:0.52916664;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          inkscape:connector-curvature="0"
@@ -143,7 +144,7 @@
            id="tspan5171"
            sodipodi:role="line" /></text>
       <g
-         id="g928">
+         id="g942">
         <ellipse
            style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:0.58092672;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            id="path5343"
@@ -168,127 +169,110 @@
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
              id="tspan5193" /></text>
       </g>
-      <g
-         id="g945">
-        <rect
-           style="fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:0.48811886;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="rect5321-7"
-           width="28.906155"
-           height="30.777042"
-           x="55.036999"
-           y="250.94228" />
-        <text
-           xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-           x="69.333328"
-           y="264.55484"
-           id="text5122-4"><tspan
-             sodipodi:role="line"
-             x="69.333328"
-             y="264.55484"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
-             id="tspan5213">Calc</tspan><tspan
-             sodipodi:role="line"
-             x="69.333328"
-             y="273.3743"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
-             id="tspan5289">Sheet</tspan></text>
-      </g>
-      <g
-         id="g950">
-        <ellipse
-           style="fill:#ffff00;fill-opacity:1;stroke:#000000;stroke-width:0.52916664;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           id="path5351"
-           cx="193.23586"
-           cy="266.33081"
-           rx="15.501633"
-           ry="16.169806" />
-        <text
-           xml:space="preserve"
-           style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-           x="182.47838"
-           y="268.10434"
-           id="text5122-9"><tspan
-             sodipodi:role="line"
-             x="182.47838"
-             y="268.10434"
-             style="font-size:6.3499999px;stroke-width:0.26458332"
-             id="tspan5235">Payroll</tspan></text>
-      </g>
+      <rect
+         y="250.94228"
+         x="55.036999"
+         height="30.777042"
+         width="28.906155"
+         id="rect5321-7"
+         style="fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:0.48811886;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <text
-         id="text5319"
-         y="184.21223"
-         x="3.4745035"
+         id="text5122-4"
+         y="264.55484"
+         x="69.333328"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5213"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+           y="264.55484"
+           x="69.333328"
+           sodipodi:role="line">Work</tspan><tspan
+           id="tspan5289"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+           y="273.3743"
+           x="69.333328"
+           sodipodi:role="line">Sheet</tspan></text>
+      <text
+         id="text5122-9"
+         y="263.56076"
+         x="190.2292"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5235"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+           y="263.56076"
+           x="190.2292"
+           sodipodi:role="line">Payroll:</tspan><tspan
+           id="tspan932"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+           y="276.78992"
+           x="190.2292"
+           sodipodi:role="line">PayAmount</tspan></text>
+      <text
+         id="text5122-4-0"
+         y="264.41965"
+         x="113.59196"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.23136425px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5213-1"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+           y="264.41965"
+           x="113.59196"
+           sodipodi:role="line">Pay</tspan><tspan
+           id="tspan5287"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+           y="274.70886"
+           x="113.59196"
+           sodipodi:role="line">Quantity</tspan></text>
+      <text
+         id="text5122-4-1"
+         y="264.18268"
+         x="149.40607"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.23136425px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5213-3"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+           y="264.18268"
+           x="149.40607"
+           sodipodi:role="line">Pay</tspan><tspan
+           id="tspan946"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+           y="274.47189"
+           x="149.40607"
+           sodipodi:role="line">Rate</tspan></text>
+      <text
+         id="text5122-4-8-3"
+         y="267.7952"
+         x="133.76308"
          style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
          xml:space="preserve"><tspan
-           style="stroke-width:0.26458332"
-           y="184.21223"
-           x="3.4745035"
-           id="tspan5317"
-           sodipodi:role="line">Process</tspan></text>
-      <g
-         id="g963">
-        <text
-           xml:space="preserve"
-           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.23136425px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-           x="117.86828"
-           y="264.41965"
-           id="text5122-4-0"><tspan
-             sodipodi:role="line"
-             x="117.86828"
-             y="264.41965"
-             style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.23136425px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
-             id="tspan5213-1">Pay</tspan><tspan
-             sodipodi:role="line"
-             x="117.86828"
-             y="274.70886"
-             style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.23136425px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
-             id="tspan5287">Quantity</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.23136425px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-           x="156.88962"
-           y="269.2608"
-           id="text5122-4-1"><tspan
-             sodipodi:role="line"
-             x="156.88962"
-             y="269.2608"
-             style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.23136425px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
-             id="tspan5213-3">Rate</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-           x="137.77213"
-           y="268.06247"
-           id="text5122-4-8-3"><tspan
-             sodipodi:role="line"
-             x="137.77213"
-             y="268.06247"
-             style="font-size:6.3499999px;stroke-width:0.26458332"
-             id="tspan5213-8-7">x</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-           x="169.84447"
-           y="268.35239"
-           id="text5122-4-8-38"><tspan
-             sodipodi:role="line"
-             x="169.84447"
-             y="268.35239"
-             style="font-size:6.3499999px;stroke-width:0.26458332"
-             id="tspan5213-8-0">=</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-           x="89.535286"
+           id="tspan5213-8-7"
+           style="font-size:6.3499999px;stroke-width:0.26458332"
+           y="267.7952"
+           x="133.76308"
+           sodipodi:role="line">x</tspan></text>
+      <text
+         id="text5122-4-8-38"
+         y="268.61966"
+         x="161.82639"
+         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           id="tspan5213-8-0"
+           style="font-size:6.3499999px;stroke-width:0.26458332"
+           y="268.61966"
+           x="161.82639"
+           sodipodi:role="line">=</tspan></text>
+      <text
+         id="text5355"
+         y="268.577"
+         x="89.535286"
+         style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
            y="268.577"
-           id="text5355"><tspan
-             sodipodi:role="line"
-             id="tspan5353"
-             x="89.535286"
-             y="268.577"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05555534px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332">=&gt;</tspan></text>
-      </g>
+           x="89.535286"
+           id="tspan5353"
+           sodipodi:role="line">=&gt;</tspan></text>
       <g
          id="g970">
         <text
@@ -300,12 +284,12 @@
              sodipodi:role="line"
              x="22.453058"
              y="263.4852"
-             style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.23136425px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+             style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
              id="tspan5281">Recorded</tspan><tspan
              sodipodi:role="line"
              x="22.453058"
              y="273.77441"
-             style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.23136425px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
+             style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.3499999px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;stroke-width:0.26458332"
              id="tspan5285">Quantity</tspan></text>
         <text
            xml:space="preserve"
