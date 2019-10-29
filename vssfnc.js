@@ -724,6 +724,7 @@ function vssfnc_formpopulate(objparam) {
         else {
             // supporting data by id //
             inputelement = document.createElement('select');
+
             inputelement.setAttribute('name', ppt);
             if (objparam.arrydatacol) {
                 inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);

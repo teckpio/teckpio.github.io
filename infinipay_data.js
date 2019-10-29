@@ -286,7 +286,7 @@ var payitem = [
         Remark: '',
         PayType: '',
         PayQty: 0,
-        PayUnit: '103',
+        PayUnit: '103;104',
         Range: '',
         RangeBase: '',
         RangeQty: '',

@@ -457,15 +457,15 @@ function payitem_loaddetail(currid) {
         ['Name', true, 'text'],
         ['Remark', true, 'text'],
         ['PayType', true, 'text'],
-        ['PayQty', false, 'text'],
-        ['PayUnit', false, 0],
-        ['Range', false, 'text'],
+        ['PayQty (Q.1)', false, 'text'],
+        ['PayUnit (Q.2)', false, 0],
+        ['Range (R.3)', false, 'text'],
         ['RangeBase', false, 1],
         ['RangeQty', false, 0],
-        ['PerRate', false, 'text'],
+        ['PerRate (R.2)', false, 'text'],
         ['PerBase', false, 1],
         ['PerBaseRate', false, 1],
-        ['Rate', true, 'text'],
+        ['Rate (R.1)', true, 'text'],
         ['Min-Max', true, 'text'],
         ['Valid Period', true, 'text'],
         ['Accrued Item', true, 2],
@@ -1450,7 +1450,7 @@ function processendmonth_getPayQty(payitemX, eeecalcsheet) {
 
     // precendence: PayItem.PayQty -> pay_quantity of PayItem.PayUnit (1 if null)//
 
-    let payqty;
+    let payqty = 0;
 
     if (payitemX.PayQty > 0) {
         // Default PayQty (ignore CalcSheet) //
@@ -1459,17 +1459,28 @@ function processendmonth_getPayQty(payitemX, eeecalcsheet) {
     else {
         // ?? why null need to be in quote, doesn't work when edited after run ?? //
         if (payitemX.PayUnit && payitemX.PayUnit !== 'null') {
-            // eeecalcsheet = calcsheet.find(calc => calc.Employee === eee.ID);
 
-            let calcqty = eeecalcsheet.pay_quantity.find(payqty => {
-                return payqty[0] === payitemX.PayUnit;
-            });
+            let arryqty = payitemX.PayUnit.split(';');
+            arryqty.forEach(pqty => {
 
-            if (calcqty) {
-                payqty = calcqty[1];
-            } else {
-                payqty = 0;
-            }
+                let calcqty = eeecalcsheet.pay_quantity.find(payqty => {
+                    return payqty[0] === pqty;
+                });
+                if (calcqty) {
+                    payqty += parseInt(calcqty[1]);
+                } else {
+                    payqty += 0;
+                }
+            })
+            
+            // let calcqty = eeecalcsheet.pay_quantity.find(payqty => {
+            //     return payqty[0] === payitemX.PayUnit;
+            // });
+            // if (calcqty) {
+            //     payqty = calcqty[1];
+            // } else {
+            //     payqty = 0;
+            // }
         }
         else {
             payqty = 1;
@@ -2062,7 +2073,7 @@ function statitemprofile_clicked(e) {
         objparam.arrydatacol = [
             ['ID', false, 'text'],
             ['Stat Profile', false, 0],
-            ['Employee ProfileItem', false, 1],
+            ['Employee Profile Item', false, 1],
             ['Operator', false, 'text'],
             ['Operand', false, 'text'],
             ['Criteria', false, 'text']
