@@ -177,7 +177,6 @@ html{
     padding:2%;
 
     border:  var(--colorbordercontentbox) solid 1px;
-    /* border:  var(--colorcontentdetailbg) solid 2px; */
 }
 
 #contentdetailtitle{

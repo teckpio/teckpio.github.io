@@ -1,9 +1,8 @@
 'use strict';
 // const sample_data= require('./infinipay_data');
 
-// import employee from ('./infinipay_data');
+// import {employee, employeeitem} from ('./infinipay_data');
 // console.log(employee[0]);
-
 
 const arryemployeeinfocat = [
     ['Personal Info', entitypersonal_clicked],
@@ -411,34 +410,143 @@ function employee_loaddetail(eeeid) {
 
     let dataobj_form = init_divcontent_getdataobjform();
     dataobj_form[0] = dataobj;
-    dataobj_form[1] = [
-        ['ID', false, 'text'],
-        ['Name', false, 'text'],
-        ['PayType', false, 'text'],
-        ['Address1', false, 'text'],
-        ['Address2', false, 'text'],
-        ['Address3', false, 'text'],
-        ['IC', false, 'text'],
-        ['Passport', false, 'text'],
-        ['Tel1', false, 'text'],
-        ['Tel2', false, 'text'],
-        ['Permit', false, 'text'],
-        ['Marital', false, 'text'],
-        ['DOB', false, 'text'],
-        ['Nationality', false, 'text'],
-        ['Race', false, 'text'],
-        ['Religion', false, 'text'],
-        ['PayProfile', false, 0]
-    ];
+
+    let arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Pay Type';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol); arrydatacol = [];
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Address1';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol); arrydatacol = [];
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Address2';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol); arrydatacol = [];
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Address3';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'IC';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Passport';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Tel';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Tel2';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Permit';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Marital';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Date Of Birth';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Nationality';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Race';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Religion';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Pay Profile';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
     dataobj_form[2] = [payprofile];
-    // arrybutton - a 2-dim array of [button[(0)type, (1)text, (2)class, (3)clickedfunction]]
-    dataobj_form[3] = [[null, '<<', null, dataobjprev_clicked],
-    [null, 'Edit', null, functionudefined_clicked],
-    ['RESET', 'Reset', null, undefined],
-    ['POST', 'New', null, functionudefined_clicked],
-    [null, '>>', null, dataobjnext_clicked]];
+
+    let arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
+    dataobj_form[3].push(arrybtn);
 
     init_divcontent(eeeid, dataobj_form, null);
+
     // update content title //
     document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.Name;
 }
@@ -452,32 +560,146 @@ function payitem_loaddetail(currid) {
     // initial detail display area //
     let dataobj_form = init_divcontent_getdataobjform();
     dataobj_form[0] = dataobj;
-    dataobj_form[1] = [
-        ['ID', false, 'text'],
-        ['Name', true, 'text'],
-        ['Remark', true, 'text'],
-        ['PayType', true, 'text'],
-        ['PayQty (Q.1)', false, 'text'],
-        ['PayUnit (Q.2)', false, 0],
-        ['Range (R.3)', false, 'text'],
-        ['RangeBase', false, 1],
-        ['RangeQty', false, 0],
-        ['PerRate (R.2)', false, 'text'],
-        ['PerBase', false, 1],
-        ['PerBaseRate', false, 1],
-        ['Rate (R.1)', true, 'text'],
-        ['Min-Max', true, 'text'],
-        ['Valid Period', true, 'text'],
-        ['Accrued Item', true, 2],
-        ['Stat Requirment', true, 'text']
-    ]
+
+    let arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Remark';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Pay Type';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Pay Qty (Q.1)';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Pay Unit (Q.2)';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 0;
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Range (R.3)';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Range Base';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 1;
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Range Qty';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 0;
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Per Rate (R.2)';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Per Base';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 1;
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Per Base Rate';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 1;
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Rate (R.1)';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Min-Max';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Valid Period';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Accrued Item';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 2;
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Stat Requirement';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
     dataobj_form[2] = [payunit, payitem, accrueditem];
-    dataobj_form[3] = [[null, '<<', null, dataobjprev_clicked],
-    [null, 'Formula', null, payitemformula_clicked],
-    [null, 'Edit', null, payitemedit_clicked],
-    ['RESET', 'Reset', null, undefined],
-    [null, 'New', null, dataobj_new],
-    [null, '>>', null, dataobjnext_clicked]];
+
+    let arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Formula';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = payitemformula_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = payitemedit_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobj_new;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
+    dataobj_form[3].push(arrybtn);
 
     init_divcontent(currid, dataobj_form, null);
 
@@ -493,15 +715,50 @@ function payunit_loaddetail(currid) {
 
     // initial detail display area //
     let dataobj_form = init_divcontent_getdataobjform();
+
     dataobj_form[0] = dataobj;
-    dataobj_form[1] = [['ID', false, 'text'],
-    ['Name', true, 'text']];
-    // dataobj_form[2] = [payunit, payitem];
-    dataobj_form[3] = [[null, '<<', null, dataobjprev_clicked],
-    [null, 'Edit', null, payunitedit_clicked],
-    ['RESET', 'Reset', null, undefined],
-    ['POST', 'New', null, dataobj_new],
-    [null, '>>', null, dataobjnext_clicked]];
+
+    let arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    let arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = payunitedit_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobj_new;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
+    dataobj_form[3].push(arrybtn);
 
     init_divcontent(currid, dataobj_form, null);
 
@@ -522,19 +779,62 @@ function payprocess_loaddetail(currid) {
     // initial detail display area //
     let dataobj_form = init_divcontent_getdataobjform();
     dataobj_form[0] = dataobj;
-    dataobj_form[1] = [
-        ['ID', false, 'text'],
-        ['Name', true, 'text'],
-        ['Setting1', true, 'text'],
-        ['Setting2', true, 'text']
-    ];
+
+    let arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Setting1';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol); arrydatacol = [];
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Setting2';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol); arrydatacol = [];
+
     // dataobj_form[2] = [payunit, payitem];
-    dataobj_form[3] = [[null, '<<', null, dataobjprev_clicked],
-    [null, 'Edit', null, payunitedit_clicked],
-    ['RESET', 'Reset', null, undefined],
-    ['POST', 'New', null, dataobj_new],
-    [null, 'RUN', null, procprocess[1]],
-    [null, '>>', null, dataobjnext_clicked]];
+
+    let arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'RUN';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = procprocess[1];
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
+    dataobj_form[3].push(arrybtn);
 
     init_divcontent(currid, dataobj_form, null);
 
@@ -556,19 +856,60 @@ function accrueditem_loaddetail(currid) {
     // initial detail display area //
     let dataobj_form = init_divcontent_getdataobjform();
     dataobj_form[0] = dataobj;
-    dataobj_form[1] = [
-        ['ID', false, 'text'],
-        ['Name', false, 'text'],
-        ['Date', false, 'text'],
-        ['Balance', false, 'text']
-    ];
-    dataobj_form[3] = [
-        [null, '<<', null, dataobjprev_clicked],
-        [null, 'Edit', null, accrueditemedit_clicked],
-        ['RESET', 'Reset', null, undefined],
-        ['POST', 'New', null, dataobj_new],
-        [null, '>>', null, dataobjnext_clicked]
-    ];
+
+    let arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Date';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol); arrydatacol = [];
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Balance';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol); arrydatacol = [];
+
+    let arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = accrueditemedit_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobj_new;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
+    dataobj_form[3].push(arrybtn);
 
     init_divcontent(currid, dataobj_form, null);
 
@@ -609,31 +950,98 @@ function payprofile_loaddetail(profileid) {
     // profile form //
     let dataobj_form = init_divcontent_getdataobjform();
     dataobj_form[0] = profiledata;
-    dataobj_form[1] = [['ID', false, 'text'],
-    ['Name', true, 'text'],
-    ['Accommodation', true, 'text'],
-    ['Companycar', true, 'text']
-    ];
+
+    let arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Accommodation';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Company Car';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
     dataobj_form[2] = null;
-    dataobj_form[3] = [[null, '<<', null, dataobjprev_clicked],
-    [null, 'Edit', null, payprofileedit_clicked],
-    ['RESET', 'Reset', null, undefined],
-    [null, 'New', null, functionudefined_clicked],
-    [null, '>>', null, dataobjnext_clicked]];
+
+    let arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = payprofileedit_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
+    dataobj_form[3].push(arrybtn);
 
     // profile item table //
     let dataobj_table = init_divcontent_getdataobjtable();
     dataobj_table[0] = profiledetaildata
-    // arrybutton - an array of 0: button text, 1: button column, 2: button_clicked function
-    // dataobj_table[2] = [['=', 2, payprofileitemedit_clicked]];
 
-    // [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function]]]
-    dataobj_table[1] = [
-        ['ID', '10%', 0, null],
-        ['Pay Item', '70%', 0, null],
-        ['Pay Rate', '20%', 0, [1, null, payprofileitemedit_clicked]]
-    ];
-    dataobj_table[2] = [['x', 0, payprofileitemdelete_clicked]];
+    let arryheader = [];
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'ID';
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Width] = '10%';
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
+    dataobj_table[1].push(arryheader);
+
+    arryheader = [];
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Pay Item';
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Width] = '70%';
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
+    dataobj_table[1].push(arryheader);
+
+    arryheader = [];
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Pay Rate';
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Width] = '20%';
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Input] = [];
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Input][vssfnc_tablepopparam_item.arryheadercol.Input.Type] = 1;
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Input][vssfnc_tablepopparam_item.arryheadercol.Input.Data] = null;
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Input][vssfnc_tablepopparam_item.arryheadercol.Input.OnChange] = payprofileitemedit_clicked;
+
+    dataobj_table[1].push(arryheader);
+
+    let arrybtn2 = [];
+    arrybtn2[vssfnc_tablepopparam_item.arrybutton.DataRow.Desc] = 'x';
+    arrybtn2[vssfnc_tablepopparam_item.arrybutton.DataRow.Col] = 0;
+    arrybtn2[vssfnc_tablepopparam_item.arrybutton.DataRow.OnClick] = payprofileitemdelete_clicked;
+    dataobj_table[2].push(arrybtn2);
+
     let divdetail = init_divcontent(profileid, dataobj_form, dataobj_table);
 
     // create funtions for profile payitem table //
@@ -720,17 +1128,59 @@ function statitem_loaddetail(statid) {
     // init detail display area //
     // profile form //
     let dataobj_form = init_divcontent_getdataobjform();
+
     dataobj_form[0] = statobj;
-    dataobj_form[1] = [['ID', false, 'text'],
-    ['Name', false, 'text'],
-    ['Person In Charge', false, 'text'],
-    ];
+
+
+    let arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Person In Charge';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+    dataobj_form[1].push(arrydatacol); arrydatacol = [];
+
     dataobj_form[2] = null;
-    dataobj_form[3] = [[null, '<<', null, dataobjprev_clicked],
-    [null, 'Edit', null, undefined],
-    ['RESET', 'Reset', null, undefined],
-    [null, 'New', null, undefined],
-    [null, '>>', null, dataobjnext_clicked]];
+
+    let arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
+    dataobj_form[3].push(arrybtn);
+
+    arrybtn = [];
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
+    dataobj_form[3].push(arrybtn);
 
     // profile item table //
     let dataobj_table = init_divcontent_getdataobjtable();
@@ -857,8 +1307,8 @@ function output_clicked(e) {
 //  - 3. function for datarowclicked
 //  ]
 // 
-function init_divcontent_getdataobjform() { return [null, null, null, null] }
-function init_divcontent_getdataobjtable() { return [null, null, null, null, null] }
+function init_divcontent_getdataobjform() { return [null, [], null, []] }
+function init_divcontent_getdataobjtable() { return [null, [], [], null, null] }
 function init_divcontent(dataobj_ID, dataobj_form, dataobj_table) {
 
     toggle_logoinfo(false);
@@ -906,17 +1356,22 @@ function init_divcontent(dataobj_ID, dataobj_form, dataobj_table) {
 
         // formdetail //
         let objparam = vssfnc_formpopulate_param();
-        // objparam.caption = 'Entity Details'
-        // objparam.actionurl = serverendpoint;
-        // [description strings, requird, type]]
         objparam.arrydatacol = dataobj_form[1];
         objparam.arryjsondata = dataobj_form[0];
-        objparam.arrydataid = [strDetailFormID, dataobj_ID];
-        // objparam.htmlform = formdetails;
-        objparam.arrylabelinput = [['30%', -1],
-        ['70%', -1]];
+        objparam.arrydataid[vssfnc_formpopparam_item.arrydataid.Form] = strDetailFormID;
+        objparam.arrydataid[vssfnc_formpopparam_item.arrydataid.DataObj] = dataobj_ID;
+
+        let arryinp = [];
+        arryinp[vssfnc_formpopparam_item.arryinput.Label.WidthRatio] = '30%';
+        arryinp[vssfnc_formpopparam_item.arryinput.Label.Align] = 0;
+        objparam.arryinput.push(arryinp);
+
+        arryinp = [];
+        arryinp[vssfnc_formpopparam_item.arryinput.Input.WidthRatio] = '70%';
+        arryinp[vssfnc_formpopparam_item.arryinput.Input.Align] = -1;
+        objparam.arryinput.push(arryinp);
+
         objparam.arryitemdata = dataobj_form[2];
-        // objparam.arryclass = ['contentcaption', 'contentlabel', 'contentinput', 'contentbutton'];
         objparam.arrybutton = dataobj_form[3];
         newform = vssfnc_formpopulate(objparam);
 
@@ -926,23 +1381,16 @@ function init_divcontent(dataobj_ID, dataobj_form, dataobj_table) {
     // table content //
     if (dataobj_table && dataobj_table[0]) {
         let objparam = vssfnc_tablepopulate_param();
-        // objparam.caption = "Entity";
-        // objparam.htmltable = tablelist;
-        // objparam.htmltableid = 'Entity';
         objparam.arryjsondata = dataobj_table[0];
         objparam.arryheadercol = dataobj_table[1];
-        objparam.arryfooter = ['Item Count']
         objparam.boolitemcount = true;
         objparam.arrydataid = [strDetailTableID, strListID];
-        objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
-        // objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
-        objparam.arrysortind = [' (v)', ' (^)'];
+        objparam.arrysortind[vssfnc_tablepopparam_item.arrysortind.Ascd] = ' (v)';
+        objparam.arrysortind[vssfnc_tablepopparam_item.arrysortind.Dscd] = ' (^)';
 
-        // arrybutton - a 2-dim array of 
-        // [0: datarow button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
-        // ?? [1: table button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
         if (dataobj_table[2]) {
-            objparam.arrybutton = dataobj_table[2][0];
+            // objparam.arrybutton = dataobj_table[2][0];
+            objparam.arrybutton = dataobj_table[2];
         }
         objparam.fncdatarowclicked = dataobj_table[3];
 
@@ -1116,73 +1564,71 @@ function populatetable(tabletitle, datalist, function_clicked) {
     let objparam = vssfnc_tablepopulate_param();
     objparam.caption = 'Listing';
     objparam.htmltable = tablelist;
-    // objparam.htmltableid = 'Entity';
     objparam.arryjsondata = datalist;
-    // [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function]]]
-    objparam.arryheadercol = [
-        ['ID', '30%', 0, ,],
-        ['Name', '70%', -1, ,]
-    ];
-    // objparam.arryfooter = ['Item Count']
-    // objparam.boolitemcount = true;
-    objparam.arrydataid = ['table', strListID];
-    objparam.arryclass = ['tablerow', 'tableheadercol', 'tabledatarow', 'tabledatarowbutton'];
-    // objparam.arryclassdatarow = ['narbartabletrodd', 'narbartabletreven', 'narbartabletrselected'];
-    objparam.arrysortind = [' (v)', ' (^)'];
 
-    // arrybutton - a 2-dim array of 
-    // [0: datarow button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
-    // ?? [1: table button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
-    // if (dataobj_table[2]) {
-    //     objparam.arrybutton = dataobj_table[2][0] //['=', 2, payprofileitemedit_clicked];
-    // let arrybtn = ['..', 0, payprofileitemedit_clicked];
-    // objparam.arrybutton.push(arrybtn);
-    // objparam.boolbutton = true;
-    // objparam.fncbuttonclicked = payprofileitemedit_clicked;
-    // }
+    let arryheader = [];
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'ID';
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Width] = '30%';
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
+    objparam.arryheadercol.push(arryheader);
+
+    arryheader = [];
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Name';
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Width] = '70%';
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Align] = -1;
+    arryheader[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
+    objparam.arryheadercol.push(arryheader);
+
+    objparam.arrydataid[vssfnc_tablepopparam_item.arrydataid.Table] = 'table'
+    objparam.arrydataid[vssfnc_tablepopparam_item.arrydataid.Datarow] = strListID;
+
+    objparam.arrysortind[vssfnc_tablepopparam_item.arrysortind.Ascd] = ' (v)';
+    objparam.arrysortind[vssfnc_tablepopparam_item.arrysortind.Dscd] = ' (^)';
+
     objparam.fncdatarowclicked = function_clicked;
     vssfnc_tablepopulate(objparam);
 
     return tablelist;
 }
 
-function populatetable2(tabletitle, datalist, function_clicked) {
-    // load listing in table element //
-    contentlisttable.innerHTML = '';
-    contentlisttable.style.display = 'block';
+// function populatetable2(tabletitle, datalist, function_clicked) {
+//     // load listing in table element //
+//     contentlisttable.innerHTML = '';
+//     contentlisttable.style.display = 'block';
 
-    var tablelist = document.createElement('table');
-    tablelist.id = strListTableID;
-    let datarow;
+//     var tablelist = document.createElement('table');
+//     tablelist.id = strListTableID;
+//     let datarow;
 
-    // caption //
-    tablelist.createCaption().innerHTML = 'Listing';
+//     // caption //
+//     tablelist.createCaption().innerHTML = 'Listing';
 
-    // headerrow //
-    let thead = tablelist.createTHead();
-    let ppt;
-    let thdata;
-    datarow = thead.insertRow();
+//     // headerrow //
+//     let thead = tablelist.createTHead();
+//     let ppt;
+//     let thdata;
+//     datarow = thead.insertRow();
 
-    for (ppt in datalist[0]) {
-        thdata = document.createElement('th');
-        thdata.innerHTML = ppt;
-        datarow.appendChild(thdata);
-    }
+//     for (ppt in datalist[0]) {
+//         thdata = document.createElement('th');
+//         thdata.innerHTML = ppt;
+//         datarow.appendChild(thdata);
+//     }
 
 
-    // datarow //
-    let tbody = tablelist.createTBody();
-    datalist.forEach(function (dataobj) {
-        datarow = tbody.insertRow();
-        datarow.dataset[strListID] = dataobj.ID;
-        datarow.insertCell(0).innerHTML = dataobj.ID;
-        datarow.insertCell(1).innerHTML = dataobj.Name;
-        datarow.addEventListener('click', function_clicked);
-    })
+//     // datarow //
+//     let tbody = tablelist.createTBody();
+//     datalist.forEach(function (dataobj) {
+//         datarow = tbody.insertRow();
+//         datarow.dataset[strListID] = dataobj.ID;
+//         datarow.insertCell(0).innerHTML = dataobj.ID;
+//         datarow.insertCell(1).innerHTML = dataobj.Name;
+//         datarow.addEventListener('click', function_clicked);
+//     })
 
-    return tablelist;
-}
+//     return tablelist;
+// }
 
 // detailform is a form with one divproperty for each property //
 // detailform is reloadable with different data object //
@@ -1402,13 +1848,11 @@ function processendmonth_clicked(e) {
 }
 
 function processendmonth_eeeclicked(e) {
+
     let payrollobj_eee = payrollobj_curr.filter(item => {
         return item.Name === employee.find(item => item.ID === this.dataset[strListID]).Name;
     })
     if (payrollobj_eee) {
-        // let tablepayroll = document.getElementById(strDetailTableID);
-        // tablepayroll.style.display = 'none';
-
         let diveeepayroll = document.getElementById(strDivEeePayrollID);
         while (diveeepayroll.firstChild) {
             diveeepayroll.firstChild.parentNode.removeChild(diveeepayroll.firstChild);
@@ -1421,11 +1865,14 @@ function processendmonth_eeeclicked(e) {
         diveeepayroll.appendChild(title);
 
         let objparam = vssfnc_tablepopulate_param();
-        // objparam.caption = payrollobj_eee[0].Name;
         objparam.arryjsondata = payrollobj_eee;
-        objparam.arrydataid = ['table', strListID];
-        objparam.arrysortind = [' (v)', ' (^)'];
+        objparam.arrydataid[vssfnc_tablepopparam_item.arrydataid.Table] = 'table';
+        objparam.arrydataid[vssfnc_tablepopparam_item.arrydataid.Datarow] = strListID;
+
+        objparam.arrysortind[vssfnc_tablepopparam_item.arrysortind.Ascd] = ' (v)';
+        objparam.arrysortind[vssfnc_tablepopparam_item.arrysortind.Dscd] = ' (^)';
         let tbl = vssfnc_tablepopulate(objparam);
+
         tbl.setAttribute('style', 'width:100%; margin:0 auto; border-collapse:collapse;');
         diveeepayroll.appendChild(tbl);
 
@@ -1439,9 +1886,14 @@ function processendmonth_eeeclicked(e) {
             // tablepayroll.style.display='block';
             diveeepayroll.style.display = 'none';
         }
-        diveeepayroll.appendChild(btnback);
 
+        // if (true){
+        //     promptmessage(null, diveeepayroll);
+        // }
+        // else{
+        diveeepayroll.appendChild(btnback);
         diveeepayroll.style.display = 'block';
+        // }
     }
     e.preventDefault();
 }
@@ -1472,7 +1924,7 @@ function processendmonth_getPayQty(payitemX, eeecalcsheet) {
                     payqty += 0;
                 }
             })
-            
+
             // let calcqty = eeecalcsheet.pay_quantity.find(payqty => {
             //     return payqty[0] === payitemX.PayUnit;
             // });
@@ -1758,15 +2210,44 @@ function calcsheet_loaddetail(eeeid) {
 
     let dataobj_table = init_divcontent_getdataobjtable();
     dataobj_table[0] = calcsheet_curr;
+
     // [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function]]]
-    dataobj_table[1] = [
-        ['ID', '10%', 0, null],
-        ['Employee', '50%', 0, null],
-        ['UnitID', '10%', 0, null],
-        ['Unit', '20%', 0, null],
-        ['Quantity', '10%', 0, [1, null, calcsheetitemedit_clicked]]
-    ];
-    // dataobj_table[2] = [['=', 1, calcsheetitemedit_clicked]];
+    let arrydatacol = [];
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'ID';
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Width] = '10%';
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+    dataobj_table[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Employee';
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Width] = '50%';
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+    dataobj_table[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'UnitID';
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Width] = '10%';
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+    dataobj_table[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Unit';
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Width] = '20%';
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+    dataobj_table[1].push(arrydatacol);
+
+    arrydatacol = [];
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Quantity';
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Width] = '10%';
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Input] = [];
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Input][vssfnc_tablepopparam_item.arryheadercol.Input.Type] = 1;
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Input][vssfnc_tablepopparam_item.arryheadercol.Input.Data] = null;
+    arrydatacol[vssfnc_tablepopparam_item.arryheadercol.Input][vssfnc_tablepopparam_item.arryheadercol.Input.OnChange] = calcsheetitemedit_clicked;
+
+    dataobj_table[1].push(arrydatacol);
+
     let divcontent = init_divcontent('', null, dataobj_table);
 
     // add function button //
@@ -2005,6 +2486,7 @@ function payprofileitemdelete_clicked(e) {
             // break;
         }
     })
+
     payprofileitem.splice(pfitemIdx, 1);
 
     alert('Pay Profile Item deleted.');
@@ -2049,17 +2531,64 @@ function statitemprofile_clicked(e) {
         // profile employee item //
         let objparam = vssfnc_tablepopulate_param();
         // objparam.caption = payrollobj_eee[0].Name;
-        objparam.arryheadercol = [
-            ['ID', '5%', 0, null],
-            ['Stat Profile', '30%', 0, null],
-            ['Employee Data', '30%', 0, null],
-            ['Operator', '5%', 0, null],
-            ['Operand', '10%', 0, null],
-            ['Criteria', '10%', 0, null]
-        ];
+        // objparam.arryheadercol = [
+        //     ['ID', '5%', 0, null],
+        //     ['Stat Profile', '30%', 0, null],
+        //     ['Employee Data', '30%', 0, null],
+        //     ['Operator', '5%', 0, null],
+        //     ['Operand', '10%', 0, null],
+        //     ['Criteria', '10%', 0, null]
+        // ];
+        let headercol = [];
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'ID';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Width] = '5%';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
+        objparam.arryheadercol.push(headercol);
+
+        headercol = [];
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Stat Profile';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Width] = '30%';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
+        objparam.arryheadercol.push(headercol);
+
+        headercol = [];
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Employee Data';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Width] = '30%';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
+        objparam.arryheadercol.push(headercol);
+
+        headercol = [];
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Operator';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Width] = '5%';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
+        objparam.arryheadercol.push(headercol);
+
+        headercol = [];
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Operand';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Width] = '10%';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
+        objparam.arryheadercol.push(headercol);
+
+        headercol = [];
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Criteria';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Width] = '10%';
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
+        headercol[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
+        objparam.arryheadercol.push(headercol);
+
         objparam.arryjsondata = profileeeeitem;
-        objparam.arrydataid = ['table', strListID];
-        objparam.arrysortind = [' (v)', ' (^)'];
+
+        objparam.arrydataid[vssfnc_tablepopparam_item.arrydataid.Table] = 'table';
+        objparam.arrydataid[vssfnc_tablepopparam_item.arrydataid.Datarow] = strListID;
+
+        objparam.arrysortind[vssfnc_tablepopparam_item.arrysortind.Ascd] = ' (v)';
+        objparam.arrysortind[vssfnc_tablepopparam_item.arrysortind.Dscd] = ' (^)';
+
         let tbl = vssfnc_tablepopulate(objparam);
         tbl.setAttribute('style', 'width:90%; margin:0 auto; border-collapse:collapse;');
         divprofileeeeitem.appendChild(tbl);
@@ -2067,31 +2596,85 @@ function statitemprofile_clicked(e) {
 
         // new profile employee item form //
         objparam = vssfnc_formpopulate_param();
-        // objparam.caption = 'New Stat Employee Item:';
-        // objparam.actionurl = serverendpoint;
-        // [description strings, requird, type]]
-        objparam.arrydatacol = [
-            ['ID', false, 'text'],
-            ['Stat Profile', false, 0],
-            ['Employee Profile Item', false, 1],
-            ['Operator', false, 'text'],
-            ['Operand', false, 'text'],
-            ['Criteria', false, 'text']
-        ];
+
+        let arrydatacol = [];
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+        objparam.arrydatacol.push(arrydatacol);
+
+        arrydatacol = [];
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Stat Profile';
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 0;
+        objparam.arrydatacol.push(arrydatacol);
+
+        arrydatacol = [];
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Employee Profile Item';
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 1;
+        objparam.arrydatacol.push(arrydatacol); arrydatacol = [];
+
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Operator';
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+        objparam.arrydatacol.push(arrydatacol);
+
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Operand';
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+        objparam.arrydatacol.push(arrydatacol);
+
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Criteria';
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
+        arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
+        objparam.arrydatacol.push(arrydatacol);
+
         objparam.arryjsondata = { ID: '', StatProfile: '', ProfileItem: '', Operator: '', Criteria: '' };
         objparam.arrydataid = [strDetailFormID, strDetailFormID];
-        // objparam.htmlform = formdetails;
-        objparam.arrylabelinput = [['30%', -1],
-        ['70%', -1]];
+        
+        let arryinp = [];
+        arryinp[vssfnc_formpopparam_item.arryinput.Label.WidthRatio] = '30%';
+        arryinp[vssfnc_formpopparam_item.arryinput.Label.Align] = -1;
+        objparam.arryinput.push(arryinp);
+
+        arryinp = [];
+        arryinp[vssfnc_formpopparam_item.arryinput.Input.WidthRatio] = '70%';
+        arryinp[vssfnc_formpopparam_item.arryinput.Input.Align] = -1;
+        objparam.arryinput.push(arryinp);
+        
         objparam.arryitemdata = [statprofile, employeeitem];
-        // objparam.arryclass = ['contentcaption', 'contentlabel', 'contentinput', 'contentbutton'];
-        objparam.arrybutton = [
-            [null, '<<', null, dataobjprev_clicked],
-            [null, 'Edit', null, functionudefined_clicked],
-            ['RESET', 'Reset', null, undefined],
-            ['POST', 'New', null, functionudefined_clicked],
-            [null, '>>', null, dataobjnext_clicked]
-        ];
+        
+        let arrybtn = [];
+        arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+        arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
+        arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
+        objparam.arrybutton.push(arrybtn);
+
+        arrybtn = [];
+        arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+        arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
+        arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
+        objparam.arrybutton.push(arrybtn);
+
+        arrybtn = [];
+        arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
+        arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
+        arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
+        objparam.arrybutton.push(arrybtn);
+
+        arrybtn = [];
+        arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
+        arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
+        arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
+        objparam.arrybutton.push(arrybtn);
+
+        arrybtn = [];
+        arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+        arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
+        arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
+        objparam.arrybutton.push(arrybtn);
+
         let newform = vssfnc_formpopulate(objparam);
         newform.setAttribute('style', 'width:80%; margin:2% auto');
         divprofileeeeitem.appendChild(newform);
@@ -2111,8 +2694,9 @@ function statitemprofile_clicked(e) {
     e.preventDefault();
 }
 
-function promptmessage(strmessage) {
+function promptmessage(strmessage, htmlelem) {
 
+    // shielddiv covers whole page //
     let shielddiv = document.createElement('div');
     shielddiv.id = 'vssPromptMsg';
     shielddiv.setAttribute('style',
@@ -2124,6 +2708,7 @@ function promptmessage(strmessage) {
     background-color:rgba(255,255,255,0.8);
     `);
 
+    // promptdiv houses the content //
     let promptdiv = document.createElement('div');
     promptdiv.setAttribute('style',
         `width:50%;
@@ -2135,16 +2720,23 @@ function promptmessage(strmessage) {
     box-shadow:0 0 10px gray;
     `);
 
-    let msgdiv = document.createElement('div');
-    msgdiv.setAttribute('style',
-        `width:50%;
-    height:50%;
-    position:absolute;
-    top:25%;
-    left:25%;
-    `);
-    msgdiv.innerHTML = strmessage;
-    promptdiv.appendChild(msgdiv);
+
+    if (htmlelem) {
+        promptdiv.appendChild(htmlelem);
+    }
+    else {
+        let msgdiv = document.createElement('div');
+        msgdiv.setAttribute('style',
+            `width:50%;
+            height:50%;
+            position:absolute;
+            top:25%;
+            left:25%;
+            `);
+        msgdiv.innerHTML = strmessage;
+        promptdiv.appendChild(msgdiv);
+    }
+
 
     let btnback = document.createElement('button');
     btnback.setAttribute('style',
