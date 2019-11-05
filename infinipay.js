@@ -4,6 +4,8 @@
 // import {employee, employeeitem} from ('./infinipay_data');
 // console.log(employee[0]);
 
+const boolAspNet = false;
+
 const arryemployeeinfocat = [
     ['Personal Info', entitypersonal_clicked],
     ['Salary Profile', entitysalarystruct_clicked],
@@ -17,17 +19,6 @@ const arrysalaryitemcat = [
 ]
 
 // array main nav item //
-const objectid = {
-    employee: 0,
-    payitem: 1,
-    payprofile: 2,
-    accrueditem: 3,
-    statitem: 4,
-    payunit: 5,
-    calcsheet: 6,
-    process: 7,
-    output: 8
-}
 
 const MainNavItem_Index = {
     HTMLID: 0,
@@ -227,18 +218,6 @@ function toggle_logoinfo(boolSwitchNavItem, boolonlogo) {
         }
     }
     else {
-        // contentdetailinfo = document.getElementById(strDivContentDetailID);
-        // if (contentdetaillogo.style.display === 'none') {
-        //     contentdetaillogo.style.display = 'block';
-        //     if (contentdetailinfo !== null) {
-        //         contentdetailinfo.style.display = 'none';
-        //     }
-        // } else {
-        //     contentdetaillogo.style.display = 'none';
-        //     if (contentdetailinfo !== null) {
-        //         contentdetailinfo.style.display = 'block';
-        //     }
-        // }
 
         contentdetailinfo = document.getElementById(strDivContentDetailID);
         if (contentdetailinfo !== null) {
@@ -250,23 +229,6 @@ function toggle_logoinfo(boolSwitchNavItem, boolonlogo) {
             contentdetailinfo.style.display = 'none';
             contentdetaillogo.style.display = 'block';
         }
-        // contentdetailinfo = document.getElementById(strDivContentDetailID);
-        // if (contentdetailinfo !== null) {
-        //     if (boolonlogo) {
-        //         contentdetailinfo.style.display = 'none';
-        //         contentdetaillogo.style.display = 'block';
-        //     }
-        //     else {
-        //         // contentdetailinfo.style.display = 'block';
-        //         // contentdetaillogo.style.display = 'none';
-        //     }
-        // }
-        // else {
-        //     contentdetailinfo.style.display = 'block';
-        //     contentdetaillogo.style.display = 'none';
-        // }
-        // contentdetaillogo.style.display = 'none';
-
     }
 }
 
@@ -289,29 +251,30 @@ async function navitem_clicked() {
 
     // load navbar table list //
     let arrydataobjlist;
-    if (navitem[MainNavItem_Index.DataObjectID] === objectid.calcsheet) {
+    if (navitem[MainNavItem_Index.DataObjectID] === DataObjID.calcsheet) {
         // data object for calcsheet is a list of employees instead of the original calcsheet
-        let csheet = await dataobj_retrieve(navitem[MainNavItem_Index.DataObjectID])
+        let csheet = await dataobj_get();
+        let empee = await dataobj_get(null, DataObjID.employee);
         arrydataobjlist = csheet.map(item => {
-            return { ID: item.Employee, Name: employee.find(eee => eee.ID === item.Employee).Name }
+            return { ID: item.Employee, Name: empee.find(eee => eee.ID === item.Employee).Name }
         });
         dataobj_curr = arrydataobjlist;
     } else {
-        dataobj_curr = await dataobj_retrieve(navitem[MainNavItem_Index.DataObjectID]);
+        dataobj_curr = await dataobj_get();
         arrydataobjlist = dataobj_curr.map(item => {
-            return { ID: item.ID, Name: item.Name }
+            return boolAspNet ? { ID: item.id, Name: item.name } : { ID: item.ID, Name: item.Name };
         })
     }
 
 
     // !! SHORTCUT FOR TESTING !! //
-    // if (this.id === arryMainNavItem[objectid.output][MainNavItem_Index.HTMLID]) {
+    // if (this.id === arryMainNavItem[DataObjID.output][MainNavItem_Index.HTMLID]) {
     //     processendmonth_clicked();
     // }
     // !! SHORTCUT FOR TESTING !! //
 
 
-    // if (dataobjid_curr === objectid.calcsheet) {
+    // if (dataobjid_curr === DataObjID.calcsheet) {
     //     arrydataobjlist = calcsheet.map(item => {
     //         return { ID: item.Employee, Name: employee.find(eee => eee.ID === item.Employee).Name }
     //     });
@@ -335,8 +298,8 @@ async function navitem_clicked() {
     switch (this.id) {
 
         // output //
-        // case arryMainNavItem[objectid.output][0]:
-        //     arryMainNavItem[objectid.output][4]();
+        // case arryMainNavItem[DataObjID.output][0]:
+        //     arryMainNavItem[DataObjID.output][4]();
         //     break;
 
         default:
@@ -362,32 +325,92 @@ async function navitem_clicked() {
     }
 }
 
-function dataobj_retrieve(dataobj_id) {
+function dataobj_url(type, DObjID) {
+    if (!DObjID) {
+        DObjID = dataobjid_curr;
+    }
+    switch (DObjID) {
+        case DataObjID.employee:
+            switch (type) {
+                case 'get':
+                    return 'http://localhost:49951/data/employeeget';
+                case 'post':
+                    return 'http://localhost:49951/data/employeeadd';
+                case 'put':
+                    return 'http://localhost:49951/data/employeeupdate';
+            }
+        case DataObjID.payitem:
+            switch (type) {
+                case 'get':
+                    return 'http://localhost:49951/data/payitemget';
+                case 'post':
+                    return 'http://localhost:49951/data/payitemadd';
+                case 'put':
+                    return 'http://localhost:49951/data/employeeupdate';
+            }
+    }
+}
 
-    if (true) {
-        return arryMainNavItem[dataobj_id][MainNavItem_Index.DataObject];
+function dataobj_get(obj_id, dobjid) {
+
+    if (dobjid === null || dobjid === undefined) {
+        dobjid = dataobjid_curr;
+    }
+
+    let strURL = dataobj_url('get', dobjid);
+    if (obj_id) {
+        strURL += '/' + obj_id;
+    }
+
+    if (!boolAspNet) {
+        return new Promise((resolve, reject) => {
+            setTimeout(function () {
+                switch (dobjid) {
+                    case DataObjID.payprofileitem:
+                        resolve(payprofileitem);
+                        break;
+                    case DataObjID.statprofile:
+                        resolve(statprofile);
+                        break;
+                    case DataObjID.statprofileemployeeitem:
+                        resolve(statprofileiemployeeitem);
+                        break;
+                    default:
+                        let dobj = arryMainNavItem[dobjid][MainNavItem_Index.DataObject];
+                        if (obj_id) {
+                            let dataobj = dobj.find(function (obj) {
+                                return obj.ID === this;
+                            }, obj_id);
+                            resolve([dataobj]);
+                        }
+                        else {
+                            resolve(dobj);
+                        }
+                        break;
+                }
+            }, 300);
+        })
     }
     else {
         // retrieved from server //
-        return new Promise((resolve, reject)=>{
+        return new Promise((resolve, reject) => {
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
                     resolve(JSON.parse(this.responseText));
                 }
             }
-            xhttp.open('GET', 'http://localhost:49951/data/payitemgetall');
+            xhttp.open('GET', strURL);
             xhttp.send();
         })
     }
 }
 
-function employee_loaddetail(eeeid) {
+async function employee_loaddetail(eeeid) {
 
     // load employee detail by ID //
-    let dataobj = employee.find(function (employee) {
-        return employee.ID === this;
-    }, eeeid);
+    let arrydataobj = await dataobj_get(eeeid);
+    let dataobj = arrydataobj[0];
 
     // initial detail display area //
 
@@ -407,7 +430,7 @@ function employee_loaddetail(eeeid) {
     dataobj_form[1].push(arrydatacol);
 
     arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Pay Type';
+    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Identity Reference';
     arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
     arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
     dataobj_form[1].push(arrydatacol); arrydatacol = [];
@@ -505,9 +528,10 @@ function employee_loaddetail(eeeid) {
     dataobj_form[3].push(arrybtn);
 
     arrybtn = [];
-    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'SUBMIT';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
-    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobj_new;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.ActionURL] = dataobj_url('put');
     dataobj_form[3].push(arrybtn);
 
     arrybtn = [];
@@ -517,9 +541,10 @@ function employee_loaddetail(eeeid) {
     dataobj_form[3].push(arrybtn);
 
     arrybtn = [];
-    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
+    arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'SUBMIT';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
-    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobj_new;
+    arrybtn[vssfnc_formpopparam_item.arrybutton.ActionURL] = dataobj_url('post');
     dataobj_form[3].push(arrybtn);
 
     arrybtn = [];
@@ -534,11 +559,11 @@ function employee_loaddetail(eeeid) {
     document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.Name;
 }
 
-function payitem_loaddetail(currid) {
+async function payitem_loaddetail(currid) {
     // load salary item detail by ID //
-    let dataobj = payitem.find(function (item) {
-        return item.ID === this;
-    }, currid);
+    let arrydataobj = await dataobj_get(currid);
+    let dataobj = arrydataobj[0];
+
 
     // initial detail display area //
     let dataobj_form = init_divcontent_getdataobjform();
@@ -690,11 +715,10 @@ function payitem_loaddetail(currid) {
     document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.Name;
 }
 
-function payunit_loaddetail(currid) {
+async function payunit_loaddetail(currid) {
     // load salary item detail by ID //
-    let dataobj = payunit.find(function (item) {
-        return item.ID === this;
-    }, currid);
+    let arrydataobj = await dataobj_get(currid);
+    let dataobj = arrydataobj[0];
 
     // initial detail display area //
     let dataobj_form = init_divcontent_getdataobjform();
@@ -750,12 +774,11 @@ function payunit_loaddetail(currid) {
 }
 
 
-function payprocess_loaddetail(currid) {
+async function payprocess_loaddetail(currid) {
 
     // load salary item detail by ID //
-    let dataobj = payprocess.find(function (item) {
-        return item.ID === this;
-    }, currid);
+    let arrydataobj = await dataobj_get(currid);
+    let dataobj = arrydataobj[0];
 
     let procprocess = arryProcess.find(prc => prc[0] === currid);
 
@@ -825,16 +848,10 @@ function payprocess_loaddetail(currid) {
     document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.Name;
 }
 
-// function accrueditemdatarow_clicked() {
-//     // save for prev/next navigation //
-//     objectid_curr = this.dataset[strListID];
-//     accrueditem_loaddetail(this.dataset[strListID]);
-// }
+async function accrueditem_loaddetail(currid) {
+    let arrydataobj = await dataobj_get(currid);
+    let dataobj = arrydataobj[0];
 
-function accrueditem_loaddetail(currid) {
-    let dataobj = accrueditem.find(function (item) {
-        return item.ID === this;
-    }, currid);
 
     // initial detail display area //
     let dataobj_form = init_divcontent_getdataobjform();
@@ -900,31 +917,28 @@ function accrueditem_loaddetail(currid) {
     document.getElementById(strClsContentDetailTitle).innerHTML = dataobj.Name;
 }
 
-// function payprofiledatarow_clicked() {
-//     // save for prev/next navigation //
-//     objectid_curr = this.dataset[strListID];
-//     payprofile_loaddetail(this.dataset[strListID]);
-// }
-
-function payprofile_loaddetail(profileid) {
+async function payprofile_loaddetail(profileid) {
 
     // load payprofile by ID //
-    let profiledata = payprofile.find(function (item) {
-        return item.ID === this;
-    }, profileid);
+    let arrydataobj = await dataobj_get(profileid);
+    let profiledata = arrydataobj[0];
+
 
     // load payprofile item //
     payprofileitem_curr = [];
-    payprofileitem_curr = payprofileitem.filter(item => {
+    let pprofileitem = await dataobj_get(null, DataObjID.payprofileitem);
+    payprofileitem_curr = pprofileitem.filter(item => {
         return item.PayProfile === profileid; //?? why cannot use this like profiledata ??//
     }, profileid)
-    // insert name of payitem //
+
+    // insert name of payitem in payprofile item //
+    let pitem = await dataobj_get(null, DataObjID.payitem);
     let profiledetaildata = payprofileitem_curr.map(item => {
         return {
             ID: item.ID,
             // PayProfile: item.PayProfile,
             // PayItemID: item.PayItem,
-            PayItem: payitem.find(pi => { return pi.ID === item.PayItem }).Name,
+            PayItem: pitem.find(pi => { return pi.ID === item.PayItem }).Name,
             PayRate: item.PayRate
         };
     })
@@ -1084,29 +1098,19 @@ function payprofile_loaddetail(profileid) {
     document.getElementById(strClsContentDetailTitle).innerHTML = profiledata.Name;
 }
 
-function statitem_loaddetail(statid) {
+async function statitem_loaddetail(statid) {
 
     // load payprofile by ID //
-    let statobj = statitem.find(function (item) {
-        return item.ID === this;
-    }, statid);
+    let arrydataobj = await dataobj_get(statid);
+    let statobj = arrydataobj[0];
 
 
-    // load payprofile item //
+    // load statprofile item //
     statitem_curr = [];
-    statprofile_curr = statprofile.filter(item => {
+    let sprofile = await dataobj_get(null, DataObjID.statprofile);
+    statprofile_curr = sprofile.filter(item => {
         return item.StatItem === statid;
     }, statid)
-    // // insert name of payitem //
-    // let profiledetaildata = payprofileitem_curr.map(item => {
-    //     return {
-    //         ID: item.ID,
-    //         // PayProfile: item.PayProfile,
-    //         // PayItemID: item.PayItem,
-    //         PayItem: payitem.find(pi => { return pi.ID === item.PayItem }).Name,
-    //         PayRate: item.PayRate
-    //     };
-    // })
 
     // init detail display area //
     // profile form //
@@ -1176,25 +1180,13 @@ function statitem_loaddetail(statid) {
         ['Stat Item', '5%', 0, ,],
         ['Rate', '55%', -1, ,]
     ];
-    // // [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function]]]
-    // dataobj_table[1] = [
-    //     ['ID', '10%', 0, null],
-    //     ['Pay Item', '70%', 0, null],
-    //     ['Pay Rate', '20%', 0, [1, null, payprofileitemedit_clicked]]
-    // ];
-
-    // a 2-dim array of 
-    // [0: datarow button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
-    // ?? [1: table button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
-    // dataobj_table[2] = [['..', 3, statitemprofilerange_clicked,]];
-
 
     dataobj_table[3] = statitemprofile_clicked;
     let divdetail = init_divcontent(statid, dataobj_form, dataobj_table);
 
 
 
-    // create funtions for profile payitem table //
+    // create functions for profile payitem table //
     let divfunction = document.createElement('div');
     divfunction.setAttribute('style',
         `width:90%;
@@ -1219,30 +1211,6 @@ function statitem_loaddetail(statid) {
     divfunction.appendChild(btnNew);
 
     divdetail.appendChild(divfunction);
-
-    // // new function //
-    // let divfunctionnew = document.createElement('div');
-    // divfunctionnew.setAttribute('style',
-    //     `width:90%;
-    //                     box-sizing:box-border;
-    //                     padding:2%;
-    //                     margin:2% auto;
-    //                     display:flex;
-    //                     justify-content:space-around;
-    //                     border:1px solid gray`);
-    // // select for pay item //
-    // let payitemselect = document.createElement('select');
-    // payitemselect.style.width = '60%';
-    // payitemselect.dataset.id = profileid;
-    // payitem.forEach(item => {
-    //     let selectoption = document.createElement('option');
-    //     selectoption.text = item.Name;
-    //     selectoption.setAttribute('value', item.ID);
-    //     payitemselect.appendChild(selectoption);
-    // })
-    // payitemselect.onchange = payprofileitem_selectchanged;
-
-    // divfunctionnew.appendChild(payitemselect);
 
 
     // update content title //
@@ -1339,6 +1307,8 @@ function init_divcontent(dataobj_ID, dataobj_form, dataobj_table) {
 
         // formdetail //
         let objparam = vssfnc_formpopulate_param();
+        objparam.actionurl = dataobj_url('post');
+
         objparam.arrydatacol = dataobj_form[1];
         objparam.arryjsondata = dataobj_form[0];
         objparam.arrydataid[vssfnc_formpopparam_item.arrydataid.Form] = strDetailFormID;
@@ -1404,7 +1374,6 @@ function init_divcontent(dataobj_ID, dataobj_form, dataobj_table) {
         return divcontentdetail;
     }
 }
-
 
 // detailnav is a column flex of: image + navitem //
 // navitem is a column flex of various detail categories //
@@ -1482,7 +1451,6 @@ function payitemedit_clicked(e) {
             else {
                 payitemX[ppt] = form.elements[ppt].value;
             }
-
         }
     }
     // without saving the edited data, prevent page refresh //
@@ -1574,86 +1542,6 @@ function populatetable(tabletitle, datalist, function_clicked) {
 
     return tablelist;
 }
-
-// function populatetable2(tabletitle, datalist, function_clicked) {
-//     // load listing in table element //
-//     contentlisttable.innerHTML = '';
-//     contentlisttable.style.display = 'block';
-
-//     var tablelist = document.createElement('table');
-//     tablelist.id = strListTableID;
-//     let datarow;
-
-//     // caption //
-//     tablelist.createCaption().innerHTML = 'Listing';
-
-//     // headerrow //
-//     let thead = tablelist.createTHead();
-//     let ppt;
-//     let thdata;
-//     datarow = thead.insertRow();
-
-//     for (ppt in datalist[0]) {
-//         thdata = document.createElement('th');
-//         thdata.innerHTML = ppt;
-//         datarow.appendChild(thdata);
-//     }
-
-
-//     // datarow //
-//     let tbody = tablelist.createTBody();
-//     datalist.forEach(function (dataobj) {
-//         datarow = tbody.insertRow();
-//         datarow.dataset[strListID] = dataobj.ID;
-//         datarow.insertCell(0).innerHTML = dataobj.ID;
-//         datarow.insertCell(1).innerHTML = dataobj.Name;
-//         datarow.addEventListener('click', function_clicked);
-//     })
-
-//     return tablelist;
-// }
-
-// detailform is a form with one divproperty for each property //
-// detailform is reloadable with different data object //
-// divproperty is a row flex of: label + input //
-// function populateform(dataobj, boolpost) {
-
-//     // detail form is always create anew, divdetail will remove all child beforehand //
-//     let formelement = document.createElement('form');
-//     formelement.id = strDetailFormID;
-//     formelement.style.flex = strFBDetailForm;
-
-//     // divproperty is a row flex of: label + input //
-//     let divproperty;
-//     let labelelement, dataelement;
-//     for (var ppt in dataobj) {
-//         divproperty = document.createElement('div');
-//         divproperty.style.display = 'flex';
-//         divproperty.style.marginTop = '1%';
-
-//         // label //
-//         labelelement = document.createElement('label');
-//         labelelement.innerHTML = ppt
-//         labelelement.style.flex = strFBFormLabel;
-//         divproperty.appendChild(labelelement);
-
-//         // data // 
-//         dataelement = document.createElement('input');
-//         dataelement.name = ppt;
-//         if (boolpost) {
-//             dataelement.value = '';
-//         }
-//         else {
-//             dataelement.value = dataobj[ppt];
-//         }
-//         dataelement.style.flex = strFBFormInput;
-//         divproperty.appendChild(dataelement);
-
-//         formelement.appendChild(divproperty);
-//     }
-
-//     return formelement;
-// }
 
 function payprofileedit_clicked(e) {
     let payprofileX = payprofile.find(item => {
@@ -1907,15 +1795,6 @@ function processendmonth_getPayQty(payitemX, eeecalcsheet) {
                     payqty += 0;
                 }
             })
-
-            // let calcqty = eeecalcsheet.pay_quantity.find(payqty => {
-            //     return payqty[0] === payitemX.PayUnit;
-            // });
-            // if (calcqty) {
-            //     payqty = calcqty[1];
-            // } else {
-            //     payqty = 0;
-            // }
         }
         else {
             payqty = 1;
@@ -2156,21 +2035,20 @@ function salaryitemvalid_clicked() {
 
 }
 
-// function calcsheetdatarow_clicked() {
-//     // save for prev/next navigation //
-//     objectid_curr = this.dataset[strListID];
-//     calcsheet_loaddetail(this.dataset[strListID]);
-// }
 
-function calcsheet_loaddetail(eeeid) {
+async function calcsheet_loaddetail(eeeid) {
+    let calcsheettitle = '';
+
     // remove previously added update button //
     let btnnode = document.getElementById(strDivTableFunctionID)
     if (btnnode) { btnnode.parentNode.removeChild(btnnode) }
 
     calcsheet_curr = [];
-    let eeecalcsheet = calcsheet.filter(item => item.Employee === eeeid);
+    let csheet = await dataobj_get(null, DataObjID.calcsheet);
+    let eeecalcsheet = csheet.filter(item => item.Employee === eeeid);
 
-    payunit.forEach(item => {
+    let punit = await dataobj_get(null, DataObjID.payunit);
+    punit.forEach(item => {
         calcsheet_curr.push({
             ID: item.ID,
             Employee: '',
@@ -2183,10 +2061,11 @@ function calcsheet_loaddetail(eeeid) {
     // ID:'2',
     // Employee: '102',
     // pay_quantity: [['101', 1], ['102', 26]]
-
+    let eee = await dataobj_get(null, DataObjID.employee);
     calcsheet_curr.forEach(item => {
         // item.ID = eeecalcsheet[0].Employee;
-        item.Employee = employee.find(ee => ee.ID === eeeid).Name;
+        item.Employee = eee.find(ee => ee.ID === eeeid).Name;
+        calcsheettitle = item.Employee;
         let arrypayqty = eeecalcsheet[0].pay_quantity.find(pq => pq[0] === item.PayUnitID);
         item.PayQuantity = arrypayqty ? arrypayqty[1] : 0;
     })
@@ -2232,6 +2111,9 @@ function calcsheet_loaddetail(eeeid) {
     dataobj_table[1].push(arrydatacol);
 
     let divcontent = init_divcontent('', null, dataobj_table);
+
+    // update content title //
+    document.getElementById(strClsContentDetailTitle).innerHTML = calcsheettitle;
 
     // add function button //
     let divfunction = document.createElement('div');
@@ -2308,69 +2190,30 @@ function payprofileitemnew_clicked(e) {
     e.preventDefault();
 }
 
-// function payunitnew_clicked(e) {
-//     try {
-
-//         dataobj_new(e);
-//         alert('New Pay Unit added.');
-//         toggle_logoinfo(false);
-//         e.preventDefault();
-//     }
-//     catch (e) { alert(e); }
-// }
-
-function dataobj_crud_obj() {
-    // let newdataobj;
-    // let data;
-    // let dataname;
-    // switch (dataobjid_curr) {
-    //     case objectid.payitem:
-    //         data = payitem;
-    //         dataname = 'Salary Item';
-    //         newdataobj = { ID: '', Name: '' };
-    //         break;
-    //     case objectid.payunit:
-    //         data = payunit;
-    //         dataname = 'Pay Unit';
-    //         newdataobj = { ID: '', Name: '' };
-    //         break;
-    //     case objectid.accrueditem:
-    //         data = accrueditem;
-    //         dataname = 'Accrued Item';
-    //         newdataobj = { ID: '', Name: '' };
-    //         break;
-    //     default:
-    //         data = null;
-    //         dataname = null;
-    //         newdataobj = null;
-    //         break;
-    // }
-    // return { data, dataname, newdataobj };
-}
-
 function dataobj_new(e) {
     try {
-        // let dataparam = dataobj_crud_obj();
-        // console.log(dataparam);
-        // let newdataobj = dataparam[2];
-        // let data = dataparam[0];
-        // let dataname = dataparam[1];
-
+        let strURL = '';
         let newdataobj;
         let data;
         let dataname;
         switch (dataobjid_curr) {
-            case objectid.payitem:
+            case DataObjID.employee:
+                data = employee;
+                dataname = 'Employee';
+                newdataobj = { ID: '', Name: '' };
+                strURL = 'http://localhost:49951/data/employeeadd';
+                break;
+            case DataObjID.payitem:
                 data = payitem;
                 dataname = 'Salary Item';
                 newdataobj = { ID: '', Name: '' };
                 break;
-            case objectid.payunit:
+            case DataObjID.payunit:
                 data = payunit;
                 dataname = 'Pay Unit';
                 newdataobj = { ID: '', Name: '' };
                 break;
-            case objectid.accrueditem:
+            case DataObjID.accrueditem:
                 data = accrueditem;
                 dataname = 'Accrued Item';
                 newdataobj = { ID: '', Name: '' };
@@ -2381,30 +2224,25 @@ function dataobj_new(e) {
                 newdataobj = null;
                 break;
         }
-        let frm = document.getElementById(strDetailFormID);
-        Object.keys(data[0]).forEach(ppt => {
-            newdataobj[ppt] = frm.elements[ppt].value
-        })
-        newdataobj.ID = dataobj_getnewid(data);
-        data.push(newdataobj);
+        if (boolAspNet) {
 
-        alert('New ' + dataname + ' added.');
-        toggle_logoinfo(false, true);
-        e.preventDefault();
+        }
+        else {
+            let frm = document.getElementById(strDetailFormID);
+            Object.keys(data[0]).forEach(ppt => {
+                newdataobj[ppt] = frm.elements[ppt].value
+            })
+            newdataobj.ID = dataobj_getnewid(data);
+            data.push(newdataobj);
+
+            alert('New ' + dataname + ' added.');
+            toggle_logoinfo(false, true);
+            e.preventDefault();
+        }
     }
     catch (ex) { alert(ex); }
-
 }
 
-function dataobj_newextrparam() {
-    // let newpayunit = { ID: '', Name: '' };
-    // let arrydatacol = window.location.href.split('?')[1].split('&');
-
-    // arrydatacol.forEach(datacol => {
-    //     let arryppt = datacol.split('=');
-    //     newpayunit[arryppt[0]] = arryppt[1];
-    // })
-}
 
 function dataobj_getnewid(dataobj) {
     let maxid = 0;
@@ -2417,13 +2255,13 @@ function dataobj_getnewid(dataobj) {
 }
 
 function dataobjprev_clicked(e) {
-    objectid_curr = dataobjlist_search(-1).ID;
+    objectid_curr = boolAspNet ? dataobjlist_search(-1).id : dataobjlist_search(-1).ID;
     dataobj_loaddetail(objectid_curr);
     e.preventDefault();
 }
 
 function dataobjnext_clicked(e) {
-    objectid_curr = dataobjlist_search(1).ID;
+    objectid_curr = boolAspNet ? dataobjlist_search(1).id : dataobjlist_search(1).ID;
     dataobj_loaddetail(objectid_curr);
     e.preventDefault();
 }
@@ -2436,7 +2274,7 @@ function dataobjlist_search(direction) {
 
     let curridx = 0;
     dataobj_curr.forEach((dataobj, index) => {
-        if (dataobj.ID === objectid_curr) {
+        if (dataobj.ID === objectid_curr || dataobj.id === objectid_curr) {
             curridx = index;
         }
     })
@@ -2480,8 +2318,10 @@ function payitemformula_clicked() {
     alert('Show Formula of PayItem Rate Calculation ...');
 }
 
-function statitemprofile_clicked(e) {
-    let profileeeeitem = statprofileiemployeeitem.filter(item => {
+async function statitemprofile_clicked(e) {
+
+    let statpeeeitem = await dataobj_get(null, DataObjID.statprofileemployeeitem);
+    let profileeeeitem = statpeeeitem.filter(item => {
         return item.StatProfile === this.dataset[strListID];
     })
 

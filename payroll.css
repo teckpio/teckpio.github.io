@@ -35,3 +35,12 @@ table tr:nth-child(even){
 table td{
     border:1px solid lightgray;
 }
+
+.sectionbox{
+    border:1px solid black;
+    margin: 2% auto;
+}
+
+.sectionbox:first-child{
+    width:80%;
+}

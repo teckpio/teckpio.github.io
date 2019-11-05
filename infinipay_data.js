@@ -1,4 +1,19 @@
 // sample data //
+const DataObjID = {
+    employee: 0,
+    payitem: 1,
+    payprofile: 2,
+    accrueditem: 3,
+    statitem: 4,
+    payunit: 5,
+    calcsheet: 6,
+    process: 7,
+    output: 8,
+    // composite data object
+    payprofileitem: 9,
+    statprofile: 10,
+    statprofileemployeeitem:11
+}
 
 
 var employee = [

@@ -104,14 +104,14 @@ const vssfnc_tablepopparam_item = {
     // fncdatarowclicked - function to call on datarow clicked
     arrybutton: {
         DataRow: {
-            ArryID:0,
+            ArryID: 0,
             Desc: 0,
             Col: 1,
             OnClick: 2,
             CSSClass: 3
         },
         Table: {
-            ArryID:1,
+            ArryID: 1,
             Desc: 0,
             OnClick: 1,
             CSSClass: 2
@@ -272,7 +272,7 @@ function vssfnc_tablepopulate(objparam) {
             }
 
             // cell button element //
-          
+
             if (!boolbtnadded && objparam.arrybutton && objparam.arrybutton.length > 0) {
 
                 let btncolumn = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Col] ? objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Col] : 0;
@@ -540,7 +540,7 @@ function vssfnc_formpopulate_param() {
     // arrydataid - an array of data attributes - 
     //          0:form id
     //          1:dataobj id (id of record of form)
-    // arrybutton - a 2-dim array of [button[(0)type, (1)text, (2)class, (3)clickedfunction]]
+    // arrybutton - a 2-dim array of [button[(0)type, (1)text, (2)class, (3)clickedfunction (4)formactionurl]]
 
     return {
         caption: null,
@@ -566,13 +566,13 @@ const vssfnc_formpopparam_item = {
     },
     arryinput: {
         Label: {
-            ArryID:0,
+            ArryID: 0,
             WidthRatio: 0,
             Desc: 1,
             Align: 2
         },
         Input: {
-            ArryID:1,
+            ArryID: 1,
             WidthRatio: 0,
             Align: 1
         }
@@ -591,13 +591,15 @@ const vssfnc_formpopparam_item = {
         Type: 0,
         Desc: 1,
         CSSClass: 2,
-        OnClick: 3
+        OnClick: 3,
+        ActionURL:4
     }
 }
 
 // used to populate a form (display / addition / edit) for a single object with multiple properties //
 function vssfnc_formpopulate(objparam) {
 
+    
     let param_item = vssfnc_formpopparam_item;
 
     // set default for null parameter //
@@ -608,12 +610,14 @@ function vssfnc_formpopulate(objparam) {
         while (objparam.htmlform.firstChild) {
             objparam.htmlform.removeChild(objparam.htmlform.firstChild);
         }
+        objparam.htmlform.id = objparam.arrydataid[param_item.arrydataid.Form];
     }
     else {
         objparam.htmlform = document.createElement('form');
         objparam.htmlform.id = objparam.arrydataid[param_item.arrydataid.Form];
         boolReturnElem = true;
     }
+
 
     // css class of form
 
@@ -849,6 +853,7 @@ function vssfnc_formpopulate(objparam) {
         for (let i = 0; i < objparam.arrybutton.length; i++) {
             var buttonelement = document.createElement('button');
             buttonelement.setAttribute('type', objparam.arrybutton[i][param_item.arrybutton.Type]);
+            buttonelement.setAttribute('formaction', objparam.arrybutton[i][param_item.arrybutton.ActionURL]);
             buttonelement.innerHTML = objparam.arrybutton[i][param_item.arrybutton.Desc];
             buttonelement.dataset.ID = objparam.arrydataid[param_item.arrydataid.DataObj];
 
@@ -866,15 +871,27 @@ function vssfnc_formpopulate(objparam) {
         objparam.htmlform.appendChild(divbutton);
     }
 
+    // let frm = document.getElementById(objparam.arrydataid[param_item.arrydataid.Form]);
+    // console.log(objparam.arrydataid[param_item.arrydataid.Form]);
+    
+    // frm.onsubmit = onsub;
+    // function onsub(){
+    //     console.log(this);
+    // }
+    
+    // objparam.htmlform.setAttribute('onsubmit', "onsub()");
+    // console.log(objparam.htmlform);
+    // objparam.htmlform.addEventListener('submit', onsub);    
+
     // onsubmit is required to convert checkbox / radio value //
     // objparam.htmlform.onsubmit = function (evt) {
-    //     let eleminput = this.querySelectorAll('input');
-    //     eleminput.forEach(elem => {
-    //         if (elem.type == 'checkbox') {
-    //             elem.value = elem.checked ? 1 : 0;
-    //         }
-    //     })
-    //     // evt.preventDefault();
+    // let eleminput = this.querySelectorAll('input');
+    // eleminput.forEach(elem => {
+    //     if (elem.type == 'checkbox') {
+    //         elem.value = elem.checked ? 1 : 0;
+    //     }
+    // })
+    // evt.preventDefault();
     // }
 
     if (boolReturnElem) {
