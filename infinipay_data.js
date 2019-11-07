@@ -1,20 +1,52 @@
 // sample data //
-const DataObjID = {
-    employee: 0,
-    payitem: 1,
-    payprofile: 2,
-    accrueditem: 3,
-    statitem: 4,
-    payunit: 5,
-    calcsheet: 6,
-    process: 7,
-    output: 8,
-    // composite data object
-    payprofileitem: 9,
-    statprofile: 10,
-    statprofileemployeeitem:11
+const infinipayURL = {
+    // employee //
+    EmployeeGet: 'http://localhost:49951/data/employeeget',
+    EmployeeAdd: 'http://localhost:49951/data/employeeadd',
+    EmployeeUpdate: 'http://localhost:49951/data/employeeupdate',
+    // payitem //
+    PayItemGet: 'http://localhost:49951/data/payitemget',
+    PayItemAdd: 'http://localhost:49951/data/payitemadd',
+    PayItemUpdate: 'http://localhost:49951/data/employeeupdate',
+    // process //
+    PayProcessEndMonth: 'http://localhost:49951/process/endmonth'
 }
 
+const DataObjID = {
+    Employee: 0,
+    PayItem: 1,
+    PayProfile: 2,
+    AccruedItem: 3,
+    StatItem: 4,
+    PayUnit: 5,
+    CalcSheet: 6,
+    PayProcess: 7,
+    Output: 8,
+    // composite data object
+    PayProfileItem: 9,
+    StatProfile: 10,
+    StatProfileEmployeeItem: 11
+}
+
+const employeedatacol = [
+    ['ID', false, 'text'],
+    ['Name', false, 'text'],
+    ['Payment Type', false, 'text'],
+    ['Address1', false, 'text'],
+    ['Address2', false, 'text'],
+    ['Address3', false, 'text'],
+    ['Identity Reference', false, 'text'],
+    ['Passport', false, 'text'],
+    ['Tel', false, 'text'],
+    ['Tel2', false, 'text'],
+    ['Permit', false, 'text'],
+    ['Marital Status', false, 'text'],
+    ['Date Of Birth', false, 'text'],
+    ['Nationality', false, 'text'],
+    ['Race', false, 'text'],
+    ['Religion', false, 'text'],
+    ['Pay Profile', false, DataObjID.PayProfile],
+]
 
 var employee = [
     { ID: '101', Name: 'M Adam', PayType: 'Monthly', Address1: '33, Jalan K', Address2: '', Address3: '', IC: '890910-08-1289', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Malay', Religion: 'Islam', PayProfile: '101' },
@@ -44,6 +76,13 @@ var employeeitem = [
     { ID: '', Name: 'PayProfile' }
 ]
 
+const payprofiledatacol = [
+    ['ID', false, 'text'],
+    ['Name', false, 'text'],
+    ['Accommodation', false, 'text'],
+    ['Company Car', false, 'text']
+]
+
 var payprofile = [
     { ID: '101', Name: 'Managerial', Accomodation: 'Yes', CompanyCar: 'Yes' },
     { ID: '102', Name: 'Executive1', Accomodation: 'Yes', CompanyCar: 'No' },
@@ -53,6 +92,25 @@ var payprofile = [
     { ID: '106', Name: 'Contract', Accomodation: 'No', CompanyCar: 'No' }
 ]
 
+const payitemdatacol = [
+    ['ID', false, 'text'],
+    ['Name', false, 'text'],
+    ['Remark', false, 'text'],
+    ['Pay Type', false, 'text'],
+    ['Pay Qty (Q.1)', false, 'text'],
+    ['Pay Unit (Q.2)', false, DataObjID.PayUnit],
+    ['Range (R.3)', false, 'text'],
+    ['Range Base', false, DataObjID.PayItem],
+    ['Range Qty', false, DataObjID.PayUnit],
+    ['Per Rate (R.2)', false, 'text'],
+    ['Per Base', false, DataObjID.PayItem],
+    ['Per Base Rate', false, DataObjID.PayItem],
+    ['Rate (R.1)', false, 'text'],
+    ['Min-Max', false, 'text'],
+    ['Valid Period', false, 'text'],
+    ['Accrued Item', false, DataObjID.AccruedItem],
+    ['Stat Requirement', false, 'text']
+]
 
 var payitem = [
     {
@@ -398,6 +456,12 @@ var payprofileitem = [
     { ID: '21', PayProfile: '101', PayItem: '116', PayRate: null }
 ]
 
+const statitemdatacol = [
+    ['ID', false, 'text'],
+    ['Name', false, 'text'],
+    ['Person In Charge', false, 'text']
+]
+
 var statitem = [
     { ID: '101', Name: 'EPF', PersonInCharge: '' },
     { ID: '102', Name: 'SOCSO', PersonInCharge: '' },
@@ -429,11 +493,23 @@ var statprofileiemployeeitem = [
     { ID: '11', StatProfile: '5', ProfileItem: 'Nationality', Operator: '=', Operand: '', Criteria: 'Malaysian' }
 ]
 
+const accrueditemdatacol = [
+    ['ID', false, 'text'],
+    ['Name', false, 'text'],
+    ['Date', false, 'text'],
+    ['Balance', false, 'text']
+]
+
 var accrueditem = [
     { ID: '101', Name: 'Advance', Date: '', Balance: 0 },
     { ID: '102', Name: 'Loan', Date: '', Balance: 0 },
     { ID: '104', Name: 'Ex-Gratia', Date: '', Balance: 0 },
     { ID: '105', Name: 'Retirement', Date: '', Balance: 0 }
+]
+
+const payunitdatacol = [
+    ['ID', false, 'text'],
+    ['Name', false, 'text']
 ]
 
 var payunit = [
@@ -447,6 +523,13 @@ var payunit = [
     { ID: '108', Name: 'ot_hour2' },
     { ID: '109', Name: 'contract_pcs' },
     { ID: '110', Name: 'mileage' }
+]
+
+const payprocessdatacol = [
+    ['ID', false, 'text'],
+    ['Name', false, 'text'],
+    ['Setting1', false, 'text'],
+    ['Setting2', false, 'text']
 ]
 
 var payprocess = [

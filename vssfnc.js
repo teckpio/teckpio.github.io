@@ -770,7 +770,7 @@ function vssfnc_formpopulate(objparam) {
             }
         }
         else {
-            // supporting data by id //
+            // value data by id //
             inputelement = document.createElement('select');
 
             inputelement.setAttribute('name', ppt);

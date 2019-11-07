@@ -336,6 +336,9 @@ html{
 }
 
 .ipfooter{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
     height:var(--heightfooter);
     box-sizing: border-box;
     background-color:var(--colorfooterbg);
@@ -343,6 +346,10 @@ html{
     padding:1%;
     font-size: var(--fontsizefooter);
     text-align: center;
+}
+
+.ipfooter div{
+    flex-basis: 1fr;
 }
 
 /* logo page */

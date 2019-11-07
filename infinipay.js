@@ -251,10 +251,10 @@ async function navitem_clicked() {
 
     // load navbar table list //
     let arrydataobjlist;
-    if (navitem[MainNavItem_Index.DataObjectID] === DataObjID.calcsheet) {
+    if (navitem[MainNavItem_Index.DataObjectID] === DataObjID.CalcSheet) {
         // data object for calcsheet is a list of employees instead of the original calcsheet
         let csheet = await dataobj_get();
-        let empee = await dataobj_get(null, DataObjID.employee);
+        let empee = await dataobj_get(null, DataObjID.Employee);
         arrydataobjlist = csheet.map(item => {
             return { ID: item.Employee, Name: empee.find(eee => eee.ID === item.Employee).Name }
         });
@@ -330,23 +330,23 @@ function dataobj_url(type, DObjID) {
         DObjID = dataobjid_curr;
     }
     switch (DObjID) {
-        case DataObjID.employee:
+        case DataObjID.Employee:
             switch (type) {
                 case 'get':
-                    return 'http://localhost:49951/data/employeeget';
+                    return infinipayURL.EmployeeGet;
                 case 'post':
-                    return 'http://localhost:49951/data/employeeadd';
+                    return infinipayURL.EmployeeAdd;
                 case 'put':
-                    return 'http://localhost:49951/data/employeeupdate';
+                    return infinipayURL.EmployeeUpdate;
             }
-        case DataObjID.payitem:
+        case DataObjID.PayItem:
             switch (type) {
                 case 'get':
-                    return 'http://localhost:49951/data/payitemget';
+                    return infinipayURL.PayItemGet;
                 case 'post':
-                    return 'http://localhost:49951/data/payitemadd';
+                    return infinipayURL.PayItemAdd;
                 case 'put':
-                    return 'http://localhost:49951/data/employeeupdate';
+                    return infinipayURL.PayItemUpdate;
             }
     }
 }
@@ -366,13 +366,13 @@ function dataobj_get(obj_id, dobjid) {
         return new Promise((resolve, reject) => {
             setTimeout(function () {
                 switch (dobjid) {
-                    case DataObjID.payprofileitem:
+                    case DataObjID.PayProfileItem:
                         resolve(payprofileitem);
                         break;
-                    case DataObjID.statprofile:
+                    case DataObjID.StatProfile:
                         resolve(statprofile);
                         break;
-                    case DataObjID.statprofileemployeeitem:
+                    case DataObjID.StatProfileEmployeeItem:
                         resolve(statprofileiemployeeitem);
                         break;
                     default:
@@ -406,6 +406,34 @@ function dataobj_get(obj_id, dobjid) {
     }
 }
 
+async function divcontentparam_loaddataobj(datacol) {
+    // arryType2Index is an array of arrays of [DataObjID, ArrayIndex]
+    // loaded Data Object will have an entry with its ArrayIndex
+    // this to avoid double loading of same Data Object
+    let arryType2Index = [];
+    let arrydataobj = [];
+    let arryidx = 0;
+    for (var i = 0; i < datacol.length; i++) {
+        if (!isNaN(datacol[i][vssfnc_formpopparam_item.arrydatacol.Type])) {
+            let loaded = arryType2Index.find(typeindex => {
+                return typeindex[0] === datacol[i][vssfnc_formpopparam_item.arrydatacol.Type];
+            })
+            if (loaded) {
+                datacol[i][vssfnc_formpopparam_item.arrydatacol.Type] = loaded[1];
+            }
+            else {
+                // vssfnc_formpopparam_item.arrydatacol.Type indicates the index of the required dataobj in the array of data object in vssfnc:form_populate; therefore convert the initial data object id to the array index
+                let dataobj = await dataobj_get(null, datacol[i][vssfnc_formpopparam_item.arrydatacol.Type]);
+                arrydataobj.push(dataobj);
+                arryType2Index.push([datacol[i][vssfnc_formpopparam_item.arrydatacol.Type], arryidx])
+                datacol[i][vssfnc_formpopparam_item.arrydatacol.Type] = arryidx;
+                arryidx += 1;
+            }
+        }
+    }
+    return arrydataobj;
+}
+
 async function employee_loaddetail(eeeid) {
 
     // load employee detail by ID //
@@ -413,145 +441,42 @@ async function employee_loaddetail(eeeid) {
     let dataobj = arrydataobj[0];
 
     // initial detail display area //
-
     let dataobj_form = init_divcontent_getdataobjform();
-    dataobj_form[0] = dataobj;
-
-    let arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Identity Reference';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol); arrydatacol = [];
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Address1';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol); arrydatacol = [];
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Address2';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol); arrydatacol = [];
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Address3';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'IC';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Passport';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Tel';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Tel2';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Permit';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Marital';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Date Of Birth';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Nationality';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Race';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Religion';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Pay Profile';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    dataobj_form[2] = [payprofile];
+    dataobj_form[divcontent_formitemidx.FormDataObj] = dataobj;
+    dataobj_form[divcontent_formitemidx.DataCol] = employeedatacol;
+    dataobj_form[divcontent_formitemidx.DataColObj] = await divcontentparam_loaddataobj(employeedatacol);
 
     let arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'SUBMIT';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobj_new;
     arrybtn[vssfnc_formpopparam_item.arrybutton.ActionURL] = dataobj_url('put');
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'SUBMIT';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobj_new;
     arrybtn[vssfnc_formpopparam_item.arrybutton.ActionURL] = dataobj_url('post');
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     init_divcontent(eeeid, dataobj_form, null);
 
@@ -567,147 +492,46 @@ async function payitem_loaddetail(currid) {
 
     // initial detail display area //
     let dataobj_form = init_divcontent_getdataobjform();
-    dataobj_form[0] = dataobj;
-
-    let arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Remark';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Pay Type';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Pay Qty (Q.1)';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Pay Unit (Q.2)';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 0;
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Range (R.3)';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Range Base';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 1;
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Range Qty';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 0;
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Per Rate (R.2)';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Per Base';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 1;
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Per Base Rate';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 1;
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Rate (R.1)';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Min-Max';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Valid Period';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Accrued Item';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 2;
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Stat Requirement';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    dataobj_form[2] = [payunit, payitem, accrueditem];
+    dataobj_form[divcontent_formitemidx.FormDataObj] = dataobj;
+    dataobj_form[divcontent_formitemidx.DataCol] = payitemdatacol;
+    dataobj_form[divcontent_formitemidx.DataColObj] = await divcontentparam_loaddataobj(payitemdatacol);
+    //[payunit, payitem, accrueditem];
 
     let arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Formula';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = payitemformula_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = payitemedit_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobj_new;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     init_divcontent(currid, dataobj_form, null);
 
@@ -723,49 +547,39 @@ async function payunit_loaddetail(currid) {
     // initial detail display area //
     let dataobj_form = init_divcontent_getdataobjform();
 
-    dataobj_form[0] = dataobj;
-
-    let arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
+    dataobj_form[divcontent_formitemidx.FormDataObj] = dataobj;
+    dataobj_form[divcontent_formitemidx.DataCol] = payunitdatacol;
+    dataobj_form[divcontent_formitemidx.DataColObj] = null;
 
     let arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = payunitedit_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobj_new;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     init_divcontent(currid, dataobj_form, null);
 
@@ -784,63 +598,39 @@ async function payprocess_loaddetail(currid) {
 
     // initial detail display area //
     let dataobj_form = init_divcontent_getdataobjform();
-    dataobj_form[0] = dataobj;
-
-    let arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Setting1';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol); arrydatacol = [];
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Setting2';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol); arrydatacol = [];
-
-    // dataobj_form[2] = [payunit, payitem];
+    dataobj_form[divcontent_formitemidx.FormDataObj] = dataobj;
+    dataobj_form[divcontent_formitemidx.DataCol] = payprocessdatacol;
+    dataobj_form[divcontent_formitemidx.DataColObj] = null;
 
     let arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'RUN';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = procprocess[1];
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     init_divcontent(currid, dataobj_form, null);
 
@@ -855,61 +645,39 @@ async function accrueditem_loaddetail(currid) {
 
     // initial detail display area //
     let dataobj_form = init_divcontent_getdataobjform();
-    dataobj_form[0] = dataobj;
-
-    let arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Date';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol); arrydatacol = [];
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Balance';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol); arrydatacol = [];
+    dataobj_form[divcontent_formitemidx.FormDataObj] = dataobj;
+    dataobj_form[divcontent_formitemidx.DataCol] = accrueditemdatacol;
+    dataobj_form[divcontent_formitemidx.DataColObj] = null;
 
     let arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = accrueditemedit_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobj_new;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     init_divcontent(currid, dataobj_form, null);
 
@@ -926,13 +694,13 @@ async function payprofile_loaddetail(profileid) {
 
     // load payprofile item //
     payprofileitem_curr = [];
-    let pprofileitem = await dataobj_get(null, DataObjID.payprofileitem);
+    let pprofileitem = await dataobj_get(null, DataObjID.PayProfileItem);
     payprofileitem_curr = pprofileitem.filter(item => {
         return item.PayProfile === profileid; //?? why cannot use this like profiledata ??//
     }, profileid)
 
     // insert name of payitem in payprofile item //
-    let pitem = await dataobj_get(null, DataObjID.payitem);
+    let pitem = await dataobj_get(null, DataObjID.PayItem);
     let profiledetaildata = payprofileitem_curr.map(item => {
         return {
             ID: item.ID,
@@ -946,81 +714,58 @@ async function payprofile_loaddetail(profileid) {
     // init detail display area //
     // profile form //
     let dataobj_form = init_divcontent_getdataobjform();
-    dataobj_form[0] = profiledata;
-
-    let arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Accommodation';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Company Car';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    dataobj_form[2] = null;
+    dataobj_form[divcontent_formitemidx.FormDataObj] = profiledata;
+    dataobj_form[divcontent_formitemidx.DataCol] = payprofiledatacol;
+    dataobj_form[divcontent_formitemidx.DataColObj] = null;
 
     let arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = payprofileedit_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
+
 
     // profile item table //
     let dataobj_table = init_divcontent_getdataobjtable();
-    dataobj_table[0] = profiledetaildata
+    dataobj_table[divcontent_tableitemidx.TableDataObj] = profiledetaildata
 
     let arryheader = [];
     arryheader[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'ID';
     arryheader[vssfnc_tablepopparam_item.arryheadercol.Width] = '10%';
     arryheader[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
     arryheader[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
-    dataobj_table[1].push(arryheader);
+    dataobj_table[divcontent_tableitemidx.DataCol].push(arryheader);
 
     arryheader = [];
     arryheader[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Pay Item';
     arryheader[vssfnc_tablepopparam_item.arryheadercol.Width] = '70%';
     arryheader[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
     arryheader[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
-    dataobj_table[1].push(arryheader);
+    dataobj_table[divcontent_tableitemidx.DataCol].push(arryheader);
 
     arryheader = [];
     arryheader[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Pay Rate';
@@ -1031,13 +776,13 @@ async function payprofile_loaddetail(profileid) {
     arryheader[vssfnc_tablepopparam_item.arryheadercol.Input][vssfnc_tablepopparam_item.arryheadercol.Input.Data] = null;
     arryheader[vssfnc_tablepopparam_item.arryheadercol.Input][vssfnc_tablepopparam_item.arryheadercol.Input.OnChange] = payprofileitemedit_clicked;
 
-    dataobj_table[1].push(arryheader);
+    dataobj_table[divcontent_tableitemidx.DataCol].push(arryheader);
 
     let arrybtn2 = [];
     arrybtn2[vssfnc_tablepopparam_item.arrybutton.DataRow.Desc] = 'x';
     arrybtn2[vssfnc_tablepopparam_item.arrybutton.DataRow.Col] = 0;
     arrybtn2[vssfnc_tablepopparam_item.arrybutton.DataRow.OnClick] = payprofileitemdelete_clicked;
-    dataobj_table[2].push(arrybtn2);
+    dataobj_table[divcontent_tableitemidx.Button].push(arrybtn2);
 
     let divdetail = init_divcontent(profileid, dataobj_form, dataobj_table);
 
@@ -1107,7 +852,7 @@ async function statitem_loaddetail(statid) {
 
     // load statprofile item //
     statitem_curr = [];
-    let sprofile = await dataobj_get(null, DataObjID.statprofile);
+    let sprofile = await dataobj_get(null, DataObjID.StatProfile);
     statprofile_curr = sprofile.filter(item => {
         return item.StatItem === statid;
     }, statid)
@@ -1116,72 +861,53 @@ async function statitem_loaddetail(statid) {
     // profile form //
     let dataobj_form = init_divcontent_getdataobjform();
 
-    dataobj_form[0] = statobj;
-
-
-    let arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'ID';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Name';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol);
-
-    arrydatacol = [];
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Desc] = 'Person In Charge';
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Required] = false;
-    arrydatacol[vssfnc_formpopparam_item.arrydatacol.Type] = 'text';
-    dataobj_form[1].push(arrydatacol); arrydatacol = [];
-
-    dataobj_form[2] = null;
+    dataobj_form[divcontent_formitemidx.FormDataObj] = statobj;
+    dataobj_form[divcontent_formitemidx.DataCol] = statitemdatacol;
+    dataobj_form[divcontent_formitemidx.DataColObj] = null;
 
     let arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '<<';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjprev_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Edit';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'RESET';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'Reset';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = undefined;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = 'POST';
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = 'New';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = functionudefined_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     arrybtn = [];
     arrybtn[vssfnc_formpopparam_item.arrybutton.Type] = null;
     arrybtn[vssfnc_formpopparam_item.arrybutton.Desc] = '>>';
     arrybtn[vssfnc_formpopparam_item.arrybutton.OnClick] = dataobjnext_clicked;
-    dataobj_form[3].push(arrybtn);
+    dataobj_form[divcontent_formitemidx.Button].push(arrybtn);
 
     // profile item table //
     let dataobj_table = init_divcontent_getdataobjtable();
-    dataobj_table[0] = statprofile_curr;
+    dataobj_table[divcontent_tableitemidx.TableDataObj] = statprofile_curr;
     // arrybutton - an array of 0: button text, 1: button column, 2: button_clicked function
     // // dataobj_table[2] = [['=', 2, payprofileitemedit_clicked]];
-    dataobj_table[1] = [
+    dataobj_table[divcontent_tableitemidx.DataCol] = [
         ['ID', '5%', 0, ,],
         ['Name', '35%', -1, ,],
         ['Stat Item', '5%', 0, ,],
         ['Rate', '55%', -1, ,]
     ];
 
-    dataobj_table[3] = statitemprofile_clicked;
+    dataobj_table[divcontent_tableitemidx.FncDatarowOnClick] = statitemprofile_clicked;
     let divdetail = init_divcontent(statid, dataobj_form, dataobj_table);
 
 
@@ -1250,6 +976,12 @@ function output_clicked(e) {
 //  - 3. array of button info
 //  ]
 // 
+const divcontent_formitemidx = {
+    FormDataObj: 0,
+    DataCol: 1,
+    DataColObj: 2,
+    Button: 3
+}
 // dataobj_table is an array of
 //  [
 //  - 0. dataobj of table
@@ -1258,7 +990,13 @@ function output_clicked(e) {
 //  - 3. function for datarowclicked
 //  ]
 // 
-function init_divcontent_getdataobjform() { return [null, [], null, []] }
+const divcontent_tableitemidx = {
+    TableDataObj: 0,
+    DataCol: 1,
+    Button: 2,
+    FncDatarowOnClick: 3
+}
+function init_divcontent_getdataobjform() { return [null, [], [], []] }
 function init_divcontent_getdataobjtable() { return [null, [], [], null, null] }
 function init_divcontent(dataobj_ID, dataobj_form, dataobj_table) {
 
@@ -1610,6 +1348,22 @@ function processmidmonth_clicked(e) {
 }
 
 function processendmonth_clicked(e) {
+    if (boolAspNet) {
+        let xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange=function(){
+        //     if(this.readyState===4 && this.status ===200){
+        //     }
+        // }
+        xhttp.open('GET', infinipayURL.PayProcessEndMonth);
+        xhttp.send();
+    }
+    else {
+        processendmonth();
+    }
+    e.preventDefault();
+}
+
+function processendmonth() {
     // for each employee
     //      extract PayProfile
     //          apply attached CalcSheet to each PayItem in PayProfile
@@ -1696,8 +1450,8 @@ function processendmonth_clicked(e) {
 
     // payroll object //
     let dataobj_table = init_divcontent_getdataobjtable()
-    dataobj_table[0] = payrollobj;
-    dataobj_table[3] = processendmonth_eeeclicked;
+    dataobj_table[divcontent_tableitemidx.TableDataObj] = payrollobj;
+    dataobj_table[divcontent_tableitemidx.FncDatarowOnClick] = processendmonth_eeeclicked;
     let divcontent = init_divcontent('', null, dataobj_table);
 
     // content title //
@@ -1709,13 +1463,12 @@ function processendmonth_clicked(e) {
     diveeepayroll.style.display = 'none';
     divcontent.appendChild(diveeepayroll);
 
-    if (e) {
-        e.preventDefault();
-    }
-    else {
+    // if (e) {
+    //     e.preventDefault();
+    // }
+    // else {
 
-    }
-
+    // }
 }
 
 function processendmonth_eeeclicked(e) {
@@ -2044,10 +1797,10 @@ async function calcsheet_loaddetail(eeeid) {
     if (btnnode) { btnnode.parentNode.removeChild(btnnode) }
 
     calcsheet_curr = [];
-    let csheet = await dataobj_get(null, DataObjID.calcsheet);
+    let csheet = await dataobj_get(null, DataObjID.CalcSheet);
     let eeecalcsheet = csheet.filter(item => item.Employee === eeeid);
 
-    let punit = await dataobj_get(null, DataObjID.payunit);
+    let punit = await dataobj_get(null, DataObjID.PayUnit);
     punit.forEach(item => {
         calcsheet_curr.push({
             ID: item.ID,
@@ -2061,7 +1814,7 @@ async function calcsheet_loaddetail(eeeid) {
     // ID:'2',
     // Employee: '102',
     // pay_quantity: [['101', 1], ['102', 26]]
-    let eee = await dataobj_get(null, DataObjID.employee);
+    let eee = await dataobj_get(null, DataObjID.Employee);
     calcsheet_curr.forEach(item => {
         // item.ID = eeecalcsheet[0].Employee;
         item.Employee = eee.find(ee => ee.ID === eeeid).Name;
@@ -2197,23 +1950,23 @@ function dataobj_new(e) {
         let data;
         let dataname;
         switch (dataobjid_curr) {
-            case DataObjID.employee:
+            case DataObjID.Employee:
                 data = employee;
                 dataname = 'Employee';
                 newdataobj = { ID: '', Name: '' };
                 strURL = 'http://localhost:49951/data/employeeadd';
                 break;
-            case DataObjID.payitem:
+            case DataObjID.PayItem:
                 data = payitem;
                 dataname = 'Salary Item';
                 newdataobj = { ID: '', Name: '' };
                 break;
-            case DataObjID.payunit:
+            case DataObjID.PayUnit:
                 data = payunit;
                 dataname = 'Pay Unit';
                 newdataobj = { ID: '', Name: '' };
                 break;
-            case DataObjID.accrueditem:
+            case DataObjID.AccruedItem:
                 data = accrueditem;
                 dataname = 'Accrued Item';
                 newdataobj = { ID: '', Name: '' };
@@ -2320,7 +2073,7 @@ function payitemformula_clicked() {
 
 async function statitemprofile_clicked(e) {
 
-    let statpeeeitem = await dataobj_get(null, DataObjID.statprofileemployeeitem);
+    let statpeeeitem = await dataobj_get(null, DataObjID.StatProfileEmployeeItem);
     let profileeeeitem = statpeeeitem.filter(item => {
         return item.StatProfile === this.dataset[strListID];
     })
