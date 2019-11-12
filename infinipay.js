@@ -1328,7 +1328,7 @@ async function newemployee_clicked() {
     // alert('new employee clicked');
 
     let frm = document.createElement('form');
-    
+
     let lbl = document.createElement('label');
     lbl.innerHTML = 'xxField1: '
     let inp = document.createElement('input');
@@ -1337,6 +1337,8 @@ async function newemployee_clicked() {
     frm.appendChild(lbl);
     frm.appendChild(inp);
 
+    frm.appendChild(document.createElement('br'));
+
     let lbl2 = document.createElement('label');
     lbl2.innerHTML = 'xxField2: '
     let inp2 = document.createElement('input');
@@ -1344,6 +1346,7 @@ async function newemployee_clicked() {
     inp2.name = 'field2';
     frm.appendChild(lbl2);
     frm.appendChild(inp2);
+    frm.style.width = '100px';
 
     let tbl = document.createElement('table');
     let tr = document.createElement('tr');
@@ -1359,14 +1362,18 @@ async function newemployee_clicked() {
     tbl.appendChild(tr);
     // tr.insertCell(cell);
     // tbl.insertRow(tr);
+    
+    // let rtn = await promptmessage('Hello World', frm, { Text: 'XXX', FncClicked: fulllist_clicked });
+    let rtn = await promptmessage('Hello World', 
+    null,
+    [ { Text: 'XXX', FncClicked: fulllist_clicked },  { Text: 'yyy', FncClicked: fulllist_clicked }]);
 
-    let rtn = await promptmessage('Hello World', frm, { Text: 'XXX', FncClicked: fulllist_clicked });
-    let disp;
-    let arryinp = rtn.getElementsByTagName('input');
-    for(var i=0; i < arryinp.length;i++){
-        disp += arryinp[i].value;
-    }
-    alert(disp);
+    // let disp;
+    // let arryinp = rtn.getElementsByTagName('input');
+    // for (var i = 0; i < arryinp.length; i++) {
+    //     disp += arryinp[i].value;
+    // }
+    // alert(disp);
 }
 
 function fulllist_clicked() {
@@ -1492,6 +1499,8 @@ function processendmonth() {
     dataobj_table[divcontent_tableitemidx.TableDataObj] = payrollobj;
     dataobj_table[divcontent_tableitemidx.FncDatarowOnClick] = processendmonth_eeeclicked;
     let divcontent = init_divcontent('', null, dataobj_table);
+
+    promptmessage(null, divcontent);
 
     // content title //
     document.getElementById(strClsContentDetailTitle).innerHTML = 'End-Month Process';
@@ -2309,7 +2318,7 @@ async function statitemprofile_clicked(e) {
 }
 
 
-// fncbutton is an object with 
+// fncbutton is an array of object with 
 // Text : <Button Text>,
 // FncClicked : function for clicked event
 function promptmessage(strmessage, htmlelem, fncbutton) {
@@ -2325,16 +2334,19 @@ position:fixed;
 top:0;
 left:0;
 background-color:rgba(255,255,255,0.8);
+overflow:auto;
 `);
 
         // promptdiv houses the content //
         let promptdiv = document.createElement('div');
         promptdiv.setAttribute('style',
-            `width:50%;
-height:50%;
-position:absolute;
-top:25%;
-left:25%;
+            `
+             width:50%;
+// height:50%;
+// position:absolute;
+// top:25%;
+// left:25%;
+margin:1% auto;
 background-color:white;
 box-shadow:0 0 10px gray;
 `);
@@ -2344,7 +2356,7 @@ box-shadow:0 0 10px gray;
             // strmessage as element title //
             let msgdiv = document.createElement('div');
             msgdiv.setAttribute('style',
-                `width:90%;
+                `width:100%;
         margin:2% auto;
         `);
             msgdiv.innerHTML = strmessage;
@@ -2355,51 +2367,61 @@ box-shadow:0 0 10px gray;
             htmlelem.setAttribute('style',
                 `width:90%;
         margin:2% auto;`)
+        
+        promptdiv.style.width = htmlelem.style.width;
+
         }
         else {
             let msgdiv = document.createElement('div');
             msgdiv.setAttribute('style',
                 `width:50%;
         height:50%;
-        position:absolute;
-        top:25%;
-        left:25%;
+        margin:5%;
+        padding:5%;
+        // position:absolute;
+        // top:25%;
+        // left:25%;
         `);
             msgdiv.innerHTML = strmessage;
             promptdiv.appendChild(msgdiv);
         }
 
+        let divbutton = document.createElement('div');
+        divbutton.setAttribute('style', 
+        `border-top: 1px solid gray;
+        background-color:lightgray;
+        padding:1%;
+        display:flex;
+        justify-content:flex-end;`);
+
         // caller-defined button //
         if (fncbutton) {
-            let btncaller = document.createElement('button');
-            btncaller.setAttribute('style',
-                `position:absolute;
-    bottom:2%;
-    left:2%;`);
-            btncaller.innerHTML = fncbutton.Text;
-            btncaller.onclick = fncbutton.FncClicked;
-            promptdiv.appendChild(btncaller);
+            fncbutton.forEach(btnX=>{
+                let btncaller = document.createElement('button');
+                btncaller.setAttribute('style', 'margin:1% 1%;');
+                btncaller.innerHTML = btnX.Text;
+                btncaller.onclick = btnX.FncClicked;
+                divbutton.appendChild(btncaller);
+            })
         }
 
         // default back button //
         let btnback = document.createElement('button');
-        btnback.setAttribute('style',
-            `position:absolute;
-bottom:2%;
-right:2%;`);
+        btnback.setAttribute('style', 'margin:1% 1%;');
         btnback.innerHTML = 'Back';
         btnback.onclick = function () {
             let divshield = document.getElementById('vssPromptMsg');
             divshield.parentNode.removeChild(divshield);
-            if(htmlelem){
+            if (htmlelem) {
                 resolve(htmlelem);
             }
-            else{
+            else {
                 resolve();
             }
-            
+
         }
-        promptdiv.appendChild(btnback);
+        divbutton.appendChild(btnback);
+        promptdiv.appendChild(divbutton);
 
         shielddiv.appendChild(promptdiv);
 
