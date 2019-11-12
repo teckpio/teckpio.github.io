@@ -1324,10 +1324,49 @@ function calcsheetitemedit_clicked(e) {
 }
 
 
-function newemployee_clicked() {
-    alert('new employee clicked');
+async function newemployee_clicked() {
+    // alert('new employee clicked');
 
-    promptmessage('Hello World');
+    let frm = document.createElement('form');
+    
+    let lbl = document.createElement('label');
+    lbl.innerHTML = 'xxField1: '
+    let inp = document.createElement('input');
+    inp.Type = 'text';
+    inp.name = 'field1';
+    frm.appendChild(lbl);
+    frm.appendChild(inp);
+
+    let lbl2 = document.createElement('label');
+    lbl2.innerHTML = 'xxField2: '
+    let inp2 = document.createElement('input');
+    inp2.Type = 'text';
+    inp2.name = 'field2';
+    frm.appendChild(lbl2);
+    frm.appendChild(inp2);
+
+    let tbl = document.createElement('table');
+    let tr = document.createElement('tr');
+    let headercol = document.createElement('th');
+    headercol.innerHTML = 'hd xxx';
+    tr.appendChild(headercol);
+    tbl.appendChild(tr);
+    // tr.insertCell(headercol);
+    // tbl.insertRow(tr);
+    let cell = document.createElement('td');
+    cell.innerHTML = 'xxx';
+    tr.appendChild(cell);
+    tbl.appendChild(tr);
+    // tr.insertCell(cell);
+    // tbl.insertRow(tr);
+
+    let rtn = await promptmessage('Hello World', frm, { Text: 'XXX', FncClicked: fulllist_clicked });
+    let disp;
+    let arryinp = rtn.getElementsByTagName('input');
+    for(var i=0; i < arryinp.length;i++){
+        disp += arryinp[i].value;
+    }
+    alert(disp);
 }
 
 function fulllist_clicked() {
@@ -2269,67 +2308,105 @@ async function statitemprofile_clicked(e) {
     e.preventDefault();
 }
 
-function promptmessage(strmessage, htmlelem) {
 
-    // shielddiv covers whole page //
-    let shielddiv = document.createElement('div');
-    shielddiv.id = 'vssPromptMsg';
-    shielddiv.setAttribute('style',
-        `width:100%;
-    height:100%;
-    position:fixed;
-    top:0;
-    left:0;
-    background-color:rgba(255,255,255,0.8);
-    `);
+// fncbutton is an object with 
+// Text : <Button Text>,
+// FncClicked : function for clicked event
+function promptmessage(strmessage, htmlelem, fncbutton) {
 
-    // promptdiv houses the content //
-    let promptdiv = document.createElement('div');
-    promptdiv.setAttribute('style',
-        `width:50%;
-    height:50%;
-    position:absolute;
-    top:25%;
-    left:25%;
-    background-color:white;
-    box-shadow:0 0 10px gray;
-    `);
+    return new Promise((resolve, reject) => {
+        // shielddiv covers whole page //
+        let shielddiv = document.createElement('div');
+        shielddiv.id = 'vssPromptMsg';
+        shielddiv.setAttribute('style',
+            `width:100%;
+height:100%;
+position:fixed;
+top:0;
+left:0;
+background-color:rgba(255,255,255,0.8);
+`);
 
-
-    if (htmlelem) {
-        promptdiv.appendChild(htmlelem);
-    }
-    else {
-        let msgdiv = document.createElement('div');
-        msgdiv.setAttribute('style',
+        // promptdiv houses the content //
+        let promptdiv = document.createElement('div');
+        promptdiv.setAttribute('style',
             `width:50%;
-            height:50%;
-            position:absolute;
-            top:25%;
-            left:25%;
-            `);
-        msgdiv.innerHTML = strmessage;
-        promptdiv.appendChild(msgdiv);
-    }
+height:50%;
+position:absolute;
+top:25%;
+left:25%;
+background-color:white;
+box-shadow:0 0 10px gray;
+`);
 
 
-    let btnback = document.createElement('button');
-    btnback.setAttribute('style',
-        `position:absolute;
+        if (htmlelem) {
+            // strmessage as element title //
+            let msgdiv = document.createElement('div');
+            msgdiv.setAttribute('style',
+                `width:90%;
+        margin:2% auto;
+        `);
+            msgdiv.innerHTML = strmessage;
+            promptdiv.appendChild(msgdiv);
+
+            // html elem //
+            promptdiv.appendChild(htmlelem);
+            htmlelem.setAttribute('style',
+                `width:90%;
+        margin:2% auto;`)
+        }
+        else {
+            let msgdiv = document.createElement('div');
+            msgdiv.setAttribute('style',
+                `width:50%;
+        height:50%;
+        position:absolute;
+        top:25%;
+        left:25%;
+        `);
+            msgdiv.innerHTML = strmessage;
+            promptdiv.appendChild(msgdiv);
+        }
+
+        // caller-defined button //
+        if (fncbutton) {
+            let btncaller = document.createElement('button');
+            btncaller.setAttribute('style',
+                `position:absolute;
     bottom:2%;
-    right:2%;`);
-    btnback.innerHTML = 'Back';
-    btnback.onclick = function () {
-        let divshield = document.getElementById('vssPromptMsg');
-        divshield.parentNode.removeChild(divshield);
-    }
+    left:2%;`);
+            btncaller.innerHTML = fncbutton.Text;
+            btncaller.onclick = fncbutton.FncClicked;
+            promptdiv.appendChild(btncaller);
+        }
 
-    promptdiv.appendChild(btnback);
+        // default back button //
+        let btnback = document.createElement('button');
+        btnback.setAttribute('style',
+            `position:absolute;
+bottom:2%;
+right:2%;`);
+        btnback.innerHTML = 'Back';
+        btnback.onclick = function () {
+            let divshield = document.getElementById('vssPromptMsg');
+            divshield.parentNode.removeChild(divshield);
+            if(htmlelem){
+                resolve(htmlelem);
+            }
+            else{
+                resolve();
+            }
+            
+        }
+        promptdiv.appendChild(btnback);
 
-    shielddiv.appendChild(promptdiv);
+        shielddiv.appendChild(promptdiv);
 
-    document.getElementsByTagName('body')[0].appendChild(shielddiv);
-    btnback.focus();
+        document.getElementsByTagName('body')[0].appendChild(shielddiv);
+        btnback.focus();
+    })
+
 }
 
 function statitemprofilerange_clicked() {
