@@ -39,8 +39,8 @@
 
     --fontsizeheader:1.2em;
     --fontsizecontenttitle:1.2em;
-    --fontsizebody:1em;
-    --fontsizefooter:.8em;
+    --fontsizebody:.9em;
+    --fontsizefooter:.6em;
     --fontsizemainnav:1em;
 
     --fbcontenttitle:5%;
@@ -112,7 +112,6 @@ html{
 
     font-size:var(--fontsizemainnav);
     text-align:center;
-
 }
 
 .mainnavitem:hover{
@@ -273,6 +272,7 @@ html{
     color:var(--colorcontentdetailfg);
     margin:0 auto;
     border:1px solid var(--colorbordercontentbox);
+    overflow:hidden;
 }
 
 .contentimgdiv{
@@ -372,4 +372,41 @@ html{
     -webkit-background-clip: text;
     color:transparent;
     
+}
+
+.slideinleft{
+    animation: slideinleft 500ms;
+}
+
+@keyframes slideinleft{
+    from{transform:translateX(-100%);}
+    to{transform:translateX(0)}
+}
+
+.slideoutleft{
+    animation: slideoutleft 500ms;
+}
+
+
+@keyframes slideoutleft{
+    from{transform:translateX(0);}
+    to{transform:translateX(100%)}
+}
+
+.slideinright{
+    animation: slideinright 500ms;
+}
+
+@keyframes slideinright{
+    from{transform:translateX(100%);}
+    to{transform:translateX(0)}
+}
+
+.slideoutright{
+    animation: slideoutright 500ms;
+}
+
+@keyframes slideoutright{
+    from{transform:translateX(0);}
+    to{transform:translateX(-100%)}
 }
