@@ -48,7 +48,7 @@ function vssfnc_tablepopulate_param() {
     // [0: datarow button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
     // arrybuttontable - a 2-dim array of 
     // [[0: button text, 1: button_clicked function, 2: css class of button]]
-    // fncdatarowclicked - function to call on datarow clicked
+    // fncdatarowclicked - function to call on datarow clicked (used as a callback with dataset-ID as the parameter)
 
     return {
         caption: null,
@@ -177,7 +177,7 @@ function vssfnc_tablepopulate(objparam) {
         if (objparam.arryclass[param_item.arryclass.Caption]) {
             caption.classList.add(objparam.arryclass[param_item.arryclass.Caption]);
         } else {
-            caption.setAttribute('style', 'background-color:black;color:white;text-align:left;padding:1%;')
+            caption.setAttribute('style', 'background-color:gray;color:white;text-align:left;padding:1%;')
         }
 
         caption.innerHTML = objparam.caption;
@@ -234,7 +234,7 @@ function vssfnc_tablepopulate(objparam) {
     thead.appendChild(trheader);
 
     // search / data edit row //
-    let booleditrow = false;
+    let booleditrow = true;
 
     if (booleditrow) {
 
@@ -396,21 +396,37 @@ function vssfnc_tablepopulate(objparam) {
     let tabledatarow = objparam.htmltable.getElementsByTagName('tr');
 
     for (var i = 0; i < tabledatarow.length; i++) {
-        if (i ==0 || (booleditrow && i == 1)) {
+        // header row and date edit row (if any) //
+        if (i == 0 || (booleditrow && i == 1)) {
             // do nothing //
         } else {
-            if (objparam.fncdatarowclicked === undefined) {
-                tabledatarow[i].onclick = function () {
-                    let parent = this.parentElement.parentElement;
-                    vssfnc_paintoddevenrow(parent, objparam.arryclassdatarow);
-                    this.classList.add(objparam.arryclassdatarow[param_item.arryclassdatarow.SelectedRow]);
+            // if (objparam.fncdatarowclicked === undefined) {
+            tabledatarow[i].onclick = function () {
+                let parent = this.parentElement.parentElement;
+
+                // populate date edit row (if any) //
+                // parent is thead with first child is th, second child is edit datarow //
+                let editrow = parent.children[0].children[1];
+                for (i = 0; i < editrow.children.length; i++) {
+                    // edit datarow children is td whose children is either input or select //
+                    editrow.children[i].children[0].value = this.children[i].innerHTML;
+                }
+
+                // paint selected row //
+                vssfnc_paintoddevenrow(parent, objparam.arryclassdatarow);
+                this.classList.add(objparam.arryclassdatarow[param_item.arryclassdatarow.SelectedRow]);
+
+                // call back to user-defined function with ID //
+                if (objparam.fncdatarowclicked !== undefined) {
+                    objparam.fncdatarowclicked(this.dataset.ID);
                 }
             }
-            else {
-                tabledatarow[i].onclick = objparam.fncdatarowclicked;
-            }
+            // }
+            // else {
+            //     console.log(objparam.fncdatarowclicked);
+            //     tabledatarow[i].onclick = objparam.fncdatarowclicked;
+            // }
         }
-
     }
 
     // paint table datarow - odd/even //
@@ -547,9 +563,9 @@ function vssfnc_paintoddevenrow(tablex, classdatarow) {
 
             // header row //
             tablex.rows[0].style.color = 'white';
-            tablex.rows[0].style.backgroundColor = 'black';
+            tablex.rows[0].style.backgroundColor = 'gray';
             for (var cell of tablex.rows[0].cells) {
-                cell.style.border = 'solid 1px gray';
+                cell.style.border = 'solid 1px white';
                 cell.style.padding = '5px';
             }
 
@@ -564,6 +580,8 @@ function vssfnc_paintoddevenrow(tablex, classdatarow) {
                 for (var cell of tablex.rows[i].cells) {
                     // cell.style.border = 'solid 1px gray';
                     cell.style.padding = '5px';
+                    cell.style.borderLeft = "1px solid gray";
+                    cell.style.borderRight = "1px solid gray";
                 }
             }
         }
@@ -929,7 +947,7 @@ function vssfnc_formpopulate(objparam) {
             inputelement.classList.add(objparam.arryclass[param_item.arryclass.Input]);
         }
 
-        inputelement.setAttribute('style', `width:100%;padding:.5%;
+        inputelement.setAttribute('style', `width:100%;padding:.5%;box-sizing:border-box;
             text-align:${objparam.arryinput[param_item.arryinput.Input.ArryID][param_item.arryinput.Input.Align] === 0 ? 'center' : (objparam.arryinput[param_item.arryinput.Input.ArryID][param_item.arryinput.Input.Align] === 1 ? 'right' : 'left')}`);
         divinput.appendChild(inputelement);
 
@@ -960,10 +978,10 @@ function vssfnc_formpopulate(objparam) {
     if (objparam.arrybutton) {
         for (let i = 0; i < objparam.arrybutton.length; i++) {
             var buttonelement = document.createElement('button');
-            if( objparam.arrybutton[i][param_item.arrybutton.Type]){
-                buttonelement.setAttribute('type', objparam.arrybutton[i][param_item.arrybutton.Type]); 
-            }else{
-                buttonelement.setAttribute('type', 'button'); 
+            if (objparam.arrybutton[i][param_item.arrybutton.Type]) {
+                buttonelement.setAttribute('type', objparam.arrybutton[i][param_item.arrybutton.Type]);
+            } else {
+                buttonelement.setAttribute('type', 'button');
             }
             buttonelement.setAttribute('formaction', objparam.arrybutton[i][param_item.arrybutton.ActionURL]);
             buttonelement.innerHTML = objparam.arrybutton[i][param_item.arrybutton.Desc];

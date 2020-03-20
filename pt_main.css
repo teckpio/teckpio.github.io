@@ -1,13 +1,15 @@
 :root{
     --colorNavBar_MenuLogo:rgb(233, 229, 10);
     --colorNavBar_Menu:rgb(31, 27, 27);
-    --colorTextNavBar_Menu:white;
+    --colorTextNavBar_Menu:rgb(223, 215, 215);
     --colorContent_Title:rgb(44, 38, 38);
-    --colorTextContent_Title:white;
+    --colorTextContent_Title:rgb(245, 247, 241);
+    --colorContentBoxBG:rgb(245, 250, 255);
     --colorContent_Detail:white;
-    --colorButtonBG:gray;
+    --colorButtonBG:rgb(33, 150, 165);
     --colorButtonFG: white;
     --colorButtonShadow:black;
+    --colorButtonFGHover:rgb(212, 226, 9);
 
     --fbNavBar_Logo:1;
     --fbNavBar_Menu:5;
@@ -15,8 +17,6 @@
     --fbContent_Title:1;
     --fbContent_Detail:15;
     
-
-
     --heightNavBar_logo:20vh;
     --heightNavBar_Menu:80vh;
 
@@ -27,8 +27,8 @@
     
     --widthMain:100%;
 
-    --widthNavBar:20%;
-    --widthContent:80%;
+    --widthNavBar:15%;
+    --widthContent:85%;
 
     --widthNavBar_Menu:100%;
 
@@ -104,6 +104,9 @@
     margin:0;
 
     z-index: 10;
+
+    
+    overflow:auto;
 }
 
 
@@ -140,9 +143,14 @@ li:hover{
     font-style:italic;
 }
 
-table:hover{
+table tr:hover{
+    cursor:pointer;
+}
+
+table th:hover{
     cursor:default;
 }
+
 
 /* NavBar_SubMenu resides in Content_Detail (next to NavBar) */
 #NavBar_SubMenu{
@@ -194,6 +202,7 @@ table:hover{
 #Content_Box{
     height:100%;
     
+    background-color: var(--colorContentBoxBG);
 
     text-align: center;
     flex:var(--fbContent_Detail);   
@@ -232,9 +241,13 @@ table:hover{
     box-sizing: border-box;
     padding:1%;
     margin:1%;
+    border-radius: 5%;
+    
 }
 .FunctionButton:hover{
     cursor:default;
-    border:var(--borderActiveMenuItem);
+    /* color:var(--colorButtonFGHover); */
+    /* border:var(--borderActiveMenuItem); */
     font-style:italic;   
+    outline-style: inset;
 }

@@ -425,12 +425,13 @@ function SubMenuItemClicked() {
 
 }
 
-function BusStopListClicked() {
+function BusStopListClicked(ID) {
 
     SwitchListToDetail();
 
     let BusStopData = SampleBusStopData.find((eee) => {
-        return eee.ID === this.dataset.ID || eee.ID === parseInt(this.dataset.ID);
+        return eee.ID === ID || eee.ID === parseInt(ID);
+        // return eee.ID === this.dataset.ID || eee.ID === parseInt(this.dataset.ID);
     });
 
 
@@ -449,9 +450,10 @@ function getDivBusStopByID(busstopdata) {
 }
 
 function getIFrameMap() {
-    ContentDetail.appendChild(createMap());
+    // ContentDetail.appendChild(createMap());
     // ContentDetail.appendChild(getMap());
     // getMap();
+    window.open("http://www.google.com/maps?q=24.197611,120.780512");
 }
 
 function createMap() {
@@ -460,9 +462,9 @@ function createMap() {
     divmap.style.margin = "1%";
     divmap.style.width = "50%";
 
-    // divmap.src = "http://www.google.com/maps?q=24.197611,120.780512";
+    divmap.src = "http://www.google.com/maps?q=24.197611,120.780512";
 
-    divmap.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.989442890688!2d101.08790571461427!3d4.595913396661126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31caec611a9d9c41%3A0xfe76e16d137449b4!2sIpoh+Parade%2C+105%2C+Jalan+Sultan+Abdul+Jalil%2C+31350+Ipoh%2C+Negeri+Perak!5e0!3m2!1sen!2smy!4v1565011877345!5m2!1sen!2smy"
+    // divmap.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.989442890688!2d101.08790571461427!3d4.595913396661126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31caec611a9d9c41%3A0xfe76e16d137449b4!2sIpoh+Parade%2C+105%2C+Jalan+Sultan+Abdul+Jalil%2C+31350+Ipoh%2C+Negeri+Perak!5e0!3m2!1sen!2smy!4v1565011877345!5m2!1sen!2smy"
     return divmap;
 }
 
@@ -558,12 +560,13 @@ async function xx(eeeid) {
 
 }
 
-function DriverListClicked() {
+function DriverListClicked(ID) {
 
     SwitchListToDetail();
 
     let DriverData = SampleEmployeeData.find((eee) => {
-        return eee.ID === this.dataset.ID || eee.ID === parseInt(this.dataset.ID);
+        return eee.ID === ID || eee.ID === parseInt(ID);
+        // return eee.ID === this.dataset.ID || eee.ID === parseInt(this.dataset.ID);
     });
 
 
@@ -578,18 +581,21 @@ function DriverListClicked() {
 
 }
 
-function getDetailImage() {
+function setStyleDetailImage() {
     imgpicture = document.createElement('img');
-    imgpicture.style.width = "auto";
+    imgpicture.style.width = "100%";
     imgpicture.style.height = "auto";
-    imgpicture.style.margin = "3% auto";
+    imgpicture.style.margin = "3% auto auto 3%";
+    imgpicture.style.transition = "margin .5s, opacity .2s";
     imgpicture.style.flexBasis = "1fr";
     imgpicture.style.boxShadow = "1px 1px 1px gray";
     imgpicture.style.gridArea = "1/1/9/2";
 
+
     return imgpicture;
 }
 
+// Div Detail is a grid of Image, image click direction, back to list and detail form
 function loadDivDetail(formtitle, jsondata, arrydatacol, arryitemdata, arrybtn, imgsrc) {
     let divDetail = document.createElement('div');
     divDetail.style.display = "grid";
@@ -598,19 +604,20 @@ function loadDivDetail(formtitle, jsondata, arrydatacol, arryitemdata, arrybtn, 
     divDetail.style.width = "100%";
     divDetail.style.height = "100%";
     divDetail.style.border = "1px solid gray";
+    divDetail.style.overflow = "auto";
 
     // load picture
     // let divpicture = document.createElement('div');
     // let imgpicture;
     if (Array.isArray(imgsrc)) {
         for (var i = 0; i < imgsrc.length; i++) {
-            let imgpicture = getDetailImage();
+            let imgpicture = setStyleDetailImage();
             imgpicture.src = imgsrc[i];
-            // imgpicture.style.transition="margin-left 1s";
             imgpicture.dataset.id = i;
             if (i > 0) {
-                imgpicture.style.display = "none";
-                // imgpicture.style.marginLeft="-100%";
+                imgpicture.style.marginLeft = "-100%";
+                imgpicture.style.opacity = "0";
+                // imgpicture.style.display = "none";
             }
 
             imgpicture.onmousemove = function () {
@@ -630,17 +637,21 @@ function loadDivDetail(formtitle, jsondata, arrydatacol, arryitemdata, arrybtn, 
                     for (var i = 0; i < arryimg.length; i++) {
 
                         if (i === parseInt(this.dataset.id)) {
-                            arryimg[i].style.display = "none";
-                            // arryimg[i].style.marginLeft="-100%";
+                            arryimg[i].style.marginLeft = "-100%";
+                            arryimg[i].style.opacity = "0";
+                            // arryimg[i].style.display = "none";
                         }
                         else if (i === parseInt(this.dataset.id) + 1) {
-                            arryimg[i].style.display = "block";
-                            // arryimg[i].style.marginLeft="0";
+                            arryimg[i].style.marginLeft = "3%";
+                            // arryimg[i].style.display = "block";
+                            arryimg[i].style.opacity = "1";
                             imgcounter.innerHTML = `Image ${i + 1} of ${arryimg.length}`;
+
                         }
                         else if (parseInt(this.dataset.id) === arryimg.length - 1) {
-                            arryimg[0].style.display = "block";
-                            // arryimg[0].style.marginLeft="0";
+                            arryimg[0].style.marginLeft = "3%";
+                            arryimg[0].style.opacity = "1";
+                            // arryimg[0].style.display = "block";
                             imgcounter.innerHTML = `Image 1 of ${arryimg.length}`;
                         }
                     }
@@ -650,7 +661,7 @@ function loadDivDetail(formtitle, jsondata, arrydatacol, arryitemdata, arrybtn, 
             divDetail.appendChild(imgpicture);
         }
     } else {
-        let imgpicture = getDetailImage();
+        let imgpicture = setStyleDetailImage();
         imgpicture.src = imgsrc;
         divDetail.appendChild(imgpicture);
     }
@@ -728,20 +739,22 @@ function SwitchListToDetail() {
     SubMenuItemSlideIn();
 }
 
-function setStyleDivList(divelem) {
-    ContentList.style.display = "flex";
-    ContentList.style.flexDirection = "column";
-    ContentList.style.margin = "1%";
-}
 
 function loadDivList(ListData, ListClicked, arryExportFunction) {
 
     SwitchDetailToList();
 
     ContentList.innerHTML = "";
-    ContentList.style.width = "98%"
-    ContentList.style.margin = "0 auto";
-    setStyleDivList(ContentList);
+    ContentList.style.display = "flex";
+    ContentList.style.flexDirection = "column";
+    ContentList.style.width = "97%"
+    ContentList.style.height  = "97%";
+    ContentList.style.margin = "1% auto";
+    ContentList.style.boxSizing="border-box";
+    ContentList.style.overflow = "auto";
+    ContentList.style.borderStyle="2px solid white";
+    // ContentList.style.backgroundColor="black";
+    ContentList.style.boxShadow="0 0 1px 1px gray";
 
     ContentList.appendChild(getExportDiv(arryExportFunction));
 
@@ -752,6 +765,7 @@ function loadDivList(ListData, ListClicked, arryExportFunction) {
     divsearchfnc.style.boxSizing = "border-box";
     divsearchfnc.style.padding = "2%";
     divsearchfnc.style.border = "1px solid gray";
+    divsearchfnc.style.backgroundColor = "white";
     ContentList.appendChild(divsearchfnc);
 
     // load list table - start
@@ -848,12 +862,13 @@ function MenuBusReportClicked() {
     alert(BusReportItem);
 }
 
-function BusBreakDownListClicked() {
+function BusBreakDownListClicked(ID) {
 
     SwitchListToDetail();
 
     let BreakDownData = SampleBusBreakDownData.find((eee) => {
-        return eee.ID === this.dataset.ID || eee.ID === parseInt(this.dataset.ID);
+        // return eee.ID === this.dataset.ID || eee.ID === parseInt(this.dataset.ID);
+        return eee.ID === ID || eee.ID === parseInt(ID);
     });
 
 
@@ -901,8 +916,10 @@ function getExportDiv(arryExportFunction) {
     divexportfnc.style.flexDirection = "row";
     divexportfnc.style.boxSizing = "border-box";
     divexportfnc.style.width = "100%";
+    divexportfnc.style.backgroundColor = 'white';
     // divexportfnc.style.margin="0 auto";
     divexportfnc.style.border = "1px solid gray";
+    // divexportfnc.style.position="fixed";
 
 
     let divExportNewPage = document.createElement('div');
@@ -1173,7 +1190,7 @@ function InitializeMap() {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: true
     };
-    
+
     map = new google.maps.Map(document.getElementById("map"), myOptions);
 
     return map;
