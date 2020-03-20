@@ -436,7 +436,48 @@ function load_product(imgsrc) {
 
 }
 
+function readTextFile(file)
+{
+    
+    // var rawFile = new XMLHttpRequest();
+    // rawFile.open("GET", file, false);
+    
+    // rawFile.onreadystatechange = function ()
+    // {
+    //     if(rawFile.readyState === 4)
+    //     {
+    //         if(rawFile.status === 200 || rawFile.status == 0)
+    //         {
+    //             var allText = rawFile.responseText;
+    //             alert(allText);
+    //         }
+    //     }
+    //     else{
+    //         alert("error");
+    //     }
+    // }
+    // alert("in3");
+    // rawFile.send(null);
+
+
+        var input = "file:///c:/ltp/testlog.log";
+
+        var reader = new FileReader();
+        reader.onload = function(){
+          var text = reader.result;
+          var node = document.getElementById('output');
+          node.innerText = text;
+          console.log(reader.result.substring(0, 200));
+        };
+        reader.readAsText(input.files[0]);
+}
+
 function productcat_click() {
+    
+    alert("product clicked");
+    readTextFile("file:///c:/ltp/testlog.log");
+    alelrt("after read");
+
     switch (this.innerHTML) {
         case arryproductcat[0]:
             load_product(arryproductpic1);

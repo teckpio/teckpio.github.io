@@ -1,17 +1,20 @@
-// sample data //
-const infinipayURL = {
-    // employee //
-    EmployeeGet: 'http://localhost:49951/data/employeeget',
-    EmployeeAdd: 'http://localhost:49951/data/employeeadd',
-    EmployeeUpdate: 'http://localhost:49951/data/employeeupdate',
-    // payitem //
-    PayItemGet: 'http://localhost:49951/data/payitemget',
-    PayItemAdd: 'http://localhost:49951/data/payitemadd',
-    PayItemUpdate: 'http://localhost:49951/data/employeeupdate',
-    // process //
-    PayProcessEndMonth: 'http://localhost:49951/process/endmonth'
-}
+//const ProfileItemComparer = [
+//    { ID: 1, Name: '=' },
+//    { ID: 2, Name: '<>' },
+//    { ID: 3, Name: '>' },
+//    { ID: 4, Name: '>=' },
+//    { ID: 5, Name: '<' },
+//    { ID: 6, Name: '<=' },
+//    { ID: 7, Name: '#=' },
+//    { ID: 8, Name: '#>=' },
+//    { ID: 9, Name: '#<=' },
+//    { ID: 10, Name: '()' },
+//    { ID: 11, Name: '()#=' },
+//    { ID: 12, Name: '()#>=' },
+//    { ID: 13, Name: '()#<=' }
+//]
 
+// key to correspond to infinipay.js:arryMainNavItem
 const DataObjID = {
     Employee: 0,
     PayItem: 1,
@@ -19,553 +22,293 @@ const DataObjID = {
     AccruedItem: 3,
     StatItem: 4,
     PayUnit: 5,
-    CalcSheet: 6,
+    WorkSheet: 6,
     PayProcess: 7,
     Output: 8,
     // composite data object
     PayProfileItem: 9,
     StatProfile: 10,
-    StatProfileEmployeeItem: 11
+    StatProfileItem: 11,
+    EmployeeProfile: 12,
+    EmployeeProfileOption: 13,
+    EmployeeProfileItem: 14,
+    ProfileItemComparer: 15,
+    Payroll: 16,
+    WorkSheetItem: 17,
+    PayItemXStatItem: 18
 }
 
-const employeedatacol = [
-    ['ID', false, 'text'],
-    ['Name', false, 'text'],
-    ['Payment Type', false, 'text'],
-    ['Address1', false, 'text'],
-    ['Address2', false, 'text'],
-    ['Address3', false, 'text'],
-    ['Identity Reference', false, 'text'],
-    ['Passport', false, 'text'],
-    ['Tel', false, 'text'],
-    ['Tel2', false, 'text'],
-    ['Permit', false, 'text'],
-    ['Marital Status', false, 'text'],
-    ['Date Of Birth', false, 'text'],
-    ['Nationality', false, 'text'],
-    ['Race', false, 'text'],
-    ['Religion', false, 'text'],
-    ['Pay Profile', false, DataObjID.PayProfile],
-]
+// 0: field name; 1: display text; 2: required; 3: datatype //
+const DataColIndex = { FieldName: 0, DisplayText: 1, Required: 2, DataType: 3 }
 
-var employee = [
-    { ID: '101', Name: 'M Adam', PayType: 'Monthly', Address1: '33, Jalan K', Address2: '', Address3: '', IC: '890910-08-1289', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Malay', Religion: 'Islam', PayProfile: '101' },
-    { ID: '102', Name: 'E Michael', PayType: 'Monthly', Address1: '68, Jalan Long', Address2: '', Address3: '', IC: '897998-08-8798', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist', PayProfile: '102' },
-    { ID: '104', Name: 'Lee Meng', PayType: 'Monthly', Address1: '6, Jalan Mid Road', Address2: '', Address3: '', IC: '901098-08-8798', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist', PayProfile: '104' },
-    { ID: '105', Name: 'Siti N', PayType: 'Monthly', Address1: '36, Jalan KKM', Address2: '', Address3: '', IC: '091810-08-1289', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Malay', Religion: 'Islam', PayProfile: '105' },
-    { ID: '106', Name: 'Tan Ah Loong', PayType: 'Monthly', Address1: '8, Jalan Short', Address2: '', Address3: '', IC: '635798-08-8798', Passport: '', Tel1: '05-2550909', Tel2: '', Permit: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist', PayProfile: '105' }
-]
+const DataObj = {
+    Employee: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text'],
+            ['PayProfile', 'Pay Profile', false, DataObjID.PayProfile]
+        ],
+        URL: {
+            List: 'http://localhost:49951/data/employeelist',
+            Get: 'http://localhost:49951/data/employeelist',
+            Add: 'http://localhost:49951/data/employeepost',
+            Update: 'http://localhost:49951/data/employeepost'
+        }
+    },
 
-var employeeitem = [
-    { ID: '', Name: 'ID' },
-    { ID: '', Name: 'Name' },
-    { ID: '', Name: 'PayType' },
-    { ID: '', Name: 'Address1' },
-    { ID: '', Name: 'Address2' },
-    { ID: '', Name: 'Address3' },
-    { ID: '', Name: 'IC' },
-    { ID: '', Name: 'Passport' },
-    { ID: '', Name: 'Tel1' },
-    { ID: '', Name: 'Tel2' },
-    { ID: '', Name: 'Permit' },
-    { ID: '', Name: 'Marital' },
-    { ID: '', Name: 'DateOfBirth' },
-    { ID: '', Name: 'Nationality' },
-    { ID: '', Name: 'Religion' },
-    { ID: '', Name: 'Race' },
-    { ID: '', Name: 'PayProfile' }
-]
+    EmployeeProfileOption: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text'],
+            ['Option', 'Option', false, 'text'],
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/employeeprofileoptionget',
+            Add: 'http://localhost:49951/data/employeeprofileoptionpost',
+            Update: 'http://localhost:49951/data/employeeprofileoptionpost'
+        }
+    },
 
-const payprofiledatacol = [
-    ['ID', false, 'text'],
-    ['Name', false, 'text'],
-    ['Accommodation', false, 'text'],
-    ['Company Car', false, 'text']
-]
+    EmployeeProfileItem: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text'],
+            ['Type', 'Type', false, DataObjID.EmployeeProfileOption],
+            ['Required', 'Required', false, 'radio']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/employeeprofileitemget',
+            Add: 'http://localhost:49951/data/employeeprofileitempost',
+            Update: 'http://localhost:49951/data/employeeprofileitempost'
+        }
+    },
 
-var payprofile = [
-    { ID: '101', Name: 'Managerial', Accomodation: 'Yes', CompanyCar: 'Yes' },
-    { ID: '102', Name: 'Executive1', Accomodation: 'Yes', CompanyCar: 'No' },
-    { ID: '103', Name: 'Executive2', Accomodation: 'Yes', CompanyCar: 'No' },
-    { ID: '104', Name: 'Clerical', Accomodation: 'No', CompanyCar: 'No' },
-    { ID: '105', Name: 'Production', Accomodation: 'No', CompanyCar: 'No' },
-    { ID: '106', Name: 'Contract', Accomodation: 'No', CompanyCar: 'No' }
-]
+    EmployeeProfile: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text'],
+            ['Employee', 'Employee', false, 'text'],
+            ['ProfileItem', 'ProfileItem', false, 'text'],
+            ['Value', 'Value', false, 'text'],
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/employeeprofileget',
+            Add: 'http://localhost:49951/data/employeeprofilepost',
+            Update: 'http://localhost:49951/data/employeeprofilepost',
+            UpdateByEmployee: 'http://localhost:49951/data/employeeprofileupdate'
+        }
+    },
 
-const payitemdatacol = [
-    ['ID', false, 'text'],
-    ['Name', false, 'text'],
-    ['Remark', false, 'text'],
-    ['Pay Type', false, 'text'],
-    ['Pay Qty (Q.1)', false, 'text'],
-    ['Pay Unit (Q.2)', false, DataObjID.PayUnit],
-    ['Range (R.3)', false, 'text'],
-    ['Range Base', false, DataObjID.PayItem],
-    ['Range Qty', false, DataObjID.PayUnit],
-    ['Per Rate (R.2)', false, 'text'],
-    ['Per Base', false, DataObjID.PayItem],
-    ['Per Base Rate', false, DataObjID.PayItem],
-    ['Rate (R.1)', false, 'text'],
-    ['Min-Max', false, 'text'],
-    ['Valid Period', false, 'text'],
-    ['Accrued Item', false, DataObjID.AccruedItem],
-    ['Stat Requirement', false, 'text']
-]
+    PayItem: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text'],
+            ['PayQty', 'Pay Quantity', false, 'text'],
+            ['PayUnit', 'Pay Unit', false, DataObjID.PayUnit],
+            ['Range', 'Range', false, 'text'],
+            ['RangeBase', 'Range Base', false, DataObjID.PayItem],
+            ['RangeQty', 'Range Quantity', false, DataObjID.PayUnit],
+            ['PerRate', 'Per Rate', false, 'text'],
+            ['PerBase', 'Per Base', false, DataObjID.PayItem],
+            ['PerBaseRate', 'Per BaseRate', false, DataObjID.PayItem],
+            ['Rate', 'Rate', false, 'text'],
+            ['MinMax', 'Min-Max', false, 'text'],
+            ['Validity', 'Valid Period', false, 'text'],
+            ['AccruedItem', 'Accrued Item', false, DataObjID.AccruedItem],
+            ['StatRequired', 'Statutory Required', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/payitemget',
+            Add: 'http://localhost:49951/data/payitempost',
+            Update: 'http://localhost:49951/data/payitempost'
+        }
+    },
 
-var payitem = [
-    {
-        ID: '101',
-        Name: 'Monthly Basic',
-        Remark: '',
-        PayType: '',
-        PayQty: 0, // if PayQty is non-0, CalcSheet quantity is igored and PayQty is defaulted to the value of PayItem:PayQty
-        PayUnit: '101',
+    PayProfile: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/payprofileget',
+            Add: 'http://localhost:49951/data/payprofilepost',
+            Update: 'http://localhost:49951/data/payprofilepost'
+        }
+    },
 
-        // Range and RangeBase is optional to come up with a PerRate or Rate //
-        Range: '',
-        RangeBase: '', // RangeBase can be quantity of PayUnit (prefixed:1.) (check with CalcSheet) or value of PayItem (prefixed:2) (check with ProcessedPayItem) //
-        RangeQty: '', // if RangeQty is speficied, pay_quantity in CalcSheet will be used as Range Criteria
+    AccruedItem: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/accrueditemget',
+            Add: 'http://localhost:49951/data/accrueditempost',
+            Update: 'http://localhost:49951/data/accrueditempost'
+        }
+    },
 
-        // when Rate (%) is specified, PerBase or PerBaseRate is used //
-        // when PerBase is specified, processed amount of Base will be used //
-        // when PerBaseRate is specified, Rate of Base (PayItem) will be used //
-        PerRate: 0,
-        PerBase: '',
-        PerBaseRate: '',
+    StatItem: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text'],
+            ['PersonInCharge', 'Person In Charge', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/statitemget',
+            Add: 'http://localhost:49951/data/statitempost',
+            Update: 'http://localhost:49951/data/statitempost'
+        }
+    },
 
-        Rate: 2500, // the Amount to be applied to PayQuantity in the Payroll Process //
+    StatProfile: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text'],
+            ['StatItem', 'Stat Item', false, DataObjID.StatItem],
+            ['Rate', 'Rate', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/statprofileget',
+            Add: 'http://localhost:49951/data/statprofilepost',
+            Update: 'http://localhost:49951/data/statprofilepost'
+        }
+    },
 
-        // MinMax and ValidPeriod are checks on the processed value //
-        MinMax: '',
-        ValidPeriod: '',
+    StatProfileItem: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text'],
+            ['StatProfile', 'Stat Profile', false, DataObjID.StatProfile],
+            ['ProfileItem', 'Profile Item', false, DataObjID.EmployeeProfileItem],
+            ['Operator', 'Operator', false, DataObjID.ProfileItemComparer],
+            ['Operand', 'Operand', false, 'text'],
+            ['Criteria', 'Criteria', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/statprofileitemget',
+            Add: 'http://localhost:49951/data/statprofileitempost',
+            Update: 'http://localhost:49951/data/statprofileitempost'
+        }
+    },
 
-        // link to AccruedItems //
-        AccruedItem: '',
+    PayItemXStatItem: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text'],
+            ['PayItem', 'Pay Item', false, DataObjID.PayItem],
+            ['StatItem', 'Stat Item', false, DataObjID.StatItem]
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/payitemxstatitemget',
+            Add: 'http://localhost:49951/data/payitemxstatitempost',
+            Update: 'http://localhost:49951/data/payitemxstatitempost',
+        }
+    },
 
-        // check with statutory requirement //
-        StatRequired: ''
+    PayUnit: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/payunitget',
+            Add: 'http://localhost:49951/data/payunitpost',
+            Update: 'http://localhost:49951/data/payunitpost'
+        }
     },
-    {
-        ID: '102',
-        Name: 'Daily Rate',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '101',
-        Range: '',
-        RangeBase: '',
-        RangeQty: '',
-        PerRate: 0,
-        PerBase: '',
-        PerBaseRate: '',
-        Rate: 80,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
+
+    WorkSheet: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text'],
+            ['Employee', 'Employee', false, DataObjID.Employee],
+            ['Payroll Date', 'PayrollDate', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/worksheetget',
+            Add: 'http://localhost:49951/data/worksheetpost',
+            Update: 'http://localhost:49951/data/worksheetpost'
+        }
     },
-    {
-        ID: '103',
-        Name: 'Hourly Rate',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '106',
-        Range: '',
-        RangeBase: '',
-        RangeQty: '',
-        PerRate: 0,
-        PerBase: '',
-        PerBaseRate: '',
-        Rate: 10,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
+
+    WorkSheetItem: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['WorkSheet', 'WorkSheet', false, DataObjID.WorkSheet],
+            ['PayUnit', 'Pay Unit', false, DataObjID.PayUnit],
+            ['PayQty', 'Pay Quantity', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/worksheetitemget',
+            Add: 'http://localhost:49951/data/worksheetitempost',
+            Update: 'http://localhost:49951/data/worksheetitempost',
+            UpdateByEmployee: 'http://localhost:49951/data/employeeworksheetupdate'
+        }
     },
-    {
-        ID: '104',
-        Name: 'Car Allowance',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '101',
-        Range: '0,1000,50;1001,2500,80;2501,10000,10',
-        RangeBase: '101',
-        RangeQty: '',
-        PerRate: 0,
-        PerBase: '101',
-        PerBaseRate: '',
-        Rate: 0,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
+
+    PayProcess: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/payprocessget',
+            Add: 'http://localhost:49951/data/payprocesspost',
+            Update: 'http://localhost:49951/data/payprocesspost'
+        }
     },
-    {
-        ID: '105',
-        Name: 'Full Attendance',
-        Remark: '',
-        PayType: '',
-        PayQty: 1,
-        PayUnit: '103',
-        Range: '0,0,100;1,999,0',
-        RangeBase: '',
-        RangeQty: '103',
-        PerRate: 0,
-        PerBase: '',
-        PerBaseRate: '',
-        Rate: 0,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
+
+    Output: {
+        DataCol: [],
+        URL: {}
     },
-    {
-        ID: '106',
-        Name: 'OT Rate1',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '107',
-        Range: '',
-        RangeBase: '',
-        RangeQty: '',
-        PerRate: 1.5,
-        PerBase: '',
-        PerBaseRate: '103',
-        Rate: 0,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
+
+    // composite data object
+
+    PayProfileItem: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text'],
+            ['PayProfile', 'Pay Profile', false, DataObjID.PayProfile],
+            ['PayItem', 'Pay Item', false, DataObjID.PayItem],
+            ['Rate', 'Rate', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/payprofileitemget',
+            Add: 'http://localhost:49951/data/payprofileitempost',
+            Update: 'http://localhost:49951/data/payprofileitempost'
+        }
     },
-    {
-        ID: '107',
-        Name: 'OT Rate2',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '108',
-        Range: '',
-        RangeBase: '',
-        RangeQty: '',
-        PerRate: 2,
-        PerBase: '',
-        PerBaseRate: '103',
-        Rate: 0,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
-    },
-    {
-        ID: '108',
-        Name: 'Contract Piece1',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '109',
-        Range: '',
-        RangeBase: '',
-        RangeQty: '',
-        PerRate: 0,
-        PerBase: '',
-        PerBaseRate: '',
-        Rate: 0.20,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
-    },
-    {
-        ID: '109',
-        Name: 'Contract Piece2',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '109',
-        Range: '',
-        RangeBase: '',
-        RangeQty: '',
-        PerBaseRate: '',
-        PerRate: 0,
-        PerBase: '',
-        Rate: 0.30,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
-    },
-    {
-        ID: '110',
-        Name: 'Mileage Claims',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '110',
-        Range: '0,1000,.3;1001,3000,.2;3001,5000,.1',
-        RangeBase: '110',
-        RangeQty: '110',
-        PerRate: 0,
-        PerBase: '',
-        PerBaseRate: '',
-        Rate: 0,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
-    },
-    {
-        ID: '111',
-        Name: 'Advance Deduction',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '110',
-        Range: '0,1000,.3;1001,3000,.2;3001,5000,.1',
-        RangeBase: '110',
-        RangeQty: '',
-        PerRate: 0,
-        PerBase: '',
-        PerBaseRate: '',
-        Rate: 0,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '101',
-        StatRequired: ''
-    },
-    {
-        ID: '112',
-        Name: 'Monthly Basic - Daily Rate',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '',
-        Range: '',
-        RangeBase: '',
-        RangeQty: '',
-        PerRate: 0.03846,
-        PerBase: '',
-        PerBaseRate: '101',
-        Rate: 0,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
-    },
-    {
-        ID: '113',
-        Name: 'No Pay Leave',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '103;104',
-        Range: '',
-        RangeBase: '',
-        RangeQty: '',
-        PerRate: 1,
-        PerBase: '',
-        PerBaseRate: '112',
-        Rate: 0,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
-    },
-    {
-        ID: '114',
-        Name: 'Transport Allowance',
-        Remark: '',
-        PayType: '',
-        PayQty: 0,
-        PayUnit: '102',
-        Range: '',
-        RangeBase: '',
-        RangeQty: '',
-        PerRate: 0,
-        PerBase: '',
-        PerBaseRate: '',
-        Rate: 5,
-        MinMax: '',
-        ValidPeriod: '',
-        AccruedItem: '',
-        StatRequired: ''
-    },
-    {
-        ID: '115',
-        Name: 'Festive Goodwill',
-        Remark: '',
-        PayType: '',
-        PayQty: 1,
-        PayUnit: '',
-        Range: '',
-        RangeBase: '',
-        RangeQty: '',
-        PerRate: 0,
-        PerBase: '',
-        PerBaseRate: '',
-        Rate: 500,
-        MinMax: '',
-        ValidPeriod: '10-10-2019',
-        AccruedItem: '',
-        StatRequired: ''
-    },
-    {
-        ID: '116',
-        Name: 'Bonus',
-        Remark: '',
-        PayType: '',
-        PayQty: 1,
-        PayUnit: '',
-        Range: '',
-        RangeBase: '',
-        RangeQty: '',
-        PerRate: 2,
-        PerBase: '101',
-        PerBaseRate: '',
-        Rate: 0,
-        MinMax: '',
-        ValidPeriod: '10-10-2019',
-        AccruedItem: '',
-        StatRequired: ''
+
+    ProfileItemComparer: {
+        DataCol: [
+            ['ID', 'ID', false, 'text'],
+            ['Name', 'Name', false, 'text']
+        ],
+        URL: {
+            Get: 'http://localhost:49951/data/profileitemcomparerget',
+            //Add: 'http://localhost:49951/data/payprofileitempost',
+            //Update: 'http://localhost:49951/data/payprofileitempost'
+        }
     }
-]
+}
 
-var payprofileitem = [
-    { ID: '1', PayProfile: '101', PayItem: '101', PayRate: 5000 },
-    { ID: '2', PayProfile: '101', PayItem: '104', PayRate: null },
-    { ID: '3', PayProfile: '101', PayItem: '110', PayRate: null },
-    { ID: '4', PayProfile: '101', PayItem: '113', PayRate: null },
-    { ID: '5', PayProfile: '102', PayItem: '101', PayRate: null },
-    { ID: '6', PayProfile: '102', PayItem: '104', PayRate: null },
-    { ID: '7', PayProfile: '102', PayItem: '113', PayRate: null },
-    { ID: '8', PayProfile: '103', PayItem: '102', PayRate: 50 },
-    { ID: '9', PayProfile: '103', PayItem: '104', PayRate: null },
-    { ID: '10', PayProfile: '102', PayItem: '110', PayRate: null },
-    { ID: '11', PayProfile: '104', PayItem: '103', PayRate: null },
-    { ID: '12', PayProfile: '104', PayItem: '101', PayRate: null },
-    { ID: '13', PayProfile: '105', PayItem: '103', PayRate: null },
-    { ID: '14', PayProfile: '105', PayItem: '106', PayRate: null },
-    { ID: '15', PayProfile: '105', PayItem: '107', PayRate: null },
-    { ID: '16', PayProfile: '105', PayItem: '105', PayRate: null },
-    { ID: '17', PayProfile: '105', PayItem: '111', PayRate: null },
-    { ID: '18', PayProfile: '105', PayItem: '108', PayRate: null },
-    { ID: '19', PayProfile: '105', PayItem: '109', PayRate: null },
-    { ID: '20', PayProfile: '105', PayItem: '114', PayRate: null },
-    { ID: '21', PayProfile: '101', PayItem: '116', PayRate: null }
-]
-
-const statitemdatacol = [
-    ['ID', false, 'text'],
-    ['Name', false, 'text'],
-    ['Person In Charge', false, 'text']
-]
-
-var statitem = [
-    { ID: '101', Name: 'EPF', PersonInCharge: '' },
-    { ID: '102', Name: 'SOCSO', PersonInCharge: '' },
-    { ID: '104', Name: 'EIS', PersonInCharge: '' },
-    { ID: '105', Name: 'PCB', PersonInCharge: '' },
-    { ID: '106', Name: 'HRDF', PersonInCharge: '' },
-    { ID: '107', Name: 'FOMEMA', PersonInCharge: 's' }
-]
-
-var statprofile = [
-    { ID: '1', Name: 'Malaysian Age <60', StatItem: '101', Rate: '0,5000,11%,13%;5001,1000,11%,12%' },
-    { ID: '2', Name: 'Malaysian Age >=60', StatItem: '101', Rate: '0,100000,0%,4%' },
-    { ID: '3', Name: 'Non-Malaysian Age <60', StatItem: '101', Rate: '0,5000,11%,13%;5001,10000,11%,12%' },
-    { ID: '4', Name: 'Non-Malaysian Age >=60', StatItem: '101', Rate: '0,5000,5.5%,6.5%;5001,1000,5.5%,6%' },
-    { ID: '5', Name: 'SOCSO', StatItem: '102', Rate: '0,30,.4,.1;31,50,.7,.2;51,70,1.1,.3' }
-]
-
-var statprofileiemployeeitem = [
-    { ID: '1', StatProfile: '1', ProfileItem: 'Nationality', Operator: '=', Operand: '', Criteria: 'Malaysian' },
-    { ID: '2', StatProfile: '1', ProfileItem: 'Birthdate', Operator: '-', Operand: 'Current Date', Criteria: '<60' },
-    { ID: '3', StatProfile: '1', ProfileItem: 'NumberOfChildren', Operator: '#>', Operand: '', Criteria: '2' },
-    { ID: '4', StatProfile: '1', ProfileItem: 'NumberOfChildren', Operator: '$>', Operand: '', Criteria: '18' },
-    { ID: '5', StatProfile: '2', ProfileItem: 'Nationality', Operator: '=', Operand: '', Criteria: 'Malaysian' },
-    { ID: '6', StatProfile: '2', ProfileItem: 'Birthdate', Operator: '-', Operand: 'Current Date', Criteria: '>=60' },
-    { ID: '7', StatProfile: '3', ProfileItem: 'Nationality', Operator: '=', Operand: '', Criteria: 'Malaysian' },
-    { ID: '8', StatProfile: '3', ProfileItem: 'Birthdate', Operator: '-', Operand: 'Current Date', Criteria: '<60' },
-    { ID: '9', StatProfile: '4', ProfileItem: 'Nationality', Operator: '=', Operand: '', Criteria: 'Malaysian' },
-    { ID: '10', StatProfile: '4', ProfileItem: 'Birthdate', Operator: '-', Operand: 'Current Date', Criteria: '>=60' },
-    { ID: '11', StatProfile: '5', ProfileItem: 'Nationality', Operator: '=', Operand: '', Criteria: 'Malaysian' }
-]
-
-const accrueditemdatacol = [
-    ['ID', false, 'text'],
-    ['Name', false, 'text'],
-    ['Date', false, 'text'],
-    ['Balance', false, 'text']
-]
-
-var accrueditem = [
-    { ID: '101', Name: 'Advance', Date: '', Balance: 0 },
-    { ID: '102', Name: 'Loan', Date: '', Balance: 0 },
-    { ID: '104', Name: 'Ex-Gratia', Date: '', Balance: 0 },
-    { ID: '105', Name: 'Retirement', Date: '', Balance: 0 }
-]
-
-const payunitdatacol = [
-    ['ID', false, 'text'],
-    ['Name', false, 'text']
-]
-
-var payunit = [
-    { ID: '101', Name: 'pay_month' },
-    { ID: '102', Name: 'pay_day' },
-    { ID: '103', Name: 'npl_day' },
-    { ID: '104', Name: 'abs_day' },
-    { ID: '105', Name: 'pbh_day' },
-    { ID: '106', Name: 'pay_hour' },
-    { ID: '107', Name: 'ot_hour1' },
-    { ID: '108', Name: 'ot_hour2' },
-    { ID: '109', Name: 'contract_pcs' },
-    { ID: '110', Name: 'mileage' }
-]
-
-const payprocessdatacol = [
-    ['ID', false, 'text'],
-    ['Name', false, 'text'],
-    ['Setting1', false, 'text'],
-    ['Setting2', false, 'text']
-]
-
-var payprocess = [
-    { ID: '101', Name: 'Mid-Month Process', Setting1: '', Setting2: '' },
-    { ID: '102', Name: 'End-Month Process', Setting1: '', Setting2: '' },
-    { ID: '103', Name: 'Year-End Process', Setting1: '', Setting2: '' }
-]
-
-var calcsheet = [
-    {
-        ID: '1',
-        Employee: '101',
-        pay_quantity: [['101', 1], ['102', 26], ['103', 1], ['104', 0], ['105', 0], ['106', 0], ['107', 0], ['108', 0], ['109', 0], ['110', 0]]
+const PayProcess = {
+    MidMonth: {
+        ID: 1,
+        URL: 'http://localhost:49951/process/midmonth'
     },
-    {
-        ID: '2',
-        Employee: '102',
-        pay_quantity: [['101', 1], ['102', 25], ['103', 1], ['104', 0], ['105', 0], ['106', 0], ['107', 0], ['108', 0], ['109', 0], ['110', 500]]
+    EndMonth: {
+        ID: 2,
+        URL: 'http://localhost:49951/process/endmonth'
     },
-    {
-        ID: '3',
-        Employee: '104',
-        pay_quantity: [['101', 1], ['102', 24], ['103', 0], ['104', 0], ['105', 0], ['106', 0], ['107', 0], ['108', 0], ['109', 0], ['110', 0]]
-    },
-    {
-        ID: '4',
-        Employee: '105',
-        pay_quantity: [['101', 1], ['102', 22], ['103', 0], ['104', 0], ['105', 0], ['106', 100], ['107', 5], ['108', 3], ['109', 1000], ['110', 0]]
-    },
-    {
-        ID: '5',
-        Employee: '106',
-        pay_quantity: [['101', 1], ['102', 23], ['103', 1], ['104', 0], ['105', 0], ['106', 90], ['107', 5], ['108', 3], ['109', 2000], ['110', 0]]
+    YearEnd: {
+        ID: 3,
+        URL: 'http://localhost:49951/process/yearend'
     }
-];
+}
 
 
 
-// export {employee, employeeitem};
+

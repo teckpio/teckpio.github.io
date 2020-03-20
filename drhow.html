@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        h2 {
+            text-decoration: underline;
+            padding-top: 100px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <!-- title  -->
+    <div style="width:100%; position:fixed; top:0; left:0; background-color:gray;color:white;z-index: 99;padding:10px;">
+        <h1>Dr How - Functional Documentation</h1>
+    </div>
+
+
+    <!-- document -->
+    <div style="position: relative;top:100px">
+
+
+        <!-- main is a column flex of navi and content -->
+        <div id="main" style="position:relative; display: flex; flex-direction: row;">
+
+            <!-- flex - navi -->
+            <div id="navi"
+                style="position:fixed; top:100px; width:20%; flex-basis: 1fr;display: flex;flex-direction: column;padding:10px;">
+                <!-- Table of Content -->
+                <ul>
+                    <li><a href="#Summary">Functional Description</a></li>
+                    <li><a href="#Menu_Options">Menu Options</a></li>
+                    <li><a href="#Process_Flow">Process Flow</a></li>
+                    <li><a href="#Make_Appointment">Making a New Appointment</a></li>
+                    <li><a href="#Make_Payment">Making Payment</a></li>
+                    <li><a href="#Review_Appointment">Review Appointments</a></li>
+                    <li><a href="#Register_Appointment">Register Appointments</a> </li>
+                    <li><a href="#Day_Appointment">Appointment's Estimated Time</a></li>
+                    <li><a href="#Time_Appointment">On Day of Appointment</a></li>
+                </ul>
+            </div>
+
+            <!-- flex - content -->
+            <div id="content" style="position:relative; top:-100px; left:20%; width:70%;flex-basis:5fr;padding:10px;">
+                <!-- Summary -->
+                <div id="Summary">
+                    <h2>Functional Description</h2>
+                    <p>
+                        Dr How is a mobile/web application that enables patients to manage their appointments with
+                        registered doctors.
+                        <br><br>
+                        Doctors who wish to register with Dr How system also use Dr How mobile/web application for
+                        registration.
+                    </p>
+                </div>
+
+
+                <!-- System Componenets -->
+                <div id="Menu_Options">
+                    <h2>Menu Options</h2>
+                    <div>
+                        <table>
+                            <tr>
+                                <td>1</td>
+                                <td>Home</td>
+                                <td>Back to Homepage</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Dashboard</td>
+                                <td>Today's appointments</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Announcement</td>
+                                <td>Review Doctor's announcements</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>New Appointment</td>
+                                <td>To make new appointment</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Profile</td>
+                                <td>Patient's profile</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Appointments</td>
+                                <td>Appointment Records</td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+
+
+                <!-- Process flow of making appointment -->
+                <div id="Process_Flow">
+                    <h2>Process Flow of Appointments</h2>
+                    Select Doctor -> Select Consultation Mode -> Select Date -> Select Priority -> Make Payment ->
+                    Register
+                </div>
+
+                <!-- Patient -->
+                <div id="Make_Appointment">
+                    <h2>Making New Appointment</h2>
+                    <table>
+                        <tr>
+                            <td>1</td>
+                            <td>Search Doctor</td>
+                            <td>There are 3 ways to search for doctor:<br><br>
+                                <table>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>SEARCH</td>
+                                        <td>Search doctors that match all or any of the following criteria:<br><br>
+                                            1. Doctor's Name<br>
+                                            2. Clinic's name<br>
+                                            3. Patient's Symptoms<br>
+                                            3. Doctor's Specialty
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>FIND NEARBY</td>
+                                        <td>Search for doctors/clinics which are within a preset distance from Patient's current location.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Text Pattern</td>
+                                        <td>Search for text entered in the &#60Text Search&#62 in the following fields:
+                                            <br><br>
+                                            1. Doctor's name<br>
+                                            2. Clinic's name<br>
+                                            3. Doctor's qualification<br>
+                                            4. Distance(Km)
+                                        </td>
+                                    </tr>
+                                </table>
+                                <p>
+                                    On the doctor's row in the extracted list:
+                                    <table>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Detail</td>
+                                            <td>To show details of selected doctor including Symptoms, Specialty and
+                                                Pricing.<br><br></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Select</td>
+                                            <td>Select doctor for appointment.</td>
+                                        </tr>
+                                    </table>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Choose Consultation Mode</td>
+                            <td>There are 4 modes to choose from:<br><br>
+                                1. Attend<br>
+                                2. Tele-Conference<br>
+                                3. Tele-Video<br>
+                                4. Text-Messaging<br>
+                                <p>
+                                    For the selected mode:
+                                    <table>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>DETAIL</td>
+                                            <td>To show business hours and rates of consultation fees for selected
+                                                mode.<br><br></td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>SELECT</td>
+                                            <td>Select mode for appointment.</td>
+                                        </tr>
+                                    </table>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Choose Date</td>
+                            <td>
+                                <p>
+                                    Select required date of the appointment.
+                                </p>
+                                <p>
+                                    Number of registered appointments for the selected date is indicated by Color Codes.
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Choose Priority</td>
+                            <td>
+                                <p>
+                                    Patients can choose 2 priorities for the appointment:<br><br>
+                                    1. Elective<br>
+                                    2. Premier<br>
+                                </p>
+                                <p>
+                                    A slot and estimated time will be assigned to an Elective appointment only when the
+                                    appointment is registered after the appointment is made. Elective appointments will
+                                    be arranged to be after all Priority appointments.
+                                </p>
+                                <p>
+                                    A slot will be assigned to a Premier appointment after the appointment is made and
+                                    before its registration. During calculation of slot sequnce and appointments'
+                                    estiamted times, an unregistered Premier appointment will be taken into account
+                                    although it's not being registered yet. Therefore, when a Premier appointment is
+                                    being registered, it will be slotted ahead of Elective appontments when determining
+                                    estimated time.
+                                </p>
+                                <p>
+                                    Patient keys in any additional remark for doctor in the &#60Patient Remark&#62
+                                    box.<br><br>
+                                    For Tele-Conference appointment, Patient is required to key in the phone number that
+                                    Doctor will call in &#60Phone Number&#62 box.
+                                </p>
+                                <p>
+                                    After accepting the Terms and Conditions, Patient will proceed to make payment.
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <!-- Making Payment -->
+                <div id="Make_Payment">
+                    <h2>Making Payment</h2>
+                    <p>
+                        Dr How is using IPay88 for online payment method.
+                    </p>
+                </div>
+
+
+
+                <!-- Review appointments -->
+                <div id="Review_Appointment">
+                    <h2>Review Appointments</h2>
+                    <p>
+                        Review appointments made by clicking the &#60Appointments&#62 menu item. Appointments made are
+                        categorised into 3 tabs:<br><br>
+                        1. Today<br>
+                        2. Future<br>
+                        3. History<br>
+                    </p>
+                    <p>
+                        Click &#60RETRIEVE&#62 of the selected tab to retrieve appointment records.
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- register appointment -->
+                <div id="Register_Appointment">
+                    <h2>Registering Appointment</h2>
+                    <p>
+                        Appointments made can be registered in 2 ways:<br><br>
+                        1. Dashboard: for today's appointments only.<br>
+                        2. Appointments: select appointments from retrieved list for registration.
+                    </p>
+                    <p>
+                        Unpaid appointments will not be able to register.
+                        <br><br>
+                        Unpaid appointment could happen if for some technical reasons (eg system hangs while patients
+                        are making payment in IPay88), the appoinment do not finish the payment process. In this case,
+                        the appointment will have an Unpaid Status in the list. Clicking RETRIEVE of the selected tab
+                        will clear appointments made without payment.
+                    </p>
+                    <p>
+                        Registred appointments will have an Estiamted Time assigned. Unregistered appointments will show
+                        "Yet to register".
+                    </p>
+                    <p>
+                        Unregistered appointments will not appear in Doctor's appointment list for consultations.
+                    </p>
+                </div>
+
+
+
+                <!-- Appointment's Estimated Time -->
+                <div id="Day_Appointment">
+                    <h2>Day of Appointment and Estimated Time</h2>
+                    <p>
+                        On the day of the appointment, it will appear in the Dashboard with an Estimated Time based on
+                        Doctor/Clinic's
+                        business hours when Patient registered the appointment.
+                    </p>
+                    <p>
+                        Estimated Time of the appointment will be updated as Doctor conducts his/her consultation
+                        sessions during the day. To retrieve an appointment's latest estimated time, Patient
+                        need to click REFRESH.
+                    </p>
+                    <table>
+                        <thead>
+                            <th>Estimated Time</th>
+                            <th>Remark</th>
+                        </thead>
+                        <tr>
+                            <td>HOLD</td>
+                            <td>Doctor is holding the consultation session.</td>
+                        </tr>
+                        <tr>
+                            <td>TO BE SERVED</td>
+                            <td>When the Patient is next to be served. 
+                                <br><br>
+                                If Doctor
+                                has overrun his previous consultation session, the Estimated Time shown before 
+                                might not be accurate.</td>
+                        </tr>
+                        <tr>
+                            <td>Current Time</td>
+                            <td>Doctor has overrun previous appointments and the appointment is not the next to be served.</td>
+                        </tr>
+                        <tr>
+                            <td>DONE</td>
+                            <td>Appointment's consultation session has ended.</td>
+                        </tr>
+                    </table>
+                                       
+                </div>
+
+
+
+                <!-- Consultation mode -->
+                <div id="Time_Appointment">
+                    <h2>At Time of Appointment</h2>
+                    <table>
+                        <tr>
+                            <td>1</td>
+                            <td>Attend</td>
+                            <td>Attend to the clinic.</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Tele-Conference</td>
+                            <td>Patient needs to be ready by the phone of the registered number in the appointment to wait for Doctor's call. </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Tele-Video</td>
+                            <td>Patients needs to go into the Video Call page and wait for Doctor to create a video chat room. Patient will be prompted when Doctor has created the video chat room, after which Patient will join into the video chat room by pressing CONNECT.</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Text-Messaging</td>
+                            <td>Patients to check with text messaging for Doctor's reply.</td>
+                        </tr>
+                    </table>
+                            
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

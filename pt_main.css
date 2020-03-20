@@ -1,0 +1,240 @@
+:root{
+    --colorNavBar_MenuLogo:rgb(233, 229, 10);
+    --colorNavBar_Menu:rgb(31, 27, 27);
+    --colorTextNavBar_Menu:white;
+    --colorContent_Title:rgb(44, 38, 38);
+    --colorTextContent_Title:white;
+    --colorContent_Detail:white;
+    --colorButtonBG:gray;
+    --colorButtonFG: white;
+    --colorButtonShadow:black;
+
+    --fbNavBar_Logo:1;
+    --fbNavBar_Menu:5;
+
+    --fbContent_Title:1;
+    --fbContent_Detail:15;
+    
+
+
+    --heightNavBar_logo:20vh;
+    --heightNavBar_Menu:80vh;
+
+    --heightMain:100vh;
+    
+    --heightNavBar_MenuItem:10%;
+
+    
+    --widthMain:100%;
+
+    --widthNavBar:20%;
+    --widthContent:80%;
+
+    --widthNavBar_Menu:100%;
+
+    --widthContentTitleLogo:5;
+    --widthContentTitleText:10;
+
+    --borderNavBar_Logo:none;
+    --borderActiveMenuItem: 1px yellow solid;
+
+    --fontMain:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.html{
+    background-color: var(--colorNavBar_Menu);
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+/* Main is a row flex of NavBar and Content */
+#Main{
+    display: flex;
+    flex-flow:row;
+
+    height: var(--heightMain);
+    width:var(--widthMain);
+
+    background-color: var(--colorNavBar_Menu);
+
+    font-family:var(--fontMain);
+}
+
+/* NavBar is a column flex of NavBar_Logo and NavBar_Menu */
+#NavBar{
+    flex:var(--widthNavBar);
+
+    display: flex;
+    flex-flow:column;
+
+    height: var(--heightMain);
+
+    background-color: var(--colorNavBar_Menu);    
+
+    z-index: 10;
+
+    position:fixed;
+
+    width:var(--widthNavBar);
+}
+
+#NavBar_Logo{
+    flex:var(--fbNavBar_Logo) ;   
+
+    background-color: var(--colorNavBar_MenuLogo);
+    
+    font-weight: bold;
+    text-align: center;
+
+    border:var(--borderNavBar_Logo);
+
+    margin:0;
+
+    z-index: 10;
+}
+
+#NavBar_Logo h5{
+    border:1px solid white;
+}
+
+#NavBar_Menu{
+    flex:var(--fbNavBar_Menu);
+    
+    color:var(--colorTextNavBar_Menu);
+
+    margin:0;
+
+    z-index: 10;
+}
+
+
+ul{
+    list-style: none;
+
+    padding:0;
+
+    width:100%;
+
+    box-sizing: border-box;
+}
+
+li {
+    display:flex;
+    flex-direction: row;
+
+    box-sizing: border-box;
+    
+    height:var(--heightNavBar_MenuItem);
+
+    background-color: var(--colorNavBar_Menu);
+
+    border:var(--borderNavBar_Logo);
+
+    padding:10px;
+
+    margin:0 auto;
+}
+
+li:hover{
+    cursor:default;
+    border:var(--borderActiveMenuItem);
+    font-style:italic;
+}
+
+table:hover{
+    cursor:default;
+}
+
+/* NavBar_SubMenu resides in Content_Detail (next to NavBar) */
+#NavBar_SubMenu{
+    margin-left:-20%;
+    margin-top:20%;
+    width:20%;
+    transition: margin-left .5s, opacity .3s;
+    background-color: var(--colorNavBar_Menu);
+    box-shadow: 5px 5px 2px lightgray;
+    color:var(--colorTextNavBar_Menu);
+    display: flex;
+    flex-direction: column;
+
+    position:absolute;
+}
+
+
+/* Content is a column flex of Content_Title and Content_Box */
+/* Content_Title consists of logo, content title, user */
+#Content{
+    background-color: var(--colorContent_Detail);
+    flex:var(--widthContent);
+
+    height: var(--heightMain);
+
+    display: flex;
+    flex-flow: column;
+
+    border:1px solid lightgray;
+
+    position:fixed;
+    left:var(--widthNavBar);
+    width:var(--widthContent);
+}
+
+/* Content_Title is a row flex of Content_TitleLogo and Content_TitleText */
+#Content_Title{
+    background-color: var(--colorContent_Title);
+    color:var(--colorTextContent_Title);
+    flex:var(--fbContent_Title);
+
+    padding-top:1%;
+
+    display: flex;
+    flex-flow: row;
+}
+
+/* Content_Box consists of Content_List and Content_Detail */         
+#Content_Box{
+    height:100%;
+    
+
+    text-align: center;
+    flex:var(--fbContent_Detail);   
+
+    scroll-behavior: auto;
+
+    /* width:var(--widthContent); */
+    width:100%;
+    overflow: auto;
+}
+
+#Content_TitleLogo{
+    flex:var(--widthContentTitleLogo);
+    padding-left:2%;
+}
+
+#Content_TitleText{
+    flex:var(--widthContentTitleText);    
+    text-align: right;
+    padding-right:2%;
+}
+
+#Content_List{
+    display: flex;
+    flex-direction: row;
+}
+
+#Content_Detail{
+ 
+}
+
+.FunctionButton{
+    background-color: var(--colorButtonBG);
+    color: var(--colorButtonFG);
+    box-shadow: 1px 1px 1px var(--colorButtonShadow);
+    box-sizing: border-box;
+    padding:1%;
+    margin:1%;
+}
+.FunctionButton:hover{
+    cursor:default;
+    border:var(--borderActiveMenuItem);
+    font-style:italic;   
+}
