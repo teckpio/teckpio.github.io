@@ -470,21 +470,24 @@ function createMap() {
 
 // display: row flex: List + Map
 function RouteBusStopParticular() {
-    loadDivList(SampleBusStopData, BusStopListClicked, [undefined, undefined, undefined, undefined, undefined]);
+
+
+
+    loadDivList(SampleBusStopData, BusStopListClicked, null, [undefined, undefined, undefined, undefined, undefined]);
 
 
     // arrybuttontable - a 2-dim array of 
     // [[0: button text, 1: button_clicked function, 2: css class of button]]
-    let arrybtn = [
-        ["Full List", RouteBusStopParticularFull, ClassFunctionButton],
-        ["Show Map", RouteBusStopParticularMap, ClassFunctionButton]
-    ];
+    // let arrybtn = [
+    //     ["Full List", RouteBusStopParticularFull, ClassFunctionButton],
+    //     ["Show Map", RouteBusStopParticularMap, ClassFunctionButton]
+    // ];
 
-    let divmap = document.createElement('iframe');
-    divmap.style.flexGrow = "7";
-    divmap.style.margin = "1%";
+    // let divmap = document.createElement('iframe');
+    // divmap.style.flexGrow = "7";
+    // divmap.style.margin = "1%";
 
-    divmap.src = "http://www.google.com/maps?q=24.197611,120.780512";
+    // divmap.src = "http://www.google.com/maps?q=24.197611,120.780512";
 
     // divmap.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.989442890688!2d101.08790571461427!3d4.595913396661126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31caec611a9d9c41%3A0xfe76e16d137449b4!2sIpoh+Parade%2C+105%2C+Jalan+Sultan+Abdul+Jalil%2C+31350+Ipoh%2C+Negeri+Perak!5e0!3m2!1sen!2smy!4v1565011877345!5m2!1sen!2smy"
 
@@ -495,7 +498,7 @@ function RouteBusStopParticular() {
     // divmap.style = "border:0";
     // divmap.iframe.allowfullscreen = true;
 
-    ContentList.appendChild(divmap);
+    // ContentList.appendChild(divmap);
 };
 
 function RouteBusStopParticularFull() {
@@ -739,22 +742,27 @@ function SwitchListToDetail() {
     SubMenuItemSlideIn();
 }
 
+function setStyleDivList(divlist) {
+    divlist.style.display = "flex";
+    divlist.style.flexDirection = "column";
+    divlist.style.width = "97%"
+    divlist.style.height = "97%";
+    divlist.style.margin = "1% auto";
+    divlist.style.boxSizing = "border-box";
+    divlist.style.overflow = "auto";
+    // divlist.style.borderStyle = "1px solid rgb(250,250,250)";
+    divlist.style.backgroundColor = "white";
+    // divlist.style.boxShadow = "0 0 1px 1px gray";
 
-function loadDivList(ListData, ListClicked, arryExportFunction) {
+}
+
+function loadDivList(ListData, ListClicked, ListEditRow, arryExportFunction) {
 
     SwitchDetailToList();
 
     ContentList.innerHTML = "";
-    ContentList.style.display = "flex";
-    ContentList.style.flexDirection = "column";
-    ContentList.style.width = "97%"
-    ContentList.style.height  = "97%";
-    ContentList.style.margin = "1% auto";
-    ContentList.style.boxSizing="border-box";
-    ContentList.style.overflow = "auto";
-    ContentList.style.borderStyle="2px solid white";
-    // ContentList.style.backgroundColor="black";
-    ContentList.style.boxShadow="0 0 1px 1px gray";
+
+    setStyleDivList(ContentList);
 
     ContentList.appendChild(getExportDiv(arryExportFunction));
 
@@ -764,13 +772,15 @@ function loadDivList(ListData, ListClicked, arryExportFunction) {
     divsearchfnc.style.width = "100%";
     divsearchfnc.style.boxSizing = "border-box";
     divsearchfnc.style.padding = "2%";
-    divsearchfnc.style.border = "1px solid gray";
     divsearchfnc.style.backgroundColor = "white";
+    divsearchfnc.style.border = "1px solid rgb(220,220,220)"; 
     ContentList.appendChild(divsearchfnc);
 
     // load list table - start
-    let ListTable = pupulateTable(null, ListData, ListClicked, null);
+    let ListTable = pupulateTable(null, ListData, ListClicked, null, ListEditRow);
     ListTable.style.width = '100%';
+    // ListTable.style.position="relative";
+    // ListTable.style.top = "10%";
     // ListTable.style.margin = '1%';
     ContentList.appendChild(ListTable);
     // load list table - end
@@ -779,7 +789,7 @@ function loadDivList(ListData, ListClicked, arryExportFunction) {
 
 
 function DriverPersonalParticulars() {
-    loadDivList(SampleEmployeeData, DriverListClicked, [undefined, undefined, undefined, undefined, undefined]);
+    loadDivList(SampleEmployeeData, DriverListClicked, null, [undefined, undefined, undefined, undefined, undefined]);
 }
 
 function load_divbutton(arrysetbtn, boolbtndir, boolbtnreset) {
@@ -896,21 +906,20 @@ function getDivBusBreadDownByID(breakdowndata) {
 }
 
 function BusManageBreakdown() {
-    loadDivList(SampleBusBreakDownData, BusBreakDownListClicked, [undefined, undefined, undefined, undefined, undefined]);
+    let arryeditrow = ["Bus Breakdown Data Object", ArryDataItem[DataObj.BusBreakDown], undefined]
+    loadDivList(SampleBusBreakDownData, BusBreakDownListClicked, arryeditrow, [undefined, undefined, undefined, undefined, undefined]);
 }
 
 function DutyRoster() {
-    loadDivList(SampleDutyRoster, DutyRosterListClicked, [undefined, undefined, undefined, undefined, undefined]);
+    let arryeditrow = ["Duty Roster Data Object", ArryDataItem[DataObj.DutyRoster], undefined]
+    loadDivList(SampleDutyRoster, DutyRosterListClicked, arryeditrow, [undefined, undefined, undefined, undefined, undefined]);
 }
 
 function DutyRosterListClicked() {
 
 }
 
-// arryExportFunction=[NewPage, Print, Excel, PDF, CSV]
-function getExportDiv(arryExportFunction) {
-
-    let divexportfnc = document.createElement('div');
+function setStyleDivExport(divexportfnc) {
     divexportfnc.style.display = "flex";
     divexportfnc.style.justifyContent = "space-around";
     divexportfnc.style.flexDirection = "row";
@@ -918,9 +927,20 @@ function getExportDiv(arryExportFunction) {
     divexportfnc.style.width = "100%";
     divexportfnc.style.backgroundColor = 'white';
     // divexportfnc.style.margin="0 auto";
-    divexportfnc.style.border = "1px solid gray";
+    divexportfnc.style.border = "1px solid rgb(220,220,220)";
+    // divexportfnc.style.boxShadow="2px 2px 5px 5px lightgray";
     // divexportfnc.style.position="fixed";
+    // divexportfnc.style.height="10%";
 
+
+}
+
+// arryExportFunction=[NewPage, Print, Excel, PDF, CSV]
+function getExportDiv(arryExportFunction) {
+
+    let divexportfnc = document.createElement('div');
+
+    setStyleDivExport(divexportfnc);
 
     let divExportNewPage = document.createElement('div');
     divExportNewPage.className = ClassFunctionButton;
@@ -991,7 +1011,7 @@ function ReportAPAD(ReportID) {
             break;
     }
     if (ReportData) {
-        let ListTable = pupulateTable(ReportID, ReportData, undefined, null);
+        let ListTable = pupulateTable(ReportID, ReportData, undefined, null, null);
         // ListTable.style.width = '50%';
         ListTable.style.boxShadow = "2px 2px 2px gray";
         ContentDetail.appendChild(ListTable);
@@ -1079,16 +1099,6 @@ function SearchMenuIndex(MenuArray, MenuID) {
     return found ? i : -1;
 }
 
-// function MenuRouteManageBusStop() {
-//     SubMenuItemSlideIn();
-//     InvisibleAllSubMenu(null);
-
-//     let tablelist1 = pupulateTable("Bus Stop Listing", SampleRouteData, undefined, null);
-//     // tablelist1.dataset[strListTableNavItem] = navitem[MainNavItem_Index.HTMLID];
-//     // tablelist1.classList.add(strClsListInTable);
-//     ContentDetail.innerHTML = "";
-//     ContentDetail.appendChild(tablelist1);
-// }
 
 function populateForm(formtitle, arrydatacol, jsondata, arryitemdata, arrybtn) {
     // load detail form - start
@@ -1107,7 +1117,7 @@ function populateForm(formtitle, arrydatacol, jsondata, arryitemdata, arrybtn) {
     //     ['50%',, 0],
     //     ['50%', -1]
     // ];
-    // objparam.arryclass = ['contentcaption', 'contentlabel', 'contentinput', 'contentbutton'];
+    objparam.arryclass = [undefined, undefined, undefined, undefined, ClassFunctionButton];
 
     objparam.arrybutton = load_divbutton(arrybtn, true, true);
 
@@ -1116,7 +1126,7 @@ function populateForm(formtitle, arrydatacol, jsondata, arryitemdata, arrybtn) {
     // objparam.arryitemdata.push(listobj.account);
 }
 
-function pupulateTable(tabletitle, datalist, function_clicked, arrybtn) {
+function pupulateTable(tabletitle, datalist, function_clicked, arrybtn, arryeditrow) {
     // load listing in table element //
     // contentlisttable.innerHTML = '';
     // contentlisttable.style.display = 'block';
@@ -1129,27 +1139,6 @@ function pupulateTable(tabletitle, datalist, function_clicked, arrybtn) {
     objparam.htmltable = tablelist;
     objparam.arryjsondata = datalist;
 
-    // let arryheader = [];
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'ID';
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Width] = '30%';
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Align] = 0;
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
-    // objparam.arryheadercol.push(arryheader);
-
-    // arryheader = [];
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Name';
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Width] = '70%';
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Align] = -1;
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
-    // objparam.arryheadercol.push(arryheader);
-
-    // arryheader = [];
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Desc] = 'Sector';
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Width] = '70%';
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Align] = -1;
-    // arryheader[vssfnc_tablepopparam_item.arryheadercol.Input] = null;
-    // objparam.arryheadercol.push(arryheader);
-
     objparam.arrydataid[vssfnc_tablepopparam_item.arrydataid.Table] = 'table'
     objparam.arrydataid[vssfnc_tablepopparam_item.arrydataid.Datarow] = "ID";
 
@@ -1157,8 +1146,8 @@ function pupulateTable(tabletitle, datalist, function_clicked, arrybtn) {
     objparam.arrysortind[vssfnc_tablepopparam_item.arrysortind.Dscd] = ' (^)';
 
     objparam.arrybuttontable = arrybtn;
-
     objparam.fncdatarowclicked = function_clicked;
+    objparam.arryeditrow = arryeditrow;
 
     vssfnc_tablepopulate(objparam);
 

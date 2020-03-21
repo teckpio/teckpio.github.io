@@ -124,10 +124,10 @@ const SampleBusStopData = [
 ]
 
 const SampleBusBreakDownData = [
-    { 'ID': '001', 'Reference': '1234', 'Route': '66', 'Bus Number': 'AHW8868', 'Date': '01/01/2019', 'Location': 'Silibin', 'Replacement Bus': 'AKL8778', 'Driver': 'Lim Ah Pek', 'Checked By': 'Mazlan', 'Initial Assessment': 'Engine Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '01/02/2020', 'Picture': ['breakdown1.jfif','breakdown2.jfif','breakdown3.jfif'] },
-    { 'ID': '002', 'Reference': '1234', 'Route': '90', 'Bus Number': 'AKL1234', 'Date': '04/08/2019', 'Location': 'Ipoh Garden', 'Replacement Bus': 'AEL5265', 'Driver': 'Muthu Samy', 'Checked By': 'Muthu', 'Initial Assessment': 'Wiring Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '', 'Picture': ['breakdown2.jfif','breakdown3.jfif'] },
-    { 'ID': '003', 'Reference': '1234', 'Route': '45', 'Bus Number': 'AJK6766', 'Date': '05/11/2019', 'Location': 'Tambun', 'Replacement Bus': 'ABK245', 'Driver': 'Esmi Mali', 'Checked By': 'Lee', 'Initial Assessment': 'Air Cond Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '05/01/2020', 'Picture': ['breakdown3.jfif'] },
-    { 'ID': '004', 'Reference': '1234', 'Route': '77', 'Bus Number': 'ABC4535', 'Date': '19/12/2019', 'Location': 'Tambun', 'Replacement Bus': 'ACP4535', 'Driver': 'Ali Kumar', 'Checked By': 'Kok', 'Initial Assessment': 'Brake Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '', 'Picture': ['breakdown4.jfif'] }
+    { 'ID': '001', 'Reference': '1234', 'Route': 'Route89', 'Bus Number': 'AHL2398', 'Date': '01/01/2019', 'Location': 'Silibin', 'Replacement Bus': 'AKL8778', 'Driver': 'Tan K', 'Checked By': 'Mazlan', 'Initial Assessment': 'Engine Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '01/02/2020', 'Picture': ['breakdown1.jfif', 'breakdown2.jfif', 'breakdown3.jfif'] },
+    { 'ID': '002', 'Reference': '1234', 'Route': 'Route123', 'Bus Number': 'AHL2398', 'Date': '04/08/2019', 'Location': 'Ipoh Garden', 'Replacement Bus': 'AEL5265', 'Driver': 'Tan K', 'Checked By': 'Muthu', 'Initial Assessment': 'Wiring Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '', 'Picture': ['breakdown2.jfif', 'breakdown3.jfif'] },
+    { 'ID': '003', 'Reference': '1234', 'Route': 'Route89', 'Bus Number': 'AHL2398', 'Date': '05/11/2019', 'Location': 'Tambun', 'Replacement Bus': 'ABK245', 'Driver': 'Tan K', 'Checked By': 'Lee', 'Initial Assessment': 'Air Cond Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '05/01/2020', 'Picture': ['breakdown3.jfif'] },
+    { 'ID': '004', 'Reference': '1234', 'Route': 'Route66', 'Bus Number': 'AHL2398', 'Date': '19/12/2019', 'Location': 'Tambun', 'Replacement Bus': 'ACP4535', 'Driver': 'Ali M', 'Checked By': 'Kok', 'Initial Assessment': 'Brake Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '', 'Picture': ['breakdown4.jfif'] }
 ]
 
 const SampleDutyRoster = [
@@ -140,7 +140,7 @@ const DataObj = {
     DriverPersonalParticular: 0,
     BusBreakDown: 1,
     BusStop: 2,
-    DutyRoster:3
+    DutyRoster: 3
 }
 
 const ArryDataObjCol = [
@@ -192,8 +192,46 @@ const ArryDataObjCol = [
         ['Longitude', 'Longitude', true, 'text'],
         ['Status', 'Status', true, 'radio'],
         ['Picture', 'Picture', false, 'text']
+    ],
+    [
+
     ]
 ];
+
+const ArryDataRoute = [{ ID: 1, Name: 'Route66' }, { ID: 2, Name: 'Route89' }, { ID: 3, Name: 'Route123' }, { ID: 4, Name: 'Route783' }];
+const ArryDataBus = [{ ID: 1, Name: 'ABC123' }, { ID: 2, Name: 'AKM8293' }, { ID: 3, Name: 'AHL2398' }, { ID: 4, Name: 'ADE2309' }];
+const ArryDataDriver = [{ ID: 1, Name: 'Ali M' }, { ID: 2, Name: 'Tan K' }, { ID: 3, Name: 'E Adam' }, { ID: 4, Name: 'Mark Lee' }];
+
+const ArryDataItem = [
+    [],
+    [
+        null,
+        null,
+        ArryDataRoute,
+        ArryDataBus,
+        null,
+        null,
+        ArryDataBus,
+        ArryDataDriver,
+        ArryDataDriver,
+        null,
+        null,
+        ArryDataDriver,
+        null,
+        null
+    ],
+    [],
+    [
+        null,
+        null,
+        null,
+        ArryDataRoute,
+        null,
+        ArryDataBus,
+        ArryDataDriver
+    ]
+]
+
 
 const ArryDataObjBtn = [
     [
