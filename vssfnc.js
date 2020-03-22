@@ -27,7 +27,6 @@ function vssfnc_tablepopulate_param() {
     // tablelistX - html element of the table to be created (if the html table element is not provided, the function will return a table element)
     // tableid - id of source datatable (for sorting by column purposes - obsolete?)
     // arryclass - an array of css classes - 
-    //
     //          0:<caption> 
     //          1:<thead><tr>
     //          2:<thead><tr><th>
@@ -44,8 +43,8 @@ function vssfnc_tablepopulate_param() {
     // arrysortind - an array of 2 strings indicator for column sorting - 
     //          0:ascending
     //          1:descending
-    // arrybutton - a 2-dim array of 
-    //          [0: datarow button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
+    // arrybutton (button for td in a set column) - a 2-dim array of 
+    //          [[0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
     // arrybuttontable - a 2-dim array of 
     //          [[0: button text, 1: button_clicked function, 2: css class of button]]
     // fncdatarowclicked - function to call on datarow clicked (used as a callback with dataset-ID as the parameter)
@@ -108,17 +107,13 @@ const vssfnc_tablepopparam_item = {
         Dscd: 1
     },
     // arrybutton - a 2-dim array of 
-    // [0: datarow button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
-    // ?? [1: table button: [0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
-    // fncdatarowclicked - function to call on datarow clicked
+    // [[0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
     arrybutton: {
-        DataRow: {
-            ArryID: 0,
-            Desc: 0,
-            Col: 1,
-            OnClick: 2,
-            CSSClass: 3
-        }
+        ArryID: 0,
+        Desc: 0,
+        Col: 1,
+        OnClick: 2,
+        CSSClass: 3
     },
     arrybuttontable: {
         Button: {
@@ -269,6 +264,10 @@ function vssfnc_tablepopulate(objparam) {
         // add first an action column //
         let taction = document.createElement('td');
         taction.innerHTML = "+";
+        if (objparam.arryclass[param_item.arryclass.TrButton]) {
+            taction.classList = objparam.arryclass[param_item.arryclass.TrButton];
+        }
+        taction.style.border = "2px solid lightgray";
         taction.dataset.DataObj = objparam.arryeditrow[param_item.arryeditrow.DataObj];
         taction.onclick = function () {
             alert('Add ' + this.dataset.DataObj);
@@ -277,6 +276,7 @@ function vssfnc_tablepopulate(objparam) {
 
         for (hdr in objparam.arryjsondata[0]) {
             let tedit = document.createElement('td');
+            tedit.style.border = "2px solid lightgray";
             let ipt;
 
             if (objparam.arryeditrow[param_item.arryeditrow.ArryItemData] && objparam.arryeditrow[param_item.arryeditrow.ArryItemData][i]) {
@@ -296,7 +296,7 @@ function vssfnc_tablepopulate(objparam) {
                 ipt = document.createElement('input');
             }
             ipt.style.width = "100%";
-            ipt.style.border = "1px solid lightgray";
+            ipt.style.border = "none";
             // ipt.style.boxSizing = "border-box";
             tedit.appendChild(ipt);
             tredit.appendChild(tedit);
@@ -310,8 +310,7 @@ function vssfnc_tablepopulate(objparam) {
     // load datarow //
 
     let tbody = document.createElement('tbody');
-    let boolbtnadded;
-
+  
     // an array for total for each datacol of arrjJSON item //
     if (objparam.arryjsondata.length > 0) {
         let arrydatasum = new Array(Object.keys(objparam.arryjsondata[0]).length);
@@ -330,17 +329,19 @@ function vssfnc_tablepopulate(objparam) {
         // add first an action column //
         if (booleditrow) {
             let taction = document.createElement('td');
-            taction.innerHTML = '...';
+            taction.innerHTML = '^';
+            if (objparam.arryclass[param_item.arryclass.TrButton]) {
+                taction.classList = objparam.arryclass[param_item.arryclass.TrButton];
+            }
             taction.onclick = function () {
-                // this: td -> parentlement: tr -> parentelement: tbody -> parentelement: table
+                // this: td : parentlement -> tr : parentelement -> tbody : parentelement -> table //
                 let table = this.parentElement.parentElement.parentElement;
                 let thead = table.children[0];
-                // parent has 2 children: thead and tbody //
-                // thead has 2 children: th and edit datarow //
+                // table has 2 children: thead and tbody //
+                // thead has 2 children: header row (th) and edit datarow //
 
-                // parent is thead with first child is th, second child is edit datarow //
                 let editrow = thead.children[1];
-                
+
                 // i starts from 1. 0 is the action td //
                 for (i = 1; i < editrow.children.length; i++) {
                     // edit datarow's children is td whose children is either input or select //
@@ -349,7 +350,7 @@ function vssfnc_tablepopulate(objparam) {
                         editrow.children[i].children[0].value = this.parentElement.children[i].innerHTML;
                     } else if (editrow.children[i].children[0].nodeName == 'SELECT') {
 
-                        // go through option of select //
+                        // go through option of select search for match text string //
                         for (var x = 0; x < editrow.children[i].children[0].length; x++) {
                             if (editrow.children[i].children[0].children[x].text === this.parentElement.children[i].innerHTML) {
                                 editrow.children[i].children[0].value = editrow.children[i].children[0].children[x].value;
@@ -357,7 +358,6 @@ function vssfnc_tablepopulate(objparam) {
                             }
                         }
                     }
-
                 }
             }
             tr.appendChild(taction);
@@ -366,8 +366,7 @@ function vssfnc_tablepopulate(objparam) {
         tr.classList.add(objparam.arryclass[param_item.arryclass.TrTd]);
         tr.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
 
-        // datarow button, if any //
-        boolbtnadded = objparam.arrybutton && objparam.arrybutton.length > 0 ? false : true;
+        // datarow column button, if any //
         Object.values(item).forEach((val, index) => {
 
             // construct the td element //
@@ -399,22 +398,45 @@ function vssfnc_tablepopulate(objparam) {
 
             // cell button element //
 
-            if (!boolbtnadded && objparam.arrybutton && objparam.arrybutton.length > 0) {
+            if (objparam.arrybutton && objparam.arrybutton.length > 0) {
+                objparam.arrybutton.forEach((arrycolbtn) => {
+                    if (arrycolbtn[param_item.arrybutton.Col] === index) {
+                        // let button = document.createElement('button');
+                        let button = document.createElement('div');
 
-                let btncolumn = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Col] ? objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Col] : 0;
-                if (index === btncolumn) {
-                    let button = document.createElement('button');
-                    if (objparam.arryclass[param_item.arryclass.TrButton]) {
-                        button.classList.add(objparam.arryclass[param_item.arryclass.TrButton]);
-                    }
-                    else {
+                        if (objparam.arryclass[param_item.arryclass.TrButton]) {
+                            button.classList.add(objparam.arryclass[param_item.arryclass.TrButton]);
+                        }
+                        else {
+                            // ?? do nothing ??
+                        }
 
+                        button.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
+                        button.innerHTML = arrycolbtn[param_item.arrybutton.Desc];
+                        button.dataset.ID = val;
+                        button.style.display = "inline-block";
+                        button.style.float="right";
+                        button.style.marginLeft = "10%";
+                        // button.style.marginRight="0";
+                        button.style.alignSelf="flex-end";
+                        button.onclick = arrycolbtn[param_item.arrybutton.OnClick];
+                        td.appendChild(button);
                     }
-                    button.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
-                    button.innerHTML = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Desc];
-                    td.appendChild(button);
-                    boolbtnadded = true;
-                }
+                })
+                // let btncolumn = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Col] ? objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Col] : 0;
+                // if (index === btncolumn) {
+                //     let button = document.createElement('button');
+                //     if (objparam.arryclass[param_item.arryclass.TrButton]) {
+                //         button.classList.add(objparam.arryclass[param_item.arryclass.TrButton]);
+                //     }
+                //     else {
+
+                //     }
+                //     button.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
+                //     button.innerHTML = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Desc];
+                //     td.appendChild(button);
+                //     // boolbtnadded = true;
+                // }
             }
 
             // collect aggregate details (count and total) //
@@ -472,13 +494,14 @@ function vssfnc_tablepopulate(objparam) {
 
     // 
     // eventhandler for table datarow clicked //
-    // ! do it before formatting odd/even row, which changes the class of the datarow !//
+    // !! do it before formatting odd/even row, which changes the class of the datarow !! //
     // 
 
     // !! cannot use getElementsByClassName(objparam.arryclass[3] !!
     // !! if arryclass is not specified, all elements will have same class name !!
     // let tabledatarow = document.getElementsByClassName(objparam.arryclass[3]);
     let tabledatarow = objparam.htmltable.getElementsByTagName('tr');
+    let parent = tabledatarow.parentElement;
 
     for (var i = 0; i < tabledatarow.length; i++) {
         // header row and date edit row (if any) //
@@ -498,33 +521,6 @@ function vssfnc_tablepopulate(objparam) {
             } else {
                 // whole datarow has same click event //
                 tabledatarow[i].onclick = function () {
-                    // let parent = this.parentElement.parentElement;
-
-                    // populate date edit row (if any) //
-                    // parent is thead with first child is th, second child is edit datarow //
-                    // if (booleditrow) {
-                    
-                    // parent is thead with first child is th, second child is edit datarow //
-                    // let editrow = parent.children[0].children[1];
-                    // for (i = 0; i < editrow.children.length; i++) {
-                    //     // edit datarow's children is td whose children is either input or select //
-                    //     if (editrow.children[i].children[0].nodeName == 'INPUT') {
-                    //         editrow.children[i].children[0].value = this.children[i].innerHTML;
-                    //     } else if (editrow.children[i].children[0].nodeName == 'SELECT') {
-
-                    //         // go through option of select //
-                    //         for (var x = 0; x < editrow.children[i].children[0].length; x++) {
-                    //             if (editrow.children[i].children[0].children[x].text === this.children[i].innerHTML) {
-                    //                 editrow.children[i].children[0].value = editrow.children[i].children[0].children[x].value;
-                    //                 break;
-                    //             }
-                    //         }
-                    //     }
-
-                    // }
-                    // }
-
-                    // paint selected row //
                     vssfnc_paintoddevenrow(parent, objparam.arryclassdatarow);
 
                     this.classList.add(objparam.arryclassdatarow[param_item.arryclassdatarow.SelectedRow]);
@@ -565,7 +561,7 @@ function vssfnc_tablepopulate(objparam) {
             } else {
                 btn.style.margin = "1%";
             }
-            console.log(btn);
+            // console.log(btn);
             divbtn.appendChild(btn);
         }
         objparam.htmltable.appendChild(divbtn);
@@ -629,15 +625,15 @@ function vssfnc_tablepopulate(objparam) {
     }
 
     // eventhandler for table datarow button //
-
-    if (objparam.arrybutton) {
-        let tablerowbutton = objparam.htmltable.getElementsByTagName('button');
-        for (var i = 0; i < tablerowbutton.length; i++) {
-            if (objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.OnClick]) {
-                tablerowbutton[i].onclick = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.OnClick];
-            }
-        }
-    }
+    //!! table datarow button has since been converted to allow multiple column button per datarow !! //
+    // if (objparam.arrybutton) {
+    //     let tablerowbutton = objparam.htmltable.getElementsByTagName('button');
+    //     for (var i = 0; i < tablerowbutton.length; i++) {
+    //         if (objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.OnClick]) {
+    //             tablerowbutton[i].onclick = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.OnClick];
+    //         }
+    //     }
+    // }
 
     if (boolReturnElem) {
         return objparam.htmltable;

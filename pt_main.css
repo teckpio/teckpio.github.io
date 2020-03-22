@@ -1,8 +1,8 @@
 :root{
     --colorNavBar_MenuLogo:rgb(233, 229, 10);
-    --colorNavBar_Menu:rgb(31, 27, 27);
+    --colorNavBar_Menu:rgb(40, 40, 40);
     --colorTextNavBar_Menu:rgb(223, 215, 215);
-    --colorContent_Title:rgb(44, 38, 38);
+    --colorContent_Title:rgb(40, 40, 40);
     --colorTextContent_Title:rgb(245, 247, 241);
     --colorContentBoxBG:rgb(245, 245, 245);
     --colorContent_Detail:white;

@@ -63,9 +63,9 @@ const SampleRouteData = [
 ]
 
 const SampleEmployeeData = [
-    { ID: '101', Code: '101', Name: 'M Adam', Password: 'Position', Employment: '33, Jalan K', IC: '', Gender: 'F', Religion: 'Buddhist', Race: 'Chinese', Address: '', Joined: '890910-08-1289', Terminated: '', Contact: '05-2550909', Emergency: '', Sector: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Malay', Religion: 'Islam', PayProfile: '101', Picture: 'who1.jpg' },
-    { ID: '102', Code: '101', Name: 'E Michael', Password: 'Position', Employment: '68, Jalan Long', IC: '', Gender: 'F', Religion: 'Buddhist', Race: 'Chinese', Address: '', Joined: '897998-08-8798', Terminated: '', Contact: '05-2550909', Emergency: '', Sector: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist', PayProfile: '102', Picture: 'who2.jpg' },
-    { ID: '104', Code: '101', Name: 'Lee Meng', Password: 'Position', Employment: '6, Jalan Mid Road', IC: '', Gender: 'F', Religion: 'Buddhist', Race: 'Chinese', Address: '', Joined: '901098-08-8798', Terminated: '', Contact: '05-2550909', Emergency: '', Sector: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist', PayProfile: '104', Picture: 'who3.jpg' },
+    { ID: '101', Code: '101', Name: 'Ali M', Password: 'Position', Employment: '33, Jalan K', IC: '', Gender: 'F', Religion: 'Buddhist', Race: 'Chinese', Address: '', Joined: '890910-08-1289', Terminated: '', Contact: '05-2550909', Emergency: '', Sector: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Malay', Religion: 'Islam', PayProfile: '101', Picture: 'who1.jpg' },
+    { ID: '102', Code: '101', Name: 'Tan K', Password: 'Position', Employment: '68, Jalan Long', IC: '', Gender: 'F', Religion: 'Buddhist', Race: 'Chinese', Address: '', Joined: '897998-08-8798', Terminated: '', Contact: '05-2550909', Emergency: '', Sector: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist', PayProfile: '102', Picture: 'who2.jpg' },
+    { ID: '104', Code: '101', Name: 'E Adam', Password: 'Position', Employment: '6, Jalan Mid Road', IC: '', Gender: 'F', Religion: 'Buddhist', Race: 'Chinese', Address: '', Joined: '901098-08-8798', Terminated: '', Contact: '05-2550909', Emergency: '', Sector: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist', PayProfile: '104', Picture: 'who3.jpg' },
     { ID: '105', Code: '101', Name: 'Siti N', Password: 'Position', Employment: '36, Jalan KKM', IC: '', Gender: 'F', Religion: 'Buddhist', Race: 'Chinese', Address: '', Joined: '091810-08-1289', Terminated: '', Contact: '05-2550909', Emergency: '', Sector: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Malay', Religion: 'Islam', PayProfile: '105', Picture: 'who4.jpg' },
     { ID: '106', Code: '101', Name: 'Tan Ah Loong', Password: 'Position', Employment: '8, Jalan Short', IC: '', Gender: 'F', Religion: 'Buddhist', Race: 'Chinese', Address: '', Joined: '635798-08-8798', Terminated: '', Contact: '05-2550909', Emergency: '', Sector: '', Marital: 'Married', DateOfBirth: '01012000', Nationality: 'Malaysian', Race: 'Chinese', Religion: 'Buddhist', PayProfile: '105', Picture: 'who5.jpg' }
 ]
@@ -131,7 +131,9 @@ const SampleBusBreakDownData = [
 ]
 
 const SampleDutyRoster = [
-    { 'ID': '001', 'Reference': '1234', 'Date': '01/03/2020', 'Route': '66', 'Schedule': '06:00', 'Assigned Bus': 'ABK6789', 'Assigned Driver': 'Mat Salleh' }
+    { 'ID': '001', 'Reference': '1234', 'Date': '01/03/2020', 'Route': '66', 'Schedule': '06:00', 'Assigned Bus': 'ABK6789', 'Assigned Driver': 'Ali M' },
+    { 'ID': '002', 'Reference': '1235', 'Date': '01/03/2020', 'Route': '89', 'Schedule': '06:00', 'Assigned Bus': 'ACP990', 'Assigned Driver': 'Tan K' },
+    { 'ID': '003', 'Reference': '1236', 'Date': '01/03/2020', 'Route': '900', 'Schedule': '06:00', 'Assigned Bus': 'AEL1092', 'Assigned Driver': 'E Adam' }
 ]
 
 

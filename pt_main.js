@@ -473,7 +473,7 @@ function RouteBusStopParticular() {
 
 
 
-    loadDivList(SampleBusStopData, BusStopListClicked, null, [undefined, undefined, undefined, undefined, undefined]);
+    loadDivList(SampleBusStopData, BusStopListClicked, null, null, null, [undefined, undefined, undefined, undefined, undefined]);
 
 
     // arrybuttontable - a 2-dim array of 
@@ -563,15 +563,18 @@ async function xx(eeeid) {
 
 }
 
-function DriverListClicked(ID) {
+function loadDivDetailDriverInfo(ID, Name) {
 
     SwitchListToDetail();
 
-    let DriverData = SampleEmployeeData.find((eee) => {
-        return eee.ID === ID || eee.ID === parseInt(ID);
-        // return eee.ID === this.dataset.ID || eee.ID === parseInt(this.dataset.ID);
-    });
-
+    let DriverData;
+    if (ID) {
+        DriverData = SampleEmployeeData.find((eee) => {
+            return eee.ID === ID || eee.ID === parseInt(ID);
+        });
+    } else {
+        DriverData = SampleEmployeeData.find(eee => eee.Name == Name);
+    }
 
     ContentDetail.innerHTML = "";
     // ContentDetail.style.display="grid";
@@ -583,6 +586,23 @@ function DriverListClicked(ID) {
     ContentDetail.appendChild(getDivDriverPersonalParticularsByID(DriverData));
 
 }
+
+// function loadDivDetailDriverInfo() {
+
+//     SwitchListToDetail();
+
+//     let DriverData = SampleEmployeeData.find(eee=>eee.Name == this.dataset.ID);
+
+//     ContentDetail.innerHTML = "";
+//     // ContentDetail.style.display="grid";
+//     // ContentDetail.style.gridTemplateColumns="30% 70%";
+//     // ContentDetail.style.gridTemplateRows="70% 30%";
+//     // ContentDetail.style.display = "flex";
+//     ContentDetail.style.margin = "1%";
+
+//     ContentDetail.appendChild(getDivDriverPersonalParticularsByID(DriverData));
+// }
+
 
 function setStyleDetailImage() {
     imgpicture = document.createElement('img');
@@ -752,11 +772,11 @@ function setStyleDivList(divlist) {
     divlist.style.overflow = "auto";
     // divlist.style.borderStyle = "1px solid rgb(250,250,250)";
     divlist.style.backgroundColor = "white";
-    // divlist.style.boxShadow = "0 0 1px 1px gray";
+    divlist.style.boxShadow = "0 0 2px 1px gray";
 
 }
 
-function loadDivList(ListData, ListClicked, ListEditRow, arryExportFunction) {
+function loadDivList(ListData, ListClicked, ListEditRow, arrycolbtn, arrytblbtn, arryExportFunction) {
 
     SwitchDetailToList();
 
@@ -773,11 +793,11 @@ function loadDivList(ListData, ListClicked, ListEditRow, arryExportFunction) {
     divsearchfnc.style.boxSizing = "border-box";
     divsearchfnc.style.padding = "2%";
     divsearchfnc.style.backgroundColor = "white";
-    divsearchfnc.style.border = "1px solid rgb(220,220,220)"; 
+    divsearchfnc.style.border = "1px solid rgb(220,220,220)";
     ContentList.appendChild(divsearchfnc);
 
     // load list table - start
-    let ListTable = pupulateTable(null, ListData, ListClicked, null, ListEditRow);
+    let ListTable = pupulateTable(null, ListData, ListClicked, arrycolbtn, arrytblbtn, ListEditRow);
     ListTable.style.width = '100%';
     // ListTable.style.position="relative";
     // ListTable.style.top = "10%";
@@ -789,7 +809,11 @@ function loadDivList(ListData, ListClicked, ListEditRow, arryExportFunction) {
 
 
 function DriverPersonalParticulars() {
-    loadDivList(SampleEmployeeData, DriverListClicked, null, [undefined, undefined, undefined, undefined, undefined]);
+    loadDivList(SampleEmployeeData, DriverPersonalParticularListClicked, null, null, null, [undefined, undefined, undefined, undefined, undefined]);
+}
+
+function DriverPersonalParticularListClicked(ID) {
+    loadDivDetailDriverInfo(ID, null);
 }
 
 function load_divbutton(arrysetbtn, boolbtndir, boolbtnreset) {
@@ -906,18 +930,32 @@ function getDivBusBreadDownByID(breakdowndata) {
 }
 
 function BusManageBreakdown() {
-    let arryeditrow = ["Bus Breakdown Data Object", ArryDataItem[DataObj.BusBreakDown], undefined]
-    loadDivList(SampleBusBreakDownData, BusBreakDownListClicked, arryeditrow, [undefined, undefined, undefined, undefined, undefined]);
+    let arryeditrow = ["Bus Breakdown Data Object", ArryDataItem[DataObj.BusBreakDown], undefined];
+    loadDivList(SampleBusBreakDownData, BusBreakDownListClicked, arryeditrow, null, null, [undefined, undefined, undefined, undefined, undefined]);
+}
+
+function BusIDClicked() {
+    alert("BusID Clicked: " + this.dataset.ID);
+    event.preventDefault();
+}
+
+function DriverIDClicked() {
+    loadDivDetailDriverInfo(null, this.dataset.ID);
 }
 
 function DutyRoster() {
-    let arryeditrow = ["Duty Roster Data Object", ArryDataItem[DataObj.DutyRoster], undefined]
-    loadDivList(SampleDutyRoster, DutyRosterListClicked, arryeditrow, [undefined, undefined, undefined, undefined, undefined]);
+    let arryeditrow = ["Duty Roster Data Object", ArryDataItem[DataObj.DutyRoster], undefined];
+    // [[0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
+    let arrycolbtn = [
+        ['..', 5, BusIDClicked, null],
+        ['..', 6, DriverIDClicked, null]
+    ];
+    loadDivList(SampleDutyRoster, undefined, arryeditrow, arrycolbtn, null, [undefined, undefined, undefined, undefined, undefined]);
 }
 
-function DutyRosterListClicked() {
-
-}
+// function DutyRosterListClicked(ID) {
+//     // alert(ID);
+// }
 
 function setStyleDivExport(divexportfnc) {
     divexportfnc.style.display = "flex";
@@ -1011,7 +1049,7 @@ function ReportAPAD(ReportID) {
             break;
     }
     if (ReportData) {
-        let ListTable = pupulateTable(ReportID, ReportData, undefined, null, null);
+        let ListTable = pupulateTable(ReportID, ReportData, undefined, null, null, null);
         // ListTable.style.width = '50%';
         ListTable.style.boxShadow = "2px 2px 2px gray";
         ContentDetail.appendChild(ListTable);
@@ -1126,7 +1164,7 @@ function populateForm(formtitle, arrydatacol, jsondata, arryitemdata, arrybtn) {
     // objparam.arryitemdata.push(listobj.account);
 }
 
-function pupulateTable(tabletitle, datalist, function_clicked, arrybtn, arryeditrow) {
+function pupulateTable(tabletitle, datalist, function_clicked, arrycolbtn, arrytblbtn, arryeditrow) {
     // load listing in table element //
     // contentlisttable.innerHTML = '';
     // contentlisttable.style.display = 'block';
@@ -1145,9 +1183,20 @@ function pupulateTable(tabletitle, datalist, function_clicked, arrybtn, arryedit
     objparam.arrysortind[vssfnc_tablepopparam_item.arrysortind.Ascd] = ' (v)';
     objparam.arrysortind[vssfnc_tablepopparam_item.arrysortind.Dscd] = ' (^)';
 
-    objparam.arrybuttontable = arrybtn;
+    objparam.arrybutton = arrycolbtn;
+    objparam.arrybuttontable = arrytblbtn;
     objparam.fncdatarowclicked = function_clicked;
     objparam.arryeditrow = arryeditrow;
+
+    // arryclass - an array of css classes - 
+    //          0:<caption> 
+    //          1:<thead><tr>
+    //          2:<thead><tr><th>
+    //          3:<tr><td>
+    //          4:<tr><button>
+    //          5:<tfoot><tr>
+    let arryclass = [null, null, null, null, "FunctionButton", null];
+    objparam.arryclass = arryclass;
 
     vssfnc_tablepopulate(objparam);
 
