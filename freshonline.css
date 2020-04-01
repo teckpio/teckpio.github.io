@@ -1,0 +1,127 @@
+:root{
+    --fontmain: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    --heightsitetitle:5vh;
+    --heightnavbar:5vh;
+    --heightcontentbox:78vh;
+    --heightfooter:5vh;
+
+    --widthContentList:30%;
+    --widthContentDetail:65%;
+
+    --fbContentList:3;
+    --fbContentDetail:7;
+
+    --colorborderdiv:rgb(220, 220, 220);
+    --colormenuitemselected:rgb(200,200,200);
+}
+
+html {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* font-family:var(--fontmain); */
+}
+
+#SiteTitle{
+    height:var(--heightsitetitle);
+    /* border:1px solid var(--colorborderdiv); */
+}
+
+#NavBar{
+    height:var(--heightnavbar);
+    border:1px solid var(--colorborderdiv);
+    
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    /* align-content: stretch; */
+}
+
+.MenuItem{
+    border-left:1px solid var(--colorborderdiv);
+    flex-grow: 1;
+    
+    text-align: center;
+    /* overflow: hidden; */
+    position: relative;
+    /* height:100%; */
+    /* padding:2%; */
+}
+
+.MenuItemSelected{
+    border:1px solid var(--colorborderdiv);
+    flex-grow: 1;
+    
+    text-align: center;
+    font-style: italic;
+
+    /* overflow: hidden; */
+    position: relative;
+    background-color: var(--colormenuitemselected);
+    color:white;
+
+    height:100%;
+}
+
+.MenuItem:hover{
+    cursor: pointer;
+    font-style: italic;
+    background-color: lightgray;
+    color:white;
+}
+
+.MenuResourcesDropDown{
+    border: 1px solid gray;
+    position: absolute;
+    width:100%;
+    top:0;
+    text-align: left;
+    display:none;
+    margin-top:var(--heightnavbar);
+    z-index: 2;
+    background-color: white;
+    
+}
+
+.MenuResourcesItem{
+    color:black;
+    margin:5%;
+    padding:5%;
+}
+
+#MenuResources:hover .MenuResourcesDropDown{
+    /* background-color: rgb(220, 220, 220); */
+    display: block;
+    
+}
+
+
+
+
+/* ContentBOx is a column flex of ContentList and ContentDetail */
+#ContentBox{
+    height: var(--heightcontentbox);
+    display: flex;
+    flex-direction: row;
+
+    /* border:1px solid var(--colorborderdiv); */
+}
+
+#ContentList{
+    width: var(--widthContentList);
+    /* flex-grow: var(--fbContentList); */
+    border-right:1px solid var(--colorborderdiv);
+}
+
+#ContentDetail{
+    width: var(--widthContentDetail);
+    text-align: center;
+    margin:2% auto;
+    /* flex-grow: var(--fbContentDetail); */
+    /* border:1px solid var(--colorborderdiv); */
+}
+
+#Footer{
+    height: var(--heightfooter);
+    border:1px solid var(--colorborderdiv);
+    text-align: right;
+    font-size: smaller;
+}

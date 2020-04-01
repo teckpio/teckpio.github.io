@@ -47,6 +47,25 @@
 
     --bgcolorgradient:linear-gradient(
         45deg,
+        gray,
+        gray,
+        gray,
+        gray,
+        gray,
+        gray,
+        rgb(15, 15, 228),
+        rgb(75, 121, 212),
+        rgb(75, 121, 212),
+        rgb(133, 165, 231),
+        lightgray,
+        rgb(133, 165, 231),
+        rgb(75, 121, 212),
+        rgb(75, 121, 212),
+        rgb(15, 15, 228),
+        gray
+    );
+    /* --bgcolorgradient:linear-gradient(
+        45deg,
         darkblue,
         darkblue,
         darkblue,
@@ -63,7 +82,7 @@
         rgb(75, 121, 212),
         rgb(15, 15, 228),
         darkblue
-    );
+    ); */
 }
 
 html, body{
