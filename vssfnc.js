@@ -145,7 +145,7 @@ function vssfnc_tablepopulate(objparam) {
     let param_item = vssfnc_tablepopparam_item;
 
     // try {
-    let booleditrow = objparam.arryeditrow.length;
+    let booleditrow = objparam.arryeditrow;
 
     let boolReturnElem = false;
     if (objparam.htmltable) {
@@ -166,7 +166,7 @@ function vssfnc_tablepopulate(objparam) {
             width:100%;
             margin: 0 auto;
             box-sizing: border-box;
-            border:1px solid rgb(200,200,200);`);
+            border:1px solid black;`);
     }
 
     // handling of null param //
@@ -267,7 +267,7 @@ function vssfnc_tablepopulate(objparam) {
         if (objparam.arryclass[param_item.arryclass.TrButton]) {
             taction.classList = objparam.arryclass[param_item.arryclass.TrButton];
         }
-        taction.style.border = "2px solid rgb(250,250,250)";
+        taction.style.border = "2px solid lightgray";
         taction.dataset.DataObj = objparam.arryeditrow[param_item.arryeditrow.DataObj];
         taction.onclick = function () {
             alert('Add ' + this.dataset.DataObj);
@@ -276,7 +276,7 @@ function vssfnc_tablepopulate(objparam) {
 
         for (hdr in objparam.arryjsondata[0]) {
             let tedit = document.createElement('td');
-            tedit.style.border = "2px solid rgb(250,250,250)";
+            tedit.style.border = "2px solid lightgray";
             let ipt;
 
             if (objparam.arryeditrow[param_item.arryeditrow.ArryItemData] && objparam.arryeditrow[param_item.arryeditrow.ArryItemData][i]) {
@@ -532,11 +532,6 @@ function vssfnc_tablepopulate(objparam) {
                 }
             }
 
-            // hover over datarow //
-            tabledatarow[i].onmouseover=function(){
-                this.style.cursor = "default";
-            }
-
         }
     }
 
@@ -689,7 +684,7 @@ function vssfnc_paintoddevenrow(tablex, classdatarow) {
     else {
         // default style //
         if (tablex) {
-            
+            tablex.style.border = 'solid 1px gray';
 
             // header row //
             tablex.rows[0].style.color = 'white';
@@ -710,11 +705,10 @@ function vssfnc_paintoddevenrow(tablex, classdatarow) {
                 for (var cell of tablex.rows[i].cells) {
                     // cell.style.border = 'solid 1px gray';
                     cell.style.padding = '5px';
-                    cell.style.borderLeft = "1px solid rgb(240,240,240)";
-                    cell.style.borderRight = "1px solid rgb(240,240,240)";
+                    cell.style.borderLeft = "1px solid gray";
+                    cell.style.borderRight = "1px solid gray";
                 }
             }
-            tablex.style.border = 'solid 1px rgb(100,100,100)';
         }
     }
 

@@ -7,7 +7,7 @@ const FlexMenuItemLogo = 3;
 const FlexMenuItemText = 6;
 const FlexManuItemDirLeft = 1;
 
-const transitionPeriod = "0.5s";
+const transitionPeriod = "1s";
 
 const IDDataList = "DataList";
 const IDDataDetail = "DataDetail";
@@ -20,8 +20,11 @@ const ClassFunctionButton = "FunctionButton";
 const styleNavBarSideMenuHidden = "margin-left:-20%; margin-top:10%; opacity:0;";
 const styleNavBarSideMenuShow = "margin-left:0; margin-top:10%; opacity:1";
 
-const styleSubMenuHidden = "display:none; transition:" + transitionPeriod + " margin; margin-top:-100px; ";
-const styleSubMenuShow = "display:block; transition:1s margin; margin-top:0;";
+// const styleSubMenuHidden = "display:none; transition:" + transitionPeriod + " margin; margin-top:-100px; ";
+// const styleSubMenuShow = "display:block; transition:" + transitionPeriod + " margin; margin-top:0;";
+
+const styleSubMenuHidden = "display:block; transition:all " + transitionPeriod + "; height:100%;";
+const styleSubMenuShow = "display:block; transition:all " + transitionPeriod + "; height:100%;";
 
 const strImgDirectionRight = "PTIconDirectionRight.svg";
 const strImgDirectionDown = "PTIconDirectionDown.svg";
@@ -141,7 +144,7 @@ const MenuItem = [
 setCurrentDateTime();
 setTimeByMinute();
 populateMenuItem(MenuItem, '', NavBarMenu, 1);
-
+// InvisibleAllSubMenu(null);
 
 // load ends
 
@@ -166,6 +169,9 @@ function populateMenuItem(menuarray, menuname, htmlmenu, menulevel) {
         // 1st level menu - add 2nd level menu
         if (menulevel == 1) {
             var submenu = document.createElement('ul');
+            submenu.style.transition = "all " + transitionPeriod;
+            submenu.style.display = "none";
+            submenu.style.height = "0";
 
             populateMenuItem(mitem[MenuItemIndexSubMenu], mitem[MenuItemIndexText], submenu, 2);
         }
@@ -174,12 +180,15 @@ function populateMenuItem(menuarray, menuname, htmlmenu, menulevel) {
         var lineitem = document.createElement('li');
         if (menulevel == 2 && menuname) {
             lineitem.className = menuname;
-        }
+            lineitem.style.transition = "all " + transitionPeriod;
+            lineitem.style.display = "none";
 
-        // // !! testing
-        // lineitem.style.border='1px solid white';
+            console.log('in 186: ' + lineitem.style.display);
 
-        if (menulevel == 3) {
+            lineitem.style.height = "0";
+        } else if (menulevel == 1) {
+            lineitem.style.display = "flex";
+        } else if (menulevel == 3) {
             lineitem.style.width = "100%";
             lineitem.style.textAlign = "center";
         }
@@ -202,6 +211,7 @@ function populateMenuItem(menuarray, menuname, htmlmenu, menulevel) {
         var divtext = document.createElement('div');
         divtext.innerHTML = mitem[MenuItemIndexText];
         divtext.style = "flex-grow:" + FlexMenuItemText + "; " + (menuname ? "text-align:right; box-sizing:border-box; padding-right:10%" : "text-align:left;");
+
         lineitem.appendChild(divtext);
 
         // direction
@@ -229,25 +239,35 @@ function populateMenuItem(menuarray, menuname, htmlmenu, menulevel) {
         htmlmenu.appendChild(lineitem)
         if (menulevel == 1) {
             htmlmenu.appendChild(submenu);
-
         }
         else {
             htmlmenu.className = ClassSubMenu;
             htmlmenu.dataset.id = menuname;
-            htmlmenu.style = styleSubMenuHidden;
+            // htmlmenu.style = styleSubMenuHidden;
         }
     })
+}
 
+
+function setStyleSubMenuInit(submenu) {
 
 }
 
+// ignoreid is deprecated //
 function InvisibleAllSubMenu(ignoreid) {
     let menuitem = document.getElementsByClassName(ClassSubMenu);
 
     for (var i = 0; i < menuitem.length; i++) {
-        if (menuitem[i].dataset.id != ignoreid) {
-            menuitem[i].style = styleSubMenuHidden;
+        // if (menuitem[i].dataset.id != ignoreid) {
+        // menuitem[i].style = styleSubMenuHidden;
+        menuitem[i].style.display = "none";
+        menuitem[i].style.height = "0";
+
+        for (x = 0; x < menuitem[i].childNodes.length; x++) {
+            menuitem[i].childNodes[x].style.height = "0";
+            menuitem[i].childNodes[x].style.display = "none";
         }
+        // }
     }
 
     SubMenuItemSlideIn();
@@ -255,32 +275,60 @@ function InvisibleAllSubMenu(ignoreid) {
     // revert menu direction
     let menudirection = document.getElementsByClassName(ClassMainMenuDirection);
     for (var i = 0; i < menudirection.length; i++) {
-
-        RotateDirectionMenuClose(menudirection[i].dataset.id);
-
+        // RotateDirectionMenuOpen(menudirection[i].dataset.id);
+        RotateDirectionMenuOpen(menudirection[i].id);
     }
 }
 
 function MainMenuClicked() {
 
-    InvisibleAllSubMenu(this.dataset.id);
+    InvisibleAllSubMenu(null);
+    PushSubMenuDown(this.dataset.id);
+    // SubMenuItemSlideIn();
+
+    // console.log(this.dataset.id);
+
+    // const menuitem = document.getElementsByClassName(this.dataset.id);
 
 
-    const menuitem = document.getElementsByClassName(this.dataset.id);
+    // // console.log(menuitem[0].parentNode.firstChild);
+    // // console.log(menuitem[0].parentNode.firstChild.style);
+    // // console.log(menuitem[0].parentNode.firstChild.style.height);
+    // console.log(menuitem[1].parentNode);
+    // console.log(menuitem[1].parentNode.style.display);
+    // // console.log(menuitem[0].parentNode.firstChild.style.display === "none");
 
-    //!! doesn't work if no submenu !!!!!
-    if (menuitem[0].parentNode) {
 
-        if (menuitem[0].parentNode.style.display == "none") {
-            menuitem[0].parentNode.style = styleSubMenuShow;
+    // // console.log(menuitem[0]);
+    // // let style = getComputedStyle(menuitem[0]);
+    // // console.log(style.getPropertyValue('display'));
+    // // console.log(style.getPropertyValue('height'));
 
-            RotateDirectionMenuClose(this.dataset.id);
+    // //?? how to determine subemenu is expanded ??//
+    // if (menuitem[1].parentNode.style.display == "none") {
+    //     console.log('pusing down');
+    //     PushSubMenuDown(this.dataset.id);
+    // }
 
-        } else {
-            menuitem[0].parentNode.style = styleSubMenuHidden;
-            RotateDirectionMenuOpen(this.dataset.id);
-        }
-    }
+    // //!! doesn't work if no submenu !!!!!
+    // if (menuitem[0].parentNode) {
+
+    //     if (menuitem[0].parentNode.style.display == "none") {
+    //         menuitem[0].parentNode.style = styleSubMenuShow;
+    //         menuitem[0].parentNode.style.height="100%";
+    //         for(var i=0; i<menuitem[0].parentNode.childNodes.length; i++){
+    //             menuitem[0].parentNode.childNodes[i].style.display="block";
+    //             menuitem[0].parentNode.childNodes[i].style.height="100%";
+    //         }
+
+    //         RotateDirectionMenuClose(this.dataset.id);
+
+    //     } else {
+    //         menuitem[0].parentNode.style = styleSubMenuHidden;
+    //         // menuitem[0].parentNode.style.height="0";
+    //         RotateDirectionMenuOpen(this.dataset.id);
+    //     }
+    // }
 
     // SetMenuTitle(this.dataset.id);
 }
@@ -310,7 +358,7 @@ function SubMenuClicked() {
 
 function SubMenuItemSlideIn(menuid) {
     NavBarSideMenu.style = styleNavBarSideMenuHidden;
-    RotateDirectionMenuOpen(menuid);
+    // RotateDirectionMenuOpen(menuid);
 }
 
 function SubMenuItemSlideOut(menuid) {
@@ -329,18 +377,37 @@ function RotateDirectionMenuClose(imgdirid) {
 
 function RotateDirectionMenuOpen(imgdirid) {
     if (imgdirid) {
-        const MMenuDirection = document.getElementById(imgdirid + strMenuDirection);
+        // const MMenuDirection = document.getElementById(imgdirid + strMenuDirection);
+        const MMenuDirection = document.getElementById(imgdirid);
         MMenuDirection.style.transition = "transform " + transitionPeriod;
         MMenuDirection.style.transform = "rotate(0deg)";
     }
 }
 
 
-function PushSubMenuDown() {
+function PushSubMenuDown(menuid) {
+    let menuitem = document.getElementsByClassName(ClassSubMenu);
 
+    for (var i = 0; i < menuitem.length; i++) {
+        if (menuitem[i].dataset.id == menuid) {
+            menuitem[i].style.height = "100%";
+            menuitem[i].style.display = "block";
+
+            console.log(menuitem[i]);
+            console.log('push 397: ' + menuitem[i].style.display);
+
+            for (x = 0; x < menuitem[i].childNodes.length; x++) {
+                menuitem[i].childNodes[x].style.display = "flex";
+                menuitem[i].childNodes[x].style.height = "100%";
+                // menuitem[i].childNodes[x].style.opacity="100%";
+            }
+        }
+    }
+
+    RotateDirectionMenuClose(menuid);
 }
 
-function PushSubMenuUp() {
+function PullSubMenuUp() {
 
 }
 
@@ -414,6 +481,9 @@ function SubMenuItemClicked() {
         case 'Breakdown':
             BusManageBreakdown();
             break;
+        case 'Service and Maintenance':
+            BusServiceMaintain();
+            break;
         case 'Duty Roster':
             DutyRoster();
             break;
@@ -429,7 +499,7 @@ function BusStopListClicked(ID) {
 
     SwitchListToDetail();
 
-    let BusStopData = SampleBusStopData.find((eee) => {
+    let BusStopData = getBusStopData().find((eee) => {
         return eee.ID === ID || eee.ID === parseInt(ID);
         // return eee.ID === this.dataset.ID || eee.ID === parseInt(this.dataset.ID);
     });
@@ -439,6 +509,10 @@ function BusStopListClicked(ID) {
     ContentDetail.style.margin = "1%";
 
     ContentDetail.appendChild(getDivBusStopByID(BusStopData));
+}
+
+function getBusStopData() {
+    return SampleBusStopData;
 }
 
 function getDivBusStopByID(busstopdata) {
@@ -471,36 +545,13 @@ function createMap() {
 // display: row flex: List + Map
 function RouteBusStopParticular() {
 
-
-
-    loadDivList(SampleBusStopData, BusStopListClicked, null, null, null, [undefined, undefined, undefined, undefined, undefined]);
-
-
-    // arrybuttontable - a 2-dim array of 
-    // [[0: button text, 1: button_clicked function, 2: css class of button]]
-    // let arrybtn = [
-    //     ["Full List", RouteBusStopParticularFull, ClassFunctionButton],
-    //     ["Show Map", RouteBusStopParticularMap, ClassFunctionButton]
-    // ];
-
-    // let divmap = document.createElement('iframe');
-    // divmap.style.flexGrow = "7";
-    // divmap.style.margin = "1%";
-
-    // divmap.src = "http://www.google.com/maps?q=24.197611,120.780512";
-
-    // divmap.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.989442890688!2d101.08790571461427!3d4.595913396661126!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31caec611a9d9c41%3A0xfe76e16d137449b4!2sIpoh+Parade%2C+105%2C+Jalan+Sultan+Abdul+Jalil%2C+31350+Ipoh%2C+Negeri+Perak!5e0!3m2!1sen!2smy!4v1565011877345!5m2!1sen!2smy"
-
-
-    // divmap.width = "600";
-    // divmap.height = "450";
-    // divmap.frameBorder="1";
-    // divmap.style = "border:0";
-    // divmap.iframe.allowfullscreen = true;
-
-    // ContentList.appendChild(divmap);
+    loadDivList(getBusStopListData(), BusStopListClicked, null, null, null, [undefined, undefined, undefined, undefined, undefined]);
 };
 
+function getBusStopListData() {
+    return SampleBusStopData;
+
+}
 function RouteBusStopParticularFull() {
     alert("full list");
 }
@@ -569,11 +620,11 @@ function loadDivDetailDriverInfo(ID, Name) {
 
     let DriverData;
     if (ID) {
-        DriverData = SampleEmployeeData.find((eee) => {
+        DriverData = getDriverData().find((eee) => {
             return eee.ID === ID || eee.ID === parseInt(ID);
         });
     } else {
-        DriverData = SampleEmployeeData.find(eee => eee.Name == Name);
+        DriverData = getDriverData().find(eee => eee.Name == Name);
     }
 
     ContentDetail.innerHTML = "";
@@ -586,6 +637,13 @@ function loadDivDetailDriverInfo(ID, Name) {
     ContentDetail.appendChild(getDivDriverPersonalParticularsByID(DriverData));
 
 }
+
+
+
+function getDriverData() {
+    return SampleEmployeeData;
+}
+
 
 // function loadDivDetailDriverInfo() {
 
@@ -625,6 +683,7 @@ function loadDivDetail(formtitle, jsondata, arrydatacol, arryitemdata, arrybtn, 
     divDetail.style.gridTemplateColumns = "30% 70%";
     divDetail.style.gridTemplateRows = "10% 10% 10% 10% 10% 10% 10% 10% 10% 10%";
     divDetail.style.width = "100%";
+    divDetail.style.margin = "0 auto";
     divDetail.style.height = "100%";
     divDetail.style.border = "1px solid gray";
     divDetail.style.overflow = "auto";
@@ -686,6 +745,9 @@ function loadDivDetail(formtitle, jsondata, arrydatacol, arryitemdata, arrybtn, 
     } else {
         let imgpicture = setStyleDetailImage();
         imgpicture.src = imgsrc;
+        imgpicture.style.width = "80%";
+        imgpicture.style.height = "auto";
+        imgpicture.style.margin = "2% auto";
         divDetail.appendChild(imgpicture);
     }
 
@@ -714,16 +776,13 @@ function loadDivDetail(formtitle, jsondata, arrydatacol, arryitemdata, arrybtn, 
         divtext.style.fontStyle = "italic";
         divdirection.appendChild(divtext);
 
-        // let dirright = document.createElement('div');
-        // dirright.innerHTML = "&gt&gt";
-        // dirright.className = ClassFunctionButton;
-        // divdirection.appendChild(dirright);
-
         divDetail.appendChild(divdirection);
     }
 
     let divBackList = document.createElement('div');
     divBackList.innerHTML = "Back To List";
+    divBackList.style.margin = "1% auto";
+    divBackList.style.width = "80%";
     divBackList.className = ClassFunctionButton;
     divBackList.onclick = SwitchDetailToList;
     divBackList.style.gridArea = "10/1/11/2";
@@ -731,12 +790,12 @@ function loadDivDetail(formtitle, jsondata, arrydatacol, arryitemdata, arrybtn, 
     divDetail.appendChild(divBackList);
 
     detailform = populateForm(formtitle, arrydatacol, jsondata, arryitemdata, arrybtn);
-    detailform.style = "margin:1% auto; width:50%;";
+    detailform.style.margin = "1% auto";
+    detailform.style.width = "50%";
     detailform.style.flexBasis = "3fr";
     detailform.style.gridArea = "1/2/11/3";
-    detailform.style.width = "95%";
+    detailform.style.width = "80%";
     divDetail.appendChild(detailform);
-
 
     return divDetail;
 }
@@ -784,7 +843,7 @@ function loadDivList(ListData, ListClicked, ListEditRow, arrycolbtn, arrytblbtn,
 
     setStyleDivList(ContentList);
 
-    ContentList.appendChild(getExportDiv(arryExportFunction));
+    ContentList.appendChild(getExportDiv("", arryExportFunction));
 
     // search function
     let divsearchfnc = document.createElement('div');
@@ -809,9 +868,13 @@ function loadDivList(ListData, ListClicked, ListEditRow, arrycolbtn, arrytblbtn,
 
 
 function DriverPersonalParticulars() {
-    loadDivList(SampleEmployeeData, DriverPersonalParticularListClicked, null, null, null, [undefined, undefined, undefined, undefined, undefined]);
+    loadDivList(getDriverListData(), DriverPersonalParticularListClicked, null, null, null, [undefined, undefined, undefined, undefined, undefined]);
 }
 
+function getDriverListData() {
+    return SampleEmployeeData;
+
+}
 function DriverPersonalParticularListClicked(ID) {
     loadDivDetailDriverInfo(ID, null);
 }
@@ -900,7 +963,7 @@ function BusBreakDownListClicked(ID) {
 
     SwitchListToDetail();
 
-    let BreakDownData = SampleBusBreakDownData.find((eee) => {
+    let BreakDownData = getBusBreakDownData().find((eee) => {
         // return eee.ID === this.dataset.ID || eee.ID === parseInt(this.dataset.ID);
         return eee.ID === ID || eee.ID === parseInt(ID);
     });
@@ -912,6 +975,55 @@ function BusBreakDownListClicked(ID) {
     ContentDetail.appendChild(getDivBusBreadDownByID(BreakDownData));
 }
 
+function getBusBreakDownData() {
+    return SampleBusBreakDownData;
+}
+
+function BusServiceMaintainListClicked(ID) {
+
+    SwitchListToDetail();
+
+    // header
+    let ServiceMaintainData = getBusServiceMaintainData().find((eee) => {
+        return eee.ID === ID || eee.ID === parseInt(ID);
+    });
+
+    ContentDetail.innerHTML = "";
+    ContentDetail.style.margin = "1%";
+
+    let formheader = getDivBusServiceMaintainByID(ServiceMaintainData)
+    ContentDetail.appendChild(formheader);
+
+    // item //
+    let lchild = ContentDetail.lastChild;
+
+    let itemtitle = document.createElement('div');
+    itemtitle.innerHTML = "Item Details:";
+    itemtitle.style.textAlign = "left";
+    itemtitle.style.margin = "2%";
+    itemtitle.style.textDecoration = "underline";
+    // // let formheader = lchild.lastChild;
+    lchild.lastChild.appendChild(itemtitle);
+
+    // let ServiceMaintainData = getBusServiceMaintainItemData().find((eee) => {
+    //     return eee.ID === ID || eee.ID === parseInt(ID);
+    // });
+    let ServiceMaintainItemData = getBusServiceMaintainItemData();
+
+    let ListTable = pupulateTable(null, ServiceMaintainItemData, undefined, undefined, undefined, []);
+    ListTable.style.width = '100%';
+
+    lchild.lastChild.appendChild(ListTable);
+}
+
+function getBusServiceMaintainData() {
+    return SampleBusServiceMaintainData;
+}
+
+function getBusServiceMaintainItemData() {
+    return SampleBusServiceMaintainItemData;
+}
+
 function getDivBusBreadDownByID(breakdowndata) {
 
     let arrydatacol = ArryDataObjCol[DataObj.BusBreakDown];
@@ -919,24 +1031,53 @@ function getDivBusBreadDownByID(breakdowndata) {
     arrybtn[2][3] = getIFrameMap;
 
     // route, bus, driver
-    let arryitemdata = [
-        [{ ID: 1, Name: "66" }, { ID: 2, Name: "68" }, { ID: 3, Name: "57" }, { ID: 4, Name: "89" }],
-        [{ ID: 1, Name: "AMK209" }, { ID: 2, Name: "AKL8398" }, { ID: 3, Name: "AEP8987" }, { ID: 4, Name: "ABM1234" }],
-        [{ ID: 1, Name: "Ali" }, { ID: 2, Name: "Muthu" }, { ID: 3, Name: "Samy" }, { ID: 4, Name: "Ah Meng" }]
-    ]
-
+    // let arryitemdata = [
+    //     [{ ID: 1, Name: "66" }, { ID: 2, Name: "68" }, { ID: 3, Name: "57" }, { ID: 4, Name: "89" }],
+    //     [{ ID: 1, Name: "AMK209" }, { ID: 2, Name: "AKL8398" }, { ID: 3, Name: "AEP8987" }, { ID: 4, Name: "ABM1234" }],
+    //     [{ ID: 1, Name: "Ali" }, { ID: 2, Name: "Muthu" }, { ID: 3, Name: "Samy" }, { ID: 4, Name: "Ah Meng" }]
+    // ]
+    let arryitemdata = ArryDataItemForm;
 
     return loadDivDetail("Bus Breakdown", breakdowndata, arrydatacol, arryitemdata, arrybtn, breakdowndata.Picture);
 }
 
-function BusManageBreakdown() {
-    let arryeditrow = ["Bus Breakdown Data Object", ArryDataItem[DataObj.BusBreakDown], undefined];
-    loadDivList(SampleBusBreakDownData, BusBreakDownListClicked, arryeditrow, null, null, [undefined, undefined, undefined, undefined, undefined]);
+function getDivBusServiceMaintainByID(servicemaintaindata) {
+
+    let arrydatacol = ArryDataObjCol[DataObj.BusServiceMaintain];
+    let arrybtn = ArryDataObjBtn[DataObj.BusServiceMaintain];
+    arrybtn[2][3] = getIFrameMap;
+
+    let arryitemdata = ArryDataItemForm;
+
+    return loadDivDetail("Bus Service and Maintenance", servicemaintaindata, arrydatacol, arryitemdata, arrybtn, servicemaintaindata.Picture);
 }
 
+function BusManageBreakdown() {
+    let arryeditrow = ["Bus Breakdown Data Object", ArryDataItemTable[DataObj.BusBreakDown], undefined];
+    loadDivList(getBusBreakDownListData(), BusBreakDownListClicked, arryeditrow, null, null, [undefined, undefined, undefined, undefined, undefined]);
+}
+
+function getBusBreakDownListData() {
+    return SampleBusBreakDownData;
+}
+
+function BusServiceMaintain() {
+    let arryeditrow = ["Bus Serice/Maintenance Data Object", ArryDataItemTable[DataObj.BusServiceMaintain], undefined];
+    loadDivList(getBusServiceMaintainListData(), BusServiceMaintainListClicked, arryeditrow, null, null, [undefined, undefined, undefined, undefined, undefined]);
+}
+
+function getBusServiceMaintainListData() {
+    return SampleBusServiceMaintainData;
+}
+
+
 function BusIDClicked() {
-    alert("BusID Clicked: " + this.dataset.ID);
+    getBusSummaryData();
     event.preventDefault();
+}
+
+function getBusSummaryData() {
+    alert("BusID Clicked: " + this.dataset.ID);
 }
 
 function DriverIDClicked() {
@@ -944,13 +1085,17 @@ function DriverIDClicked() {
 }
 
 function DutyRoster() {
-    let arryeditrow = ["Duty Roster Data Object", ArryDataItem[DataObj.DutyRoster], undefined];
+    let arryeditrow = ["Duty Roster Data Object", ArryDataItemTable[DataObj.DutyRoster], undefined];
     // [[0: button text, 1: button column, 2: button_clicked function, 3: css class of button]]
     let arrycolbtn = [
         ['..', 5, BusIDClicked, null],
         ['..', 6, DriverIDClicked, null]
     ];
-    loadDivList(SampleDutyRoster, undefined, arryeditrow, arrycolbtn, null, [undefined, undefined, undefined, undefined, undefined]);
+    loadDivList(getDutyRoster(), undefined, arryeditrow, arrycolbtn, null, [undefined, undefined, undefined, undefined, undefined]);
+}
+
+function getDutyRoster() {
+    return SampleDutyRoster;
 }
 
 // function DutyRosterListClicked(ID) {
@@ -974,7 +1119,7 @@ function setStyleDivExport(divexportfnc) {
 }
 
 // arryExportFunction=[NewPage, Print, Excel, PDF, CSV]
-function getExportDiv(arryExportFunction) {
+function getExportDiv(ID, arryExportFunction) {
 
     let divexportfnc = document.createElement('div');
 
@@ -983,6 +1128,7 @@ function getExportDiv(arryExportFunction) {
     let divExportNewPage = document.createElement('div');
     divExportNewPage.className = ClassFunctionButton;
     divExportNewPage.innerHTML = "New Page";
+    divExportNewPage.id = ID;
     divExportNewPage.onclick = arryExportFunction[0];
 
     let divExportPrint = document.createElement('div');
@@ -1019,7 +1165,7 @@ function ReportAPAD(ReportID) {
     ContentDetail.style.flexDirection = "column";
     ContentDetail.style.margin = "1%";
 
-    ContentDetail.appendChild(getExportDiv([ExportNewPage, undefined, undefined, undefined, undefined]));
+    ContentDetail.appendChild(getExportDiv(ReportID, [ExportNewPage, undefined, undefined, undefined, undefined]));
 
     // search function
     let divsearchfnc = document.createElement('div');
@@ -1061,6 +1207,8 @@ function ReportAPAD(ReportID) {
 function ExportNewPage() {
 
     let newwindow = window.open("");
+
+    newwindow.document.write("<title>" + this.id + "</title>");
 
     //?? how best to slice out only the table element ??
 

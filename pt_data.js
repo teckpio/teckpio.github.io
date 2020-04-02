@@ -24,22 +24,6 @@ const DataObjID = {
 
 const DataColIndex = { FieldName: 0, DisplayText: 1, Required: 2, DataType: 3 }
 
-// const DataObj = {
-//     EmployeeParticulars: {
-//         DataCol: [
-//             ['ID', 'ID', false, 'text'],
-//             ['Name', 'Name', false, 'text'],
-//             ['PayProfile', 'Pay Profile', false, DataObjID.PayProfile]
-//         ],
-//         URL: {
-//             List: 'http://localhost:49951/data/employeelist',
-//             Get: 'http://localhost:49951/data/employeelist',
-//             Add: 'http://localhost:49951/data/employeepost',
-//             Update: 'http://localhost:49951/data/employeepost'
-//         }
-//     }
-// }
-
 const SampleRouteData = [
     { 'vnum': 'AHW8868', 'status': 'x', 'in': 'c' },
     { 'vnum': 'AEK8899', 'status': 'o', 'in': 'c' },
@@ -130,6 +114,19 @@ const SampleBusBreakDownData = [
     { 'ID': '004', 'Reference': '1234', 'Route': 'Route66', 'Bus Number': 'AHL2398', 'Date': '19/12/2019', 'Location': 'Tambun', 'Replacement Bus': 'ACP4535', 'Driver': 'Ali M', 'Checked By': 'Kok', 'Initial Assessment': 'Brake Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '', 'Picture': ['breakdown4.jfif'] }
 ]
 
+const SampleBusServiceMaintainData = [
+    { 'ID': '001', 'Reference': '1234', 'Date': '01/01/2019', 'Bus': 'AHK3388', 'Workshop': 'Ah Long Workshop', 'In Charge': 'Tan', 'Status': 'Outstanding', 'Completion Date': '', 'Picture': ['breakdown1.jfif', 'breakdown2.jfif', 'breakdown3.jfif'] },
+    { 'ID': '002', 'Reference': '1234', 'Date': '01/01/2019', 'Bus': 'AHK3388', 'Workshop': 'Ah Long Workshop', 'In Charge': 'Tan', 'Status': 'Outstanding', 'Completion Date': '', 'Picture': ['breakdown1.jfif', 'breakdown2.jfif', 'breakdown3.jfif'] },
+    { 'ID': '003', 'Reference': '1234', 'Date': '01/01/2019', 'Bus': 'AHK3388', 'Workshop': 'Ah Long Workshop', 'In Charge': 'Tan', 'Status': 'Outstanding', 'Completion Date': '', 'Picture': ['breakdown1.jfif', 'breakdown2.jfif', 'breakdown3.jfif'] },
+    { 'ID': '004', 'Reference': '1234', 'Date': '01/01/2019', 'Bus': 'AHK3388', 'Workshop': 'Ah Long Workshop', 'In Charge': 'Tan', 'Status': 'Outstanding', 'Completion Date': '', 'Picture': ['breakdown1.jfif', 'breakdown2.jfif', 'breakdown3.jfif'] }
+]
+
+const SampleBusServiceMaintainItemData=[
+    { 'ID': '1', 'Transaction': '001', 'ItemCategory': 'Brake System', 'Description': 'abcddef', 'Quantity': '1', 'Price': 'RM25.00', 'Total': 'RM25.00' },
+    { 'ID': '2', 'Transaction': '001', 'ItemCategory': 'Wiring System', 'Description': 'abcddef', 'Quantity': '1', 'Price': 'RM30.00', 'Total': 'RM30.00' },
+    { 'ID': '3', 'Transaction': '001', 'ItemCategory': 'Tyre', 'Description': 'abcddef', 'Quantity': '1', 'Price': 'RM40.00', 'Total': 'RM40.00' }
+]
+
 const SampleDutyRoster = [
     { 'ID': '001', 'Reference': '1234', 'Date': '01/03/2020', 'Route': '66', 'Schedule': '06:00', 'Assigned Bus': 'ABK6789', 'Assigned Driver': 'Ali M' },
     { 'ID': '002', 'Reference': '1235', 'Date': '01/03/2020', 'Route': '89', 'Schedule': '06:00', 'Assigned Bus': 'ACP990', 'Assigned Driver': 'Tan K' },
@@ -142,7 +139,9 @@ const DataObj = {
     DriverPersonalParticular: 0,
     BusBreakDown: 1,
     BusStop: 2,
-    DutyRoster: 3
+    BusServiceMaintain: 3,
+    BusServiceMaintainItem: 4,
+    DutyRoster: 5
 }
 
 const ArryDataObjCol = [
@@ -196,15 +195,42 @@ const ArryDataObjCol = [
         ['Picture', 'Picture', false, 'text']
     ],
     [
-
-    ]
+        ['ID', 'ID', false, 'text'],
+        ['Reference', 'Reference', false, 'text'],
+        ['Date', 'Date', false, 'text'],
+        ['Bus', 'Bus', false, 1],
+        ['Workshop', 'Workshop', true, 'text'],
+        ['In Charge', 'InCharge', true, 2],
+        ['Status', 'Status', true, 'radio'],
+        ['Completion Date', 'Completion Date', false, 'text'],
+        ['Picture', 'Picture', false, 'text']
+    ],
+    [
+        ['ID', 'ID', false, 'text'],
+        ['Transaction', 'Transaction', false, 'text'],
+        ['Category', 'Category', false, 'text'],
+        ['Description', 'Description', false, 'text'],
+        ['Quantity', 'Quantity', true, 'text'],
+        ['Price', 'Price', true, 'text'],
+        ['Total', 'Total', true, 'text'],
+        ['Completion Date', 'Completion Date', false, 'text'],
+        ['Picture', 'Picture', false, 'text']
+    ],
+    []
 ];
+
+// Route, Bus, Driver
+const ArryDataItemForm = [
+    [{ ID: 1, Name: 'Route66' }, { ID: 2, Name: 'Route89' }, { ID: 3, Name: 'Route123' }, { ID: 4, Name: 'Route783' }],
+    [{ ID: 1, Name: 'ABC123' }, { ID: 2, Name: 'AKM8293' }, { ID: 3, Name: 'AHL2398' }, { ID: 4, Name: 'ADE2309' }],
+    [{ ID: 1, Name: 'Ali M' }, { ID: 2, Name: 'Tan K' }, { ID: 3, Name: 'E Adam' }, { ID: 4, Name: 'Mark Lee' }]
+]
 
 const ArryDataRoute = [{ ID: 1, Name: 'Route66' }, { ID: 2, Name: 'Route89' }, { ID: 3, Name: 'Route123' }, { ID: 4, Name: 'Route783' }];
 const ArryDataBus = [{ ID: 1, Name: 'ABC123' }, { ID: 2, Name: 'AKM8293' }, { ID: 3, Name: 'AHL2398' }, { ID: 4, Name: 'ADE2309' }];
 const ArryDataDriver = [{ ID: 1, Name: 'Ali M' }, { ID: 2, Name: 'Tan K' }, { ID: 3, Name: 'E Adam' }, { ID: 4, Name: 'Mark Lee' }];
 
-const ArryDataItem = [
+const ArryDataItemTable = [
     [],
     [
         null,
@@ -222,7 +248,9 @@ const ArryDataItem = [
         null,
         null
     ],
-    [],
+    [
+
+    ],
     [
         null,
         null,
@@ -252,5 +280,16 @@ const ArryDataObjBtn = [
         [null, 'New', undefined, undefined, undefined],
         [null, 'Upload Picture', undefined, undefined, undefined],
         [null, 'Location in Map', undefined, undefined, undefined]
-    ]
+    ],
+    [
+        [null, 'Edit', undefined, undefined, undefined],
+        [null, 'New', undefined, undefined, undefined],
+        [null, 'Upload Picture', undefined, undefined, undefined]
+    ],
+    [
+        [null, 'Edit', undefined, undefined, undefined],
+        [null, 'New', undefined, undefined, undefined],
+    ],
+    []
+
 ];

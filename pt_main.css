@@ -1,9 +1,10 @@
 :root{
     --colorNavBar_MenuLogo:rgb(233, 229, 10);
     --colorNavBar_Menu:rgb(40, 40, 40);
+    --colorNavBar_MenuHighLight:yellow;
     --colorTextNavBar_Menu:rgb(223, 215, 215);
     --colorContent_Title:rgb(40, 40, 40);
-    --colorTextContent_Title:rgb(245, 247, 241);
+    --colorTextContent_Title:rgb(223, 215, 215);
     --colorContentBoxBG:rgb(245, 245, 245);
     --colorContent_Detail:white;
     --colorButtonBG:rgb(140, 127, 141);
@@ -135,12 +136,11 @@ ul{
 }
 
 li {
-    display:flex;
     flex-direction: row;
 
     box-sizing: border-box;
     
-    height:var(--heightNavBar_MenuItem);
+    /* height:var(--heightNavBar_MenuItem); */
 
     background-color: var(--colorNavBar_Menu);
 
@@ -149,10 +149,13 @@ li {
     padding:10px;
 
     margin:0 auto;
+
+    list-style: none;
 }
 
 li:hover{
     cursor:default;
+    color:var(--colorNavBar_MenuHighLight);
     border:var(--borderActiveMenuItem);
     font-style:italic;
 }
