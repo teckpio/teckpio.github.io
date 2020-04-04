@@ -1,0 +1,225 @@
+:root{
+    --transitionperiod:.7s;
+
+    --heightheader:12vh;
+    --heightcontent:85vh;
+    --heightfooter:5%;
+
+    --heightTitle:40%;
+    --heightMenuBar:60%;
+
+    --heightContentDisplay:95%;
+    --heightContentNav:5%;
+
+    --flexTitle:3;
+    --flexMenuBar:7;
+
+    --flexContentDisplay:95;
+    --flexContentNav:5;
+
+    --flexContentSideBarLeft:1;
+    --flexContentBox:7;
+    --flexContentSideBarRight:2;
+    
+    --widthContentSideBarLeft:10%;
+    --widthContentBox:70%;
+    --widthContentSideBarRight:20%;
+
+    --colorBGNavBtn:    rgba(100,100,100,1);
+    --colorBGHTML:rgba(250,250,250,1);
+    --colorBGContentDisplay:white;
+    --colorBGContentLeftMenu:white;
+    --colorBGContentRightMenu:white;
+    --colorBGMenuBar: white;
+
+    --BGHTML:linear-gradient(100deg, rgb(226, 226, 243),rgba(230,230,240,1),rgba(240,240,240,1),rgba(240,240,240,1),rgba(230,230,240,1),rgb(226, 226, 243));
+
+    --borderstyle:2px solid rgba(128, 88, 88, 0.5);
+    --borderstylenavbtn:2px solid rgba(200,200,200,1);
+    --borderstylehighlight: 1px solid white;
+}
+
+html{
+    box-sizing: border-box;
+    /* background-color: var(--colorBGHTML); */
+}
+
+body{
+    background:var(--BGHTML);
+    
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#ScreenCover{
+    height:100vh;
+    width:100vw;
+    position:absolute;
+    top:0;
+    left:0;
+    background-color:white;
+    opacity:1;
+    z-index: 1;
+    transition:all var(--transitionperiod);
+}
+
+/* header is a column flex of Title and ManuBar */
+#header{
+    height:var(--heightheader);
+    /* border:var(--borderstyle); */
+
+    display:flex;
+    flex-direction: column;
+}
+
+#Title{
+    flex-grow: var(--flexTitle);
+}
+
+#MenuBar{
+    flex-grow: var(--flexMenuBar);
+
+    width:100%;
+    border: var(--borderstyle);
+
+    display:flex;
+    justify-content: space-around;
+
+    background-color: var(--colorBGMenuBar);
+    /* height:var(--heightMenuBar); */
+}
+
+.MenuBarItem{
+    height:100%;
+    width:100%;
+    text-align:center;
+    /* border:var(--borderstyle); */
+    margin:0 1%;
+
+    background:linear-gradient(white, white, rgba(250,250,250,1), white, white);
+}
+
+.MenuBarItem:hover{
+    box-shadow: 0 0 2px 2px gray;
+}
+
+/* Content is a row flex with SideBarMenuLeft and ContentBox and SideBarMenuRight */
+#Content{
+  
+    height:var(--heightcontent);
+    /* min-height: 100%; */
+    /* border:var(--borderstyle); */
+
+    display: flex;
+}
+
+
+#SideMenuBarLeft{
+    width: var(--widthContentSideBarLeft);
+    flex-grow: var(--flexContentSideBarLeft);
+    border:var(--borderstyle);
+    margin:1%;
+    padding:1%;
+    background-color: var(--colorBGContentLeftMenu);
+    box-shadow: -1px 1px 1px 1px lightgrey;
+    transition:var(--transitionperiod);
+    overflow: hidden;
+}
+
+#SideMenuBarLeftContent{
+    margin-left: -100%;
+    transition: var(--transitionperiod);
+}
+
+/* ContentBox is a column flex with ContentDisplay and ContentNav */
+#ContentBox{
+    height:100%;
+    /* min-height: 100%; */
+
+    width:var(--widthContentBox);
+    flex-grow: var(--flexContentBox);
+
+    display: flex;
+    flex-direction: column;
+
+    /* border:var(--borderstyle); */
+}
+
+#SideMenuBarRight{
+    /* max-width: var(--widthContentSideBarRight); */
+    width: var(--widthContentSideBarRight);
+    flex-grow: var(--flexContentSideBarRight);
+
+    border:var(--borderstyle);
+    margin:1%;
+
+    padding: 1%;
+
+    transition:all var(--transitionperiod);
+    overflow-y:hidden;
+
+    background-color: var(--colorBGContentRightMenu);
+    box-shadow: 1px 1px 1px 1px lightgrey;
+}
+
+#ContentDisplay{
+    height:var(--heightContentDisplay);
+    flex-grow:var(--flexContentDisplay);
+
+    border: var(--borderstyle);
+    width:100%;
+    margin:1% auto;
+
+    transition:all var(--transitionperiod);
+
+    background-color: var(--colorBGContentDisplay);
+
+    overflow: hidden;
+}
+
+#ContentNav{
+    height:var(--heightContentNav);
+    flex-grow:var(--flexContentNav);
+    border: var(--borderstyle);
+
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ContentNavBtn{
+    flex-grow: 1;
+    text-align: center;
+
+    background-color: var(--colorBGNavBtn);
+    color:white;
+    border:var(--borderstylenavbtn);
+
+    transition: all var(--transitionperiod);
+}
+
+#ContentNavDesc{
+    flex-grow:1;
+    text-align:center;
+    background-color:white;
+
+    box-shadow: 0 0 1px 1px gray;
+    transition: var(--transitionperiod);
+}
+
+.ContentNavBtn:hover{
+    border:var(--borderstylehighlight);
+    font-style: italic;
+    }
+
+#ContentNavLeft:hover{
+    /* text-align:left; */
+}
+
+#ContentNavRight:hover{
+    /* text-align:right; */
+}
+
+#footer{
+    width:100%;
+    border:var(--borderstyle);
+    height:var(--heightfooter);
+}
