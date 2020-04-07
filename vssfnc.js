@@ -270,7 +270,7 @@ function vssfnc_tablepopulate(objparam) {
         taction.style.border = "2px solid lightgray";
         taction.dataset.DataObj = objparam.arryeditrow[param_item.arryeditrow.DataObj];
         taction.onclick = function () {
-            alert('Add ' + this.dataset.DataObj);
+            // alert('Add ' + this.dataset.DataObj);
         }
         tredit.appendChild(taction);
 
@@ -310,7 +310,7 @@ function vssfnc_tablepopulate(objparam) {
     // load datarow //
 
     let tbody = document.createElement('tbody');
-  
+
     // an array for total for each datacol of arrjJSON item //
     if (objparam.arryjsondata.length > 0) {
         let arrydatasum = new Array(Object.keys(objparam.arryjsondata[0]).length);
@@ -415,10 +415,10 @@ function vssfnc_tablepopulate(objparam) {
                         button.innerHTML = arrycolbtn[param_item.arrybutton.Desc];
                         button.dataset.ID = val;
                         button.style.display = "inline-block";
-                        button.style.float="right";
+                        button.style.float = "right";
                         button.style.marginLeft = "10%";
                         // button.style.marginRight="0";
-                        button.style.alignSelf="flex-end";
+                        button.style.alignSelf = "flex-end";
                         button.onclick = arrycolbtn[param_item.arrybutton.OnClick];
                         td.appendChild(button);
                     }
@@ -862,13 +862,6 @@ function vssfnc_formpopulate(objparam) {
         // for(ppt in objparam.arryjsondata[0]){
 
         // }
-        // objparam.arrydatacol = [['ID', false, 'text'],
-        // ['Name', true, 'text'],
-        // ['Code', true, 'text'],
-        // ['Currency', true, 'text'],
-        // ['Debit Account', true, 0],
-        // ['Credit Account', true, 1],
-        // ['Taxable', false, 'radio']];
     }
 
     // 
@@ -1104,10 +1097,19 @@ function vssfnc_formpopulate(objparam) {
 
     if (objparam.arrybutton) {
         for (let i = 0; i < objparam.arrybutton.length; i++) {
-            var buttonelement = document.createElement('button');
+            // var buttonelement = document.createElement('button');
             if (objparam.arrybutton[i][param_item.arrybutton.Type]) {
+                var buttonelement = document.createElement('button');
+                // if (objparam.arrybutton[i][param_item.arrybutton.Type] = 'file') {
+                //     buttonelement = document.createElement('input');
+                //     buttonelement.style.display = "none";
+                // } else {
+                //     buttonelement = document.createElement('button');
+                // }
+
                 buttonelement.setAttribute('type', objparam.arrybutton[i][param_item.arrybutton.Type]);
             } else {
+                var buttonelement = document.createElement('button');
                 buttonelement.setAttribute('type', 'button');
             }
             buttonelement.setAttribute('formaction', objparam.arrybutton[i][param_item.arrybutton.ActionURL]);
