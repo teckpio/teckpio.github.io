@@ -1,0 +1,29 @@
+:root{
+    --widthheader:100%;
+
+    --heightheader:5%;
+
+    --colorbgheader:rgb(13, 160, 128);
+    --colorfgheader:white;
+}
+
+
+html{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+header{
+    background-color: var(--colorbgheader);
+    color:var(--colorfgheader);
+    padding:1% 1%;
+    width:var(--widthheader);
+    height:var(--heightheader);
+    position:fixed;
+    top:0;
+    left:0;
+}
+
+body{
+    margin-top:var(--heightheader);
+}

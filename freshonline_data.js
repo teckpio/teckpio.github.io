@@ -65,6 +65,29 @@ const DataOrderHeader = [
     }
 ]
 
+const DataPickupArea = [
+    {
+        ID: 1,
+        Name: "Puchong",
+        Location: "OR001"
+    },
+    {
+        ID: 2,
+        Name: "Kepong",
+        Location: "OR001"
+    },
+    {
+        ID: 3,
+        Name: "Subang",
+        Location: "OR001"
+    },
+    {
+        ID: 4,
+        Name: "Petaling Jaya",
+        Location: "OR001"
+    }
+]
+
 const DataOrderDetail = [
     {
         ID: 1,
@@ -89,11 +112,60 @@ const DataOrderDetail = [
         Quantity: '10kg',
         Price: 'Rm1.00',
         Total: 'RM10.00'
+    },
+    {
+        ID: 4,
+        Order: 2,
+        Item: 'Celery',
+        Quantity: '10kg',
+        Price: 'Rm1.00',
+        Total: 'RM10.00'
+    },
+    {
+        ID: 5,
+        Order: 2,
+        Item: 'Wasabi',
+        Quantity: '10kg',
+        Price: 'Rm1.00',
+        Total: 'RM10.00'
+    },
+    {
+        ID: 6,
+        Order: 2,
+        Item: 'Cucumber',
+        Quantity: '10kg',
+        Price: 'Rm1.00',
+        Total: 'RM10.00'
+    },
+    {
+        ID: 7,
+        Order: 3,
+        Item: 'Broccoli',
+        Quantity: '10kg',
+        Price: 'Rm1.50',
+        Total: 'RM15.00'
+    },
+    {
+        ID: 8,
+        Order: 3,
+        Item: 'Celery',
+        Quantity: '10kg',
+        Price: 'Rm1.00',
+        Total: 'RM10.00'
+    },
+    {
+        ID: 9,
+        Order: 3,
+        Item: 'Capsicum',
+        Quantity: '10kg',
+        Price: 'Rm1.00',
+        Total: 'RM10.00'
     }
+
 ]
 
 
-const DataOrderSummary = [
+const DataOrderSummaryProduct = [
     {
         ID: 1,
         Order:"OR001",
@@ -127,4 +199,79 @@ const DataOrderSummary = [
         Quantity: "100kg",
     }
 
+]
+
+const DataOrderSummaryPickup = [
+    {
+        ID: 1,
+        Area:"Kepong",
+        Orders:"20"
+    },
+    {
+        ID: 2,
+        Area:"Petaling Jaya",
+        Orders:"20"
+    },
+    {
+        ID: 3,
+        Area:"Puchong",
+        Orders:"20"
+    },
+    {
+        ID: 4,
+        Area:"Subang",
+        Orders:"20"
+    }
+
+]
+
+const DataOrderPickupDetail = [
+    {
+        ID: 1,
+        Order:"OR001",
+        Date:"01/03/2020",
+        Customer:"Tan",
+        Product:"Tomato",
+        Quantity: "100kg",
+    },
+    {
+        ID: 2,
+        Order:"OR001",
+        Date:"01/03/2020",
+        Customer:"Tan",
+        Product:"Broccoli",
+        Quantity: "100kg",
+    },
+    {
+        ID: 3,
+        Order:"OR001",
+        Date:"01/03/2020",
+        Customer:"Tan",
+        Product:"Broccoli",
+        Quantity: "100kg",
+    },
+    {
+        ID: 4,
+        Order:"OR002",
+        Date:"02/03/2020",
+        Customer:"Ali",
+        Product:"Broccoli",
+        Quantity: "100kg",
+    },
+    {
+        ID: 5,
+        Order:"OR002",
+        Date:"02/03/2020",
+        Customer:"Ali",
+        Product:"Cucumber",
+        Quantity: "100kg",
+    },
+    {
+        ID: 6,
+        Order:"OR003",
+        Date:"02/03/2020",
+        Customer:"Siti",
+        Product:"Broccoli",
+        Quantity: "100kg",
+    }
 ]

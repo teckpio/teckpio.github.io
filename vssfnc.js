@@ -1100,12 +1100,6 @@ function vssfnc_formpopulate(objparam) {
             // var buttonelement = document.createElement('button');
             if (objparam.arrybutton[i][param_item.arrybutton.Type]) {
                 var buttonelement = document.createElement('button');
-                // if (objparam.arrybutton[i][param_item.arrybutton.Type] = 'file') {
-                //     buttonelement = document.createElement('input');
-                //     buttonelement.style.display = "none";
-                // } else {
-                //     buttonelement = document.createElement('button');
-                // }
 
                 buttonelement.setAttribute('type', objparam.arrybutton[i][param_item.arrybutton.Type]);
             } else {
@@ -1184,4 +1178,59 @@ function vssfnc_scrollright() {
         }, numContentScrollDelay * 3);
         this.innerHTML = strUserProfile;
     }
+}
+
+
+// param for functionbutton is 2-dim array (for multiple buttons) of 3 items:
+// 1. image source
+// 2. text of button
+// 3. onclick function of button
+// 4. css class of button
+function vssfnc_buttonpopulate_param() {
+    return {
+        class: null,
+        width: null,
+        arrybutton: []
+    }
+}
+
+const vssfnc_buttonparam_item = {
+    arrybutton: {
+        Img: 0,
+        Text: 1,
+        OnClick: 2,
+        Class: 3
+    }
+}
+
+function vssfnc_buttonpopulate(parambutton) {
+    let divbtn = document.createElement('div');
+    divbtn.style.display = "flex";
+    divbtn.style.justifyContent = "space-around";
+
+    if (parambutton.class) {
+        divbtn.classList.add(parambutton.class);
+    } else {
+        divbtn.style.border = "1px solid rgba(200,200,200,1)";
+        divbtn.style.padding = "1%";
+        divbtn.style.margin = "1% auto";
+        divbtn.style.boxSizing = "border-box";
+        if (parambutton.width) {
+            divbtn.style.width = parambutton.width;
+        }
+    }
+
+    let buttonx;
+
+    parambutton.arrybutton.forEach(btn => {
+        buttonx = document.createElement('button');
+        buttonx.innerHTML = btn[vssfnc_buttonparam_item.arrybutton.Text];
+        buttonx.onclick = btn[vssfnc_buttonparam_item.arrybutton.OnClick];
+        if (btn[vssfnc_buttonparam_item.arrybutton.Class]) {
+            buttonx.classList.add(btn[vssfnc_buttonparam_item.arrybutton.Class]);
+        }
+    divbtn.appendChild(buttonx);
+})
+
+return divbtn;
 }

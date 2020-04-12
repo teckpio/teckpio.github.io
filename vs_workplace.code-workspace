@@ -8,6 +8,15 @@
 		},
 		{
 			"path": "C:\\ltp\\Perak Transit\\Web"
+		},
+		{
+			"path": "..\\node"
+		},
+		{
+			"path": "..\\..\\VASWeb"
 		}
-	]
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Web"
+	}
 }
