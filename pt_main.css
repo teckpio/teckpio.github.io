@@ -10,7 +10,7 @@
     --colorButtonBG:rgb(140, 127, 141);
     --colorButtonFG: white;
     --colorButtonShadow:black;
-    --colorButtonFGHover:rgb(212, 226, 9);
+    --colorButtonFGHover:darkblue;
 
     --fontsizemain:medium;
     --fontsizecontent:small;
@@ -262,7 +262,7 @@ table th:hover{
 .FunctionButton{
     background-color: var(--colorButtonBG);
     color: var(--colorButtonFG);
-    box-shadow: 1px 1px 1px var(--colorButtonShadow);
+    /* box-shadow: 1px 1px 1px var(--colorButtonShadow); */
     box-sizing: border-box;
     padding:1%;
     margin:1%;
@@ -271,8 +271,14 @@ table th:hover{
 }
 .FunctionButton:hover{
     cursor:default;
-    /* color:var(--colorButtonFGHover); */
+    color:var(--colorButtonFGHover);
     /* border:var(--borderActiveMenuItem); */
-    font-style:italic;   
-    outline-style: inset;
+    /* font-style:italic;    */
+    /* outline-style: inset; */
+
+    box-sizing: border-box;
+    padding:1%;
+    margin:1%;
+    border-radius: 3%;
+    font-size:medium;
 }

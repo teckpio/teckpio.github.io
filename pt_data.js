@@ -108,10 +108,10 @@ const SampleBusStopData = [
 ]
 
 const SampleBusBreakDownData = [
-    { 'ID': '001', 'Reference': '1234', 'Route': 'Route89', 'Bus Number': 'AHL2398', 'Date': '01/01/2019', 'Location': 'Silibin', 'Replacement Bus': 'AKL8778', 'Driver': 'Tan K', 'Checked By': 'Mazlan', 'Initial Assessment': 'Engine Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '01/02/2020', 'Picture': ['breakdown1.jfif', 'breakdown2.jfif', 'breakdown3.jfif'] },
-    { 'ID': '002', 'Reference': '1234', 'Route': 'Route123', 'Bus Number': 'AHL2398', 'Date': '04/08/2019', 'Location': 'Ipoh Garden', 'Replacement Bus': 'AEL5265', 'Driver': 'Tan K', 'Checked By': 'Muthu', 'Initial Assessment': 'Wiring Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '', 'Picture': ['breakdown2.jfif', 'breakdown3.jfif'] },
-    { 'ID': '003', 'Reference': '1234', 'Route': 'Route89', 'Bus Number': 'AHL2398', 'Date': '05/11/2019', 'Location': 'Tambun', 'Replacement Bus': 'ABK245', 'Driver': 'Tan K', 'Checked By': 'Lee', 'Initial Assessment': 'Air Cond Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '05/01/2020', 'Picture': ['breakdown3.jfif'] },
-    { 'ID': '004', 'Reference': '1234', 'Route': 'Route66', 'Bus Number': 'AHL2398', 'Date': '19/12/2019', 'Location': 'Tambun', 'Replacement Bus': 'ACP4535', 'Driver': 'Ali M', 'Checked By': 'Kok', 'Initial Assessment': 'Brake Problem', 'Follow up Action': '', 'Follow up By': '', 'Completion Date': '', 'Picture': ['breakdown4.jfif'] }
+    { 'ID': '001', 'Reference': '1234', 'Route': 'Route89', 'Bus Number': 'AHL2398', 'Date': '01/01/2019', 'Location': 'Silibin', 'Replacement Bus': 'AKL8778', 'Driver': 'Tan K', 'Checked By': 'Mazlan', 'Initial Assessment': 'Engine Problem', 'Follow up Action': '', 'Follow up By': '', 'Service Maintenance': '456', 'Completion Date': '01/02/2020', 'Picture': ['breakdown1.jfif', 'breakdown2.jfif', 'breakdown3.jfif'] },
+    { 'ID': '002', 'Reference': '1234', 'Route': 'Route123', 'Bus Number': 'AHL2398', 'Date': '04/08/2019', 'Location': 'Ipoh Garden', 'Replacement Bus': 'AEL5265', 'Driver': 'Tan K', 'Checked By': 'Muthu', 'Initial Assessment': 'Wiring Problem', 'Follow up Action': '', 'Follow up By': '', 'Service Maintenance': '345', 'Completion Date': '', 'Picture': ['breakdown2.jfif', 'breakdown3.jfif'] },
+    { 'ID': '003', 'Reference': '1234', 'Route': 'Route89', 'Bus Number': 'AHL2398', 'Date': '05/11/2019', 'Location': 'Tambun', 'Replacement Bus': 'ABK245', 'Driver': 'Tan K', 'Checked By': 'Lee', 'Initial Assessment': 'Air Cond Problem', 'Follow up Action': '', 'Follow up By': '', 'Service Maintenance': '234', 'Completion Date': '05/01/2020', 'Picture': ['breakdown3.jfif'] },
+    { 'ID': '004', 'Reference': '1234', 'Route': 'Route66', 'Bus Number': 'AHL2398', 'Date': '19/12/2019', 'Location': 'Tambun', 'Replacement Bus': 'ACP4535', 'Driver': 'Ali M', 'Checked By': 'Kok', 'Initial Assessment': 'Brake Problem', 'Follow up Action': '', 'Follow up By': '', 'Service Maintenance': '123', 'Completion Date': '', 'Picture': ['breakdown4.jfif'] }
 ]
 
 const SampleBusServiceMaintainData = [
@@ -152,21 +152,21 @@ const ArryDataObjCol = [
         ['Address1', 'Address1', true, 'text'],
         ['Address2', 'Address2', true, 'text'],
         ['Address3', 'Address3', true, 'text'],
-        ['IC', 'IC', false, 'radio'],
+        ['IC', 'IC', false, 'text'],
         ['Passport', 'Passport', false, 'text'],
         ['Tel1', 'Tel1', true, 'text'],
         ['Tel2', 'Tel2', true, 'text'],
         ['Permit', 'Permit', true, 'text'],
         ['Marital', 'Marital', true, 'text'],
         ['DOB', 'DOB', true, 'text'],
-        ['Nationality', 'Nationality', false, 'radio'],
+        ['Nationality', 'Nationality', false, 'text'],
         ['Race', 'Race', true, 'text'],
         ['Religion', 'Religion', true, 'text'],
-        ['PayProfile', 'PayProfile', false, 'radio'],
+        ['PayProfile', 'PayProfile', false, 'text'],
         ['Race', 'Race', true, 'text'],
         ['Religion', 'Religion', true, 'text'],
-        ['PayProfile', 'PayProfile', false, 'radio'],
-        ['Picture', 'Picture', false, 'radio']
+        ['PayProfile', 'PayProfile', false, 'text'],
+        ['Picture', 'Picture', false, 'text']
     ],
     [
         ['ID', 'ID', false, 'text'],
@@ -181,6 +181,7 @@ const ArryDataObjCol = [
         ['Initial Assessment', 'Initial Assessment', false, 'text'],
         ['Follow up Action', 'Follow up Action', false, 'text'],
         ['Follow up By', 'Follow up By', false, 'text'],
+        ['Service Maintenance', 'Service Maintenance', false, 'text'],
         ['Completion Date', 'Completion Date', false, 'text'],
         ['Picture', 'Picture', false, 'text']
     ],
@@ -267,24 +268,24 @@ const ArryDataObjBtn = [
     [
         [null, 'Edit', undefined, undefined, undefined],
         [null, 'New', undefined, undefined, undefined],
-        [null, 'Upload Picture', undefined, undefined, undefined],
+        [null, 'Upload Picture', undefined, undefined, null],
     ],
     [
         [null, 'Edit', undefined, undefined, undefined],
         [null, 'New', undefined, undefined, undefined],
         [null, 'Location in Map', undefined, undefined, undefined],
-        [null, 'Upload Picture', undefined, undefined, undefined],
+        [null, 'Upload Picture', undefined, undefined, null],
     ],
     [
         [null, 'Edit', undefined, undefined, undefined],
         [null, 'New', undefined, undefined, undefined],
-        [null, 'Upload Picture', undefined, undefined, undefined],
+        [null, 'Upload Picture', undefined, undefined, null],
         [null, 'Location in Map', undefined, undefined, undefined]
     ],
     [
         [null, 'Edit', undefined, undefined, undefined],
         [null, 'New', undefined, undefined, undefined],
-        [null, 'Upload Picture', undefined, undefined, undefined]
+        [null, 'Upload Picture', undefined, undefined, null]
     ],
     [
         [null, 'Edit', undefined, undefined, undefined],

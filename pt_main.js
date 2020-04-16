@@ -183,8 +183,6 @@ function populateMenuItem(menuarray, menuname, htmlmenu, menulevel) {
             lineitem.style.transition = "all " + transitionPeriod;
             lineitem.style.display = "none";
 
-            console.log('in 186: ' + lineitem.style.display);
-
             lineitem.style.height = "0";
         } else if (menulevel == 1) {
             lineitem.style.display = "flex";
@@ -805,6 +803,7 @@ function getDivDriverPersonalParticularsByID(driverdata) {
 
     let arrydatacol = ArryDataObjCol[DataObj.DriverPersonalParticular];
     let arrybtn = ArryDataObjBtn[DataObj.DriverPersonalParticular];
+    arrybtn[2][3] = uploadImage;
 
     return loadDivDetail("Personal Particulars", driverdata, arrydatacol, null, arrybtn, driverdata.Picture);
 }
@@ -1350,6 +1349,20 @@ function pupulateTable(tabletitle, datalist, function_clicked, arrycolbtn, arryt
 
     return tablelist;
 }
+
+
+function uploadImage() {
+    // alert('upload image ...');
+    let fileupload = document.createElement("input");
+    fileupload.setAttribute("type", "file");
+    fileupload.onchange = () => {
+        console.log(fileupload.value);
+    }
+    fileupload.click();
+
+}
+
+
 
 function setCurrentDateTime() {
 
