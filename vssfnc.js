@@ -1114,7 +1114,7 @@ function vssfnc_formpopulate(objparam) {
             }
             buttonelement.setAttribute('formaction', objparam.arrybutton[i][param_item.arrybutton.ActionURL]);
             buttonelement.innerHTML = objparam.arrybutton[i][param_item.arrybutton.Desc];
-            buttonelement.dataset.id = objparam.arrydataid[param_item.arrydataid.DataObj];
+            buttonelement.dataset.ID = objparam.arrydataid[param_item.arrydataid.DataObj];
 
 
             if (objparam.arryclass && objparam.arryclass[param_item.arryclass.Button]) {
@@ -1184,4 +1184,188 @@ function vssfnc_scrollright() {
         }, numContentScrollDelay * 3);
         this.innerHTML = strUserProfile;
     }
+}
+
+
+
+
+// arrymenu - a 2-dim array of menu attributes - 
+//          0:form id
+//          1:dataobj id (id of record of form)
+// max levels of menu: 3
+
+function vssfnc_menupopulate_param() {
+    return {
+        arrymenu: []
+    }
+}
+
+const vssfnc_menupopparam_item = {
+    arrymenu: {
+        MenuIndex: 0,
+        Text: 0,
+        Img: 1,
+        OnClick: 2,
+        DatasetID: 3,
+        Class: 4,
+        SubMenu: 5
+    }
+}
+
+// maximum number of levels in menu: 3 //
+// by default:
+//  only 1st level menu is visible
+//  1st level has no additional class
+//  2nd and 3rd level has a class for its parent menu item
+function vssfnc_menupopulate(objparam, initlevel) {
+
+    let divmenu = document.createElement('div');
+
+    // default to 1 //
+    if (!initlevel) {
+        initlevel = 1
+    }
+
+    console.log('menu level: ' + initlevel);
+    console.log('objparam: arrymenu: ');
+    console.log(objparam.arrymenu);
+
+    let menulevel = initlevel;
+
+
+    objparam.arrymenu.forEach((mitem) => {
+
+        var menuitem = document.createElement('div');
+        let submenu = document.createElement('div');
+
+        console.log('processing menu: ');
+        console.log(mitem);
+
+
+        // only 1st and 2nd level menu could have submenu //
+        if (menulevel == 1 || menulevel == 2) {
+            if (mitem[vssfnc_menupopparam_item.arrymenu.SubMenu] && mitem[vssfnc_menupopparam_item.arrymenu.SubMenu].length > 0) {
+                // submenu2 = document.createElement('div');
+                // // submenu.style.transition = "all " + transitionPeriod;
+                // submenu2.style.display = "none";
+                // submenu2.style.height = "0";
+
+                // since level won't be more than 3 levels deep, assign can be used //
+
+                console.log('processing submenu: ');
+                console.log(mitem[vssfnc_menupopparam_item.arrymenu.SubMenu]);
+
+
+                if (menulevel == 2) {
+                    let objparam2 = vssfnc_menupopulate_param();
+                    // objparam2.arrymenu = [];
+                    objparam2.arrymenu = mitem[vssfnc_menupopparam_item.arrymenu.SubMenu];
+
+                    submenu = vssfnc_menupopulate(objparam2, menulevel + 1);
+                }
+                else {
+                    mitem[vssfnc_menupopparam_item.arrymenu.SubMenu].forEach((submenuitem) => {
+
+                        let objparam2 = vssfnc_menupopulate_param();
+                        // objparam2.arrymenu = [];
+                        objparam2.arrymenu.push(submenuitem);
+                        // console.log('objparam2 before recursive: ');
+                        // console.log(objparam2);
+                        // submenu = vssfnc_menupopulate(objparam2, menulevel + 1);
+                        submenu.appendChild( vssfnc_menupopulate(objparam2, menulevel + 1));
+                        
+                        // console.log('submeu after returning from menupopulate: ');
+                        // console.log(submenu);
+
+                        // if (submenu) {
+
+                        //     console.log("append 1280 (within submenu): submenu into divmenu");
+                        //     divmenu.appendChild(submenu);
+                        // }
+                        // if (menulevel==1){
+                        //     return submenu;
+                        // }
+
+                    })
+                }
+
+            }
+        }
+
+
+
+
+        if (menulevel == 1 || menulevel == 2) {
+            menuitem.style.display = "block";
+            menuitem.style.textAlign = "center";
+        } else {
+            // level 2 and level 3 //
+            // lineitem.className = parentmenu;
+            // lineitem.style.display = "none";
+            menuitem.style.textAlign = "right";
+        }
+
+        // icon
+        if (mitem[vssfnc_menupopparam_item.arrymenu.Img]) {
+            var divimg = document.createElement('div');
+            divimg.innerHTML = "<img src='" + mitem[vssfnc_menupopparam_item.arrymenu.Img] + "'></img>"
+            menuitem.appendChild(divimg);
+        }
+
+
+        // text
+        var divtext = document.createElement('div');
+        divtext.innerHTML = mitem[vssfnc_menupopparam_item.arrymenu.Text];
+        // divtext.style = "flex-grow:" + FlexMenuItemText + "; " + (parentmenu ? "text-align:right; box-sizing:border-box; padding-right:10%" : "text-align:left;");
+
+        menuitem.appendChild(divtext);
+
+
+        // Dataset.ID //
+        menuitem.dataset.ID = mitem[vssfnc_menupopparam_item.arrymenu.DatasetID];
+
+
+        // OnClick //
+        // if (mitem[vssfnc_menupopparam_item.arrymenu.OnClick]) {
+        //     menuitem.addEventListener('click', mitem[vssfnc_menupopparam_item.arrymenu.OnClick]);
+        // } else {
+        //     // default //            
+        //     menuitem.onclick = function () {
+        //         console.log(this);
+        //         for (var i = 0; i < this.children.length; i++) {
+        //             this.children[i].style.display = 'block';
+        //         }
+        //     }
+        // }
+
+        // Class //
+
+        if (submenu) {
+            console.log('append 1340: submenu into menuitem');
+            menuitem.appendChild(submenu);
+            // console.log("menuitem after apend submenu2: ");
+            // console.log(menuitem);
+        }
+
+
+
+console.log("append 1349: menuitem into divmenu");
+        divmenu.appendChild(menuitem);
+
+        // if (menulevel == 1) {
+        //     console.log('before appending submenu2: ' + submenu2);
+        //     if(submenu2){
+        //         divmenu.appendChild(submenu2);
+        //     }
+        // }
+        // else {
+        //     // divmenu.className = ClassSubMenu;
+        //     // divmenu.dataset.ID = parentmenu;
+        //     // htmlmenu.style = styleSubMenuHidden;
+        // }
+    })
+
+    console.log('before returning from menupopulate: ');
+    console.log(divmenu);
+    return divmenu;
 }
