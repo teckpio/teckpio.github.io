@@ -1217,155 +1217,224 @@ const vssfnc_menupopparam_item = {
 //  only 1st level menu is visible
 //  1st level has no additional class
 //  2nd and 3rd level has a class for its parent menu item
-function vssfnc_menupopulate(objparam, initlevel) {
+//
+// 2 div created - divmenu and submenu
+//
+// Class and Dataset.ID
+// Dataset.ID = parentclass + this.Text
+// Class = parent.Dataset.ID
+
+function vssfnc_menupopulate(objparam, initlevel, parentclass) {
+
+    // default to 1 //
+    let menulevel = initlevel ? initlevel : 1;
 
     let divmenu = document.createElement('div');
 
-    // default to 1 //
-    if (!initlevel) {
-        initlevel = 1
+    // 1 elements within divmenu:
+    //      - menuitem
+    //
+    // 2 elements within menuitem:
+    //  1. divmenutitle
+    //  2. submenu (if any)
+    // 
+    // 2 elements in divmenutitle:
+    //  1. img
+    //  2. text
+    
+    // OR 
+
+    // 2 elements within divmenu:
+    //      1- menuitem
+    //      2- submenu (if any)
+    //
+    // 2 elements within menuitem:
+    //  1. img
+    //  2. text
+
+    if (menulevel == 1) {
+        divmenu.style.display = "flex";
+        // divmenu.style.overflow = "hidden";
+        // divmenu.style.Height = "50px";
+        divmenu.style.border = '1px solid black';
+        divmenu.style.justifyContent = "space-around";
+        divmenu.style.width = "100%";
+    } else if (menulevel == 2) {
+        divmenu.style.display = "none";
+        // divmenu.style.position="absolute";
+        divmenu.style.border = '1px solid gray';
+        // divmenu.style.width="100%";
+        // divmenu.style.zIndex="10";
+        divmenu.style.flexGrow = "1";
+    } else if (menulevel == 3) {
+        divmenu.style.display = "none";
+        // divmenu.style.flexDirection = "column";
+        // divmenu.style.display="none";
     }
 
-    console.log('menu level: ' + initlevel);
-    console.log('objparam: arrymenu: ');
-    console.log(objparam.arrymenu);
 
-    let menulevel = initlevel;
 
+
+    // FOR EACH MENU IN ARRAYMENU //
 
     objparam.arrymenu.forEach((mitem) => {
 
         var menuitem = document.createElement('div');
-        let submenu = document.createElement('div');
+        // menuitem.style.display = "flex";
+        // menuitem.style.float="clear";
 
-        console.log('processing menu: ');
-        console.log(mitem);
+        if (menulevel == 1) {
+
+            menuitem.style.display="block";
+            // menuitem.style.overflow = "hidden";
+            // menuitem.style.height = "50px";
+            menuitem.style.border = "1px solid red";
+            menuitem.style.flexGrow = "1"; // to fill up the parent space //
+            menuitem.style.width = "100%";
+            // menuitem.style.zIndex = "10";
+        } else if (menulevel == 2) {
+            // menuitem.style.display = "block";
+            menuitem.style.border = "1px solid yellow";
+            menuitem.style.width = "100%";
+            // menuitem.style.zIndex = "10";
+            // menuitem.style.position="absolute";
+        } else if (menulevel == 3) {
+            // menuitem.style.display = "none";
+            menuitem.style.border = "1px solid blue";
+        }
+
+        // Dataset.ID //
+        parentclass = menulevel > 1 && parentclass ? parentclass : '';
+        menuitem.dataset.ID = parentclass + mitem[vssfnc_menupopparam_item.arrymenu.Text];
+
+
+        // Style //
+
+
+
+        // process submenu of level 1 and level 2 //
+        let submenu;
 
 
         // only 1st and 2nd level menu could have submenu //
         if (menulevel == 1 || menulevel == 2) {
+
             if (mitem[vssfnc_menupopparam_item.arrymenu.SubMenu] && mitem[vssfnc_menupopparam_item.arrymenu.SubMenu].length > 0) {
-                // submenu2 = document.createElement('div');
-                // // submenu.style.transition = "all " + transitionPeriod;
-                // submenu2.style.display = "none";
-                // submenu2.style.height = "0";
 
-                // since level won't be more than 3 levels deep, assign can be used //
+                submenu = document.createElement('div');
+                submenu.dataset.ID = parentclass + mitem[vssfnc_menupopparam_item.arrymenu.Text];
 
-                console.log('processing submenu: ');
-                console.log(mitem[vssfnc_menupopparam_item.arrymenu.SubMenu]);
-
-
-                if (menulevel == 2) {
-                    let objparam2 = vssfnc_menupopulate_param();
-                    // objparam2.arrymenu = [];
-                    objparam2.arrymenu = mitem[vssfnc_menupopparam_item.arrymenu.SubMenu];
-
-                    submenu = vssfnc_menupopulate(objparam2, menulevel + 1);
+                if (parentclass) {
+                    submenu.classList.add(parentclass);
                 }
-                else {
+
+                // menulevel == 2 after recurse to submenu from menulevel == 1 //
+                if (menulevel == 1) {
                     mitem[vssfnc_menupopparam_item.arrymenu.SubMenu].forEach((submenuitem) => {
 
+                        // no parent menu => no Class for root menu //
+
                         let objparam2 = vssfnc_menupopulate_param();
-                        // objparam2.arrymenu = [];
                         objparam2.arrymenu.push(submenuitem);
-                        // console.log('objparam2 before recursive: ');
-                        // console.log(objparam2);
-                        // submenu = vssfnc_menupopulate(objparam2, menulevel + 1);
-                        submenu.appendChild( vssfnc_menupopulate(objparam2, menulevel + 1));
-                        
-                        // console.log('submeu after returning from menupopulate: ');
-                        // console.log(submenu);
 
-                        // if (submenu) {
-
-                        //     console.log("append 1280 (within submenu): submenu into divmenu");
-                        //     divmenu.appendChild(submenu);
-                        // }
-                        // if (menulevel==1){
-                        //     return submenu;
-                        // }
-
+                        submenu.appendChild(vssfnc_menupopulate(objparam2, menulevel + 1, submenu.dataset.ID));
                     })
                 }
+                else if (menulevel == 2) {
 
+                    // max level is 3, therefore if menulevel is at 2, it's submenu would be the last level //
+
+                    let objparam2 = vssfnc_menupopulate_param();
+                    objparam2.arrymenu = mitem[vssfnc_menupopparam_item.arrymenu.SubMenu];
+
+                    submenu = vssfnc_menupopulate(objparam2, menulevel + 1, menuitem.dataset.ID);
+                }
             }
         }
 
 
 
-
         if (menulevel == 1 || menulevel == 2) {
-            menuitem.style.display = "block";
+            // menuitem.style.display = "block";
             menuitem.style.textAlign = "center";
-        } else {
+        } else if (menulevel == 2) {
             // level 2 and level 3 //
             // lineitem.className = parentmenu;
             // lineitem.style.display = "none";
+            menuitem.style.textAlign = "left";
+        } else if (menulevel == 3) {
             menuitem.style.textAlign = "right";
         }
+
+        // divmenutitle contains icon and text
+        let divmenutitle = document.createElement('div');
+        divmenutitle.style.display="flex";
+        if(menulevel==1 || menulevel==2){
+            divmenutitle.style.justifyContent="space-around";
+        }else if (menulevel==3){
+            divmenutitle.style.justifyContent="flex-end";
+        }
+        
 
         // icon
         if (mitem[vssfnc_menupopparam_item.arrymenu.Img]) {
             var divimg = document.createElement('div');
+            // divimg.style.justifySelf="start";
             divimg.innerHTML = "<img src='" + mitem[vssfnc_menupopparam_item.arrymenu.Img] + "'></img>"
-            menuitem.appendChild(divimg);
+            divmenutitle.appendChild(divimg);
         }
-
 
         // text
         var divtext = document.createElement('div');
+        divtext.style.boxSizing="border-box";
+        if (menulevel==3){
+            divtext.style.marginLeft="0";
+            // divtext.style.justifySelf="end";
+        }
+        // divtext.style.float="right";
         divtext.innerHTML = mitem[vssfnc_menupopparam_item.arrymenu.Text];
-        // divtext.style = "flex-grow:" + FlexMenuItemText + "; " + (parentmenu ? "text-align:right; box-sizing:border-box; padding-right:10%" : "text-align:left;");
 
-        menuitem.appendChild(divtext);
+        divmenutitle.appendChild(divtext);
 
-
-        // Dataset.ID //
-        menuitem.dataset.ID = mitem[vssfnc_menupopparam_item.arrymenu.DatasetID];
+        menuitem.appendChild(divmenutitle);
 
 
         // OnClick //
-        // if (mitem[vssfnc_menupopparam_item.arrymenu.OnClick]) {
-        //     menuitem.addEventListener('click', mitem[vssfnc_menupopparam_item.arrymenu.OnClick]);
-        // } else {
-        //     // default //            
-        //     menuitem.onclick = function () {
-        //         console.log(this);
-        //         for (var i = 0; i < this.children.length; i++) {
-        //             this.children[i].style.display = 'block';
-        //         }
-        //     }
-        // }
+        menuitem.onclick = function () {
+            let submenux = document.querySelectorAll("." + this.dataset.ID);
 
-        // Class //
-
-        if (submenu) {
-            console.log('append 1340: submenu into menuitem');
-            menuitem.appendChild(submenu);
-            // console.log("menuitem after apend submenu2: ");
-            // console.log(menuitem);
+            if (submenux.length > 0) {
+                for (let i = 0; i < submenux.length; i++) {
+                    submenux[i].style.display = "block";
+                }
+            }
+            if (mitem[vssfnc_menupopparam_item.arrymenu.OnClick]) {
+                mitem[vssfnc_menupopparam_item.arrymenu.OnClick]();
+            }
         }
 
 
 
-console.log("append 1349: menuitem into divmenu");
-        divmenu.appendChild(menuitem);
+        // Class //
+        // class of submenu is added when processing submenu //
+        // No Class required for root menu (no parent) //
+        if (menulevel > 1) {
+            menuitem.classList.add(parentclass);
+            divmenu.classList.add(parentclass);
+        }
 
-        // if (menulevel == 1) {
-        //     console.log('before appending submenu2: ' + submenu2);
-        //     if(submenu2){
-        //         divmenu.appendChild(submenu2);
-        //     }
+
+        // append elements //
+        if (submenu) {
+            menuitem.appendChild(submenu);
+        }
+
+        divmenu.appendChild(menuitem);
+        // if (submenu) {
+        //     divmenu.appendChild(submenu);
         // }
-        // else {
-        //     // divmenu.className = ClassSubMenu;
-        //     // divmenu.dataset.ID = parentmenu;
-        //     // htmlmenu.style = styleSubMenuHidden;
-        // }
+
     })
 
-    console.log('before returning from menupopulate: ');
-    console.log(divmenu);
     return divmenu;
 }

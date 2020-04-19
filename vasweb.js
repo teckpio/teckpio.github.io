@@ -12,14 +12,14 @@ const divmenubar = document.getElementById('menubar');
 
 const MenuItem = [
     ["Driver", "PTIconDriver.svg", undefined, , , [
-        ["Manage", , undefined, , , [
-            ["Personal Particulars", , undefined, , ,],
-            ["Driving License", , undefined, , ,],
-            ["PSV License", , undefined, , ,],
-            ["Commission", , undefined, , ,]
+        ["Manage", "PTIconDriver.svg", undefined, , , [
+            ["Personal Particulars", "PTIconDriver.svg", menuClicked, , ,],
+            ["Driving License", "PTIconDriver.svg", undefined, , ,],
+            ["PSV License", "PTIconDriver.svg", undefined, , ,],
+            ["Commission", "PTIconDriver.svg", undefined, , ,]
         ]],
-        ["Report", , undefined, , ,[
-            ["Commission", , undefined, , ,]
+        ["Report", "PTIconDriver.svg", undefined, , ,[
+            ["Commission", "PTIconDriver.svg", undefined, , ,]
         ]]]
     ],
     ["Bus", "PTIconDriver.svg", undefined, , , [
@@ -47,4 +47,9 @@ function populateManu() {
     menuparam.arrymenu = MenuItem;
     divmenubar.appendChild(vssfnc_menupopulate(menuparam, 1, null))
 
+}
+
+
+function menuClicked(){
+    alert('menu callback clicked');
 }
