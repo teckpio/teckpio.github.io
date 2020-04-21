@@ -30,6 +30,28 @@ const MenuItem = [
             ["Insurance", , undefined, ,]
         ]],
         ["Report", , undefined, ,]]
+    ],
+    ["Route", "PTIconDriver.svg", undefined, , , [
+        ["Manage", "PTIconDriver.svg", undefined, , , [
+            ["Personal Particulars", "PTIconDriver.svg", menuClicked, , ,],
+            ["Driving License", "PTIconDriver.svg", undefined, , ,],
+            ["PSV License", "PTIconDriver.svg", undefined, , ,],
+            ["Commission", "PTIconDriver.svg", undefined, , ,]
+        ]],
+        ["Report", "PTIconDriver.svg", undefined, , ,[
+            ["Commission", "PTIconDriver.svg", undefined, , ,]
+        ]]]
+    ],
+    ["Report", "PTIconDriver.svg", undefined, , , [
+        ["Manage", "PTIconDriver.svg", undefined, , , [
+            ["Personal Particulars", "PTIconDriver.svg", menuClicked, , ,],
+            ["Driving License", "PTIconDriver.svg", undefined, , ,],
+            ["PSV License", "PTIconDriver.svg", undefined, , ,],
+            ["Commission", "PTIconDriver.svg", undefined, , ,]
+        ]],
+        ["Report", "PTIconDriver.svg", undefined, , ,[
+            ["Commission", "PTIconDriver.svg", undefined, , ,]
+        ]]]
     ]
 ]
 
@@ -45,6 +67,7 @@ populateManu();
 function populateManu() {
     let menuparam = vssfnc_menupopulate_param();
     menuparam.arrymenu = MenuItem;
+    // menuparam.arrycolor=['rgba(0,250,0,1)', 'red','gray'];
     divmenubar.appendChild(vssfnc_menupopulate(menuparam, 1, null))
 
 }
