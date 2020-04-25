@@ -1276,9 +1276,9 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
     const TransitionPeriodStr = ".2s";
     const TransitionPeriod = 200;
     const InitDisplay = "VSSInitDisplay";
-    const DefualtBGColor = 'rgba(240, 240, 240, 1)';
+    const DefualtBGColor = 'rgba(250, 250, 250, 1)';
     const DefaultFGColor = 'black';
-    const DefaultBorder = "1px solid rgba(200,200,200,1)";
+    const DefaultBorder = "1px solid rgba(200,200,200,.5)";
     const DefaultMenuWidth = "100%"
     const DefaultMenuHeight = "20%";
     const DefaultPadding = "2px";
@@ -1286,6 +1286,9 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
     let CurrMenuBGColor;
     let CurrMenuFGColor;
+
+
+    let MenuWidth = parseInt(100 / objparam.arrymenu.length);
 
     // default //
     // if (!objparam.arrySize || objparam.arrySize && objparam.arrySize.length == 0) {
@@ -1301,7 +1304,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
     if (menulevel == 1) {
         divmenu.style.display = "flex";
         divmenu.style.overflow = "hidden";
-        divmenu.style.border = '2px solid black'; //rgba(250,250,250,.8)';
+        // divmenu.style.border = defau; //rgba(250,250,250,.8)';
         divmenu.style.justifyContent = "space-around";
         // divmenu.style.width = "100%";
         // divmenu.style.boxShadow = DefaultBoxShadow;     
@@ -1309,8 +1312,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         divmenu.dataset.Display = '0';
     } else if (menulevel == 2) {
         divmenu.style.display = "none";
-        divmenu.style.border = '3px solid blue';
-        divmenu.style.width = "100%";
+        // divmenu.style.border = '3px solid blue';
 
         divmenu.classList.add(InitDisplay);
         divmenu.dataset.Display = '0';
@@ -1318,15 +1320,17 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
     } else if (menulevel == 3) {
         divmenu.style.display = "none";
         divmenu.style.flexDirection = "column";
-        divmenu.style.position = "absolute";
-        // divmenu.style.marginLeft="0";
+        divmenu.style.alignItems="flex-end";
+        // divmenu.style.left = "100%";
 
         divmenu.dataset.Display = '0';
         divmenu.classList.add(InitDisplay);
     }
     divmenu.dataset.Level = menulevel;
     divmenu.style.transition = "all " + TransitionPeriodStr;
-    divmenu.style.margin="0";
+    divmenu.style.height = "100%";
+    divmenu.classList.add('divmenu');
+
 
     // css style //
     if (objparam.arrycolor && objparam.arrycolor.length > 0) {
@@ -1361,21 +1365,23 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
     objparam.arrymenu.forEach((mitem) => {
 
-        let menuitem = menulevel == 1 ? document.createElement('div') : menulevel == 2 ? document.createElement('ul') : document.createElement('li');
+        let menuitem = menulevel == 1 ? document.createElement('div') : menulevel == 2 ? document.createElement('div') : document.createElement('li');
 
-        menuitem.style.flexDirection = menulevel == 1 ? "column" : menulevel == 2 ? "row" : "row";
+        menuitem.style.flexDirection = menulevel == 1 ? "column" : menulevel == 2 ? "column" : "row";
         if (menulevel == 2) {
             menuitem.classList.add(InitDisplay);
         } else if (menulevel == 3) {
             menuitem.classList.add(InitDisplay);
             menuitem.style.justifyContent = "flex-end";
+            menuitem.style.padding="1%";
+            menuitem.style.width = "100%";
         }
         // menuitem.style.border = "1px solid red";
+        // menuitem.style.width = "100%";
         menuitem.style.boxSizing = "border-box";
         menuitem.style.flexGrow = "1";
         menuitem.style.transition = "all " + TransitionPeriodStr;
-        // menuitem.style.boxShadow = DefaultBoxShadow;
-        // menuitem.style.padding = DefaultPadding;
+        menuitem.classList.add('menuitem');
 
         menuitem.dataset.ID = parentclass + mitem[vssfnc_menupopparam_item.arrymenu.Text];
         menuitem.dataset.Level = menulevel;
@@ -1392,28 +1398,24 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
             if (mitem[vssfnc_menupopparam_item.arrymenu.SubMenu] && mitem[vssfnc_menupopparam_item.arrymenu.SubMenu].length > 0) {
 
-                submenu = document.createElement('div');
+                submenu = menulevel == 1 ? document.createElement('div') : document.createElement('div');
 
                 submenu.style.position = "absolute";
                 submenu.style.flexGrow = "1";
                 submenu.style.flexDirection = "column";
                 submenu.style.display = "none";
+                submenu.style.width = MenuWidth + "%";
+                submenu.style.boxSizing = "border-box";
+                // submenu.style.padding="1%";
+
+                submenu.style.justifyContent = "space-around";
 
                 submenu.dataset.Level = menulevel;
                 submenu.dataset.Display = '0';
 
                 submenu.classList.add(InitDisplay);
+                submenu.classList.add('submenu');
 
-                // css style //
-                // if (objparam.arrycolor && objparam.arrycolor.length > 0) {
-                //     submenu.style.backgroundColor = objparam.arrycolor[vssfnc_menupopparam_item.arryColor.BG];
-                //     submenu.style.color = objparam.arrycolor[vssfnc_menupopparam_item.arryColor.FG];
-                // } else {
-                //     submenu.style.backgroundColor = DefualtBGColor;
-                //     submenu.style.color = DefaultFGColor;
-                //     submenu.style.border = DefaultBorder;
-                // }
-                // submenu.style.padding = DefaultPadding;
 
                 submenu.dataset.ID = parentclass + mitem[vssfnc_menupopparam_item.arrymenu.Text];
 
@@ -1469,13 +1471,16 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
             var divimg = document.createElement('div');
             divimg.innerHTML = "<img src='" + mitem[vssfnc_menupopparam_item.arrymenu.Img] + "'></img>"
             divimg.style.margin = "1% 5%";
+            divimg.style.justifySelf="flex-end";
             divmenutitle.appendChild(divimg);
         }
 
         // text
         var divtext = document.createElement('div');
         divtext.style.boxSizing = "border-box";
+        // divtext.style.width = "100%";
         divtext.style.margin = "1%";
+        divtext.style.textAlign=  menulevel == 1 || menulevel == 2 ? "center" : "right";
 
         divtext.innerHTML = mitem[vssfnc_menupopparam_item.arrymenu.Text];
 
@@ -1489,25 +1494,13 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         // use e.stopPropagation() to stop propagation //
         menuitem.onclick = function (e) {
 
-            if (this.dataset.Level == 1) {
-                // initialise menu items //
-
-                let allmenuitem = document.querySelectorAll("." + InitDisplay);
-
-                for (let k = 0; k < allmenuitem.length; k++) {
+            let allmenuitem = document.querySelectorAll("." + InitDisplay);
+            for (let k = 0; k < allmenuitem.length; k++) {
+                if (allmenuitem[k].dataset.Level > this.dataset.Level) {
                     allmenuitem[k].style.display = "none";
                     allmenuitem[k].dataset.Display = "0";
                 }
-
-
-                if (this.dataset.Display == "0") {
-                    this.dataset.Display = "1";
-                } else if (this.dataset.Display == "1") {
-                    this.dataset.Display = "0";
-                    return;
-                }
             }
-
 
             // select all children //
             let submenux = document.querySelectorAll("." + this.dataset.ID);
@@ -1526,6 +1519,14 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                 }
             }
             if (mitem[vssfnc_menupopparam_item.arrymenu.OnClick]) {
+                let allmenuitem = document.querySelectorAll("." + InitDisplay);
+                for (let k = 0; k < allmenuitem.length; k++) {
+                    if (allmenuitem[k].dataset.Level > "1") {
+                        allmenuitem[k].style.display = "none";
+                        allmenuitem[k].dataset.Display = "0";
+                    }
+                }
+    
                 mitem[vssfnc_menupopparam_item.arrymenu.OnClick]();
             }
 

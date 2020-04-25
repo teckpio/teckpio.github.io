@@ -12,15 +12,20 @@ const divmenubar = document.getElementById('menubar');
 
 const MenuItem = [
     ["Driver", "PTIconDriver.svg", undefined, , , [
-        ["Manage", "PTIconDriver.svg", undefined, , , [
-            ["Personal Particulars", "PTIconDriver.svg", menuClicked, , ,],
-            ["Driving License", "PTIconDriver.svg", undefined, , ,],
-            ["PSV License", "PTIconDriver.svg", undefined, , ,],
-            ["Commission", "PTIconDriver.svg", undefined, , ,]
-        ]],
-        ["Report", "PTIconDriver.svg", undefined, , ,[
-            ["Commission", "PTIconDriver.svg", undefined, , ,]
-        ]]]
+        ["Manage", "PTIconDriver.svg", undefined, , ,
+            [
+                ["Personal Particulars", "PTIconDriver.svg", menuClicked, , ,],
+                ["Driving License", "PTIconDriver.svg", undefined, , ,],
+                ["PSV License", "PTIconDriver.svg", undefined, , ,],
+                ["Commission", "PTIconDriver.svg", undefined, , ,]
+            ]
+        ],
+        ["Report", "PTIconDriver.svg", undefined, , ,
+            [
+                ["Commission", "PTIconDriver.svg", undefined, , ,]
+            ]
+        ]
+    ]
     ],
     ["Bus", "PTIconDriver.svg", undefined, , , [
         ["Manage", , undefined, , , [
@@ -38,21 +43,22 @@ const MenuItem = [
             ["PSV License", "PTIconDriver.svg", undefined, , ,],
             ["Commission", "PTIconDriver.svg", undefined, , ,]
         ]],
-        ["Report", "PTIconDriver.svg", undefined, , ,[
-            ["Commission", "PTIconDriver.svg", undefined, , ,]
-        ]]]
-    ],
-    ["Report", "PTIconDriver.svg", undefined, , , [
-        ["Manage", "PTIconDriver.svg", undefined, , , [
-            ["Personal Particulars", "PTIconDriver.svg", menuClicked, , ,],
-            ["Driving License", "PTIconDriver.svg", undefined, , ,],
-            ["PSV License", "PTIconDriver.svg", undefined, , ,],
-            ["Commission", "PTIconDriver.svg", undefined, , ,]
-        ]],
-        ["Report", "PTIconDriver.svg", undefined, , ,[
+        ["Report", "PTIconDriver.svg", undefined, , , [
             ["Commission", "PTIconDriver.svg", undefined, , ,]
         ]]]
     ]
+    // ,
+    // ["Report", "PTIconDriver.svg", undefined, , , [
+    //     ["Manage", "PTIconDriver.svg", undefined, , , [
+    //         ["Personal Particulars", "PTIconDriver.svg", menuClicked, , ,],
+    //         ["Driving License", "PTIconDriver.svg", undefined, , ,],
+    //         ["PSV License", "PTIconDriver.svg", undefined, , ,],
+    //         ["Commission", "PTIconDriver.svg", undefined, , ,]
+    //     ]],
+    //     ["Report", "PTIconDriver.svg", undefined, , ,[
+    //         ["Commission", "PTIconDriver.svg", undefined, , ,]
+    //     ]]]
+    // ]
 ]
 
 
@@ -73,6 +79,6 @@ function populateManu() {
 }
 
 
-function menuClicked(){
+function menuClicked() {
     alert('menu callback clicked');
 }
