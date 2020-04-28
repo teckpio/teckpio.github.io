@@ -1029,12 +1029,6 @@ function getDivBusBreadDownByID(breakdowndata) {
     let arrybtn = ArryDataObjBtn[DataObj.BusBreakDown];
     arrybtn[2][3] = getIFrameMap;
 
-    // route, bus, driver
-    // let arryitemdata = [
-    //     [{ ID: 1, Name: "66" }, { ID: 2, Name: "68" }, { ID: 3, Name: "57" }, { ID: 4, Name: "89" }],
-    //     [{ ID: 1, Name: "AMK209" }, { ID: 2, Name: "AKL8398" }, { ID: 3, Name: "AEP8987" }, { ID: 4, Name: "ABM1234" }],
-    //     [{ ID: 1, Name: "Ali" }, { ID: 2, Name: "Muthu" }, { ID: 3, Name: "Samy" }, { ID: 4, Name: "Ah Meng" }]
-    // ]
     let arryitemdata = ArryDataItemForm;
 
     return loadDivDetail("Bus Breakdown", breakdowndata, arrydatacol, arryitemdata, arrybtn, breakdowndata.Picture);
@@ -1097,9 +1091,6 @@ function getDutyRoster() {
     return SampleDutyRoster;
 }
 
-// function DutyRosterListClicked(ID) {
-//     // alert(ID);
-// }
 
 function setStyleDivExport(divexportfnc) {
     divexportfnc.style.display = "flex";
@@ -1289,26 +1280,14 @@ function populateForm(formtitle, arrydatacol, jsondata, arryitemdata, arrybtn) {
     // load detail form - start
     let objparam = vssfnc_formpopulate_param();
     objparam.caption = formtitle;
-    // objparam.actionurl = serverendpoint;
-    // [description strings, requird, type]]
     objparam.arrydatacol = arrydatacol;
     objparam.jsondata = jsondata;
-
-
     objparam.arryitemdata = arryitemdata;
-    // objparam.htmlform = formdetails;
     objparam.arryinput = format_forminputelem();
-    // objparam.arryinput = [
-    //     ['50%',, 0],
-    //     ['50%', -1]
-    // ];
     objparam.arryclass = [undefined, undefined, undefined, undefined, ClassFunctionButton];
-
     objparam.arrybutton = load_divbutton(arrybtn, true, true);
 
     return vssfnc_formpopulate(objparam);
-    // objparam.arryitemdata.push(listobj.account);
-    // objparam.arryitemdata.push(listobj.account);
 }
 
 function pupulateTable(tabletitle, datalist, function_clicked, arrycolbtn, arrytblbtn, arryeditrow) {

@@ -1100,16 +1100,17 @@ function vssfnc_formpopulate(objparam) {
             // var buttonelement = document.createElement('button');
             if (objparam.arrybutton[i][param_item.arrybutton.Type]) {
                 var buttonelement = document.createElement('button');
-                // if (objparam.arrybutton[i][param_item.arrybutton.Type] = 'file') {
-                //     buttonelement = document.createElement('input');
-                //     buttonelement.style.display = "none";
-                // } else {
-                //     buttonelement = document.createElement('button');
-                // }
-
+                buttonelement.style.boxSizing="border-box";
+                buttonelement.style.padding = "1%";
+                buttonelement.style.width = "80%";
+                
                 buttonelement.setAttribute('type', objparam.arrybutton[i][param_item.arrybutton.Type]);
             } else {
                 var buttonelement = document.createElement('button');
+                buttonelement.style.boxSizing="border-box";
+                buttonelement.style.padding = "1%";
+                buttonelement.style.width = "80%";
+                
                 buttonelement.setAttribute('type', 'button');
             }
             buttonelement.setAttribute('formaction', objparam.arrybutton[i][param_item.arrybutton.ActionURL]);
@@ -1276,9 +1277,9 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
     const TransitionPeriodStr = ".2s";
     const TransitionPeriod = 200;
     const InitDisplay = "VSSInitDisplay";
-    const DefualtBGColor = 'rgba(250, 250, 250, 1)';
+    const DefualtBGColor = 'rgba(255, 255, 255, 1)';
     const DefaultFGColor = 'black';
-    const DefaultBorder = "1px solid rgba(200,200,200,.5)";
+    const DefaultBorder = "1px solid rgba(230,230,230,1)";
     const DefaultMenuWidth = "100%"
     const DefaultMenuHeight = "20%";
     const DefaultPadding = "2px";
@@ -1304,7 +1305,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
     if (menulevel == 1) {
         divmenu.style.display = "flex";
         divmenu.style.overflow = "hidden";
-        // divmenu.style.border = defau; //rgba(250,250,250,.8)';
+        // divmenu.style.border = DefaultBorder; //rgba(250,250,250,.8)';
         divmenu.style.justifyContent = "space-around";
         // divmenu.style.width = "100%";
         // divmenu.style.boxShadow = DefaultBoxShadow;     
@@ -1320,7 +1321,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
     } else if (menulevel == 3) {
         divmenu.style.display = "none";
         divmenu.style.flexDirection = "column";
-        divmenu.style.alignItems="flex-end";
+        divmenu.style.alignItems = "flex-end";
         // divmenu.style.left = "100%";
 
         divmenu.dataset.Display = '0';
@@ -1334,20 +1335,22 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
     // css style //
     if (objparam.arrycolor && objparam.arrycolor.length > 0) {
-        divmenu.style.backgroundColor = objparam.arrycolor[vssfnc_menupopparam_item.arryColor.BG];
-        divmenu.style.color = objparam.arrycolor[vssfnc_menupopparam_item.arryColor.FG];
+        DefualtBGColor = objparam.arrycolor[vssfnc_menupopparam_item.arryColor.BG];
+        DefaultFGColor = objparam.arrycolor[vssfnc_menupopparam_item.arryColor.FG];
+        DefaultBorder = DefaultBorder;
 
         CurrMenuBGColor = objparam.arrycolor[vssfnc_menupopparam_item.arryColor.BG];
         CurrMenuFGColor = objparam.arrycolor[vssfnc_menupopparam_item.arryColor.FG];
-    } else {
-
-        divmenu.style.backgroundColor = DefualtBGColor;
-        divmenu.style.color = DefaultFGColor;
-        divmenu.style.border = DefaultBorder;
-
-        CurrMenuBGColor = DefualtBGColor;
-        CurrMenuFGColor = DefaultFGColor;
     }
+
+
+    divmenu.style.backgroundColor = DefualtBGColor;
+    divmenu.style.color = DefaultFGColor;
+    divmenu.style.border = DefaultBorder;
+
+    CurrMenuBGColor = DefualtBGColor;
+    CurrMenuFGColor = DefaultFGColor;
+
     // divmenu.style.padding = DefaultPadding;
 
 
@@ -1370,13 +1373,15 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         menuitem.style.flexDirection = menulevel == 1 ? "column" : menulevel == 2 ? "column" : "row";
         if (menulevel == 2) {
             menuitem.classList.add(InitDisplay);
+            menuitem.style.border = DefaultBorder;
         } else if (menulevel == 3) {
             menuitem.classList.add(InitDisplay);
             menuitem.style.justifyContent = "flex-end";
-            menuitem.style.padding="1%";
+            menuitem.style.padding = "1%";
             menuitem.style.width = "100%";
+            menuitem.style.border = DefaultBorder;
         }
-        // menuitem.style.border = "1px solid red";
+        // menuitem.style.border = DefaultBorder;
         // menuitem.style.width = "100%";
         menuitem.style.boxSizing = "border-box";
         menuitem.style.flexGrow = "1";
@@ -1460,8 +1465,10 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         // divmenutitle contains icon and text
 
         let divmenutitle = document.createElement('div');
+        divmenutitle.classList.add("divmenutitle");
         divmenutitle.style.display = "flex";
         divmenutitle.style.margin = "0 5%";
+        divmenutitle.style.width="100%";
         divmenutitle.style.justifyContent = menulevel == 1 || menulevel == 2 ? "center" : "flex-end";
 
 
@@ -1471,16 +1478,24 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
             var divimg = document.createElement('div');
             divimg.innerHTML = "<img src='" + mitem[vssfnc_menupopparam_item.arrymenu.Img] + "'></img>"
             divimg.style.margin = "1% 5%";
-            divimg.style.justifySelf="flex-end";
+            divimg.style.justifySelf = "flex-end";
+            if (menulevel == 3) {
+                divimg.style.flexGrow = "1";
+            }
+
             divmenutitle.appendChild(divimg);
         }
 
         // text
         var divtext = document.createElement('div');
         divtext.style.boxSizing = "border-box";
-        // divtext.style.width = "100%";
+        divtext.style.width = "100%";
         divtext.style.margin = "1%";
-        divtext.style.textAlign=  menulevel == 1 || menulevel == 2 ? "center" : "right";
+        divtext.style.padding = "1%";
+        divtext.style.textAlign = menulevel == 1 || menulevel == 2 ? "center" : "right";
+        if (menulevel == 3) {
+            divtext.style.flexGrow = "1";
+        }
 
         divtext.innerHTML = mitem[vssfnc_menupopparam_item.arrymenu.Text];
 
@@ -1526,7 +1541,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                         allmenuitem[k].dataset.Display = "0";
                     }
                 }
-    
+
                 mitem[vssfnc_menupopparam_item.arrymenu.OnClick]();
             }
 
