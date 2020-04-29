@@ -8,7 +8,18 @@
 // vssfnc_formpopulate_param
 // vssfnc_formpopulate
 
+const colorFormButtonBG = "white";
+const colorFormButtonnFG = "black";
 
+const colorTableHeaderRow = "black";
+const colorTableOddRow = "lightgray";
+const colorTableEvenRow = "white";
+
+const BorderTable = "";
+const BoxShadowTable ="";
+
+const TransitionPeriodStr = ".2s";
+const TransitionPeriod = 200;
 
 
 
@@ -901,7 +912,6 @@ function vssfnc_formpopulate(objparam) {
     var ppt;
     var idxarrydatacol = 0;
 
-
     for (ppt in objparam.jsondata) {
         // property wrapper - a div (row or column flex depending on layout) with: divlabel + divinput //
         var divwrapper = document.createElement('div');
@@ -1000,7 +1010,10 @@ function vssfnc_formpopulate(objparam) {
                 inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
                 if (ppt === 'ID') {
                     // .diabled will not send data to server //
-                    inputelement.readOnly = true;
+
+                    //!! for testing only, should set to true !!
+                    
+                    // inputelement.readOnly = true;
                     if (objparam.jsondata[ppt] === '') {
                         inputelement.value = '0';
                     }
@@ -1096,23 +1109,21 @@ function vssfnc_formpopulate(objparam) {
     }
 
     if (objparam.arrybutton) {
+
         for (let i = 0; i < objparam.arrybutton.length; i++) {
-            // var buttonelement = document.createElement('button');
             if (objparam.arrybutton[i][param_item.arrybutton.Type]) {
                 var buttonelement = document.createElement('button');
-                buttonelement.style.boxSizing="border-box";
-                buttonelement.style.padding = "1%";
-                buttonelement.style.width = "80%";
-                
                 buttonelement.setAttribute('type', objparam.arrybutton[i][param_item.arrybutton.Type]);
             } else {
                 var buttonelement = document.createElement('button');
-                buttonelement.style.boxSizing="border-box";
-                buttonelement.style.padding = "1%";
-                buttonelement.style.width = "80%";
-                
                 buttonelement.setAttribute('type', 'button');
             }
+            buttonelement.style.boxSizing = "border-box";
+            buttonelement.style.padding = "1%";
+            buttonelement.style.width = "80%";
+            buttonelement.style.backgroundColor = colorFormButtonBG;
+            buttonelement.style.color = colorFormButtonnFG;
+
             buttonelement.setAttribute('formaction', objparam.arrybutton[i][param_item.arrybutton.ActionURL]);
             buttonelement.innerHTML = objparam.arrybutton[i][param_item.arrybutton.Desc];
             buttonelement.dataset.ID = objparam.arrydataid[param_item.arrydataid.DataObj];
@@ -1126,6 +1137,29 @@ function vssfnc_formpopulate(objparam) {
             if (objparam.arrybutton[i][param_item.arrybutton.Type] !== 'submit' && objparam.arrybutton[i][param_item.arrybutton.Type] !== 'reset') {
                 buttonelement.onclick = objparam.arrybutton[i][param_item.arrybutton.OnClick];
             }
+
+            buttonelement.onmouseover = function (e) {
+                this.style.opacity = "0.5";
+                setTimeout(() => {
+                    this.style.backgroundColor = colorFormButtonnFG;
+                    this.style.color = colorFormButtonBG;
+                    this.style.opacity = "1";
+                }, TransitionPeriod / 2);
+
+                e.stopPropagation();
+            }
+
+            buttonelement.onmouseleave = function (e) {
+                this.style.opacity = "0.5";
+                setTimeout(() => {
+                    this.style.backgroundColor = colorFormButtonBG;
+                    this.style.color = colorFormButtonnFG;
+                    this.style.opacity = "1";
+                }, TransitionPeriod / 2);
+
+                e.stopPropagation();
+            }
+
             divbutton.appendChild(buttonelement);
         }
 
@@ -1274,8 +1308,6 @@ const vssfnc_menupopparam_item = {
 
 function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
-    const TransitionPeriodStr = ".2s";
-    const TransitionPeriod = 200;
     const InitDisplay = "VSSInitDisplay";
     const DefualtBGColor = 'rgba(255, 255, 255, 1)';
     const DefaultFGColor = 'black';
@@ -1468,7 +1500,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         divmenutitle.classList.add("divmenutitle");
         divmenutitle.style.display = "flex";
         divmenutitle.style.margin = "0 5%";
-        divmenutitle.style.width="100%";
+        divmenutitle.style.width = "100%";
         divmenutitle.style.justifyContent = menulevel == 1 || menulevel == 2 ? "center" : "flex-end";
 
 
