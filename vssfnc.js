@@ -998,7 +998,7 @@ function vssfnc_formpopulate(objparam) {
                 }
             }
             else {
-                // text //
+                // text and number //
                 inputelement = document.createElement('INPUT');
                 inputelement.setAttribute('name', ppt);
                 inputelement.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
@@ -1008,6 +1008,9 @@ function vssfnc_formpopulate(objparam) {
                 // inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);//
 
                 inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
+                if(objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type] === 'number'){
+                    inputelement.setAttribute('step', "0.01");
+                }
                 if (ppt === 'ID') {
                     // .diabled will not send data to server //
 
