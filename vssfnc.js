@@ -16,7 +16,7 @@ const colorTableOddRow = "lightgray";
 const colorTableEvenRow = "white";
 
 const BorderTable = "";
-const BoxShadowTable ="";
+const BoxShadowTable = "";
 
 const TransitionPeriodStr = ".2s";
 const TransitionPeriod = 200;
@@ -1008,14 +1008,14 @@ function vssfnc_formpopulate(objparam) {
                 // inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);//
 
                 inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
-                if(objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type] === 'number'){
+                if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type] === 'number') {
                     inputelement.setAttribute('step', "0.01");
                 }
                 if (ppt === 'ID') {
                     // .diabled will not send data to server //
 
                     //!! for testing only, should set to true !!
-                    
+
                     // inputelement.readOnly = true;
                     if (objparam.jsondata[ppt] === '') {
                         inputelement.value = '0';
@@ -1312,13 +1312,16 @@ const vssfnc_menupopparam_item = {
 function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
     const InitDisplay = "VSSInitDisplay";
-    const DefualtBGColor = 'rgba(255, 255, 255, 1)';
-    const DefaultFGColor = 'black';
+    // const DefualtBGColor = 'rgba(255, 255, 255, 1)';
+    // const DefaultFGColor = 'black';
+    const DefualtBGColor = 'black';
+    const DefaultFGColor = 'rgba(255, 255, 255, 1)';
     const DefaultBorder = "1px solid rgba(230,230,230,1)";
     const DefaultMenuWidth = "100%"
     const DefaultMenuHeight = "20%";
     const DefaultPadding = "2px";
-    const DefaultBoxShadow = "0 0 2px 2px rgb(250,250,250)";
+    const DefaultBoxShadow = "3px 3px 2px lightgray";
+    // const DefaultBoxShadow = "0 0 2px 2px rgb(250,250,250)";
 
     let CurrMenuBGColor;
     let CurrMenuFGColor;
@@ -1382,6 +1385,10 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
     divmenu.style.backgroundColor = DefualtBGColor;
     divmenu.style.color = DefaultFGColor;
     divmenu.style.border = DefaultBorder;
+    if (menulevel > 1) {
+        divmenu.style.boxShadow = DefaultBoxShadow;
+    }
+
 
     CurrMenuBGColor = DefualtBGColor;
     CurrMenuFGColor = DefaultFGColor;
@@ -1406,7 +1413,10 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         let menuitem = menulevel == 1 ? document.createElement('div') : menulevel == 2 ? document.createElement('div') : document.createElement('li');
 
         menuitem.style.flexDirection = menulevel == 1 ? "column" : menulevel == 2 ? "column" : "row";
-        if (menulevel == 2) {
+        if (menulevel == 1) {
+            // menuitem.style.padding = "0 5%";
+        }
+        else if (menulevel == 2) {
             menuitem.classList.add(InitDisplay);
             menuitem.style.border = DefaultBorder;
         } else if (menulevel == 3) {
@@ -1416,8 +1426,6 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
             menuitem.style.width = "100%";
             menuitem.style.border = DefaultBorder;
         }
-        // menuitem.style.border = DefaultBorder;
-        // menuitem.style.width = "100%";
         menuitem.style.boxSizing = "border-box";
         menuitem.style.flexGrow = "1";
         menuitem.style.transition = "all " + TransitionPeriodStr;
@@ -1544,30 +1552,43 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         // use e.stopPropagation() to stop propagation //
         menuitem.onclick = function (e) {
 
+            let boolFlip = true;
+
             let allmenuitem = document.querySelectorAll("." + InitDisplay);
             for (let k = 0; k < allmenuitem.length; k++) {
                 if (allmenuitem[k].dataset.Level > this.dataset.Level) {
+
+                    if (boolFlip) {
+                        if (allmenuitem[k].classList.contains(this.dataset.ID)) {
+                            if (allmenuitem[k].dataset.Display == "1") {
+                                boolFlip = false;
+                            }
+                        }
+                    }
                     allmenuitem[k].style.display = "none";
                     allmenuitem[k].dataset.Display = "0";
                 }
             }
 
-            // select all children //
-            let submenux = document.querySelectorAll("." + this.dataset.ID);
+            // select all children and flip visibility //
+            if (boolFlip) {
+                let submenux = document.querySelectorAll("." + this.dataset.ID);
+                if (submenux.length > 0) {
+                    for (let i = 0; i < submenux.length; i++) {
+                        if (submenux[i].dataset.Display == '0') {
 
-            if (submenux.length > 0) {
-                for (let i = 0; i < submenux.length; i++) {
-                    if (submenux[i].dataset.Display == '0') {
+                            submenux[i].style.display = "flex";
+                            submenux[i].dataset.Display = "1";
 
-                        submenux[i].style.display = "flex";
-                        submenux[i].dataset.Display = "1";
-
-                    } else if (submenux[i].dataset.Display == '1') {
-                        submenux[i].style.display = "none";
-                        submenux[i].dataset.Display = "0";
+                        } else if (submenux[i].dataset.Display == '1') {
+                            submenux[i].style.display = "none";
+                            submenux[i].dataset.Display = "0";
+                        }
                     }
                 }
             }
+
+            // invisible all menu items after executing user defined click //
             if (mitem[vssfnc_menupopparam_item.arrymenu.OnClick]) {
                 let allmenuitem = document.querySelectorAll("." + InitDisplay);
                 for (let k = 0; k < allmenuitem.length; k++) {
