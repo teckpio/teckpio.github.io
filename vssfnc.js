@@ -1312,11 +1312,12 @@ const vssfnc_menupopparam_item = {
 function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
     const InitDisplay = "VSSInitDisplay";
-    // const DefualtBGColor = 'rgba(255, 255, 255, 1)';
-    // const DefaultFGColor = 'black';
-    const DefualtBGColor = 'black';
-    const DefaultFGColor = 'rgba(255, 255, 255, 1)';
+    const DefualtBGColor = 'rgba(12, 155, 130, 1)';
+    const DefaultFGColor = 'white';
+    // const DefualtBGColor = 'black';
+    // const DefaultFGColor = 'rgba(255, 255, 255, 1)';
     const DefaultBorder = "1px solid rgba(230,230,230,1)";
+    const DefaultLevel1Border = "2px solid rgba(250,250,250,.8)";
     const DefaultMenuWidth = "100%"
     const DefaultMenuHeight = "20%";
     const DefaultPadding = "2px";
@@ -1345,7 +1346,6 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         divmenu.style.overflow = "hidden";
         // divmenu.style.border = DefaultBorder; //rgba(250,250,250,.8)';
         divmenu.style.justifyContent = "space-around";
-        // divmenu.style.width = "100%";
         // divmenu.style.boxShadow = DefaultBoxShadow;     
 
         divmenu.dataset.Display = '0';
@@ -1370,6 +1370,13 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
     divmenu.style.height = "100%";
     divmenu.classList.add('divmenu');
 
+    divmenu.onmouseleave = function () {
+        let allmenuitem = document.querySelectorAll("." + InitDisplay);
+        for (let k = 0; k < allmenuitem.length; k++) {
+            allmenuitem[k].style.display = "none";
+            allmenuitem[k].dataset.Display = "0";
+        }
+    }
 
     // css style //
     if (objparam.arrycolor && objparam.arrycolor.length > 0) {
@@ -1414,17 +1421,18 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
         menuitem.style.flexDirection = menulevel == 1 ? "column" : menulevel == 2 ? "column" : "row";
         if (menulevel == 1) {
-            // menuitem.style.padding = "0 5%";
+            menuitem.style.border = DefaultLevel1Border;
+            // menuitem.style.margin="0 1% 0 1%";
         }
         else if (menulevel == 2) {
             menuitem.classList.add(InitDisplay);
-            menuitem.style.border = DefaultBorder;
+            // menuitem.style.border = DefaultBorder;
         } else if (menulevel == 3) {
             menuitem.classList.add(InitDisplay);
             menuitem.style.justifyContent = "flex-end";
             menuitem.style.padding = "1%";
             menuitem.style.width = "100%";
-            menuitem.style.border = DefaultBorder;
+            // menuitem.style.border = DefaultBorder;
         }
         menuitem.style.boxSizing = "border-box";
         menuitem.style.flexGrow = "1";
@@ -1510,9 +1518,13 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         let divmenutitle = document.createElement('div');
         divmenutitle.classList.add("divmenutitle");
         divmenutitle.style.display = "flex";
-        divmenutitle.style.margin = "0 5%";
+        if (menulevel == 3) {
+            divmenutitle.style.flexDirection = "row-reverse";
+        }
+        // divmenutitle.style.margin = "0 5%";
         divmenutitle.style.width = "100%";
         divmenutitle.style.justifyContent = menulevel == 1 || menulevel == 2 ? "center" : "flex-end";
+
 
 
 
@@ -1520,10 +1532,15 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         if (mitem[vssfnc_menupopparam_item.arrymenu.Img]) {
             var divimg = document.createElement('div');
             divimg.innerHTML = "<img src='" + mitem[vssfnc_menupopparam_item.arrymenu.Img] + "'></img>"
-            divimg.style.margin = "1% 5%";
-            divimg.style.justifySelf = "flex-end";
+            divimg.classList.add('divmenutitleimg');
+            divimg.style.margin = "1%";
+            // divimg.style.justifySelf = "flex-end";
+            divimg.style.alignSelf = "center";
+
             if (menulevel == 3) {
                 divimg.style.flexGrow = "1";
+            } else {
+                // divimg.style.justifyItems="end";
             }
 
             divmenutitle.appendChild(divimg);
@@ -1531,13 +1548,16 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
         // text
         var divtext = document.createElement('div');
+        divtext.classList.add('divmenutitletext');
         divtext.style.boxSizing = "border-box";
-        divtext.style.width = "100%";
+        // divtext.style.width = "100%";
         divtext.style.margin = "1%";
         divtext.style.padding = "1%";
         divtext.style.textAlign = menulevel == 1 || menulevel == 2 ? "center" : "right";
         if (menulevel == 3) {
-            divtext.style.flexGrow = "1";
+            divtext.style.flexGrow = "9";
+        } else {
+            // divtext.style.justifyItems="start";
         }
 
         divtext.innerHTML = mitem[vssfnc_menupopparam_item.arrymenu.Text];
