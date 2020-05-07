@@ -1321,7 +1321,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
     const DefaultMenuWidth = "100%"
     const DefaultMenuHeight = "20%";
     const DefaultPadding = "2px";
-    const DefaultBoxShadow = "3px 3px 2px lightgray";
+    const DefaultBoxShadow = "5px 5px 2px rgba(210,210,210,.8)";
     // const DefaultBoxShadow = "0 0 2px 2px rgb(250,250,250)";
 
     let CurrMenuBGColor;
