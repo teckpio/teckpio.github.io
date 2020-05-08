@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        :root {
+            --glbMargin: 5%;
+            --glbPadding: 2%;
+            --colorButtonBG: white;
+            --colorButtonBorder: blue;
+            --colorButtonFontHL: white;
+            --fontsizeAppTitle: 1.5em;
+            --glbBorder: 1px solid rgba(200, 200, 200, 1);
+        }
+
+        html {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            box-sizing: border-box;
+            /* color:white; */
+        }
+
+        body {
+            /* background-color:black; */
+            background-image: linear-gradient(45deg, blue, white,white,white,white,white, blue);
+        }
+
+        #MainContent {
+            width: 20vw;
+            margin: 10% auto;
+            padding: calc(var(--glbPadding)*2);
+            box-sizing: 0 0 3px 3px lightgray;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 5px 5px rgba(200, 200, 200, .5);
+        }
+
+        /* @media only screen and (min-width: 600px){
+            #MainContent {
+            width: 20vw;
+            margin: 10% auto;
+            padding: calc(var(--glbPadding)*2);
+            box-sizing: 0 0 3px 3px lightgray;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 5px 5px rgba(200, 200, 200, .5);
+        } */
+
+        #ApplicationTitle {
+            margin: 1% 0 10%;
+            font-size: var(--fontsizeAppTitle);
+        }
+
+        #LoginBox {
+            border: 1px solid rgba(200, 200, 200, .5);
+            background-color: rgba(240, 240, 240, .2);
+            padding: var(--glbPadding);
+        }
+
+        .LoginElem {
+            /* background-color: gray; */
+            margin: var(--glbMargin);
+            width: 80%;
+        }
+
+        .LoginInput {
+            width: 100%;
+            padding: var(--glbPadding);
+            border: none;
+            border-bottom: var(--glbBorder);
+
+
+        }
+
+        #LoginButtonDiv {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .Button {
+            background-color: var(--colorButtonBG);
+            border: 1px solid var(--colorButtonBorder);
+            padding: var(--glbPadding);
+            width: 100%;
+            margin: var(--glbMargin);
+            text-align: center;
+        }
+
+        .Button:hover {
+            background-color: var(--colorButtonBorder);
+            border: 1px solid var(--colorButtonFontHL);
+            color: var(--colorButtonFontHL);
+        }
+
+        .Button:focus {
+            background-color: var(--colorButtonBorder);
+            border: 1px solid var(--colorButtonFontHL);
+            color: var(--colorButtonFontHL);
+        }
+
+        .ButtonShow {
+            display: block;
+        }
+
+        .ButtonHide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="MainContent">
+
+        <div id="ApplicationTitle">
+
+        </div>
+        <div id="LoginBox">
+            <div id="LoginTitle">
+                Login:
+            </div>
+            <div id="LoginNameDiv">
+                <div class="LoginElem" id="LoginNameLabel">
+                    Name
+                </div>
+                <div class="LoginElem" id="LoginNameInput">
+                    <input class="LoginInput" id="LoginName" type="text">
+                </div>
+            </div>
+
+            <div id="LoginPasswordDiv">
+                <div class="LoginElem" id="LoginPasswordLabel">
+                    Password
+                </div>
+                <div class="LoginElem" id="LoginPasswordInput">
+                    <input class="LoginInput" id="LoginPassword" type="password">
+                </div>
+            </div>
+            <div id="LoginButtonDiv">
+                <button class="Button" id="BtnLogin">
+                    Login
+                </button>
+                <button class="Button ButtonHide" id="BtnLogout">
+                    Logout
+                </button>
+                <button class="Button" id="BtnSignup">
+                    Sign Up
+                </button>
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const DivAppTitle = document.getElementById("ApplicationTitle");
+    const btnLogin = document.getElementById("BtnLogin");
+    const btnSignup = document.getElementById("BtnSignup");
+    const btnLogout = document.getElementById("BtnLogout");
+
+
+
+    DivAppTitle.innerHTML = "Fresh ONLINE";
+    btnLogin.onclick = () => {
+        alert('login');
+        btnLogout.classList.remove("ButtonHide");
+        btnLogin.classList.add("ButtonHide");
+    }
+    btnSignup.onclick = () => {
+        alert('singup');
+    }
+    btnLogout.onclick = () => {
+        alert('logout');
+        btnLogout.classList.add("ButtonHide");
+        btnLogin.classList.remove("ButtonHide");
+    }
+</script>
+
+</html>

@@ -8,19 +8,21 @@
 // vssfnc_formpopulate_param
 // vssfnc_formpopulate
 
-const colorFormButtonBG = "white";
-const colorFormButtonnFG = "black";
+const VssColorFormButtonBG = "white";
+const VssColorFormButtonnFG = "black";
 
-const colorTableHeaderRow = "black";
-const colorTableOddRow = "lightgray";
-const colorTableEvenRow = "white";
+const VssColorTableHeaderRow = "black";
+const VssColorTableOddRow = "lightgray";
+const VssColorTableEvenRow = "white";
 
-const BorderTable = "";
-const BoxShadowTable = "";
+const VssBorderTable = "";
+const VssBoxShadowTable = "";
 
-const TransitionPeriodStr = ".2s";
-const TransitionPeriod = 200;
+const VssTransitionPeriodStr = ".2s";
+const VssTransitionPeriod = 200;
 
+const VssInitDisplay = "VSSInitDisplay";
+const VssMenu = "VssMenu";
 
 
 
@@ -1124,8 +1126,8 @@ function vssfnc_formpopulate(objparam) {
             buttonelement.style.boxSizing = "border-box";
             buttonelement.style.padding = "1%";
             buttonelement.style.width = "80%";
-            buttonelement.style.backgroundColor = colorFormButtonBG;
-            buttonelement.style.color = colorFormButtonnFG;
+            buttonelement.style.backgroundColor = VssColorFormButtonBG;
+            buttonelement.style.color = VssColorFormButtonnFG;
 
             buttonelement.setAttribute('formaction', objparam.arrybutton[i][param_item.arrybutton.ActionURL]);
             buttonelement.innerHTML = objparam.arrybutton[i][param_item.arrybutton.Desc];
@@ -1144,10 +1146,10 @@ function vssfnc_formpopulate(objparam) {
             buttonelement.onmouseover = function (e) {
                 this.style.opacity = "0.5";
                 setTimeout(() => {
-                    this.style.backgroundColor = colorFormButtonnFG;
-                    this.style.color = colorFormButtonBG;
+                    this.style.backgroundColor = VssColorFormButtonnFG;
+                    this.style.color = VssColorFormButtonBG;
                     this.style.opacity = "1";
-                }, TransitionPeriod / 2);
+                }, VssTransitionPeriod / 2);
 
                 e.stopPropagation();
             }
@@ -1155,10 +1157,10 @@ function vssfnc_formpopulate(objparam) {
             buttonelement.onmouseleave = function (e) {
                 this.style.opacity = "0.5";
                 setTimeout(() => {
-                    this.style.backgroundColor = colorFormButtonBG;
-                    this.style.color = colorFormButtonnFG;
+                    this.style.backgroundColor = VssColorFormButtonBG;
+                    this.style.color = VssColorFormButtonnFG;
                     this.style.opacity = "1";
-                }, TransitionPeriod / 2);
+                }, VssTransitionPeriod / 2);
 
                 e.stopPropagation();
             }
@@ -1280,30 +1282,34 @@ const vssfnc_menupopparam_item = {
 //      1. img
 //      2. text
 
+// all menu items has a class VssMenu
+
 // when init:
 //  only 1st level menu is visible
-//  1st level has no additional class
+//  1st level has no additional class ??
 //  2nd and 3rd level has one class for its parent menu item id
 
 // for every menu item 
 // Dataset.ID = parentclass + this.Text (for root menu item, parentclass is null)
-// Class = parent.Dataset.ID 
+// Class += parent.Dataset.ID 
 // parent.dataset.ID is passed recursively as the parentclass
 
-// how dataset is used:
-// 3 dataset attribute: 
+// dataset:
+// 4 dataset attribute: 
 //      1. ID 
 //      2. Level
 //      3. Display (1 for visible, 0 for non-visible)
+//      4. SubExpanded (1 for sub menu expanded, 0 for none)
 // each menu item has a dataset.ID that is its text
 // this dataset.ID is used as one of the Classes of its children (if any) for tracing purposes
 // every menu item has a dataset.Level correspond to its level
-// dataset.Display in root menu item is used to indicate whether the root menu item has been expanded
+// dataset.Display is to indicate visibility of menu item
+// dataset.SubExpanded in parent has its sub menu item expanded
+
 // if root menu item is expanded when clicked, it will be hidden
 
-
 // initialisation after activation:
-// apart from the 1st level menu, all menu items has a class: InitDisplay
+// apart from the 1st level menu, all menu items has a class: VssInitDisplay
 // which is used to invisible the menu items during initialisation.
 
 // to display, style.display is toggled between 'flex' and 'none'
@@ -1311,12 +1317,12 @@ const vssfnc_menupopparam_item = {
 
 function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
-    const InitDisplay = "VSSInitDisplay";
+
     const DefualtBGColor = 'rgba(12, 155, 130, 1)';
     const DefaultFGColor = 'white';
     // const DefualtBGColor = 'black';
     // const DefaultFGColor = 'rgba(255, 255, 255, 1)';
-    const DefaultBorder = "1px solid rgba(230,230,230,1)";
+    const DefaultBorder = "1px solid rgba(210,210,210,.8)";
     const DefaultLevel1Border = "2px solid rgba(250,250,250,.8)";
     const DefaultMenuWidth = "100%"
     const DefaultMenuHeight = "20%";
@@ -1341,20 +1347,23 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
     let divmenu = menulevel === 1 ? document.createElement('div') : menulevel === 2 ? document.createElement('div') : document.createElement('div');
 
+
     if (menulevel == 1) {
         divmenu.style.display = "flex";
         divmenu.style.overflow = "hidden";
         // divmenu.style.border = DefaultBorder; //rgba(250,250,250,.8)';
         divmenu.style.justifyContent = "space-around";
+        divmenu.dataset.Display = '1';
+        divmenu.dataset.SubExpanded = '0';
+
         // divmenu.style.boxShadow = DefaultBoxShadow;     
 
-        divmenu.dataset.Display = '0';
     } else if (menulevel == 2) {
         divmenu.style.display = "none";
-        // divmenu.style.border = '3px solid blue';
-
-        divmenu.classList.add(InitDisplay);
+        divmenu.classList.add(VssInitDisplay);
         divmenu.dataset.Display = '0';
+        divmenu.dataset.SubExpanded = '0';
+
 
     } else if (menulevel == 3) {
         divmenu.style.display = "none";
@@ -1362,22 +1371,20 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         divmenu.style.alignItems = "flex-end";
         // divmenu.style.left = "100%";
 
+        divmenu.classList.add(VssInitDisplay);
         divmenu.dataset.Display = '0';
-        divmenu.classList.add(InitDisplay);
+        // to avoid null reference
+        divmenu.dataset.SubExpanded = '0';
+
     }
     divmenu.dataset.Level = menulevel;
-    divmenu.style.transition = "all " + TransitionPeriodStr;
+
+    divmenu.style.transition = "all " + VssTransitionPeriodStr;
     divmenu.style.height = "100%";
     divmenu.classList.add('divmenu');
+    divmenu.classList.add(VssMenu);
 
-    divmenu.onmouseleave = function () {
-        let allmenuitem = document.querySelectorAll("." + InitDisplay);
-        for (let k = 0; k < allmenuitem.length; k++) {
-            allmenuitem[k].style.display = "none";
-            allmenuitem[k].dataset.Display = "0";
-        }
-    }
-
+    
     // css style //
     if (objparam.arrycolor && objparam.arrycolor.length > 0) {
         DefualtBGColor = objparam.arrycolor[vssfnc_menupopparam_item.arryColor.BG];
@@ -1400,7 +1407,6 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
     CurrMenuBGColor = DefualtBGColor;
     CurrMenuFGColor = DefaultFGColor;
 
-    // divmenu.style.padding = DefaultPadding;
 
 
     // there must be a height for overflow:hidden to work //
@@ -1422,26 +1428,34 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         menuitem.style.flexDirection = menulevel == 1 ? "column" : menulevel == 2 ? "column" : "row";
         if (menulevel == 1) {
             menuitem.style.border = DefaultLevel1Border;
+            menuitem.style.padding = "2px";
+
             // menuitem.style.margin="0 1% 0 1%";
+            menuitem.dataset.Display = '1';
+            menuitem.dataset.SubExpanded = '0';
         }
         else if (menulevel == 2) {
-            menuitem.classList.add(InitDisplay);
+            menuitem.classList.add(VssInitDisplay);
             // menuitem.style.border = DefaultBorder;
+            menuitem.dataset.Display = '0';
+            menuitem.dataset.SubExpanded = '0';
         } else if (menulevel == 3) {
-            menuitem.classList.add(InitDisplay);
+            menuitem.classList.add(VssInitDisplay);
             menuitem.style.justifyContent = "flex-end";
             menuitem.style.padding = "1%";
             menuitem.style.width = "100%";
             // menuitem.style.border = DefaultBorder;
+            menuitem.dataset.Display = '0';
+            menuitem.dataset.SubExpanded = '0';
         }
         menuitem.style.boxSizing = "border-box";
         menuitem.style.flexGrow = "1";
-        menuitem.style.transition = "all " + TransitionPeriodStr;
+        menuitem.style.transition = "all " + VssTransitionPeriodStr;
         menuitem.classList.add('menuitem');
+        menuitem.classList.add(VssMenu);
 
         menuitem.dataset.ID = parentclass + mitem[vssfnc_menupopparam_item.arrymenu.Text];
         menuitem.dataset.Level = menulevel;
-        menuitem.dataset.Display = '0';
 
 
         menuitem.style.textAlign = menulevel == 1 || menulevel == 2 ? "center" : "right";
@@ -1462,6 +1476,11 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                 submenu.style.display = "none";
                 submenu.style.width = MenuWidth + "%";
                 submenu.style.boxSizing = "border-box";
+                submenu.style.transition = "all " + VssTransitionPeriodStr;
+                if (menulevel == 2) {
+                    submenu.style.marginTop = "-100%";
+                }
+
                 // submenu.style.padding="1%";
 
                 submenu.style.justifyContent = "space-around";
@@ -1469,8 +1488,9 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                 submenu.dataset.Level = menulevel;
                 submenu.dataset.Display = '0';
 
-                submenu.classList.add(InitDisplay);
+                submenu.classList.add(VssInitDisplay);
                 submenu.classList.add('submenu');
+                submenu.classList.add(VssMenu);
 
 
                 submenu.dataset.ID = parentclass + mitem[vssfnc_menupopparam_item.arrymenu.Text];
@@ -1478,8 +1498,12 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                 // at level 1, parentclass would by default be null //
                 if (menulevel == 1) {
                     submenu.classList.add(mitem[vssfnc_menupopparam_item.arrymenu.Text]);
+                    submenu.dataset.Display = "0";
+                    submenu.dataset.SubExpanded = "0";
                 } else {
                     submenu.classList.add(parentclass);
+                    submenu.dataset.Display = "0";
+                    submenu.dataset.SubExpanded = "0";
                 }
 
                 // menulevel == 2 after recurse to submenu from menulevel == 1 //
@@ -1507,6 +1531,10 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                     objparam2.arrymenu = mitem[vssfnc_menupopparam_item.arrymenu.SubMenu];
 
                     submenu = vssfnc_menupopulate(objparam2, menulevel + 1, menuitem.dataset.ID);
+                }
+
+                submenu.onmouseleave = function () {
+                    vssfnc_menuInitDisplay();
                 }
             }
         }
@@ -1567,62 +1595,118 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
 
 
-        // OnClick //
+        // OnClick, OnMouseOve, OnMouseOut //
+
+        // when clicked, either
+        // this menu has been expanded / closed OR
+        // other menu has expanded
+
         // when a menuitem is clicked, click event of all its parent will also be triggerred //
         // use e.stopPropagation() to stop propagation //
         menuitem.onclick = function (e) {
 
-            let boolFlip = true;
+            switch (this.dataset.Level) {
+                case "3":
+                    // re-init menu display and call back, if any //
 
-            let allmenuitem = document.querySelectorAll("." + InitDisplay);
-            for (let k = 0; k < allmenuitem.length; k++) {
-                if (allmenuitem[k].dataset.Level > this.dataset.Level) {
+                    // init menu display //
+                    vssfnc_menuInitDisplay();
 
-                    if (boolFlip) {
-                        if (allmenuitem[k].classList.contains(this.dataset.ID)) {
-                            if (allmenuitem[k].dataset.Display == "1") {
-                                boolFlip = false;
+                    // call back //
+                    if (mitem[vssfnc_menupopparam_item.arrymenu.OnClick]) {
+                        mitem[vssfnc_menupopparam_item.arrymenu.OnClick]();
+                    }
+
+                    break;
+
+                case "1":
+
+                    // dataset.SubExpaned would have been defaulted to 0 when vssfnc_menuInitDisplay
+                    let boolExpand = false;
+                    if (this.dataset.SubExpanded == "0") {
+                        boolExpand = true;
+                    }
+
+                    vssfnc_menuInitDisplay();
+
+                    if (boolExpand) {
+
+                        // expand submenu //
+                        this.dataset.SubExpanded = "1";
+                        let submenux = document.querySelectorAll("." + this.dataset.ID);
+                        if (submenux.length > 0) {
+                            for (let i = 0; i < submenux.length; i++) {
+                                // if(submenux[i].dataset.Level != this.dataset.Level){
+                                submenux[i].style.display = "flex";
+                                submenux[i].style.opacity = "0";
+
+                                submenux[i].dataset.Display = "1";
+                                submenux[i].dataset.SubExpanded = "0";
+
+                                setTimeout(() => {
+
+                                    // submenux[i].style.marginTop = "0";
+                                    submenux[i].style.opacity = "1";
+                                }, VssTransitionPeriod);
+                                // }
                             }
                         }
                     }
-                    allmenuitem[k].style.display = "none";
-                    allmenuitem[k].dataset.Display = "0";
-                }
-            }
 
-            // select all children and flip visibility //
-            if (boolFlip) {
-                let submenux = document.querySelectorAll("." + this.dataset.ID);
-                if (submenux.length > 0) {
-                    for (let i = 0; i < submenux.length; i++) {
-                        if (submenux[i].dataset.Display == '0') {
+                    break;
 
-                            submenux[i].style.display = "flex";
-                            submenux[i].dataset.Display = "1";
+                case "2":
+                    if (mitem[vssfnc_menupopparam_item.arrymenu.OnClick]) {
+                        vssfnc_menuInitDisplay();
+                        mitem[vssfnc_menupopparam_item.arrymenu.OnClick]();
+                    } else {
 
-                        } else if (submenux[i].dataset.Display == '1') {
-                            submenux[i].style.display = "none";
-                            submenux[i].dataset.Display = "0";
+                        // collapse all sub level menu //
+                        let allmenuitem = document.querySelectorAll("." + VssInitDisplay);
+                        for (let k = 0; k < allmenuitem.length; k++) {
+
+                            if (allmenuitem[k].dataset.Level == "3") {
+                                allmenuitem[k].style.display = "none";
+                                allmenuitem[k].dataset.Display = "0";
+                            }
+                            allmenuitem[k].dataset.SubExpanded = "0";
                         }
+
+                        if (this.dataset.SubExpanded == "1") {
+                            this.dataset.SubExpanded = "0";
+
+                        } else if (this.dataset.SubExpanded == "0") {
+
+
+                            this.dataset.SubExpanded = "1";
+
+                            let submenux = document.querySelectorAll("." + this.dataset.ID);
+                            if (submenux.length > 0) {
+                                for (let i = 0; i < submenux.length; i++) {
+                                    submenux[i].style.display = "flex";
+                                    submenux[i].style.opacity = "0";
+
+                                    submenux[i].dataset.Display = "1";
+
+                                    setTimeout(() => {
+
+                                        // submenux[i].style.marginTop = "0";
+                                        submenux[i].style.opacity = "1";
+                                    }, VssTransitionPeriod);
+                                }
+                            }
+                        }
+
                     }
-                }
+
+
+
+                    break;
+
             }
-
-            // invisible all menu items after executing user defined click //
-            if (mitem[vssfnc_menupopparam_item.arrymenu.OnClick]) {
-                let allmenuitem = document.querySelectorAll("." + InitDisplay);
-                for (let k = 0; k < allmenuitem.length; k++) {
-                    if (allmenuitem[k].dataset.Level > "1") {
-                        allmenuitem[k].style.display = "none";
-                        allmenuitem[k].dataset.Display = "0";
-                    }
-                }
-
-                mitem[vssfnc_menupopparam_item.arrymenu.OnClick]();
-            }
-
             e.stopPropagation();
         }
+
 
         menuitem.onmouseover = function (e) {
             this.style.opacity = "0.5";
@@ -1630,7 +1714,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                 this.style.backgroundColor = CurrMenuFGColor;
                 this.style.color = CurrMenuBGColor;
                 this.style.opacity = "1";
-            }, TransitionPeriod / 2);
+            }, VssTransitionPeriod / 2);
 
             e.stopPropagation();
         }
@@ -1641,7 +1725,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                 this.style.backgroundColor = CurrMenuBGColor;
                 this.style.color = CurrMenuFGColor;
                 this.style.opacity = "1";
-            }, TransitionPeriod / 2);
+            }, VssTransitionPeriod / 2);
 
 
             e.stopPropagation();
@@ -1667,6 +1751,24 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         divmenu.appendChild(menuitem);
     })
 
+    //!! should implement !!//
+    divmenu.onmouseleave = function () {
+        // vssfnc_menuInitDisplay();
+    }
+
     return divmenu;
 
 }
+
+function vssfnc_menuInitDisplay() {
+    let allmenuitem = document.querySelectorAll("." + VssMenu);
+    for (let k = 0; k < allmenuitem.length; k++) {
+
+        if (allmenuitem[k].dataset.Level != "1") {
+            allmenuitem[k].style.display = "none";
+            allmenuitem[k].dataset.Display = "0";
+        }
+        allmenuitem[k].dataset.SubExpanded = "0";
+    }
+}
+
