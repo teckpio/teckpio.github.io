@@ -1318,16 +1318,16 @@ const vssfnc_menupopparam_item = {
 function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
 
-    const DefualtBGColor = 'rgba(12, 155, 130, 1)';
-    const DefaultFGColor = 'white';
+    let DefualtBGColor = 'rgba(12, 155, 130, 1)';
+    let DefaultFGColor = 'white';
     // const DefualtBGColor = 'black';
     // const DefaultFGColor = 'rgba(255, 255, 255, 1)';
-    const DefaultBorder = "1px solid rgba(210,210,210,.8)";
-    const DefaultLevel1Border = "2px solid rgba(250,250,250,.8)";
-    const DefaultMenuWidth = "100%"
-    const DefaultMenuHeight = "20%";
-    const DefaultPadding = "2px";
-    const DefaultBoxShadow = "5px 5px 2px rgba(210,210,210,.8)";
+    let DefaultBorder = "1px solid rgba(210,210,210,.8)";
+    let DefaultLevel1Border = "2px solid rgba(250,250,250,.8)";
+    let DefaultMenuWidth = "100%"
+    let DefaultMenuHeight = "20%";
+    let DefaultPadding = "2px";
+    let DefaultBoxShadow = "5px 5px 2px rgba(210,210,210,.8)";
     // const DefaultBoxShadow = "0 0 2px 2px rgb(250,250,250)";
 
     let CurrMenuBGColor;
@@ -1357,6 +1357,11 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         divmenu.dataset.SubExpanded = '0';
 
         // divmenu.style.boxShadow = DefaultBoxShadow;     
+        
+        divmenu.onmouseleave = function () {
+            vssfnc_menuInitDisplay();
+        }
+
 
     } else if (menulevel == 2) {
         divmenu.style.display = "none";
@@ -1384,7 +1389,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
     divmenu.classList.add('divmenu');
     divmenu.classList.add(VssMenu);
 
-    
+
     // css style //
     if (objparam.arrycolor && objparam.arrycolor.length > 0) {
         DefualtBGColor = objparam.arrycolor[vssfnc_menupopparam_item.arryColor.BG];
@@ -1533,9 +1538,6 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                     submenu = vssfnc_menupopulate(objparam2, menulevel + 1, menuitem.dataset.ID);
                 }
 
-                submenu.onmouseleave = function () {
-                    vssfnc_menuInitDisplay();
-                }
             }
         }
 
@@ -1751,10 +1753,6 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
         divmenu.appendChild(menuitem);
     })
 
-    //!! should implement !!//
-    divmenu.onmouseleave = function () {
-        // vssfnc_menuInitDisplay();
-    }
 
     return divmenu;
 
