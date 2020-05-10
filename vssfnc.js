@@ -239,7 +239,7 @@ function vssfnc_tablepopulate(objparam) {
             trheader.appendChild(th);
         });
     }
-    else {
+    else if(objparam.arryjsondata) {
         // extract header col from first json object //
         objparam.arryheadercol = [];
         let header;
@@ -321,336 +321,342 @@ function vssfnc_tablepopulate(objparam) {
     objparam.htmltable.appendChild(thead);
 
     // load datarow //
+    if(objparam.arryjsondata){
+        let tbody = document.createElement('tbody');
 
-    let tbody = document.createElement('tbody');
-
-    // an array for total for each datacol of arrjJSON item //
-    if (objparam.arryjsondata.length > 0) {
-        let arrydatasum = new Array(Object.keys(objparam.arryjsondata[0]).length);
-        if (objparam.arryfooteragg) {
-            // initialise arrydatasum //
-            for (var i = 0; i < arrydatasum.length; i++) {
-                arrydatasum[i] = 0;
+        // an array for total for each datacol of arrjJSON item //
+        if (objparam.arryjsondata.length > 0) {
+            let arrydatasum = new Array(Object.keys(objparam.arryjsondata[0]).length);
+            if (objparam.arryfooteragg) {
+                // initialise arrydatasum //
+                for (var i = 0; i < arrydatasum.length; i++) {
+                    arrydatasum[i] = 0;
+                }
             }
         }
-    }
-
-    objparam.arryjsondata.forEach((item, index) => {
-
-        let tr = document.createElement('tr');
-
-        // add first an action column //
-        if (booleditrow) {
-            let taction = document.createElement('td');
-            taction.innerHTML = '^';
-            if (objparam.arryclass[param_item.arryclass.TrButton]) {
-                taction.classList = objparam.arryclass[param_item.arryclass.TrButton];
-            }
-            taction.onclick = function () {
-                // this: td : parentlement -> tr : parentelement -> tbody : parentelement -> table //
-                let table = this.parentElement.parentElement.parentElement;
-                let thead = table.children[0];
-                // table has 2 children: thead and tbody //
-                // thead has 2 children: header row (th) and edit datarow //
-
-                let editrow = thead.children[1];
-
-                // i starts from 1. 0 is the action td //
-                for (i = 1; i < editrow.children.length; i++) {
-                    // edit datarow's children is td whose children is either input or select //
-                    // this is action td. parent element is tr //
-                    if (editrow.children[i].children[0].nodeName == 'INPUT') {
-                        editrow.children[i].children[0].value = this.parentElement.children[i].innerHTML;
-                    } else if (editrow.children[i].children[0].nodeName == 'SELECT') {
-
-                        // go through option of select search for match text string //
-                        for (var x = 0; x < editrow.children[i].children[0].length; x++) {
-                            if (editrow.children[i].children[0].children[x].text === this.parentElement.children[i].innerHTML) {
-                                editrow.children[i].children[0].value = editrow.children[i].children[0].children[x].value;
-                                break;
+    
+        objparam.arryjsondata.forEach((item, index) => {
+    
+            let tr = document.createElement('tr');
+    
+            // add first an action column //
+            if (booleditrow) {
+                let taction = document.createElement('td');
+                taction.innerHTML = '^';
+                if (objparam.arryclass[param_item.arryclass.TrButton]) {
+                    taction.classList = objparam.arryclass[param_item.arryclass.TrButton];
+                }
+                taction.onclick = function () {
+                    // this: td : parentlement -> tr : parentelement -> tbody : parentelement -> table //
+                    let table = this.parentElement.parentElement.parentElement;
+                    let thead = table.children[0];
+                    // table has 2 children: thead and tbody //
+                    // thead has 2 children: header row (th) and edit datarow //
+    
+                    let editrow = thead.children[1];
+    
+                    // i starts from 1. 0 is the action td //
+                    for (i = 1; i < editrow.children.length; i++) {
+                        // edit datarow's children is td whose children is either input or select //
+                        // this is action td. parent element is tr //
+                        if (editrow.children[i].children[0].nodeName == 'INPUT') {
+                            editrow.children[i].children[0].value = this.parentElement.children[i].innerHTML;
+                        } else if (editrow.children[i].children[0].nodeName == 'SELECT') {
+    
+                            // go through option of select search for match text string //
+                            for (var x = 0; x < editrow.children[i].children[0].length; x++) {
+                                if (editrow.children[i].children[0].children[x].text === this.parentElement.children[i].innerHTML) {
+                                    editrow.children[i].children[0].value = editrow.children[i].children[0].children[x].value;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
+                tr.appendChild(taction);
             }
-            tr.appendChild(taction);
-        }
-
-        tr.classList.add(objparam.arryclass[param_item.arryclass.TrTd]);
-        tr.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
-
-        // datarow column button, if any //
-        Object.values(item).forEach((val, index) => {
-
-            // construct the td element //
-            // add button AFTER input/data element //
-
-            let td = document.createElement('td');
-            let tdstyle = `text-align:${objparam.arryheadercol[index][param_item.arryheadercol.Align] === 1 ? 'right' : (objparam.arryheadercol[index][param_item.arryheadercol.Align] === 0 ? 'center' : 'left')};
-            ${objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0%' || objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0' ? 'display:none' : ''}'`
-
-            // td is either for display or input //
-            // 3: [input type, input data, onchange function]]
-
-            if (objparam.arryheadercol[index][param_item.arryheadercol.Input]) {
-                // for input //
-                let inputtype = objparam.arryheadercol[index][param_item.arryheadercol.Input][param_item.arryheadercol.Input.Type] === 2 ? 'select' : 'input';
-                let inputelem = document.createElement(inputtype);
-                inputelem.value = val;
-                // inputelem.setAttribute('style', `width:100%; ${tdstyle}`);
-                inputelem.setAttribute('style', tdstyle);
-                inputelem.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
-
-                td.appendChild(inputelem);
-            }
-            else {
-                // for display //
-                td.setAttribute('style', tdstyle);
-                td.innerHTML = val;
-            }
-
-            // cell button element //
-
-            if (objparam.arrybutton && objparam.arrybutton.length > 0) {
-                objparam.arrybutton.forEach((arrycolbtn) => {
-                    if (arrycolbtn[param_item.arrybutton.Col] === index) {
-                        // let button = document.createElement('button');
-                        let button = document.createElement('div');
-
-                        if (objparam.arryclass[param_item.arryclass.TrButton]) {
-                            button.classList.add(objparam.arryclass[param_item.arryclass.TrButton]);
+    
+            tr.classList.add(objparam.arryclass[param_item.arryclass.TrTd]);
+            tr.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
+    
+            // datarow column button, if any //
+            Object.values(item).forEach((val, index) => {
+    
+                // construct the td element //
+                // add button AFTER input/data element //
+    
+                let td = document.createElement('td');
+                let tdstyle = `text-align:${objparam.arryheadercol[index][param_item.arryheadercol.Align] === 1 ? 'right' : (objparam.arryheadercol[index][param_item.arryheadercol.Align] === 0 ? 'center' : 'left')};
+                ${objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0%' || objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0' ? 'display:none' : ''}'`
+    
+                // td is either for display or input //
+                // 3: [input type, input data, onchange function]]
+    
+                if (objparam.arryheadercol[index][param_item.arryheadercol.Input]) {
+                    // for input //
+                    let inputtype = objparam.arryheadercol[index][param_item.arryheadercol.Input][param_item.arryheadercol.Input.Type] === 2 ? 'select' : 'input';
+                    let inputelem = document.createElement(inputtype);
+                    inputelem.value = val;
+                    // inputelem.setAttribute('style', `width:100%; ${tdstyle}`);
+                    inputelem.setAttribute('style', tdstyle);
+                    inputelem.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
+    
+                    td.appendChild(inputelem);
+                }
+                else {
+                    // for display //
+                    td.setAttribute('style', tdstyle);
+                    td.innerHTML = val;
+                }
+    
+                // cell button element //
+    
+                if (objparam.arrybutton && objparam.arrybutton.length > 0) {
+                    objparam.arrybutton.forEach((arrycolbtn) => {
+                        if (arrycolbtn[param_item.arrybutton.Col] === index) {
+                            // let button = document.createElement('button');
+                            let button = document.createElement('div');
+    
+                            if (objparam.arryclass[param_item.arryclass.TrButton]) {
+                                button.classList.add(objparam.arryclass[param_item.arryclass.TrButton]);
+                            }
+                            else {
+                                // ?? do nothing ??
+                            }
+    
+                            button.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
+                            button.innerHTML = arrycolbtn[param_item.arrybutton.Desc];
+                            button.dataset.ID = val;
+                            button.style.display = "inline-block";
+                            button.style.float = "right";
+                            button.style.marginLeft = "10%";
+                            // button.style.marginRight="0";
+                            button.style.alignSelf = "flex-end";
+                            button.onclick = arrycolbtn[param_item.arrybutton.OnClick];
+                            td.appendChild(button);
                         }
-                        else {
-                            // ?? do nothing ??
-                        }
-
-                        button.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
-                        button.innerHTML = arrycolbtn[param_item.arrybutton.Desc];
-                        button.dataset.ID = val;
-                        button.style.display = "inline-block";
-                        button.style.float = "right";
-                        button.style.marginLeft = "10%";
-                        // button.style.marginRight="0";
-                        button.style.alignSelf = "flex-end";
-                        button.onclick = arrycolbtn[param_item.arrybutton.OnClick];
-                        td.appendChild(button);
-                    }
-                })
-                // let btncolumn = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Col] ? objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Col] : 0;
-                // if (index === btncolumn) {
-                //     let button = document.createElement('button');
-                //     if (objparam.arryclass[param_item.arryclass.TrButton]) {
-                //         button.classList.add(objparam.arryclass[param_item.arryclass.TrButton]);
-                //     }
-                //     else {
-
-                //     }
-                //     button.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
-                //     button.innerHTML = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Desc];
-                //     td.appendChild(button);
-                //     // boolbtnadded = true;
-                // }
-            }
-
-            // collect aggregate details (count and total) //
-            if (objparam.arryfooteragg) {
-                arrydatasum[index] = parseInt(arrydatasum[index]) + parseInt(isNaN(val) ? 0 : val);
-            }
-            tr.appendChild(td);
+                    })
+                    // let btncolumn = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Col] ? objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Col] : 0;
+                    // if (index === btncolumn) {
+                    //     let button = document.createElement('button');
+                    //     if (objparam.arryclass[param_item.arryclass.TrButton]) {
+                    //         button.classList.add(objparam.arryclass[param_item.arryclass.TrButton]);
+                    //     }
+                    //     else {
+    
+                    //     }
+                    //     button.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
+                    //     button.innerHTML = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.Desc];
+                    //     td.appendChild(button);
+                    //     // boolbtnadded = true;
+                    // }
+                }
+    
+                // collect aggregate details (count and total) //
+                if (objparam.arryfooteragg) {
+                    arrydatasum[index] = parseInt(arrydatasum[index]) + parseInt(isNaN(val) ? 0 : val);
+                }
+                tr.appendChild(td);
+            });
+    
+            tbody.appendChild(tr);
         });
-
-        tbody.appendChild(tr);
-    });
-
-    objparam.htmltable.appendChild(tbody);
-
-    // table footer //
-
-    let tfoot = document.createElement('tfoot');
-
-    // aggregate function
-    if (objparam.arryfooteragg) {
-        let trfooter = document.createElement('tr');
-        trfooter.classList.add(objparam.arryclass[param_item.arryclass.TfootTr]);
-        objparam.arryfooteragg.forEach((fnc, index) => {
-            let td = document.createElement('td');
-
-            switch (fnc) {
-                case 'sum':
-                    strfooterhtml += arrydatasum[index];
-                    break;
-                case 'ave':
-                    strfooterhtml += (arrydatasum[index] / objparam.arryjsondata.length).toFixed(2);
-                    break;
-                default:
-                    break;
-            }
-            td.innerHTML = strfooterhtml;
-        })
-        trfooter.appendChild(td);
-        tfoot.appendChild(trfooter);
-    }
-
-
-    // item count //
-    // if (objparam.boolitemcount) {
-    //     objparam.htmltable.innerHTML += `<tr class = ${objparam.arryclass[5]}><td>Count: ${objparam.arryjsondata.length}</td></tr>`;
-    // }
-
-    // =>
-    // strfooterhtml += '</tfoot>'
-    // objparam.htmltable.innerHTML += strfooterhtml;
-
-
-
-
-
-    // 
-    // eventhandler for table datarow clicked //
-    // !! do it before formatting odd/even row, which changes the class of the datarow !! //
-    // 
-
-    // !! cannot use getElementsByClassName(objparam.arryclass[3] !!
-    // !! if arryclass is not specified, all elements will have same class name !!
-    // let tabledatarow = document.getElementsByClassName(objparam.arryclass[3]);
-    let tabledatarow = objparam.htmltable.getElementsByTagName('tr');
-    let parent = tabledatarow.parentElement;
-
-    for (var i = 0; i < tabledatarow.length; i++) {
-        // header row and date edit row (if any) //
-        if (i == 0 || (booleditrow && i == 1)) {
-            // do nothing //
-        } else {
-            // if (objparam.fncdatarowclicked === undefined) {
-            if (booleditrow) {
-                // action td (index: 0) has different event handler than data td //
-                if (objparam.fncdatarowclicked !== undefined) {
-                    for (var k = 1; k < tabledatarow[i].children.length; k++) {
-                        tabledatarow[i].children[k].onclick = function () {
-                            objparam.fncdatarowclicked(this.parentElement.dataset.ID);
+    
+        objparam.htmltable.appendChild(tbody);
+    
+        // table footer //
+    
+        let tfoot = document.createElement('tfoot');
+    
+        // aggregate function
+        if (objparam.arryfooteragg) {
+            let trfooter = document.createElement('tr');
+            trfooter.classList.add(objparam.arryclass[param_item.arryclass.TfootTr]);
+            objparam.arryfooteragg.forEach((fnc, index) => {
+                let td = document.createElement('td');
+    
+                switch (fnc) {
+                    case 'sum':
+                        strfooterhtml += arrydatasum[index];
+                        break;
+                    case 'ave':
+                        strfooterhtml += (arrydatasum[index] / objparam.arryjsondata.length).toFixed(2);
+                        break;
+                    default:
+                        break;
+                }
+                td.innerHTML = strfooterhtml;
+            })
+            trfooter.appendChild(td);
+            tfoot.appendChild(trfooter);
+        }
+    
+    
+        // item count //
+        // if (objparam.boolitemcount) {
+        //     objparam.htmltable.innerHTML += `<tr class = ${objparam.arryclass[5]}><td>Count: ${objparam.arryjsondata.length}</td></tr>`;
+        // }
+    
+        // =>
+        // strfooterhtml += '</tfoot>'
+        // objparam.htmltable.innerHTML += strfooterhtml;
+    
+    
+    
+    
+    
+        // 
+        // eventhandler for table datarow clicked //
+        // !! do it before formatting odd/even row, which changes the class of the datarow !! //
+        // 
+    
+        // !! cannot use getElementsByClassName(objparam.arryclass[3] !!
+        // !! if arryclass is not specified, all elements will have same class name !!
+        // let tabledatarow = document.getElementsByClassName(objparam.arryclass[3]);
+        let tabledatarow = objparam.htmltable.getElementsByTagName('tr');
+        let parent = tabledatarow.parentElement;
+    
+        for (var i = 0; i < tabledatarow.length; i++) {
+            // header row and date edit row (if any) //
+            if (i == 0 || (booleditrow && i == 1)) {
+                // do nothing //
+            } else {
+                // if (objparam.fncdatarowclicked === undefined) {
+                if (booleditrow) {
+                    // action td (index: 0) has different event handler than data td //
+                    if (objparam.fncdatarowclicked !== undefined) {
+                        for (var k = 1; k < tabledatarow[i].children.length; k++) {
+                            tabledatarow[i].children[k].onclick = function () {
+                                objparam.fncdatarowclicked(this.parentElement.dataset.ID);
+                            }
+                        }
+                    }
+                } else {
+                    // whole datarow has same click event //
+                    tabledatarow[i].onclick = function () {
+                        vssfnc_paintoddevenrow(parent, objparam.arryclassdatarow);
+    
+                        this.classList.add(objparam.arryclassdatarow[param_item.arryclassdatarow.SelectedRow]);
+    
+                        // call back to user-defined function with ID //
+                        if (objparam.fncdatarowclicked !== undefined) {
+                            objparam.fncdatarowclicked(this.dataset.ID);
                         }
                     }
                 }
-            } else {
-                // whole datarow has same click event //
-                tabledatarow[i].onclick = function () {
-                    vssfnc_paintoddevenrow(parent, objparam.arryclassdatarow);
-
-                    this.classList.add(objparam.arryclassdatarow[param_item.arryclassdatarow.SelectedRow]);
-
-                    // call back to user-defined function with ID //
-                    if (objparam.fncdatarowclicked !== undefined) {
-                        objparam.fncdatarowclicked(this.dataset.ID);
-                    }
+    
+            }
+        }
+    
+        // paint table datarow - odd/even //
+    
+        vssfnc_paintoddevenrow(objparam.htmltable, objparam.arryclassdatarow);
+    
+        // add function button for table //
+        if (objparam.arrybuttontable && objparam.arrybuttontable.length > 0) {
+    
+            let divbtn = document.createElement('div');
+            divbtn.style.display = "flex";
+            divbtn.style.flexDirection = "row";
+            divbtn.style.justifyContent = "space-around";
+            divbtn.style.width = "100%";
+            // divbtn.style.border="1px solid gray";
+            divbtn.style.padding = "1%";
+    
+            for (var i = 0; i < objparam.arrybuttontable.length; i++) {
+                console.log(objparam.arrybuttontable[i]);
+                let btn = document.createElement('div');
+    
+                btn.innerHTML = objparam.arrybuttontable[i][param_item.arrybuttontable.Button.Desc];
+                btn.addEventListener('click', objparam.arrybuttontable[i][param_item.arrybuttontable.Button.OnClick]);
+                if (objparam.arrybuttontable[i][param_item.arrybuttontable.Button.CSSClass]) {
+                    btn.className = objparam.arrybuttontable[i][param_item.arrybuttontable.Button.CSSClass];
+                } else {
+                    btn.style.margin = "1%";
+                }
+                // console.log(btn);
+                divbtn.appendChild(btn);
+            }
+            objparam.htmltable.appendChild(divbtn);
+        }
+    
+    
+    
+    
+    
+        // add event handler //
+    
+    
+        //!! eventhandler for datarow is done before paintoddevenrow !!//
+    
+    
+        // eventhandler for table header click-sort //
+        // !! cannot use getElementsByClassName(objparam.arryclass[2] !!
+        // !! if arryclass is not specified, all elements will have same class name !!
+        // let tablecolheaderX = objparam.htmltable.getElementsByClassName(objparam.arryclass[2]);
+        let tablecolheaderX = objparam.htmltable.getElementsByTagName('th');
+        for (var i = 0; i < tablecolheaderX.length; i++) {
+            tablecolheaderX[i].onclick = function () {
+                // try {
+    
+                let colidx = this.id;
+                let dir = ((this.innerHTML).indexOf(objparam.arrysortind[param_item.arrysortind.Ascd]) < 0 ? -1 : 1);
+    
+                // revert sortedtablecol to original headercol //
+                let sortedtablecol = objparam.arryheadercol.map(function (datacol) {
+                    datacol[0] = datacol[0].includes(objparam.arrysortind[param_item.arrysortind.Ascd]) ? datacol[0].replace(objparam.arrysortind[param_item.arrysortind.Ascd], '') : datacol[0].includes(objparam.arrysortind[param_item.arrysortind.Dscd]) ? datacol[0].replace(objparam.arrysortind[param_item.arrysortind.Dscd], '') : datacol[0];
+                    return datacol;
+                })
+    
+                if (sortedtablecol[colidx] && objparam.arrysortind) {
+                    // rename sorted headercol //
+                    sortedtablecol[colidx][0] += (dir < 0) ? objparam.arrysortind[param_item.arrysortind.Ascd] : objparam.arrysortind[param_item.arrysortind.Dscd];
+    
+                    // reload sorted table //
+                    objparam.arryheadercol = sortedtablecol;
+                    objparam.arryjsondata = vssfnc_sortarrydata(objparam.arryjsondata, colidx, dir);
+                    vssfnc_tablepopulate(objparam);
                 }
             }
-
         }
-    }
-
-    // paint table datarow - odd/even //
-
-    vssfnc_paintoddevenrow(objparam.htmltable, objparam.arryclassdatarow);
-
-    // add function button for table //
-    if (objparam.arrybuttontable && objparam.arrybuttontable.length > 0) {
-
-        let divbtn = document.createElement('div');
-        divbtn.style.display = "flex";
-        divbtn.style.flexDirection = "row";
-        divbtn.style.justifyContent = "space-around";
-        divbtn.style.width = "100%";
-        // divbtn.style.border="1px solid gray";
-        divbtn.style.padding = "1%";
-
-        for (var i = 0; i < objparam.arrybuttontable.length; i++) {
-            console.log(objparam.arrybuttontable[i]);
-            let btn = document.createElement('div');
-
-            btn.innerHTML = objparam.arrybuttontable[i][param_item.arrybuttontable.Button.Desc];
-            btn.addEventListener('click', objparam.arrybuttontable[i][param_item.arrybuttontable.Button.OnClick]);
-            if (objparam.arrybuttontable[i][param_item.arrybuttontable.Button.CSSClass]) {
-                btn.className = objparam.arrybuttontable[i][param_item.arrybuttontable.Button.CSSClass];
-            } else {
-                btn.style.margin = "1%";
-            }
-            // console.log(btn);
-            divbtn.appendChild(btn);
-        }
-        objparam.htmltable.appendChild(divbtn);
-    }
-
-
-
-
-
-    // add event handler //
-
-
-    //!! eventhandler for datarow is done before paintoddevenrow !!//
-
-
-    // eventhandler for table header click-sort //
-    // !! cannot use getElementsByClassName(objparam.arryclass[2] !!
-    // !! if arryclass is not specified, all elements will have same class name !!
-    // let tablecolheaderX = objparam.htmltable.getElementsByClassName(objparam.arryclass[2]);
-    let tablecolheaderX = objparam.htmltable.getElementsByTagName('th');
-    for (var i = 0; i < tablecolheaderX.length; i++) {
-        tablecolheaderX[i].onclick = function () {
-            // try {
-
-            let colidx = this.id;
-            let dir = ((this.innerHTML).indexOf(objparam.arrysortind[param_item.arrysortind.Ascd]) < 0 ? -1 : 1);
-
-            // revert sortedtablecol to original headercol //
-            let sortedtablecol = objparam.arryheadercol.map(function (datacol) {
-                datacol[0] = datacol[0].includes(objparam.arrysortind[param_item.arrysortind.Ascd]) ? datacol[0].replace(objparam.arrysortind[param_item.arrysortind.Ascd], '') : datacol[0].includes(objparam.arrysortind[param_item.arrysortind.Dscd]) ? datacol[0].replace(objparam.arrysortind[param_item.arrysortind.Dscd], '') : datacol[0];
-                return datacol;
+    
+        // eventhandler for table input field //
+    
+        if (objparam.arryheadercol) {
+            objparam.arryheadercol.forEach(headercol => {
+                if (headercol[param_item.arryheadercol.Input]) {
+    
+                    //?? how to extract input/select elements of specific column //
+                    let tableinput = objparam.htmltable.getElementsByTagName('Input');
+                    if (tableinput) {
+                        for (var i = 0; i < tableinput.length; i++) {
+                            tableinput[i].onchange = headercol[param_item.arryheadercol.Input][param_item.arryheadercol.Input.OnChange];
+                        }
+                    }
+                }
             })
-
-            if (sortedtablecol[colidx] && objparam.arrysortind) {
-                // rename sorted headercol //
-                sortedtablecol[colidx][0] += (dir < 0) ? objparam.arrysortind[param_item.arrysortind.Ascd] : objparam.arrysortind[param_item.arrysortind.Dscd];
-
-                // reload sorted table //
-                objparam.arryheadercol = sortedtablecol;
-                objparam.arryjsondata = vssfnc_sortarrydata(objparam.arryjsondata, colidx, dir);
-                vssfnc_tablepopulate(objparam);
-            }
         }
+    
+        // eventhandler for table datarow button //
+        //!! table datarow button has since been converted to allow multiple column button per datarow !! //
+        // if (objparam.arrybutton) {
+        //     let tablerowbutton = objparam.htmltable.getElementsByTagName('button');
+        //     for (var i = 0; i < tablerowbutton.length; i++) {
+        //         if (objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.OnClick]) {
+        //             tablerowbutton[i].onclick = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.OnClick];
+        //         }
+        //     }
+        // }
+    
+        // if (boolReturnElem) {
+        //     return objparam.htmltable;
+        // }
     }
-
-    // eventhandler for table input field //
-
-    if (objparam.arryheadercol) {
-        objparam.arryheadercol.forEach(headercol => {
-            if (headercol[param_item.arryheadercol.Input]) {
-
-                //?? how to extract input/select elements of specific column //
-                let tableinput = objparam.htmltable.getElementsByTagName('Input');
-                if (tableinput) {
-                    for (var i = 0; i < tableinput.length; i++) {
-                        tableinput[i].onchange = headercol[param_item.arryheadercol.Input][param_item.arryheadercol.Input.OnChange];
-                    }
-                }
-            }
-        })
-    }
-
-    // eventhandler for table datarow button //
-    //!! table datarow button has since been converted to allow multiple column button per datarow !! //
-    // if (objparam.arrybutton) {
-    //     let tablerowbutton = objparam.htmltable.getElementsByTagName('button');
-    //     for (var i = 0; i < tablerowbutton.length; i++) {
-    //         if (objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.OnClick]) {
-    //             tablerowbutton[i].onclick = objparam.arrybutton[param_item.arrybutton.DataRow.ArryID][param_item.arrybutton.DataRow.OnClick];
-    //         }
-    //     }
-    // }
-
     if (boolReturnElem) {
         return objparam.htmltable;
     }
+    
+    
 }
 
 // }
