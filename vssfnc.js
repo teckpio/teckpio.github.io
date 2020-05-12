@@ -164,8 +164,12 @@ function vssfnc_tablepopulate(objparam) {
 
     let param_item = vssfnc_tablepopparam_item;
 
-    // try {
+    // whether there's an addtional row at top as the editing row //
+
     let booleditrow = objparam.arryeditrow && objparam.arryeditrow.length > 0;
+
+    // whether to return the table element //
+    // or modification being made to the pre-loaded table element //
 
     let boolReturnElem = false;
     if (objparam.htmltable) {
@@ -178,9 +182,11 @@ function vssfnc_tablepopulate(objparam) {
     }
 
     // set css style of table element //
+
     if (true) {
         // set default if table class not set 
         // objparam.htmltable.style.borderCollapse = 'collapse';
+
         objparam.htmltable.setAttribute('style',
             `border-collapse:collapse;
             width:100%;
@@ -190,6 +196,7 @@ function vssfnc_tablepopulate(objparam) {
     }
 
     // handling of null param //
+
     if (!objparam.arryclass) {
         objparam.arryclass = [];
     }
@@ -207,14 +214,15 @@ function vssfnc_tablepopulate(objparam) {
         if (objparam.arryclass[param_item.arryclass.Caption]) {
             caption.classList.add(objparam.arryclass[param_item.arryclass.Caption]);
         } else {
-            caption.setAttribute('style', `background-color:${VssColorTableCaptionBG};color:${VssColorTableCaptionFG};text-align:left;padding:1%;`)
+            caption.style.backgroundColor = VssColorTableCaptionBG;
+            caption.style.color = VssColorTableCaptionFG;
+            caption.style.textAlign = "left";
+            caption.style.padding = "1%";
         }
 
         caption.innerHTML = objparam.caption;
         objparam.htmltable.appendChild(caption);
     }
-
-
 
     // table header //
 
@@ -237,12 +245,16 @@ function vssfnc_tablepopulate(objparam) {
 
         objparam.arryheadercol.forEach((datacol, index) => {
             let th = document.createElement('th');
-            th.classList.add(objparam.arryclass[param_item.arryclass.TheadTrTh]);
+            th.innerHTML = datacol[param_item.arryheadercol.Desc];
             th.id = index;
             th.dataset[objparam.arrydataid[param_item.arrydataid.Table]] = objparam.htmltableid;
-            th.setAttribute('style',
-                `width:${objparam.arryheadercol[index][param_item.arryheadercol.Width]} ${objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0%' || objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0' ? ';display:none' : ''}`);
-            th.innerHTML = datacol[param_item.arryheadercol.Desc];
+            if (objparam.arryclass && objparam.arryclass[param_item.arryclass.TheadTrTh]) {
+                th.classList.add(objparam.arryclass[param_item.arryclass.TheadTrTh]);
+            } else {
+                th.setAttribute('style',
+                    `width:${objparam.arryheadercol[index][param_item.arryheadercol.Width]} ${objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0%' || objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0' ? ';display:none' : ''}`);
+            }
+
             trheader.appendChild(th);
         });
     }
@@ -286,8 +298,10 @@ function vssfnc_tablepopulate(objparam) {
         taction.innerHTML = "+";
         if (objparam.arryclass[param_item.arryclass.TrButton]) {
             taction.classList = objparam.arryclass[param_item.arryclass.TrButton];
+        } else {
+            taction.style.border = "2px solid lightgray";
         }
-        taction.style.border = "2px solid lightgray";
+
         taction.dataset.DataObj = objparam.arryeditrow[param_item.arryeditrow.DataObj];
         taction.onclick = function () {
             // alert('Add ' + this.dataset.DataObj);
@@ -328,6 +342,7 @@ function vssfnc_tablepopulate(objparam) {
     objparam.htmltable.appendChild(thead);
 
     // load datarow //
+
     if (objparam.arryjsondata) {
         let tbody = document.createElement('tbody');
 
@@ -400,7 +415,9 @@ function vssfnc_tablepopulate(objparam) {
                 // 3: [input type, input data, onchange function]]
 
                 if (objparam.arryheadercol[index][param_item.arryheadercol.Input]) {
+                    
                     // for input //
+
                     let inputtype = objparam.arryheadercol[index][param_item.arryheadercol.Input][param_item.arryheadercol.Input.Type] === 2 ? 'select' : 'input';
                     let inputelem = document.createElement(inputtype);
                     inputelem.value = val;
@@ -415,6 +432,9 @@ function vssfnc_tablepopulate(objparam) {
                     td.setAttribute('style', tdstyle);
                     td.innerHTML = val;
                 }
+
+                // each td has a dataset.Key that reflects the property'a name (= header col text) //
+                td.dataset.Key = objparam.arryheadercol[index][vssfnc_tablepopparam_item.arryheadercol.Desc];
 
                 // cell button element //
 
@@ -431,8 +451,8 @@ function vssfnc_tablepopulate(objparam) {
                                 // ?? do nothing ??
                             }
 
-                            button.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
                             button.innerHTML = arrycolbtn[param_item.arrybutton.Desc];
+                            button.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
                             button.dataset.ID = val;
                             button.style.display = "inline-block";
                             button.style.float = "right";
@@ -509,11 +529,8 @@ function vssfnc_tablepopulate(objparam) {
         // objparam.htmltable.innerHTML += strfooterhtml;
 
 
-
-
-
-        // 
         // eventhandler for table datarow clicked //
+
         // !! do it before formatting odd/even row, which changes the class of the datarow !! //
         // 
 
@@ -796,6 +813,7 @@ function vssfnc_formpopulate_param() {
     //          0:form id
     //          1:dataobj id (id of record of form)
     // arrybutton - a 2-dim array of [button[(0)type, (1)text, (2)class, (3)clickedfunction (4)formactionurl]]
+    // fnconsubmit - a callback function before submitting the form for input type submit
 
     return {
         caption: null,
@@ -809,7 +827,8 @@ function vssfnc_formpopulate_param() {
         arryinput: [],
         arryclass: [],
         arrydataid: [],
-        arrybutton: []
+        arrybutton: [],
+        fnconsubmit: null
     }
 }
 
@@ -860,7 +879,7 @@ function vssfnc_formpopulate(objparam) {
 
     let param_item = vssfnc_formpopparam_item;
 
-    // set default for null parameter //
+    // set returned form element //
 
     let boolReturnElem = false;
     if (objparam.htmlform) {
@@ -876,14 +895,8 @@ function vssfnc_formpopulate(objparam) {
         boolReturnElem = true;
     }
 
-
-    // css class of form
-
-    if (true) {
-        objparam.htmlform.style.width = '100%';
-    }
-
     // datacol 
+
     if (!objparam.arrydatacol) {
         // objparam.arrydatacol=[];
         // var ppt;
@@ -898,17 +911,20 @@ function vssfnc_formpopulate(objparam) {
     // a form is a flex (row or col depending on layout) with one div for each property //
 
     // form action url //
+
     // if an url for form action is provided, it's a POST request, else default to GET //
     if (objparam.actionurl) {
         objparam.htmlform.method = 'POST';
         objparam.htmlform.action = objparam.actionurl;
     }
 
+    // default setting //
+
+    objparam.htmlform.style.width = '100%';
     objparam.htmlform.style.display = 'flex';
     objparam.htmlform.style.flexDirection = 'column';
 
     // caption //
-
 
     if (objparam.caption) {
         let captionelement = document.createElement('div');
@@ -917,277 +933,337 @@ function vssfnc_formpopulate(objparam) {
             captionelement.classList.add(objparam.arryclass[param_item.arryclass.Caption]);
         }
         else {
-            //?? not working ??//
-            captionelement.setAttribute('style', `margin-bottom:2%;padding:1%;background-color:${VssColorFormCaptionBG};color:${VssColorFormCaptionFG};`);
+            captionelement.style.marginBottom = "2%";
+            captionelement.style.padding = "1%";
+            captionelement.style.backgroundColor = VssColorFormCaptionBG;
+            captionelement.style.color = VssColorFormCaptionFG;
         }
         objparam.htmlform.appendChild(captionelement);
     }
 
-
-
     // load key and value //
 
+    // readonly attribute //
+
+    // set true only if for display and not addition //
     let boolsetreadonly = false;
-    if (objparam.jsondata['ID'] != '0') {
+    if (objparam.jsondata && !objparam.jsondata['ID'] && objparam.jsondata['ID'] != '' && objparam.jsondata['ID'] != '0') {
         boolsetreadonly = true;
     }
 
     var ppt;
     var idxarrydatacol = 0;
 
-    for (ppt in objparam.jsondata) {
-        // property wrapper - a div (row or column flex depending on layout) with: divlabel + divinput //
-        var divwrapper = document.createElement('div');
-        divwrapper.width = '100%';
-        divwrapper.setAttribute('style', 'display:flex;');
+    if (objparam.jsondata) {
+
+        // jsondata should not be null. for form being an entry form, jsondata would have all fields without value //
+
+        for (ppt in objparam.jsondata) {
+            // property wrapper - a div (row or column flex depending on layout) with: divlabel + divinput //
+
+            var divwrapper = document.createElement('div');
+            divwrapper.width = '100%';
+            divwrapper.style.display = "flex";
+
+            // label - a label element in a div element //
+
+            var divlabel = document.createElement('div');
+            divlabel.style.flexBasis = objparam.arryinput[param_item.arryinput.Label.ArryID][param_item.arryinput.Label.WidthRatio] ? objparam.arryinput[param_item.arryinput.Label.ArryID][param_item.arryinput.Label.WidthRatio] : "3";
+            divlabel.style.textAlign = objparam.arryinput[param_item.arryinput.Label.ArryID][param_item.arryinput.Label.Align] === 0 ? 'center' : (objparam.arryinput[param_item.arryinput.Label.ArryID][param_item.arryinput.Label.Align] === 1 ? 'right' : 'left');
+
+            var labelelement = document.createElement('LABEL');
+            labelelement.style.width = "100%";
+
+            if (objparam.arrydatacol && objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Desc]) {
+                labelelement.innerHTML = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Desc];
+            }
+            else {
+                labelelement.innerHTML = ppt;
+            }
+
+            if (objparam.arryclass && objparam.arryclass[param_item.arryclass.Label]) {
+                labelelement.classList.add(objparam.arryclass[param_item.arryclass.Label]);
+            }
+
+            divlabel.appendChild(labelelement);
 
 
-        // label - a label element in a div element //
-        var divlabel = document.createElement('div');
-        divlabel.style.flexBasis = objparam.arryinput[param_item.arryinput.Label.ArryID][param_item.arryinput.Label.WidthRatio];
-        divlabel.style.textAlign = objparam.arryinput[param_item.arryinput.Label.ArryID][param_item.arryinput.Label.Align] === 0 ? 'center' : (objparam.arryinput[param_item.arryinput.Label.ArryID][param_item.arryinput.Label.Align] === 1 ? 'right' : 'left');
+            // data input box - an input OR select element in a div element //
 
-        var labelelement = document.createElement('LABEL');
-        labelelement.width = '100%';
-        if (objparam.arrydatacol && objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Desc]) {
-            labelelement.innerHTML = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Desc];
-        }
-        else {
-            labelelement.innerHTML = ppt;
-        }
+            var divinput = document.createElement('div');
+            divinput.style.flexBasis = objparam.arryinput[param_item.arryinput.Input.ArryID][param_item.arryinput.Input.WidthRatio] ? objparam.arryinput[param_item.arryinput.Input.ArryID][param_item.arryinput.Input.WidthRatio] : "7";
 
-        if (objparam.arryclass && objparam.arryclass[param_item.arryclass.Label]) {
-            labelelement.classList.add(objparam.arryclass[param_item.arryclass.Label]);
-        }
-        labelelement.setAttribute('style', 'width:100%;')
-        divlabel.appendChild(labelelement);
+            // dataobj vs non-dataobj //
 
+            // non-dataobj -> radio button vs text/number/date //
+            let inputelement;
 
-        // data input box - an input OR select element in a div element //
+            // dataobj vs non-dataobj //
+            if (objparam.arrydatacol && isNaN(objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type])) {
 
+                // non-dataobj -> checkbox vs text //
+                if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type] === 'radio') {
 
-        var divinput = document.createElement('div');
-        divinput.setAttribute('style', `flex-basis:${objparam.arryinput[param_item.arryinput.Input.ArryID][param_item.arryinput.Input.WidthRatio]};`);
+                    // radio button //
 
-        // dataobj vs non-dataobj //
-        // non-dataobj -> checkbox vs text //
-        let inputelement;
+                    // inputelement for radio is a div with 2 radio
+                    inputelement = document.createElement('div');
 
-        // dataobj vs non-dataobj //
-        if (objparam.arrydatacol && isNaN(objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type])) {
+                    const idradioYes = 'rY';
+                    const idradioNo = 'rN';
 
-            // non-dataobj -> checkbox vs text //
-            if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type] === 'radio') {
-                // radio button //
-                // inputelement for radio is a div with 2 radio
-                inputelement = document.createElement('div');
+                    // yes radio //
+                    let radioY = document.createElement('INPUT');
+                    // name is required by as formdata to formactionurl
+                    radioY.setAttribute('name', ppt);
+                    radioY.dataset.Key = ppt;
+                    radioY.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
+                    radioY.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
+                    radioY.value = 1;
+                    radioY.id = idradioYes;
+                    inputelement.appendChild(radioY);
 
-                const idradioYes = 'rY';
-                const idradioNo = 'rN';
+                    let labelY = document.createElement('label');
+                    labelY.setAttribute('for', idradioYes);
+                    labelY.innerHTML = 'YES';
+                    inputelement.appendChild(labelY);
 
-                // yes radio //
-                let radioY = document.createElement('INPUT');
-                radioY.setAttribute('name', ppt);
-                radioY.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
-                radioY.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
-                radioY.value = 1;
-                radioY.id = idradioYes;
-                inputelement.appendChild(radioY);
+                    // no radio //
+                    let radioN = document.createElement('INPUT');
+                    // name is required by as formdata to formactionurl
+                    radioN.setAttribute('name', ppt);
+                    radioN.dataset.Key = ppt;
+                    radioN.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
+                    radioN.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
+                    radioN.style.margin = '0 0 0 5%';
+                    radioN.value = 0;
+                    radioN.id = idradioNo;
+                    inputelement.appendChild(radioN);
 
-                let labelY = document.createElement('label');
-                labelY.setAttribute('for', idradioYes);
-                labelY.innerHTML = 'YES';
-                inputelement.appendChild(labelY);
+                    let labelN = document.createElement('label');
+                    labelN.setAttribute('for', idradioNo);
+                    labelN.innerHTML = 'NO';
+                    inputelement.appendChild(labelN);
 
-                // no radio //
-                let radioN = document.createElement('INPUT');
-                radioN.setAttribute('name', ppt);
-                radioN.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
-                radioN.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
-                radioN.style.margin = '0 0 0 5%';
-                radioN.value = 0;
-                radioN.id = idradioNo;
-                inputelement.appendChild(radioN);
+                    if (objparam.jsondata[ppt]) {
+                        radioY.checked = true;
+                    }
+                    else {
+                        radioN.checked = true;
+                    }
+                }
+                else if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type] === 'checkbox') {
 
-                let labelN = document.createElement('label');
-                labelN.setAttribute('for', idradioNo);
-                labelN.innerHTML = 'NO';
-                inputelement.appendChild(labelN);
+                    // radio button //
 
-                if (objparam.jsondata[ppt]) {
-                    radioY.checked = true;
+                    // inputelement for radio is a div with 2 radio
+                    inputelement = document.createElement('div');
+
+                    // const idradioYes = 'rY';
+                    // const idradioNo = 'rN';
+
+                    // yes radio //
+                    let chkbox = document.createElement('INPUT');
+                    // name is required by as formdata to formactionurl
+                    chkbox.setAttribute('name', ppt);
+                    chkbox.dataset.Key = ppt;
+                    chkbox.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
+                    chkbox.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
+                    chkbox.value = 1;
+                    // radioY.id = idradioYes;
+                    inputelement.appendChild(chkbox);
+
+                    // let labelY = document.createElement('label');
+                    // labelY.setAttribute('for', idradioYes);
+                    // labelY.innerHTML = 'YES';
+                    // inputelement.appendChild(labelY);
+             
+                    chkbox.checked=objparam.jsondata[ppt];
+                    // if (objparam.jsondata[ppt]) {
+                    //     chkbox.checked = true;
+                    // }
+                    // else {
+                    //     chkbox.checked = true;
+                    // }
                 }
                 else {
-                    radioN.checked = true;
+                    // text and number and date //
+                    inputelement = document.createElement('INPUT');
+                    // name is required by as formdata to formactionurl
+                    inputelement.setAttribute('name', ppt);
+                    inputelement.dataset.Key = ppt;
+                    inputelement.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
+
+
+                    // / doesn't work !! required is a reflected property //
+                    // inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);//
+
+                    inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
+                    if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type] === 'number') {
+                        if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Attr] && !isNaN(objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Attr]) && !objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Attr].includes('.')) {
+                            let NumDecimal = '';
+                            for (let i = 0; i < objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Attr] - 1; i++) {
+                                NumDecimal += '0';
+                            }
+                            if (NumDecimal != '') {
+                                inputelement.setAttribute('step', `0.${NumDecimal}1`);
+                            }
+                        }
+
+                    }
+                    if (ppt === 'ID') {
+                        // .diabled will not send data to server //
+
+                        inputelement.readOnly = true;
+                        if (objparam.jsondata[ppt] === '') {
+                            inputelement.value = '0';
+                        }
+                        else {
+                            inputelement.value = objparam.jsondata[ppt];
+                        }
+                    }
+                    else {
+
+                        if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type] === 'date') {
+
+                            // input type date takes the value of date in the format of YYYY-MM-DD //
+                            // date string format: "2011-10-10T14:48:00" //
+                            // date string format: "2011-10-10" //
+                            let tidx = objparam.jsondata[ppt].indexOf('T');
+                            inputelement.value = tidx === -1 ? objparam.jsondata[ppt].substring(0) : objparam.jsondata[ppt].substring(0, tidx);
+                        } else {
+                            inputelement.value = objparam.jsondata[ppt];
+                        }
+                    }
                 }
             }
             else {
-                // text and number and date //
-                inputelement = document.createElement('INPUT');
+
+                // value data by id //
+
+                inputelement = document.createElement('select');
+
+                // name is required by as formdata to formactionurl
                 inputelement.setAttribute('name', ppt);
-                inputelement.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
+                inputelement.dataset.Key = ppt;
+                if (objparam.arrydatacol) {
+                    inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required]);
+                }
 
+                // populate select list item //
 
-                // / doesn't work !! required is a reflected property //
-                // inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][1]);//
+                if (objparam.arryitemdata && objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]]) {
 
-                inputelement.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
-                if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type] === 'number') {
-                    if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Attr] && !isNaN(objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Attr]) && !objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Attr].includes('.')) {
-                        let NumDecimal = '';
-                        for (let i = 0; i < objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Attr] - 1; i++) {
-                            NumDecimal += '0';
-                        }
-                        if (NumDecimal != '') {
-                            inputelement.setAttribute('step', `0.${NumDecimal}1`);
-                        }
+                    // a null value as option if data field not required //
+                    if (!objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required]) {
+                        var opt = document.createElement('option');
+                        opt.value = null;
+                        opt.text = '';
+                        inputelement.add(opt);
                     }
 
-                }
-                if (ppt === 'ID') {
-                    // .diabled will not send data to server //
+                    objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]].forEach(value => {
+                        var opt = document.createElement('option');
+                        // asuumption: ppt0 = ID, ppt1 = Name //
+                        let ppt;
+                        let i = 0;
+                        for (ppt in value) {
+                            switch (i) {
+                                case 0: opt.value = value[ppt]; break;
+                                case 1: opt.text = value[ppt]; break;
+                                default: break;
+                            }
+                            if (i > 1) { break } else { i++ }
+                        }
+                        inputelement.add(opt);
+                    });
 
-                    //!! for testing only, should set to true !!
-
-                    inputelement.readOnly = true;
-                    if (objparam.jsondata[ppt] === '') {
-                        inputelement.value = '0';
+                    // find the data in the list //
+                    var dataobjX = objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]].find(function (dataobj) {
+                        return dataobj.ID === objparam.jsondata[ppt];
+                    });
+                    if (dataobjX) {
+                        inputelement.value = dataobjX.ID;
                     }
                     else {
-                        inputelement.value = objparam.jsondata[ppt];
+                        inputelement.value = null;
                     }
                 }
-                else {
 
-                    if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type] === 'date') {
-
-                        // input type date takes the value of date in the format of YYYY-MM-DD //
-                        // date string format: "2011-10-10T14:48:00" //
-                        // date string format: "2011-10-10" //
-                        let tidx = objparam.jsondata[ppt].indexOf('T');
-                        inputelement.value = tidx === -1 ? objparam.jsondata[ppt].substring(0) : objparam.jsondata[ppt].substring(0, tidx);
-                    } else {
-                        inputelement.value = objparam.jsondata[ppt];
-                    }
-                }
-            }
-        }
-        else {
-            // value data by id //
-            inputelement = document.createElement('select');
-
-            inputelement.setAttribute('name', ppt);
-            if (objparam.arrydatacol) {
-                inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required]);
             }
 
-            // populate select list item //
-            //if (objparam.arryitemdata && objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]]) {
-            if (objparam.arryitemdata && objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]]) {
-
-                // a null value as option if data field not required //
-                if (!objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required]) {
-                    var opt = document.createElement('option');
-                    opt.value = null;
-                    opt.text = '';
-                    inputelement.add(opt);
-                }
-
-                objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]].forEach(value => {
-                    var opt = document.createElement('option');
-                    // asuumption: ppt0 = ID, ppt1 = Name //
-                    let ppt;
-                    let i = 0;
-                    for (ppt in value) {
-                        switch (i) {
-                            case 0: opt.value = value[ppt]; break;
-                            case 1: opt.text = value[ppt]; break;
-                            default: break;
-                        }
-                        if (i > 1) { break } else { i++ }
-                    }
-                    inputelement.add(opt);
-                });
-
-                // find the data in the list //
-                var dataobjX = objparam.arryitemdata[objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]].find(function (dataobj) {
-                    return dataobj.ID === objparam.jsondata[ppt];
-                });
-                if (dataobjX) {
-                    inputelement.value = dataobjX.ID;
-                }
-                else {
-                    inputelement.value = null;
+            // set readonly option onlyl if not in addition mode //
+            if (boolsetreadonly) {
+                if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.ReadOnly]) {
+                    inputelement.readOnly = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.ReadOnly]
                 }
             }
 
-        }
-
-        // set readonly option onlyl if not in addition mode //
-        if (boolsetreadonly) {
-            if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.ReadOnly]) {
-                inputelement.readOnly = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.ReadOnly]
+            if (objparam.arryclass && objparam.arryclass[param_item.arryclass.Input]) {
+                inputelement.classList.add(objparam.arryclass[param_item.arryclass.Input]);
             }
+
+            inputelement.style.width = "100%";
+            inputelement.style.padding = ".5%";
+            inputelement.style.boxSizing = "border-box";
+            inputelement.style.textAlign = objparam.arryinput[param_item.arryinput.Input.ArryID][param_item.arryinput.Input.Align] === 0 ? 'center' : (objparam.arryinput[param_item.arryinput.Input.ArryID][param_item.arryinput.Input.Align] === 1 ? 'right' : 'left');
+
+            divinput.appendChild(inputelement);
+            divwrapper.appendChild(divlabel);
+            divwrapper.appendChild(divinput);
+
+            objparam.htmlform.appendChild(divwrapper);
+
+            idxarrydatacol++
         }
-
-        if (objparam.arryclass && objparam.arryclass[param_item.arryclass.Input]) {
-            inputelement.classList.add(objparam.arryclass[param_item.arryclass.Input]);
-        }
-
-        inputelement.setAttribute('style', `width:100%;padding:.5%;box-sizing:border-box;
-            text-align:${objparam.arryinput[param_item.arryinput.Input.ArryID][param_item.arryinput.Input.Align] === 0 ? 'center' : (objparam.arryinput[param_item.arryinput.Input.ArryID][param_item.arryinput.Input.Align] === 1 ? 'right' : 'left')}`);
-        divinput.appendChild(inputelement);
-
-        divwrapper.appendChild(divlabel);
-        divwrapper.appendChild(divinput);
-
-        objparam.htmlform.appendChild(divwrapper);
-
-        idxarrydatacol++
     }
 
+
     //  button //
+
     let divbutton = document.createElement('div');
     if (objparam.arryclass && objparam.arryclass[param_item.arryclass.DivButton] && objparam.arryclass[param_item.arryclass.DivButton] != null) {
         divbutton.classList.add(objparam.arryclass[param_item.arryclass.DivButton]);
     }
     else {
-        divbutton.setAttribute('style',
-            `box-sizing:border-box;
-            width:100%; 
-            margin:2% auto;
-            display:flex;
-            border: 1px solid gray;
-            justify-content:space-around;
-            padding:1%;`);
+        divbutton.style.display = "flex";
+        divbutton.style.justifyContent = "space-around";
+        divbutton.style.border = "1px solid lightgray";
+        divbutton.style.boxSizing = "border-box";
+        divbutton.style.width = "100%";
+        divbutton.style.margin = "2% auto";
+        divbutton.style.padding = "1%";
     }
 
     if (objparam.arrybutton) {
 
         for (let i = 0; i < objparam.arrybutton.length; i++) {
-            if (objparam.arrybutton[i][param_item.arrybutton.Type]) {
-                var buttonelement = document.createElement('button');
-                buttonelement.setAttribute('type', objparam.arrybutton[i][param_item.arrybutton.Type]);
-            } else {
-                var buttonelement = document.createElement('button');
-                buttonelement.setAttribute('type', 'button');
-            }
-            buttonelement.style.boxSizing = "border-box";
-            buttonelement.style.padding = "1%";
-            buttonelement.style.width = "80%";
-            buttonelement.style.backgroundColor = VssColorFormButtonBG;
-            buttonelement.style.color = VssColorFormButtonnFG;
 
-            buttonelement.setAttribute('formaction', objparam.arrybutton[i][param_item.arrybutton.ActionURL]);
+            let buttonelement = document.createElement('button');
+
             buttonelement.innerHTML = objparam.arrybutton[i][param_item.arrybutton.Desc];
             buttonelement.dataset.ID = objparam.arrydataid[param_item.arrydataid.DataObj];
 
+            if (objparam.arrybutton[i][param_item.arrybutton.Type]) {
+                buttonelement.setAttribute('type', objparam.arrybutton[i][param_item.arrybutton.Type]);
+            } else {
+                buttonelement.setAttribute('type', 'button');
+            }
 
             if (objparam.arryclass && objparam.arryclass[param_item.arryclass.Button]) {
                 buttonelement.classList.add(objparam.arryclass[param_item.arryclass.Button]);
+            } else {
+                buttonelement.style.boxSizing = "border-box";
+                buttonelement.style.padding = "1%";
+                buttonelement.style.width = "80%";
+                buttonelement.style.backgroundColor = VssColorFormButtonBG;
+                buttonelement.style.color = VssColorFormButtonnFG;
             }
 
-            // buttonelement.formAction=objparam.actionurl;
+            // click event of button //
+
+            buttonelement.setAttribute('formaction', objparam.arrybutton[i][param_item.arrybutton.ActionURL]);
+
             if (objparam.arrybutton[i][param_item.arrybutton.Type] !== 'submit' && objparam.arrybutton[i][param_item.arrybutton.Type] !== 'reset') {
                 buttonelement.onclick = objparam.arrybutton[i][param_item.arrybutton.OnClick];
             }
@@ -1220,13 +1296,18 @@ function vssfnc_formpopulate(objparam) {
         objparam.htmlform.appendChild(divbutton);
     }
 
+    // onsubmit of form //
+
+    if (objparam.fnconsubmit) {
+        objparam.htmlform.onsubmit = objparam.fnconsubmit;
+    }
+
+
+
+
     // let frm = document.getElementById(objparam.arrydataid[param_item.arrydataid.Form]);
     // console.log(objparam.arrydataid[param_item.arrydataid.Form]);
 
-    // frm.onsubmit = onsub;
-    // function onsub(){
-    //     console.log(this);
-    // }
 
     // objparam.htmlform.setAttribute('onsubmit', "onsub()");
     // console.log(objparam.htmlform);
@@ -1487,6 +1568,11 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
             // menuitem.style.margin="0 1% 0 1%";
             menuitem.dataset.Display = '1';
             menuitem.dataset.SubExpanded = '0';
+
+            menuitem.onmouseleave = function () {
+                vssfnc_menuInitDisplay();
+            }
+
         }
         else if (menulevel == 2) {
             menuitem.classList.add(VssInitDisplay);
@@ -1718,15 +1804,15 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                         }
 
                         // collapse all sub level menu //
-                        let allmenuitem = document.querySelectorAll("." + VssInitDisplay);
-                        for (let k = 0; k < allmenuitem.length; k++) {
+                        // let allmenuitem = document.querySelectorAll("." + VssInitDisplay);
+                        // for (let k = 0; k < allmenuitem.length; k++) {
 
-                            if (allmenuitem[k].dataset.Level == "3") {
-                                allmenuitem[k].style.display = "none";
-                                allmenuitem[k].dataset.Display = "0";
-                            }
-                            allmenuitem[k].dataset.SubExpanded = "0";
-                        }
+                        //     if (allmenuitem[k].dataset.Level == "3") {
+                        //         allmenuitem[k].style.display = "none";
+                        //         allmenuitem[k].dataset.Display = "0";
+                        //     }
+                        //     allmenuitem[k].dataset.SubExpanded = "0";
+                        // }
 
                         // if (this.dataset.SubExpanded == "1") {
                         //     this.dataset.SubExpanded = "0";
@@ -1751,6 +1837,19 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                                         submenux[i].style.opacity = "1";
                                     }, VssTransitionPeriod);
                                 }
+                            }
+                        }
+                        else {
+                            this.dataset.SubExpanded = "0";
+
+                            let allmenuitem = document.querySelectorAll("." + this.dataset.ID);
+                            for (let k = 0; k < allmenuitem.length; k++) {
+
+                                if (allmenuitem[k].dataset.Level == "3") {
+                                    allmenuitem[k].style.display = "none";
+                                    allmenuitem[k].dataset.Display = "0";
+                                }
+                                allmenuitem[k].dataset.SubExpanded = "0";
                             }
                         }
 
