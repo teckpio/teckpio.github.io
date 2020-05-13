@@ -147,7 +147,12 @@ const vssfnc_tablepopparam_item = {
         DataObj: 0,
         ArryItemData: 1,
         FncDone: 2
+    },
+    tdinputtype:{
+        Input:1,
+        Select:2
     }
+
 }
 
 function vssfnc_tablepopulate(objparam) {
@@ -418,7 +423,8 @@ function vssfnc_tablepopulate(objparam) {
                     
                     // for input //
 
-                    let inputtype = objparam.arryheadercol[index][param_item.arryheadercol.Input][param_item.arryheadercol.Input.Type] === 2 ? 'select' : 'input';
+                    // let inputtype = objparam.arryheadercol[index][param_item.arryheadercol.Input][param_item.arryheadercol.Input.Type] === 2 ? 'select' : 'input';
+                    let inputtype = objparam.arryheadercol[index][param_item.arryheadercol.Input][param_item.arryheadercol.Input.Type] === param_item.tdinputtype.Select ? 'select' : 'input';
                     let inputelem = document.createElement(inputtype);
                     inputelem.value = val;
                     // inputelem.setAttribute('style', `width:100%; ${tdstyle}`);
@@ -995,7 +1001,7 @@ function vssfnc_formpopulate(objparam) {
 
             // dataobj vs non-dataobj //
 
-            // non-dataobj -> radio button vs text/number/date //
+            // non-dataobj -> radio button vs checkbox vs text/number/date //
             let inputelement;
 
             // dataobj vs non-dataobj //
