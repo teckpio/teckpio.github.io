@@ -34,7 +34,7 @@ const MenuItem = [
             ["Puspakom", , undefined, ,],
             ["Insurance", , undefined, ,]
         ]],
-        ["Report", , undefined, ,]]
+        ["Report", , menuClicked, ,]]
     ],
     ["Route", "PTIconDriver.svg", undefined, , , [
         ["Manage", "PTIconDriver.svg", undefined, , , [

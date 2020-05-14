@@ -953,9 +953,9 @@ function vssfnc_formpopulate(objparam) {
 
     // set true only if for display and not addition //
     let boolsetreadonly = false;
-    if (objparam.jsondata && !objparam.jsondata['ID'] && objparam.jsondata['ID'] != '' && objparam.jsondata['ID'] != '0') {
+    // if (objparam.jsondata && !objparam.jsondata['ID'] && objparam.jsondata['ID'] != '' && objparam.jsondata['ID'] != '0') {
         boolsetreadonly = true;
-    }
+    // }
 
     var ppt;
     var idxarrydatacol = 0;
