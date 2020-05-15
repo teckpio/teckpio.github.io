@@ -47,12 +47,14 @@ function vssfnc_tablepopulate_param() {
     // tablelistX - html element of the table to be created (if the html table element is not provided, the function will return a table element)
     // tableid - id of source datatable (for sorting by column purposes - obsolete?)
     // arryclass - an array of css classes - 
-    //          0:<caption> 
-    //          1:<thead><tr>
-    //          2:<thead><tr><th>
-    //          3:<tr><td>
-    //          4:<tr><button>
-    //          5:<tfoot><tr>
+    //          0:table
+    //          1:datarow
+    //          2:<caption> 
+    //          3:<thead><tr>
+    //          4:<thead><tr><th>
+    //          5:<tr><td>
+    //          6:<tr><button>
+    //          7:<tfoot><tr>
     // arryclassdatarow - an array of 3 classes for datarow - 
     //          0:odd-numbered row
     //          1:even-numbered row
@@ -106,12 +108,14 @@ const vssfnc_tablepopparam_item = {
         }
     },
     arryclass: {
-        Caption: 0,
-        TheadTr: 1,
-        TheadTrTh: 2,
-        TrTd: 3,
-        TrButton: 4,
-        TfootTr: 5
+        Table: 0,
+        Caption: 1,
+        Datarow: 2,
+        TheadTr: 3,
+        TheadTrTh: 4,
+        TrTd: 5,
+        TrButton: 6,
+        TfootTr: 7
     },
     arryclassdatarow: {
         OddNumRow: 0,
@@ -148,9 +152,9 @@ const vssfnc_tablepopparam_item = {
         ArryItemData: 1,
         FncDone: 2
     },
-    tdinputtype:{
-        Input:1,
-        Select:2
+    tdinputtype: {
+        Input: 1,
+        Select: 2
     }
 
 }
@@ -188,7 +192,9 @@ function vssfnc_tablepopulate(objparam) {
 
     // set css style of table element //
 
-    if (true) {
+    if (objparam.arryclass[param_item.arryclass.Table]) {
+        objparam.htmltable.classList.add(objparam.arryclass[param_item.arryclass.Table]);
+    } else {
         // set default if table class not set 
         // objparam.htmltable.style.borderCollapse = 'collapse';
 
@@ -420,7 +426,7 @@ function vssfnc_tablepopulate(objparam) {
                 // 3: [input type, input data, onchange function]]
 
                 if (objparam.arryheadercol[index][param_item.arryheadercol.Input]) {
-                    
+
                     // for input //
 
                     // let inputtype = objparam.arryheadercol[index][param_item.arryheadercol.Input][param_item.arryheadercol.Input.Type] === 2 ? 'select' : 'input';
@@ -954,7 +960,7 @@ function vssfnc_formpopulate(objparam) {
     // set true only if for display and not addition //
     let boolsetreadonly = false;
     // if (objparam.jsondata && !objparam.jsondata['ID'] && objparam.jsondata['ID'] != '' && objparam.jsondata['ID'] != '0') {
-        boolsetreadonly = true;
+    boolsetreadonly = true;
     // }
 
     var ppt;
@@ -1083,8 +1089,8 @@ function vssfnc_formpopulate(objparam) {
                     // labelY.setAttribute('for', idradioYes);
                     // labelY.innerHTML = 'YES';
                     // inputelement.appendChild(labelY);
-             
-                    chkbox.checked=objparam.jsondata[ppt];
+
+                    chkbox.checked = objparam.jsondata[ppt];
                     // if (objparam.jsondata[ppt]) {
                     //     chkbox.checked = true;
                     // }
@@ -1198,10 +1204,23 @@ function vssfnc_formpopulate(objparam) {
 
             }
 
-            // set readonly option onlyl if not in addition mode //
+            // readonly attribute //
+            // input select does not have readonly attribute and disabled won't get it selected in POSt/GET //
+
             if (boolsetreadonly) {
+
                 if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.ReadOnly]) {
-                    inputelement.readOnly = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.ReadOnly]
+
+                    // input select //
+                    if (objparam.arrydatacol && !isNaN(objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type])) {
+                        inputelement.onchange = function () {
+                            this.selectedIndex = this.defaultIndex;
+                            alert('Selection locked.');
+                        }
+
+                    } else {
+                        inputelement.readOnly = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.ReadOnly]
+                    }
                 }
             }
 
