@@ -409,6 +409,8 @@ function vssfnc_tablepopulate(objparam) {
                 tr.appendChild(taction);
             }
 
+
+
             tr.classList.add(objparam.arryclass[param_item.arryclass.TrTd]);
             tr.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = Object.values(item)[0];
 
@@ -419,6 +421,9 @@ function vssfnc_tablepopulate(objparam) {
                 // add button AFTER input/data element //
 
                 let td = document.createElement('td');
+
+                // css for td //
+
                 let tdstyle = `text-align:${objparam.arryheadercol[index][param_item.arryheadercol.Align] === 1 ? 'right' : (objparam.arryheadercol[index][param_item.arryheadercol.Align] === 0 ? 'center' : 'left')};
                 ${objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0%' || objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0' ? 'display:none' : ''}'`
 
@@ -570,7 +575,7 @@ function vssfnc_tablepopulate(objparam) {
                 } else {
                     // whole datarow has same click event //
                     tabledatarow[i].onclick = function () {
-                        vssfnc_paintoddevenrow(parent, objparam.arryclassdatarow);
+                        vssfnc_paintoddevenrow(parent, objparam.arryclassdatarow, objparam.arryheadercol);
 
                         this.classList.add(objparam.arryclassdatarow[param_item.arryclassdatarow.SelectedRow]);
 
@@ -586,7 +591,7 @@ function vssfnc_tablepopulate(objparam) {
 
         // paint table datarow - odd/even //
 
-        vssfnc_paintoddevenrow(objparam.htmltable, objparam.arryclassdatarow);
+        vssfnc_paintoddevenrow(objparam.htmltable, objparam.arryclassdatarow, objparam.arryheadercol);
 
         // add function button for table //
         if (objparam.arrybuttontable && objparam.arrybuttontable.length > 0) {
@@ -722,7 +727,7 @@ function vssfnc_tablepopulate(objparam) {
 // }
 
 
-function vssfnc_paintoddevenrow(tablex, classdatarow) {
+function vssfnc_paintoddevenrow(tablex, classdatarow, arryheadercol) {
     // if user-set css class //
     if (classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.OddNumRow] &&
         classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.EvnNumRow] &&
@@ -737,6 +742,7 @@ function vssfnc_paintoddevenrow(tablex, classdatarow) {
         }
     }
     else {
+
         // default style //
         if (tablex) {
             tablex.style.border = 'solid 1px gray';
@@ -757,17 +763,23 @@ function vssfnc_paintoddevenrow(tablex, classdatarow) {
                 tablex.rows[i].style.backgroundColor = odd ? 'white' : 'rgb(246,246,240)';
                 odd = odd ? false : true;
 
-                for (var cell of tablex.rows[i].cells) {
+                // for (var cell of tablex.rows[i].cells) {
+                for (let x = 0; x < tablex.rows[i].cells.length; x++) {
                     // cell.style.border = 'solid 1px gray';
-                    cell.style.padding = '5px';
-                    cell.style.borderLeft = "1px solid gray";
-                    cell.style.borderRight = "1px solid gray";
-                }
+                    tablex.rows[i].cells[x].style.padding = '5px';
+                    tablex.rows[i].cells[x].style.borderLeft = "1px solid gray";
+                    tablex.rows[i].cells[x].style.borderRight = "1px solid gray";
+                    tablex.rows[i].cells[x].style.textAlign = arryheadercol[x][vssfnc_tablepopparam_item.arryheadercol.Align] === 1 ? 'right' : (arryheadercol[x][vssfnc_tablepopparam_item.arryheadercol.Align] === 0 ? 'center' : 'left')
+                    if (arryheadercol[x][vssfnc_tablepopparam_item.arryheadercol.Width] === '0%' || arryheadercol[x][vssfnc_tablepopparam_item.arryheadercol.Width] === '0') {
+                        tablex.rows[i].cells[x].style.display = 'none';
+                    }
+                };
             }
         }
     }
-
 }
+
+
 
 function vssfnc_sortarrydata(arryJSON, colidx, dir) {
     // use the first data object in arryJSON to extract the property 
@@ -1473,7 +1485,7 @@ const vssfnc_menupopparam_item = {
 function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
 
-    let DefualtBGColor = 'rgba(12, 155, 130, 1)';
+    let DefualtBGColor = 'rgba(21, 136, 88, 1)';
     let DefaultFGColor = 'white';
     // const DefualtBGColor = 'black';
     // const DefaultFGColor = 'rgba(255, 255, 255, 1)';
@@ -1783,34 +1795,40 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
 
                 case "1":
 
-                    // dataset.SubExpaned would have been defaulted to 0 when vssfnc_menuInitDisplay
-                    let boolExpand = false;
-                    if (this.dataset.SubExpanded == "0") {
-                        boolExpand = true;
-                    }
-
                     vssfnc_menuInitDisplay();
+                    if (mitem[vssfnc_menupopparam_item.arrymenu.OnClick]) {
 
-                    if (boolExpand) {
+                        mitem[vssfnc_menupopparam_item.arrymenu.OnClick]();
+                    } else {
+                        // dataset.SubExpaned would have been defaulted to 0 when vssfnc_menuInitDisplay
+                        let boolExpand = false;
+                        if (this.dataset.SubExpanded == "0") {
+                            boolExpand = true;
+                        }
 
-                        // expand submenu //
-                        this.dataset.SubExpanded = "1";
-                        let submenux = document.querySelectorAll("." + this.dataset.ID);
-                        if (submenux.length > 0) {
-                            for (let i = 0; i < submenux.length; i++) {
-                                // if(submenux[i].dataset.Level != this.dataset.Level){
-                                submenux[i].style.display = "flex";
-                                submenux[i].style.opacity = "0";
+                        // vssfnc_menuInitDisplay();
 
-                                submenux[i].dataset.Display = "1";
-                                submenux[i].dataset.SubExpanded = "0";
+                        if (boolExpand) {
 
-                                setTimeout(() => {
+                            // expand submenu //
+                            this.dataset.SubExpanded = "1";
+                            let submenux = document.querySelectorAll("." + this.dataset.ID);
+                            if (submenux.length > 0) {
+                                for (let i = 0; i < submenux.length; i++) {
+                                    // if(submenux[i].dataset.Level != this.dataset.Level){
+                                    submenux[i].style.display = "flex";
+                                    submenux[i].style.opacity = "0";
 
-                                    // submenux[i].style.marginTop = "0";
-                                    submenux[i].style.opacity = "1";
-                                }, VssTransitionPeriod);
-                                // }
+                                    submenux[i].dataset.Display = "1";
+                                    submenux[i].dataset.SubExpanded = "0";
+
+                                    setTimeout(() => {
+
+                                        // submenux[i].style.marginTop = "0";
+                                        submenux[i].style.opacity = "1";
+                                    }, VssTransitionPeriod);
+                                    // }
+                                }
                             }
                         }
                     }
