@@ -13,8 +13,11 @@ const VssTableID = "VssTable";
 const VssTableDSID = "VssTableDSID";
 const VssTableDSDataObj = "VssTableDSDataObj";
 const VssTableDSDataObjX = "VssTableDSDataObjX";
+const VssTableDSXrefDataObjX = "VssTableDSXrefDataObjX";
+
 const VssTableDatarowDSID = "VssTableDatarowDSID";
 const VssTableDatarowXDSIndex = "VssTableDatarowXDSIndex";
+
 const VssTableColDSKey = "VssTableColDSKey";
 const VssTableColDSIDVal = "VssTableColDSIDVal";
 
@@ -84,8 +87,9 @@ function vssfnc_tablepopulate_param() {
     //          1:even-numbered row
     //          2:selected row
     // arrydataid - an array of data attributes - 
-    //          0:table id
-    //          1:datarow id
+    //          0:data object type
+    //          1:id of data object instance
+    //          2:id of xref dataobject instance
     // arrysortind - an array of 2 strings indicator for column sorting - 
     //          0:ascending
     //          1:descending
@@ -95,11 +99,16 @@ function vssfnc_tablepopulate_param() {
     //          [[0: button text, 1: button_clicked function, 2: css class of button]]
     // fncdatarowclicked - function to call on datarow clicked (used as a callback with dataset-ID as the parameter)
     // arryeditrow - an array of:
-    //          (if arryeditrow is set Dataset.DataObj will be set to indicate the data object that the data cells refer to) //
-    //          0. DataObj
+    //          (if arryeditrow is set table.Dataset.DataObj will be set to indicate the data object that the data cells refer to) //
+    //          0. DataObj (NOT USING)
     //          1. a 2-dim array with an array of data item options in its corresponding index (eg. [[], null, null,[], null, null])
     //              (options with ID + Name)
-    //          2. call back function (with array of datacell values as parameter) when done is clicked
+    //          2. datatype (html string for input type (eg, text, number))
+    //              - an array of datatype with index corresponding to header datacol
+    //          3. datatype attributes
+    //              - an array of 2-elem array attributes type and value (eg, [['step','0.01'],['pattern','[0-9]']) with index
+    //                  corresponding to header datacol
+    //          4. call back function (with array of datacell values as parameter) when done is clicked
 
     return {
         caption: null,
@@ -149,7 +158,8 @@ const vssfnc_tablepopparam_item = {
     },
     arrydataid: {
         DataObj: 0,
-        DataObjX: 1
+        DataObjX: 1,
+        XrefDataObjX: 2
     },
     arrysortind: {
         Ascd: 0,
@@ -175,7 +185,9 @@ const vssfnc_tablepopparam_item = {
     arryeditrow: {
         DataObj: 0,
         ArryItemData: 1,
-        FncDone: 2
+        ArryItemDataType: 2,
+        ArryItemDataTypeAttr: 3,
+        FncDone: 4
     },
     tdinputtype: {
         Input: 1,
@@ -235,6 +247,9 @@ function vssfnc_tablepopulate(objparam) {
     }
     if (objparam.arrydataid && objparam.arrydataid[param_item.arrydataid.DataObjX]) {
         objparam.htmltable.dataset[VssTableDSDataObjX] = objparam.arrydataid[param_item.arrydataid.DataObjX];
+    }
+    if (objparam.arrydataid && objparam.arrydataid[param_item.arrydataid.XrefDataObjX]) {
+        objparam.htmltable.dataset[VssTableDSXrefDataObjX] = objparam.arrydataid[param_item.arrydataid.XrefDataObjX];
     }
 
 
@@ -464,6 +479,18 @@ function vssfnc_tablepopulate(objparam) {
                 })
             } else {
                 ipt = document.createElement('input');
+
+                // data type //
+                if (objparam.arryeditrow[param_item.arryeditrow.ArryItemDataType]) {
+                    ipt.setAttribute('type', objparam.arryeditrow[param_item.arryeditrow.ArryItemDataType][i]);
+                }
+                if (objparam.arryeditrow[param_item.arryeditrow.ArryItemDataTypeAttr] && objparam.arryeditrow[param_item.arryeditrow.ArryItemDataTypeAttr][i]) {
+                    for (let k = 0; k < objparam.arryeditrow[param_item.arryeditrow.ArryItemDataTypeAttr][i].length; k++) {
+                        ipt.setAttribute(objparam.arryeditrow[param_item.arryeditrow.ArryItemDataTypeAttr][i][k][0],
+                            objparam.arryeditrow[param_item.arryeditrow.ArryItemDataTypeAttr][i][k][1]);
+                    }
+                }
+
             }
             ipt.style.width = "100%";
             ipt.style.border = "none";
@@ -471,6 +498,14 @@ function vssfnc_tablepopulate(objparam) {
 
             ipt.onchange = function () {
                 // change taction to update op //
+                let ptt = this.getAttribute('pattern')
+                if (ptt) {
+                    let testPtt = new RegExp(ptt);
+                    if (!testPtt.test(this.value)) {
+                        this.value = "";
+                    }
+                }
+                else alert('Invalid input format.');
                 let actbutton = document.getElementById(VssTableEditRowBtn);
                 actbutton.innerHTML = actbutton.innerHTML.replace(VssTableEditDRDelete, VssTableEditDREdit);
 
@@ -714,13 +749,23 @@ function vssfnc_tablepopulate(objparam) {
                         // skip td action column, starts at 1 //
                         for (var k = 1; k < tabledatarow[i].children.length; k++) {
                             tabledatarow[i].children[k].onclick = function () {
-                                objparam.fncdatarowclicked(this.parentElement.dataset.ID);
+                                objparam.fncdatarowclicked(this.dataset[VssTableDatarowDSID]);
                             }
+                        }
+                    } else {
+                        for (var k = 1; k < tabledatarow[i].children.length; k++) {
+                            tabledatarow[i].children[k].onclick = vssfnc_tablepopdrselected;
+                            // function () {
+                            //     // if booleditrow, firs td of this datarow will be the select datarow td //
+                            //     console.log(this.firstChild);
+                            //     vssfnc_tablepopdrselected();
+                            // }
                         }
                     }
                 } else {
                     // whole datarow has same click event //
                     tabledatarow[i].onclick = function () {
+
                         vssfnc_paintoddevenrow(parent, objparam.arryclassdatarow, objparam.arryheadercol, booleditrow);
 
                         this.classList.add(objparam.arryclassdatarow[param_item.arryclassdatarow.SelectedRow]);
@@ -882,6 +927,9 @@ function vssfnc_tablepopulate(objparam) {
 // }
 
 
+// 2 possible trigger event:
+//      1. when select td of a datarow is clicked
+//      2. if no callback is set for datarow clicked, when any td of a datarow is clicked
 function vssfnc_tablepopdrselected() {
 
     //!! THIS has the advantage in situation where the document has multiple tables created
@@ -894,9 +942,20 @@ function vssfnc_tablepopdrselected() {
     // thead has 2 children: header row (th) and edit datarow //
     // let editrow = thead.children[1];
 
+
+    // 2 possible trigger event:
+    //      1. when select td of a datarow is clicked
+    //      2. if no callback is set for datarow clicked, when any td of a datarow is clicked
+    let editbtnstr;
+    if (this.cellIndex == 0) {
+        editbtnstr = this.innerHTML.replace(VssTableDRSelect, VssTableEditDRDelete);
+    } else {
+        editbtnstr = this.parentElement.children[0].innerHTML.replace(VssTableDRSelect, VssTableEditDRDelete);
+    }
+
     let editrow = document.getElementById(VssTableEditRowID);
     let editrowbtn = document.getElementById(VssTableEditRowBtn);
-    editrowbtn.innerHTML = this.innerHTML.replace(VssTableDRSelect, VssTableEditDRDelete);
+    editrowbtn.innerHTML = editbtnstr;
 
 
     // set dataset value of selected row //

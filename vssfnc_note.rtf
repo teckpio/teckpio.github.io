@@ -59,15 +59,13 @@ table.dataset\par
 \tab objparam.arrydataid:\par
 \tab - DataObj (VssTableDSDataObj) (ID of DataObj type)\par
 \tab - DataObjX (VssTableDSDataObjX) (ID of DataObj instance) \par
-\tab\tab - in the case of xref dataobject (eg order item of order), \par
-\tab\tab\tab - DataObjX refers to ID of header dataobject (eg order)\par
-\tab\tab\tab - id of individual detail object is stored within datarow\par
+\tab - XrefDataObjX (VssTableDSXrefDataObjX) (ID of Xref DataObj) (eg, in the case of order item, XrefDataObjX would store the ID of its order)\par
 datarow\par
-\tab - datarow\par
+\tab - datarow.dataset\par
 \tab\tab vssfnc_tablepopulate:\par
 \tab\tab - VssTableDatarowDSID (to store ppt:ID of the datarow's item)\par
 \tab\tab - VssTableDatarowXDSIndex (to store the row index of the selected row (for editrow operation))\par
-\tab - td\par
+\tab - td.dataset\par
 \tab\tab vssfnc_tablepopulate:\par
 \tab\tab - VssTableColDSKey (to store property name of data object)\par
 \tab\tab - VssTableColDSIDVal (to store ID of ID'ed data which is showing name in the datacol)\par
@@ -108,6 +106,19 @@ a 2-dim array of:\par
 - during add/edit to add/edit row to table\par
 \tab - if input, update only innerHTML\par
 \tab - if select, update innerHTML to name of dataobject, and .dataset[VssTableColDSIDVal] to ID of dataobject (using objparam.arryitemdata)\par
+objparam.arryeditrow - an array of:\par
+(if arryyeditrow is set table.Dataset.DataObj will be set to indicate the data object that the data cells refer to)\par
+ \tab 0. DataObj (NOT USING)\par
+\tab  1. a 2-dim array with an array of data item options in its corresponding index (eg. [[], null, null,[], null, null]) (options with ID + Name)\par
+\tab 2. datatype (html string for input type (eg, text, number))\par
+                  \tab - an array of datatype with index corresponding to header datacol\par
+\tab 3. datatype attributes\par
+\tab\tab - an array of 2-elem array attributes type and value (eg, [['step','0.01'],['pattern','[0-9]']) with index corresponding to header datacol\par
+\tab 4. call back function (with array of datacell values as parameter) when done is clicked\par
+\par
+- edit row is populated (vssfnc_tablepopdrselected) when a datarow is clicked under 2 circumstances:\tab\par
+\tab 1. when select td of a datarow is clicked\par
+\tab 2. if no callback is set for datarow clicked, when any td of a datarow is clicked\par
 \par
 \par
 \ul Data Row\ulnone\par
