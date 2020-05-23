@@ -1,42 +1,84 @@
 {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
 {\*\generator Riched20 10.0.18362}\viewkind4\uc1 
 \pard\sa200\sl276\slmult1\ul\f0\fs22\lang9 vssfnc_formpopulate:\par
-objparam.htmlform\ulnone\par
-- objparam.htmlform could be pre-created before vssfnc_formpopulate (in this case all element within objparam.htmlform is removed before proceeding)\par
-- if objparam.htmlform is not preloaded, create new form into objparam.html\par
-- no return will be made if objparam.htmlform is preloaded, else return newly created objparam.htmlform\par
-- form has its id set for future query selection according to:\par
-\tab objparam.arrydataid[...arrydataid.Form]\par
+.dataset\ulnone\par
+VssFormHTMLID = "VssForm" - HTML .id for document.getElementById\par
+VssFormDSDataObj = "VssFormDSDataObj" - ID of data object type\par
+VssFormDSDataObjX = "VssFormDSDataObjX" - ID of data object instance\par
+VssFormColDSKey = "VssFormColDSKey" - storage for property / key for each label/input\par
+(each label/input is a pair of key/value)\par
 \par
+\ul\par
+objparam.htmlform\ulnone\par
+- objparam.htmlform could be pre-created before vssfnc_formpopulate call (in this case all element within objparam.htmlform is removed before proceeding)\par
+- if objparam.htmlform is not preloaded, create new form into objparam.htmlform\par
+- no return will be made if objparam.htmlform is preloaded, else return newly created objparam.htmlform\par
+- form has its id set for future query selection according to objparam.htmlformid (if null default to VssFormHTMLID\par
+- dataset[VssFormDSdataObj] to store ID of data object type\par
+- dataset[VssFormDSDataObjX] to store ID of data object instance reflected by the form\par
 \par
 \ul objparam.htmlformid\ulnone\par
 - use to set .id of form element\par
 - for identifying by document.getElementById\par
-- as agains objparam.arrydataid\par
+- as against objparam.arrydataid (used for storing data object data)\par
 \par
 \ul objparam.arrydataid\ulnone\par
-- used to store the Data Object Type ID (form id) and Data Object Instance ID (dataobj id) of the form subject\par
-\par
+- used to store \par
+arrydataid: \{\par
+        DataObj: 0,\par
+        DataObjX: 1\par
+    \},\par
 \par
 \ul objparam.jsondata\ulnone\par
-objparam.jsondata should never be null. for form being an entry form for new object, objparam.jsondata would be a object shell with all the properties and with all empty values.\par
+- objparam.jsondata should never be null. \par
+- for form being an entry form for new object, objparam.jsondata would be a object shell with all the properties and with all empty values.\par
 \par
 \par
 \ul objparam.arrydatacol (Input Element)\par
 \ulnone - for each property in objparam.jsondata (key:value pairs)\par
 - Select vs Input\par
 - Input\par
-\tab - radio button / checkbox / text / date / number\par
+\tab - currently,\par
+\tab\tab - radio button / checkbox / text / date / number\par
 \par
-- each element has a .dataset.Key as the key, and .value as the value\par
-- attributes set:\par
-\tab - required\par
-\tab - type\par
-\tab - value\par
-\tab - name (required for form ascting as formdata in formactionurl\par
+- each element has a \par
+\tab - .dataset[VssFormColsDSKey] as the key, and \par
+\tab - .value as the value\par
+\tab - attribute: name for form action url purposes\par
+\tab - attribute: type for input type\par
+\tab - .required\par
 \tab - readonly (only if in addition mode)\par
+\tab - a set of attributes according to \par
+\tab\tab - objparam.arrydatacol[datacolIndex][param_item.arrydatacol.Attr]\par
+\tab\tab - an array of [attrubute, value]\par
+\tab\tab - for 'pattern', will test for regex onchange of input\par
+\tab\tab - additional processing for 'date'\par
+- select\par
+\tab - if objparam.arryitemdata is populated with the required options\par
+\par
+\par
+\ul objparam.arryinput\ulnone\par
+- format display of label and input\par
+arryinput: \{\par
+        Label: \{\par
+            ArryID: 0,\par
+            WidthRatio: 0,\par
+            Desc: 1,\par
+            Align: 2\par
+        \},\par
+        Input: \{\par
+            ArryID: 1,\par
+            WidthRatio: 0,\par
+            Align: 1\par
+        \}\par
+    \}\par
+\par
 \par
 \ul objparam.arrybutton\ulnone\par
+- dataset[VssFormDSDataObj] - ID of data object type\par
+- dataset[VssFormDSDataObjX] - ID of data object instance\par
+\par
+- attribute 'type' set to button if objparam.arrybutton[rowIndex][param_item.arrybutton.Type is null\par
 - each button has a dataset.ID set to objparam.arrydataid[...DataObj] for the ID of the dataobject being represented by the form\par
 - event on button\par
 \tab - formaction set by objparam.button[...ActionURL] \par
@@ -48,7 +90,13 @@ objparam.jsondata should never be null. for form being an entry form for new obj
 \par
 \par
 \par
+\par
+\par
+\par
 \ul vssfnc_tablepopulate\par
+\ulnone !! Value of data cell is retrieved from td.dataset[VssTableColDSVal] - not from .innerHTML !!\par
+(for cell with input? becauase cell with input has an input element within the td)\ul\par
+\par
 Edit table data\par
 \ulnone * there are 2 ways to edit table data\par
 - using edit row (at the top, below the header row) where datarow is selected for add/edit/delete action via objparam.arryeditrow (child of thead, not tbody)\par
@@ -68,7 +116,7 @@ datarow\par
 \tab - td.dataset\par
 \tab\tab vssfnc_tablepopulate:\par
 \tab\tab - VssTableColDSKey (to store property name of data object)\par
-\tab\tab - VssTableColDSIDVal (to store ID of ID'ed data which is showing name in the datacol)\par
+\tab\tab - VssTableColDSVal (to store the value (either ID of another data object or text) - for ID'ed data innerHTML is showing name instead of the ID)\par
 \par
 \ul\par
 objparam.htmltable\ulnone\par

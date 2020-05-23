@@ -19,7 +19,7 @@ const VssTableDatarowDSID = "VssTableDatarowDSID";
 const VssTableDatarowXDSIndex = "VssTableDatarowXDSIndex";
 
 const VssTableColDSKey = "VssTableColDSKey";
-const VssTableColDSIDVal = "VssTableColDSIDVal";
+const VssTableColDSVal = "VssTableColDSVal";
 
 const VssTableEditRowID = "VssTableEditRowID";
 const VssTableEditRowBtn = "VssTableEditRowBtn";
@@ -28,9 +28,15 @@ const VssTableEditDRDelete = "-";
 const VssTableEditDREdit = "=";
 const VssTableDRSelect = "^";
 const VssTableDRSelectFnc = "VssTableDRSelectFnc";
+
+const VssTableItemCount = "VssTableItemCount";
 const VssTableStrItemCount = "Item count: ";
 
 const VssFormHTMLID = "VssForm";
+const VssFormDSDataObj = "VssFormDSDataObj";
+const VssFormDSDataObjX = "VssFormDSDataObjX";
+const VssFormColDSKey = "VssFormColDSKey";
+
 
 const VssColorTableCaptionBG = "black";
 const VssColorTableCaptionFG = "white";
@@ -315,9 +321,31 @@ function vssfnc_tablepopulate(objparam) {
     let trheader = document.createElement('tr');
 
     // add first a datarow action column //
+
     if (booleditrow) {
         let taction = document.createElement('td');
-        taction.innerHTML = ">>";
+        taction.innerHTML = ">+";
+
+        taction.onclick = () => {
+
+            // thead is parent to 0: header row, 1: edit row //
+            let editrow = taction.parentElement.parentElement.children[1];
+            let editrowtaction = editrow.firstChild;
+            if (editrowtaction) {
+                if (editrowtaction.innerHTML !== VssTableEditDRAdd) {
+                    // editrowtaction.innerHTML = VssTableEditDRAdd;
+
+                    // // re-init edit row //
+                    for (let i = 0; i < editrow.children.length; i++) {
+                        if (i == 0) {
+                            editrow.children[i].innerHTML = VssTableEditDRAdd;
+                        }
+                        editrow.children[i].firstChild.value = null;
+                    }
+                }
+            }
+        }
+
         trheader.appendChild(taction);
     }
 
@@ -361,31 +389,17 @@ function vssfnc_tablepopulate(objparam) {
             objparam.arryheadercol.push(arryheader);
             index += 1;
         })
-        // for (header in objparam.arryjsondata[0]) {
-        //     let th = document.createElement('th');
-        //     if (objparam.arryclass) {
-        //         th.classList.add(objparam.arryclass[param_item.arryclass.TheadTr]);
-        //     }
-        //     th.innerHTML = header;
-        //     trheader.appendChild(th);
-
-        //     let arryheader = [];
-        //     arryheader[param_item.arryheadercol.Desc] = header;
-        //     arryheader[param_item.arryheadercol.Align] = 0;
-        //     objparam.arryheadercol.push(arryheader);
-        //     index += 1;
-        // }
     }
 
     thead.appendChild(trheader);
 
     // search (?) / data edit row //
 
-
     if (booleditrow) {
 
         let tredit = document.createElement('tr');
         tredit.id = VssTableEditRowID;
+        tredit.style.fontFamily = "inherit";
 
         // add first an action column //
         let taction = document.createElement('td');
@@ -403,6 +417,7 @@ function vssfnc_tablepopulate(objparam) {
         // edit row clicked //
 
         taction.onclick = function () {
+            
             let tbl = document.getElementById(objparam.htmltableid);
             let drops = this.innerHTML.includes(VssTableEditDRAdd) ? VssTableEditDRAdd : (this.innerHTML.includes(VssTableEditDREdit) ? VssTableEditDREdit : VssTableEditDRDelete);
 
@@ -434,11 +449,12 @@ function vssfnc_tablepopulate(objparam) {
                                     let xitem = objparam.arryitemdata[i - 1].find(item => {
                                         return item.ID == this.parentElement.children[i].firstChild.value;
                                     })
-                                    selectedRow.children[i].dataset[VssTableColDSIDVal] = this.parentElement.children[i].firstChild.value;
+                                    // selectedRow.children[i].dataset[VssTableColDSVal] = this.parentElement.children[i].firstChild.value;
                                     selectedRow.children[i].innerHTML = xitem ? xitem.Name : '';
                                 }
                                 break;
                         }
+                        selectedRow.children[i].dataset[VssTableColDSVal] = this.parentElement.children[i].firstChild.value;
 
                         // add back any preset cell button //
 
@@ -475,7 +491,8 @@ function vssfnc_tablepopulate(objparam) {
 
                     // editrow - insert new row onto the top //
 
-                    let newRow = tbl.insertRow(2);
+                    let tbody = tbl.getElementsByTagName('tbody')[0];
+                    let newRow = tbody.insertRow(0);
                     newRow.dataset[VssTableDatarowDSID] = this.parentElement.dataset[VssTableDatarowDSID];
                     newRow.dataset[VssTableDatarowXDSIndex] = this.parentElement.dataset[VssTableDatarowXDSIndex];
 
@@ -498,11 +515,12 @@ function vssfnc_tablepopulate(objparam) {
                                         let xitem = objparam.arryitemdata[i - 1].find(item => {
                                             return item.ID == this.parentElement.children[i].firstChild.value;
                                         })
-                                        newCell.dataset[VssTableColDSIDVal] = this.parentElement.children[i].firstChild.value;
+                                        // newCell.dataset[VssTableColDSVal] = this.parentElement.children[i].firstChild.value;
                                         newCell.innerHTML = xitem ? xitem.Name : '';
                                     }
                                     break;
                             }
+                            newCell.dataset[VssTableColDSVal] = this.parentElement.children[i].firstChild.value;
                         }
 
                         // add back any preset cell button //
@@ -566,6 +584,20 @@ function vssfnc_tablepopulate(objparam) {
             }
 
         }
+
+        // taction.onmouseover = () => {
+        //     if(taction.innerHTML !== VssTableEditDRAdd){
+        //         let boolchange = false;
+        //         setTimeout(() => {
+        //             if (!boolchange) {
+        //                 taction.innerHTML = VssTableEditDRAdd;
+        //                 boolchange=true;
+        //             }
+        //         }, 500)
+        //     }
+        // }
+
+
         tredit.appendChild(taction);
 
         // let hdr;
@@ -626,62 +658,7 @@ function vssfnc_tablepopulate(objparam) {
             tredit.appendChild(tedit);
             // i++
         })
-        // for (hdr in objparam.arryjsondata[0]) {
-        //     let tedit = document.createElement('td');
-        //     tedit.style.border = "2px solid lightgray";
-        //     let ipt;
 
-        //     // select (IDed data) OR input //
-        //     if (objparam.arryeditrow[param_item.arryeditrow.ArryItemData] && objparam.arryeditrow[param_item.arryeditrow.ArryItemData][i]) {
-
-        //         ipt = document.createElement('select');
-        //         let opt = document.createElement('option');
-        //         opt.value = null;
-        //         opt.text = "";
-        //         ipt.add(opt);
-        //         objparam.arryeditrow[param_item.arryeditrow.ArryItemData][i].forEach((obj, index) => {
-        //             opt = document.createElement('option');
-        //             opt.value = obj.ID;
-        //             opt.text = obj.Name;
-        //             ipt.add(opt);
-        //         })
-        //     } else {
-        //         ipt = document.createElement('input');
-
-        //         // data type //
-        //         if (objparam.arryeditrow[param_item.arryeditrow.ArryItemDataType]) {
-        //             ipt.setAttribute('type', objparam.arryeditrow[param_item.arryeditrow.ArryItemDataType][i]);
-        //         }
-        //         if (objparam.arryeditrow[param_item.arryeditrow.ArryItemDataTypeAttr] && objparam.arryeditrow[param_item.arryeditrow.ArryItemDataTypeAttr][i]) {
-        //             for (let k = 0; k < objparam.arryeditrow[param_item.arryeditrow.ArryItemDataTypeAttr][i].length; k++) {
-        //                 ipt.setAttribute(objparam.arryeditrow[param_item.arryeditrow.ArryItemDataTypeAttr][i][k][0],
-        //                     objparam.arryeditrow[param_item.arryeditrow.ArryItemDataTypeAttr][i][k][1]);
-        //             }
-        //         }
-
-        //     }
-        //     ipt.style.width = "100%";
-        //     ipt.style.border = "none";
-        //     // ipt.style.boxSizing = "border-box";
-
-        //     ipt.onchange = function () {
-        //         // change taction to update op //
-        //         let ptt = this.getAttribute('pattern')
-        //         if (ptt) {
-        //             let testPtt = new RegExp(ptt);
-        //             if (!testPtt.test(this.value)) {
-        //                 this.value = "";
-        //                 alert('Invalid input format.');
-        //             }
-        //         }
-        //         let actbutton = document.getElementById(VssTableEditRowBtn);
-        //         actbutton.innerHTML = actbutton.innerHTML.replace(VssTableEditDRDelete, VssTableEditDREdit);
-
-        //     }
-        //     tedit.appendChild(ipt);
-        //     tredit.appendChild(tedit);
-        //     i++
-        // }
         thead.appendChild(tredit);
     }
 
@@ -744,7 +721,7 @@ function vssfnc_tablepopulate(objparam) {
             tr.dataset[VssTableDatarowDSID] = Object.values(item)[0];
 
 
-            // go throught the properties of current item //
+            // go throught the properties of current item / datarow //
 
             Object.values(item).forEach((val, index) => {
 
@@ -790,7 +767,7 @@ function vssfnc_tablepopulate(objparam) {
                         // to reflect whether .innerHTML is actually an ID of data object, thus saving the 
                         // it as ID instead of the name that is shown as innerHTML //
                         if (xitem) {
-                            td.dataset[VssTableColDSIDVal] = val;
+                            // td.dataset[VssTableColDSVal] = val;
                             td.innerHTML = xitem ? xitem.Name : "";
                         }
                         else {
@@ -803,10 +780,10 @@ function vssfnc_tablepopulate(objparam) {
 
                 }
 
-                // each td has a dataset.Key that reflects the property'a name //
+                // each td has a dataset for Key that reflects the property'a name //
+                // each td has a dataset for Value that reflects the value //
+                td.dataset[VssTableColDSVal] = val;
                 td.dataset[VssTableColDSKey] = Object.keys(item)[index];
-
-
 
                 // cell button element //
 
@@ -814,8 +791,6 @@ function vssfnc_tablepopulate(objparam) {
                     objparam.arryheadercol[index] &&
                     objparam.arryheadercol[index][param_item.arryheadercol.Button.ArryIndex] &&
                     objparam.arryheadercol[index][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick]) {
-
-                    console.log(objparam.arryheadercol[index][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick]);
 
                     // let button = document.createElement('button');
                     let button = document.createElement('div');
@@ -838,32 +813,6 @@ function vssfnc_tablepopulate(objparam) {
                     button.onclick = objparam.arryheadercol[index][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick];
                     td.appendChild(button);
                 }
-                // if (objparam.arrybutton && objparam.arrybutton.length > 0) {
-                //     objparam.arrybutton.forEach((arrycolbtn) => {
-                //         if (arrycolbtn[param_item.arrybutton.Col] === index) {
-                //             // let button = document.createElement('button');
-                //             let button = document.createElement('div');
-
-                //             if (objparam.arryclass[param_item.arryclass.TrButton]) {
-                //                 button.classList.add(objparam.arryclass[param_item.arryclass.TrButton]);
-                //             }
-                //             else {
-                //                 // ?? do nothing ??
-                //             }
-
-                //             button.innerHTML = arrycolbtn[param_item.arrybutton.Desc];
-                //             button.dataset[VssTableDatarowDSID] = Object.values(item)[0];
-                //             // button.dataset.ID = val;
-                //             button.style.display = "inline-block";
-                //             button.style.float = "right";
-                //             button.style.marginLeft = "10%";
-                //             // button.style.marginRight="0";
-                //             button.style.alignSelf = "flex-end";
-                //             button.onclick = arrycolbtn[param_item.arrybutton.OnClick];
-                //             td.appendChild(button);
-                //         }
-                //     })
-                // }
 
                 // collect aggregate details (count and total) //
                 if (objparam.arryfooteragg) {
@@ -910,6 +859,7 @@ function vssfnc_tablepopulate(objparam) {
 
             let tritemcount = document.createElement('tr');
             let tditemcount = document.createElement('td');
+            tditemcount.id = VssTableItemCount;
             tritemcount.appendChild(tditemcount);
             tditemcount.colSpan = booleditrow ? objparam.arryheadercol.length + 1 : objparam.arryheadercol.length;
             // divitemcount.style.width = "100%";
@@ -919,6 +869,8 @@ function vssfnc_tablepopulate(objparam) {
             tditemcount.style.backgroundColor = VssColorTableCaptionBG;
             tditemcount.style.color = VssColorTableCaptionFG;
             tditemcount.innerHTML = VssTableStrItemCount + objparam.arryjsondata.length;
+            // vssfnc_tablepopitemcount();
+
             // objparam.htmltable.appendChild(divitemcount);
             // objparam.htmltable.appendChild(tritemcount);
             tfoot.appendChild(tritemcount);
@@ -1196,6 +1148,14 @@ function vssfnc_tablepopdrselected() {
     }
 }
 
+// function vssfnc_tablepopitemcount(){
+//     let tbl = document.getElementById(VssTableID);
+//     let tblbody = tbl.getElementsByTagName('tbody')[0];
+//     let tditemcount = document.getElementById(VssTableItemCount);
+
+//     tditemcount.innerHTML = VssTableStrItemCount + tblbody.children.length;
+// }
+
 function vssfnc_paintoddevenrow(tablex, classdatarow, arryheadercol, booleditrow) {
     // if user-set css class //
     if (classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.OddNumRow] &&
@@ -1232,19 +1192,22 @@ function vssfnc_paintoddevenrow(tablex, classdatarow, arryheadercol, booleditrow
                 tablex.rows[i].style.backgroundColor = odd ? 'white' : 'rgb(246,246,240)';
                 odd = odd ? false : true;
 
-                for (let x = 0; x < tablex.rows[i].cells.length; x++) {
+                // if edit row exists, skip td action, starts x from 1 //
+                let startx = booleditrow ? 1 : 0;
+                for (let x = startx; x < tablex.rows[i].cells.length; x++) {
                     // cell.style.border = 'solid 1px gray';
                     tablex.rows[i].cells[x].style.padding = '5px';
                     tablex.rows[i].cells[x].style.borderLeft = "1px solid gray";
                     tablex.rows[i].cells[x].style.borderRight = "1px solid gray";
-                    if (arryheadercol[x]) {
-                        let y = booleditrow ? x + 1 : x;
 
-                        if (arryheadercol[x][vssfnc_tablepopparam_item.arryheadercol.Align]) {
-                            tablex.rows[i].cells[y].style.textAlign = arryheadercol[x][vssfnc_tablepopparam_item.arryheadercol.Align] === 1 ? 'right' : (arryheadercol[x][vssfnc_tablepopparam_item.arryheadercol.Align] === 0 ? 'center' : 'left')
+                    let y = booleditrow ? x - 1 : x;
+                    if (arryheadercol[y]) {
+
+                        if (arryheadercol[y][vssfnc_tablepopparam_item.arryheadercol.Align]) {
+                            tablex.rows[i].cells[y].style.textAlign = arryheadercol[y][vssfnc_tablepopparam_item.arryheadercol.Align] === 1 ? 'right' : (arryheadercol[y][vssfnc_tablepopparam_item.arryheadercol.Align] === 0 ? 'center' : 'left')
                         }
-                        if (arryheadercol[x][vssfnc_tablepopparam_item.arryheadercol.Width] === '0%' || arryheadercol[x][vssfnc_tablepopparam_item.arryheadercol.Width] === '0') {
-                            tablex.rows[i].cells[y].style.display = 'none';
+                        if (arryheadercol[y][vssfnc_tablepopparam_item.arryheadercol.Width] === '0%' || arryheadercol[y][vssfnc_tablepopparam_item.arryheadercol.Width] === '0') {
+                            tablex.rows[i].cells[x].style.display = 'none';
                         }
                     }
 
@@ -1343,6 +1306,10 @@ const vssfnc_formpopparam_item = {
         Attr: 4,
         ReadOnly: 5
     },
+    arrydatacolattr: {
+        Name: 0,
+        Value: 1
+    },
     arryinput: {
         Label: {
             ArryID: 0,
@@ -1392,30 +1359,36 @@ function vssfnc_formpopulate(objparam) {
         while (objparam.htmlform.firstChild) {
             objparam.htmlform.removeChild(objparam.htmlform.firstChild);
         }
-        // objparam.htmlform.id=objparam.htmlformid;
-        // objparam.htmlform.id = objparam.arrydataid[param_item.arrydataid.Form];
     }
     else {
         objparam.htmlform = document.createElement('form');
-        // objparam.htmlform.id = objparam.arrydataid[param_item.arrydataid.Form];
         boolReturnElem = true;
     }
-    if (objparam.htmlformid) {
-        objparam.htmlform.id = objparam.htmlformid;
-    } else {
-        objparam.htmlform.id = VssFormHTMLID;
+
+    // .id and .dataset //
+
+    objparam.htmlform.id = objparam.htmlformid ? objparam.htmlformid : VssFormHTMLID;
+
+
+    if (objparam.arrydataid[param_item.arrydataid.DataObj]) {
+        objparam.htmlform.dataset[VssFormDSDataObj] = objparam.arrydataid[param_item.arrydataid.DataObj];
     }
+
+    if (objparam.arrydataid[param_item.arrydataid.DataObjX]) {
+        objparam.htmlform.dataset[VssFormDSDataObjX] = objparam.arrydataid[param_item.arrydataid.DataObjX];
+    }
+
 
     // datacol 
 
-    if (!objparam.arrydatacol) {
-        // objparam.arrydatacol=[];
-        // var ppt;
-        // let record=[];
-        // for(ppt in objparam.arryjsondata[0]){
+    // if (!objparam.arrydatacol) {
+    //     // objparam.arrydatacol=[];
+    //     // var ppt;
+    //     // let record=[];
+    //     // for(ppt in objparam.arryjsondata[0]){
 
-        // }
-    }
+    //     // }
+    // }
 
     // 
     // format form //
@@ -1470,6 +1443,7 @@ function vssfnc_formpopulate(objparam) {
         // jsondata should not be null. for form being an entry form, jsondata would have all fields without value //
 
         for (ppt in objparam.jsondata) {
+
             // property wrapper - a div (row or column flex depending on layout) with: divlabel + divinput //
 
             var divwrapper = document.createElement('div');
@@ -1527,7 +1501,7 @@ function vssfnc_formpopulate(objparam) {
                     let radioY = document.createElement('INPUT');
                     // name is required by as formdata to formactionurl
                     radioY.setAttribute('name', ppt);
-                    radioY.dataset.Key = ppt;
+                    radioY.dataset[VssFormColDSKey] = ppt;
                     radioY.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
                     radioY.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
                     radioY.value = 1;
@@ -1543,7 +1517,7 @@ function vssfnc_formpopulate(objparam) {
                     let radioN = document.createElement('INPUT');
                     // name is required by as formdata to formactionurl
                     radioN.setAttribute('name', ppt);
-                    radioN.dataset.Key = ppt;
+                    radioN.dataset[VssFormColDSKey] = ppt;
                     radioN.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
                     radioN.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
                     radioN.style.margin = '0 0 0 5%';
@@ -1571,7 +1545,7 @@ function vssfnc_formpopulate(objparam) {
                     let chkbox = document.createElement('INPUT');
                     // name is required by as formdata to formactionurl
                     chkbox.setAttribute('name', ppt);
-                    chkbox.dataset.Key = ppt;
+                    chkbox.dataset[VssFormColDSKey] = ppt;
                     chkbox.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
                     chkbox.setAttribute('type', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type]);
                     chkbox.value = 1;
@@ -1586,7 +1560,7 @@ function vssfnc_formpopulate(objparam) {
                     inputelement = document.createElement('INPUT');
                     // name is required by as formdata to formactionurl
                     inputelement.setAttribute('name', ppt);
-                    inputelement.dataset.Key = ppt;
+                    inputelement.dataset[VssFormColDSKey] = ppt;
                     inputelement.required = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required];
 
                     // required //
@@ -1668,7 +1642,7 @@ function vssfnc_formpopulate(objparam) {
 
                 // name is required by as formdata to formactionurl
                 inputelement.setAttribute('name', ppt);
-                inputelement.dataset.Key = ppt;
+                inputelement.dataset[VssFormColDSKey] = ppt;
                 if (objparam.arrydatacol) {
                     inputelement.setAttribute('required', objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Required]);
                 }
@@ -1735,13 +1709,15 @@ function vssfnc_formpopulate(objparam) {
                 }
             }
 
+            // input format //
+
             if (objparam.arryclass && objparam.arryclass[param_item.arryclass.Input]) {
                 inputelement.classList.add(objparam.arryclass[param_item.arryclass.Input]);
+            } else {
+                inputelement.style.width = "100%";
+                inputelement.style.padding = ".5%";
+                inputelement.style.boxSizing = "border-box";
             }
-
-            inputelement.style.width = "100%";
-            inputelement.style.padding = ".5%";
-            inputelement.style.boxSizing = "border-box";
             inputelement.style.textAlign = objparam.arryinput[param_item.arryinput.Input.ArryID][param_item.arryinput.Input.Align] === 0 ? 'center' : (objparam.arryinput[param_item.arryinput.Input.ArryID][param_item.arryinput.Input.Align] === 1 ? 'right' : 'left');
 
             divinput.appendChild(inputelement);
@@ -1778,7 +1754,12 @@ function vssfnc_formpopulate(objparam) {
             let buttonelement = document.createElement('button');
 
             buttonelement.innerHTML = objparam.arrybutton[i][param_item.arrybutton.Desc];
-            buttonelement.dataset.ID = objparam.arrydataid[param_item.arrydataid.DataObjX];
+            if (objparam.arrydataid[param_item.arrydataid.DataObj]) {
+                buttonelement.dataset[VssFormDSDataObj] = objparam.arrydataid[param_item.arrydataid.DataObj];
+            }
+            if (objparam.arrydataid[param_item.arrydataid.DataObjX]) {
+                buttonelement.dataset[VssFormDSDataObjX] = objparam.arrydataid[param_item.arrydataid.DataObjX];
+            }
 
             if (objparam.arrybutton[i][param_item.arrybutton.Type]) {
                 buttonelement.setAttribute('type', objparam.arrybutton[i][param_item.arrybutton.Type]);
