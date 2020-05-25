@@ -2,7 +2,7 @@
 
 // vssfnc_tablepopulate_param
 // vssfnc_tablepopulate
-// vssfnc_paintoddevenrow
+// vssfnc_tablepaintoddevenrow
 // vssfnc_sortarrydata
 
 // vssfnc_formpopulate_param
@@ -10,10 +10,12 @@
 
 const VssTableID = "VssTable";
 
-const VssTableDSID = "VssTableDSID";
+// const VssTableDSID = "VssTableDSID";
 const VssTableDSDataObj = "VssTableDSDataObj";
 const VssTableDSDataObjX = "VssTableDSDataObjX";
 const VssTableDSXrefDataObjX = "VssTableDSXrefDataObjX";
+// const VssTabldDSSelectedRow = "VssTabldDSSelectedRow";
+
 
 const VssTableDatarowDSID = "VssTableDatarowDSID";
 const VssTableDatarowXDSIndex = "VssTableDatarowXDSIndex";
@@ -26,11 +28,13 @@ const VssTableEditRowBtn = "VssTableEditRowBtn";
 const VssTableEditDRAdd = "+";
 const VssTableEditDRDelete = "-";
 const VssTableEditDREdit = "=";
-const VssTableDRSelect = "^";
+const VssTableDRSelectEdit = "^";
 const VssTableDRSelectFnc = "VssTableDRSelectFnc";
 
 const VssTableItemCount = "VssTableItemCount";
 const VssTableStrItemCount = "Item count: ";
+
+const VssTableDRClassSelect = "VssTableDRClassSelect";
 
 const VssFormHTMLID = "VssForm";
 const VssFormDSDataObj = "VssFormDSDataObj";
@@ -53,7 +57,10 @@ const VssColorFormCaptionFG = "white";
 
 const VssColorFormButtonBG = "white";
 const VssColorFormButtonnFG = "black";
+const VssBorderFormButton = "1px solid white";
+const VssBorderFormButtonnBoxShadow = "0 0 1px 1px black";
 
+const VssBorderItemCount = "1px solid gray";
 
 const VssTransitionPeriodStr = ".2s";
 const VssTransitionPeriod = 200;
@@ -116,6 +123,7 @@ function vssfnc_tablepopulate_param() {
     //              - an array of 2-elem array attributes type and value (eg, [['step','0.01'],['pattern','[0-9]']) with index
     //                  corresponding to header datacol
     //          4. call back function (with array of datacell values as parameter) when done is clicked
+    // boolselectcolumn to indicate whether a datarow select column is available for datarow selection
 
     return {
         caption: null,
@@ -126,14 +134,15 @@ function vssfnc_tablepopulate_param() {
         boolitemcount: false,
         htmltable: null,
         htmltableid: null,
+        arrydataid: [],
         arryclass: [],
         arryclassdatarow: [],
-        arrydataid: [],
         arrysortind: [],
         // arrybutton: [],
         arrybuttontable: [],
         fncdatarowclicked: undefined,
-        arryeditrow: []
+        arryeditrow: [],
+        boolselectcolumn: false
     }
 }
 
@@ -320,7 +329,26 @@ function vssfnc_tablepopulate(objparam) {
 
     let trheader = document.createElement('tr');
 
-    // add first a datarow action column //
+    // add first a datarow select column //
+
+    if (objparam.boolselectcolumn) {
+        let tselect = document.createElement('td');
+        let selectcheck = document.createElement('input');
+        selectcheck.setAttribute('type', 'checkbox');
+        selectcheck.onclick = () => {
+            let drselectcheck = objparam.htmltable.querySelectorAll(`.${VssTableDRClassSelect}`);
+            if (drselectcheck) {
+                drselectcheck.forEach(cbox => {
+                    cbox.checked = selectcheck.checked;
+                })
+            }
+        }
+        tselect.appendChild(selectcheck);
+
+        trheader.appendChild(tselect);
+    }
+
+    // add a datarow action column //
 
     if (booleditrow) {
         let taction = document.createElement('td');
@@ -333,14 +361,18 @@ function vssfnc_tablepopulate(objparam) {
             let editrowtaction = editrow.firstChild;
             if (editrowtaction) {
                 if (editrowtaction.innerHTML !== VssTableEditDRAdd) {
-                    // editrowtaction.innerHTML = VssTableEditDRAdd;
-
                     // // re-init edit row //
+
                     for (let i = 0; i < editrow.children.length; i++) {
-                        if (i == 0) {
-                            editrow.children[i].innerHTML = VssTableEditDRAdd;
+                        if (objparam.boolselectcolumn && i == 0) {
+                            // do nothing 
                         }
-                        editrow.children[i].firstChild.value = null;
+                        else if (objparam.boolselectcolumn && i == 1 || !objparam.boolselectcolumn && i == 0) {
+                            editrow.children[i].innerHTML = VssTableEditDRAdd;
+                        } else {
+                            editrow.children[i].firstChild.value = null;
+                        }
+
                     }
                 }
             }
@@ -401,6 +433,18 @@ function vssfnc_tablepopulate(objparam) {
         tredit.id = VssTableEditRowID;
         tredit.style.fontFamily = "inherit";
 
+        // add first a non-functioning select column //
+
+        if (objparam.boolselectcolumn) {
+            let tselect = document.createElement('td');
+            tredit.appendChild(tselect);
+            if (objparam.arryclass[param_item.arryclass.TrButton]) {
+                tselect.classList = objparam.arryclass[param_item.arryclass.TrButton];
+            } else {
+                tselect.style.border = "2px solid lightgray";
+            }
+        }
+
         // add first an action column //
         let taction = document.createElement('td');
         taction.id = VssTableEditRowBtn;
@@ -417,7 +461,7 @@ function vssfnc_tablepopulate(objparam) {
         // edit row clicked //
 
         taction.onclick = function () {
-            
+
             let tbl = document.getElementById(objparam.htmltableid);
             let drops = this.innerHTML.includes(VssTableEditDRAdd) ? VssTableEditDRAdd : (this.innerHTML.includes(VssTableEditDREdit) ? VssTableEditDREdit : VssTableEditDRDelete);
 
@@ -427,7 +471,7 @@ function vssfnc_tablepopulate(objparam) {
                     // editrow - delete row //
 
                     tbl.deleteRow(this.parentElement.dataset[VssTableDatarowXDSIndex]);
-                    vssfnc_paintoddevenrow(tbl, objparam.arryclassdatarow, objparam.arryheadercol, booleditrow);
+                    vssfnc_tablepaintoddevenrow(tbl, objparam.arryclassdatarow, objparam.arryheadercol, booleditrow, objparam.boolselectcolumn);
                     break;
 
                 case VssTableEditDREdit:
@@ -436,7 +480,8 @@ function vssfnc_tablepopulate(objparam) {
 
                     let selectedRow = tbl.rows[this.parentElement.dataset[VssTableDatarowXDSIndex]];
                     // skip 0, which is the edit row action button //
-                    for (let i = 1; i < this.parentElement.children.length; i++) {
+                    let startI = objparam.boolselectcolumn && booleditrow ? 2 : objparam.boolselectcolumn || booleditrow ? 1 : 0;
+                    for (let i = startI; i < this.parentElement.children.length; i++) {
 
                         switch (this.parentElement.children[i].firstChild.nodeName) {
                             case 'INPUT':
@@ -445,8 +490,8 @@ function vssfnc_tablepopulate(objparam) {
                             case 'SELECT':
                                 // -1 to offset first column of edit row action button //
                                 // arryitemdata has no reference to edit row //
-                                if (objparam.arryitemdata[i - 1]) {
-                                    let xitem = objparam.arryitemdata[i - 1].find(item => {
+                                if (objparam.arryitemdata[i - startI]) {
+                                    let xitem = objparam.arryitemdata[i - startI].find(item => {
                                         return item.ID == this.parentElement.children[i].firstChild.value;
                                     })
                                     // selectedRow.children[i].dataset[VssTableColDSVal] = this.parentElement.children[i].firstChild.value;
@@ -459,9 +504,9 @@ function vssfnc_tablepopulate(objparam) {
                         // add back any preset cell button //
 
                         if (objparam.arryheadercol &&
-                            objparam.arryheadercol[i - 1] &&
-                            objparam.arryheadercol[i - 1][param_item.arryheadercol.Button.ArryIndex] &&
-                            objparam.arryheadercol[i - 1][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick]) {
+                            objparam.arryheadercol[i - startI] &&
+                            objparam.arryheadercol[i - startI][param_item.arryheadercol.Button.ArryIndex] &&
+                            objparam.arryheadercol[i - startI][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick]) {
 
                             // let button = document.createElement('button');
                             let button = document.createElement('div');
@@ -473,7 +518,7 @@ function vssfnc_tablepopulate(objparam) {
                                 // ?? do nothing ??
                             }
 
-                            button.innerHTML = objparam.arryheadercol[i - 1][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.Desc];
+                            button.innerHTML = objparam.arryheadercol[i - startI][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.Desc];
                             // button.dataset[VssTableDatarowDSID] = Object.values(item)[0];
                             // button.dataset.ID = val;
                             button.style.display = "inline-block";
@@ -481,7 +526,7 @@ function vssfnc_tablepopulate(objparam) {
                             button.style.marginLeft = "10%";
                             // button.style.marginRight="0";
                             button.style.alignSelf = "flex-end";
-                            button.onclick = objparam.arryheadercol[i - 1][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick];
+                            button.onclick = objparam.arryheadercol[i - startI][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick];
                             selectedRow.children[i].appendChild(button);
                         }
                     }
@@ -489,21 +534,34 @@ function vssfnc_tablepopulate(objparam) {
 
                 case VssTableEditDRAdd:
 
-                    // editrow - insert new row onto the top //
+                    // editrow - add/insert new row onto the top //
 
                     let tbody = tbl.getElementsByTagName('tbody')[0];
                     let newRow = tbody.insertRow(0);
                     newRow.dataset[VssTableDatarowDSID] = this.parentElement.dataset[VssTableDatarowDSID];
                     newRow.dataset[VssTableDatarowXDSIndex] = this.parentElement.dataset[VssTableDatarowXDSIndex];
 
+                    let startX = objparam.boolselectcolumn && booleditrow ? 2 : objparam.boolselectcolumn || booleditrow ? 1 : 0;
+
                     for (let i = 0; i < this.parentElement.children.length; i++) {
                         let newCell = newRow.insertCell(i);
-                        if (i == 0) {
+
+                        // datarow select column //
+                        if (objparam.boolselectcolumn && i == 0) {
+                            let tdrselect = document.createElement('input');
+                            tdrselect.setAttribute('type', 'checkbox');
+                            newCell.appendChild(tdrselect);
+                        }
+
+                        // datarow action column //
+                        else if ((objparam.boolselectcolumn && i == 1) || (!objparam.boolselectcolumn && i == 0)) {
                             // action column //
-                            newCell.innerHTML = VssTableDRSelect;
+                            newCell.innerHTML = VssTableDRSelectEdit;
                             newCell.onclick = vssfnc_tablepopdrselected;
+
+                            // datarow data column //
                         } else {
-                            newCell.dataset[VssTableColDSKey] = arrydataobjectkey[i - 1];
+                            newCell.dataset[VssTableColDSKey] = arrydataobjectkey[i - startX];
                             switch (this.parentElement.children[i].firstChild.nodeName) {
                                 case 'INPUT':
                                     newCell.innerHTML = this.parentElement.children[i].firstChild.value;
@@ -511,8 +569,8 @@ function vssfnc_tablepopulate(objparam) {
                                 case 'SELECT':
                                     // -1 to offset first column of edit row action button //
                                     // arryitemdata has no reference to edit row //
-                                    if (objparam.arryitemdata[i - 1]) {
-                                        let xitem = objparam.arryitemdata[i - 1].find(item => {
+                                    if (objparam.arryitemdata[i - startX]) {
+                                        let xitem = objparam.arryitemdata[i - startX].find(item => {
                                             return item.ID == this.parentElement.children[i].firstChild.value;
                                         })
                                         // newCell.dataset[VssTableColDSVal] = this.parentElement.children[i].firstChild.value;
@@ -526,9 +584,9 @@ function vssfnc_tablepopulate(objparam) {
                         // add back any preset cell button //
 
                         if (objparam.arryheadercol &&
-                            objparam.arryheadercol[i - 1] &&
-                            objparam.arryheadercol[i - 1][param_item.arryheadercol.Button.ArryIndex] &&
-                            objparam.arryheadercol[i - 1][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick]) {
+                            objparam.arryheadercol[i - startX] &&
+                            objparam.arryheadercol[i - startX][param_item.arryheadercol.Button.ArryIndex] &&
+                            objparam.arryheadercol[i - startX][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick]) {
 
                             // let button = document.createElement('button');
                             let button = document.createElement('div');
@@ -540,7 +598,7 @@ function vssfnc_tablepopulate(objparam) {
                                 // ?? do nothing ??
                             }
 
-                            button.innerHTML = objparam.arryheadercol[i - 1][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.Desc];
+                            button.innerHTML = objparam.arryheadercol[i - startX][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.Desc];
                             // button.dataset[VssTableDatarowDSID] = Object.values(item)[0];
                             // button.dataset.ID = val;
                             button.style.display = "inline-block";
@@ -548,7 +606,7 @@ function vssfnc_tablepopulate(objparam) {
                             button.style.marginLeft = "10%";
                             // button.style.marginRight="0";
                             button.style.alignSelf = "flex-end";
-                            button.onclick = objparam.arryheadercol[i - 1][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick];
+                            button.onclick = objparam.arryheadercol[i - startX][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick];
                             newCell.appendChild(button);
                         }
                     }
@@ -571,16 +629,20 @@ function vssfnc_tablepopulate(objparam) {
 
                     // paint odd-even row //
 
-                    vssfnc_paintoddevenrow(tbl, objparam.arryclassdatarow, objparam.arryheadercol, booleditrow);
+                    vssfnc_tablepaintoddevenrow(tbl, objparam.arryclassdatarow, objparam.arryheadercol, booleditrow, objparam.boolselectcolumn);
                     break;
             }
 
             // re-init edit row //
             for (let i = 0; i < this.parentElement.children.length; i++) {
-                if (i == 0) {
-                    this.parentElement.children[i].innerHTML = VssTableEditDRAdd;
+                if (objparam.boolselectcolumn && i == 0) {
+                    // do nothing //
                 }
-                this.parentElement.children[i].firstChild.value = null;
+                else if ((objparam.boolselectcolumn && i == 1) || (!objparam.boolselectcolumn && i == 0)) {
+                    this.parentElement.children[i].innerHTML = VssTableEditDRAdd;
+                } else {
+                    this.parentElement.children[i].firstChild.value = null;
+                }
             }
 
         }
@@ -672,7 +734,7 @@ function vssfnc_tablepopulate(objparam) {
     if (objparam.arryjsondata.length == 1) {
         let empty = true;
         for (var ppt in objparam.arryjsondata[0]) {
-            if (!ppt) {
+            if (ppt) {
                 empty = false;
                 break;
             }
@@ -701,13 +763,27 @@ function vssfnc_tablepopulate(objparam) {
 
             let tr = document.createElement('tr');
 
+            // add first a datarow select column //
+
+            if (objparam.boolselectcolumn) {
+                let tdrselect = document.createElement('td');
+                let selectcheck = document.createElement('input');
+                selectcheck.setAttribute('type', 'checkbox');
+                selectcheck.classList.add(VssTableDRClassSelect);
+                tdrselect.appendChild(selectcheck);
+
+                tr.appendChild(tdrselect);
+            }
+
+            // add first an edit row datarow select column //
+
             if (booleditrow) {
 
                 // select datarow for edit //
                 // add first an select column, which draw the selected datarow into the edit row when clicked //
 
                 let tselect = document.createElement('td');
-                tselect.innerHTML = VssTableDRSelect + (index + 1).toString();
+                tselect.innerHTML = VssTableDRSelectEdit + (index + 1).toString();
                 if (objparam.arryclass[param_item.arryclass.TrButton]) {
                     tselect.classList = objparam.arryclass[param_item.arryclass.TrButton];
                 }
@@ -866,8 +942,9 @@ function vssfnc_tablepopulate(objparam) {
             tditemcount.style.padding = "2%";
             tditemcount.style.fontStyle = "italic";
             tditemcount.style.textAlign = "left";
-            tditemcount.style.backgroundColor = VssColorTableCaptionBG;
-            tditemcount.style.color = VssColorTableCaptionFG;
+            // tditemcount.style.backgroundColor = VssColorTableCaptionBG;
+            // tditemcount.style.color = VssColorTableCaptionFG;
+            tditemcount.style.border = VssBorderItemCount;
             tditemcount.innerHTML = VssTableStrItemCount + objparam.arryjsondata.length;
             // vssfnc_tablepopitemcount();
 
@@ -911,7 +988,7 @@ function vssfnc_tablepopulate(objparam) {
                     // whole datarow has same click event //
                     tabledatarow[i].onclick = function () {
 
-                        vssfnc_paintoddevenrow(parent, objparam.arryclassdatarow, objparam.arryheadercol, booleditrow);
+                        vssfnc_tablepaintoddevenrow(parent, objparam.arryclassdatarow, objparam.arryheadercol, booleditrow, objparam.boolselectcolumn);
 
                         this.classList.add(objparam.arryclassdatarow[param_item.arryclassdatarow.SelectedRow]);
 
@@ -927,7 +1004,7 @@ function vssfnc_tablepopulate(objparam) {
 
         // paint table datarow - odd/even //
 
-        vssfnc_paintoddevenrow(objparam.htmltable, objparam.arryclassdatarow, objparam.arryheadercol, booleditrow);
+        vssfnc_tablepaintoddevenrow(objparam.htmltable, objparam.arryclassdatarow, objparam.arryheadercol, booleditrow, objparam.boolselectcolumn);
 
         // add function button for table //
 
@@ -1078,7 +1155,7 @@ function vssfnc_tablepopulate(objparam) {
 
 
 // 2 possible trigger event:
-//      1. when select td of a datarow is clicked
+//      1. when edit select td of a datarow is clicked
 //      2. if no callback is set for datarow clicked, when any td of a datarow is clicked
 function vssfnc_tablepopdrselected() {
 
@@ -1093,18 +1170,26 @@ function vssfnc_tablepopdrselected() {
     // let editrow = thead.children[1];
 
 
+    let editrow = document.getElementById(VssTableEditRowID);
+    let editrowbtn = document.getElementById(VssTableEditRowBtn);
+
+    // if editrowbtn is situated at the 2nd column, then column select datarow is enabled //
+    let booldrselectcol = editrowbtn.cellIndex == 1 ? true : false;
+
     // 2 possible trigger event:
     //      1. when select td of a datarow is clicked
     //      2. if no callback is set for datarow clicked, when any td of a datarow is clicked
     let editbtnstr;
-    if (this.cellIndex == 0) {
-        editbtnstr = this.innerHTML.replace(VssTableDRSelect, VssTableEditDRDelete);
+    // if (this.cellIndex == 0) {
+    if ((booldrselectcol && this.cellIndex == 1) || (!booldrselectcol && this.cellIndex == 0)) {
+        editbtnstr = this.innerHTML.replace(VssTableDRSelectEdit, VssTableEditDRDelete);
     } else {
-        editbtnstr = this.parentElement.children[0].innerHTML.replace(VssTableDRSelect, VssTableEditDRDelete);
+        // editbtnstr = this.parentElement.children[0].innerHTML.replace(VssTableDRSelectEdit, VssTableEditDRDelete);
+        editbtnstr = this.parentElement.children[editrowbtn.cellIndex].innerHTML.replace(VssTableDRSelectEdit, VssTableEditDRDelete);
     }
 
-    let editrow = document.getElementById(VssTableEditRowID);
-    let editrowbtn = document.getElementById(VssTableEditRowBtn);
+    // let editrow = document.getElementById(VssTableEditRowID);
+    // let editrowbtn = document.getElementById(VssTableEditRowBtn);
     editrowbtn.innerHTML = editbtnstr;
 
 
@@ -1114,8 +1199,10 @@ function vssfnc_tablepopdrselected() {
     editrow.dataset[VssTableDatarowXDSIndex] = this.parentElement.rowIndex;
     // editrow.dataset[VssTableDRSelectFnc] = this.onclick;
 
-    // i starts from 1. 0 is the action td (to be skipped) //
-    for (let i = 1; i < editrow.children.length; i++) {
+    // i starts from after the action td -  1 if no datarow select column, 2 if datarow select column //
+
+    // for (let i = 1; i < editrow.children.length; i++) {
+    for (let i = editrowbtn.cellIndex + 1; i < editrow.children.length; i++) {
         // edit datarow's children is td whose children is either input or select //
         // this is action td. parent element is tr //
         if (editrow.children[i].children[0].nodeName == 'INPUT') {
@@ -1156,16 +1243,17 @@ function vssfnc_tablepopdrselected() {
 //     tditemcount.innerHTML = VssTableStrItemCount + tblbody.children.length;
 // }
 
-function vssfnc_paintoddevenrow(tablex, classdatarow, arryheadercol, booleditrow) {
+function vssfnc_tablepaintoddevenrow(tablex, classdatarow, arryheadercol, booleditrow, boolselectcolumn) {
     // if user-set css class //
     if (classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.OddNumRow] &&
         classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.EvnNumRow] &&
         classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.SelectedRow]) {
         let cssstyle = classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.OddNumRow];
-        for (let i = 0; i < tablex.rows.length; i++) {
-            // remove selected row class, if any //
-            tablex.rows[i].classList.remove(classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.SelectedRow]);
 
+        // remove selected row class, if any //
+
+        for (let i = 0; i < tablex.rows.length; i++) {
+            tablex.rows[i].classList.remove(classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.SelectedRow]);
             cssstyle = (cssstyle === classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.EvnNumRow]) ? classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.OddNumRow] : classdatarow[vssfnc_tablepopparam_item.arryclassdatarow.EvnNumRow];
             tablex.rows[i].classList.add(cssstyle);
         }
@@ -1192,15 +1280,16 @@ function vssfnc_paintoddevenrow(tablex, classdatarow, arryheadercol, booleditrow
                 tablex.rows[i].style.backgroundColor = odd ? 'white' : 'rgb(246,246,240)';
                 odd = odd ? false : true;
 
-                // if edit row exists, skip td action, starts x from 1 //
-                let startx = booleditrow ? 1 : 0;
+                // start x according to whether dr select column is set and edit row is enabled //
+                let startx = booleditrow && boolselectcolumn ? 2 : booleditrow || boolselectcolumn ? 1 : 0;
                 for (let x = startx; x < tablex.rows[i].cells.length; x++) {
                     // cell.style.border = 'solid 1px gray';
                     tablex.rows[i].cells[x].style.padding = '5px';
                     tablex.rows[i].cells[x].style.borderLeft = "1px solid gray";
                     tablex.rows[i].cells[x].style.borderRight = "1px solid gray";
 
-                    let y = booleditrow ? x - 1 : x;
+                    // let y = booleditrow ? x - 1 : x;
+                    let y = x - startx;
                     if (arryheadercol[y]) {
 
                         if (arryheadercol[y][vssfnc_tablepopparam_item.arryheadercol.Align]) {
@@ -1277,7 +1366,8 @@ function vssfnc_formpopulate_param() {
     // arrydataid - an array of data attributes - 
     //          0:DataObj - Data Object
     //          1:DataObjX - Instance of Data Object
-    // arrybutton - a 2-dim array of [button[(0)type, (1)text, (2)class, (3)clickedfunction (4)formactionurl]]
+    // arrybutton - a 2-dim array of [button[(0)type, (1)text, (2)class, (3) colorborder (4)clickedfunction (5)formactionurl]]
+    //                  - colorborder is an array of [bgcolor, fgcolor, border, boxshadow]
     // fnconsubmit - a callback function before submitting the form for input type submit
 
     return {
@@ -1338,8 +1428,15 @@ const vssfnc_formpopparam_item = {
         Type: 0,
         Desc: 1,
         CSSClass: 2,
-        OnClick: 3,
-        ActionURL: 4
+        ColorBorder: {
+            ArryID: 3,
+            BGColor: 0,
+            FGColor: 1,
+            Border: 2,
+            BoxShadow: 3
+        },
+        OnClick: 4,
+        ActionURL: 5
     }
 }
 // arrydataid: {
@@ -1740,7 +1837,7 @@ function vssfnc_formpopulate(objparam) {
     else {
         divbutton.style.display = "flex";
         divbutton.style.justifyContent = "space-around";
-        divbutton.style.border = "1px solid lightgray";
+        divbutton.style.border = VssBorderFormButton;
         divbutton.style.boxSizing = "border-box";
         divbutton.style.width = "100%";
         divbutton.style.margin = "2% auto";
@@ -1767,17 +1864,43 @@ function vssfnc_formpopulate(objparam) {
                 buttonelement.setAttribute('type', 'button');
             }
 
+            // css class //
+
             if (objparam.arryclass && objparam.arryclass[param_item.arryclass.Button]) {
                 buttonelement.classList.add(objparam.arryclass[param_item.arryclass.Button]);
             } else {
                 buttonelement.style.boxSizing = "border-box";
                 buttonelement.style.padding = "1%";
+                buttonelement.style.margin="1%";
                 buttonelement.style.width = "80%";
-                buttonelement.style.backgroundColor = VssColorFormButtonBG;
-                buttonelement.style.color = VssColorFormButtonnFG;
             }
 
-            // click event of button //
+            // bgcolor, fgcolor, border, boxshadow //
+            // console.log(objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID]);
+
+            if (objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID] && objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID][param_item.arrybutton.ColorBorder.BGColor]) {
+                buttonelement.style.backgroundColor = objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID][param_item.arrybutton.ColorBorder.BGColor];
+            } else {
+                buttonelement.style.backgroundColor = VssColorFormButtonBG;
+            }
+            if (objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID] && objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID][param_item.arrybutton.ColorBorder.FGColor]) {
+                buttonelement.style.color = objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID][param_item.arrybutton.ColorBorder.FGColor];
+            } else {
+                buttonelement.style.color = VssColorFormButtonnFG;
+            }
+            if (objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID] && objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID][param_item.arrybutton.ColorBorder.Border]) {
+                buttonelement.style.border = objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID][param_item.arrybutton.ColorBorder.Border];
+            } else {
+                buttonelement.style.border = VssBorderFormButton;
+            }
+            if (objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID] && objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID][param_item.arrybutton.ColorBorder.BoxShadow]) {
+                buttonelement.style.boxShadow = objparam.arrybutton[i][param_item.arrybutton.ColorBorder.ArryID][param_item.arrybutton.ColorBorder.BoxShadow];
+            } else {
+                buttonelement.style.boxShadow = VssBorderFormButtonnBoxShadow;
+            }
+
+
+            // events of button //
 
             buttonelement.setAttribute('formaction', objparam.arrybutton[i][param_item.arrybutton.ActionURL]);
 
@@ -1788,8 +1911,10 @@ function vssfnc_formpopulate(objparam) {
             buttonelement.onmouseover = function (e) {
                 this.style.opacity = "0.5";
                 setTimeout(() => {
-                    this.style.backgroundColor = VssColorFormButtonnFG;
-                    this.style.color = VssColorFormButtonBG;
+                    let bgcolor = this.style.backgroundColor;
+                    this.style.backgroundColor = this.style.color;
+                    this.style.color = bgcolor;
+                    this.style.fontStyle = "italic";
                     this.style.opacity = "1";
                 }, VssTransitionPeriod / 2);
 
@@ -1799,8 +1924,10 @@ function vssfnc_formpopulate(objparam) {
             buttonelement.onmouseleave = function (e) {
                 this.style.opacity = "0.5";
                 setTimeout(() => {
-                    this.style.backgroundColor = VssColorFormButtonBG;
-                    this.style.color = VssColorFormButtonnFG;
+                    let bgcolor = this.style.backgroundColor;
+                    this.style.backgroundColor = this.style.color;
+                    this.style.color = bgcolor;
+                    this.style.fontStyle = "normal";
                     this.style.opacity = "1";
                 }, VssTransitionPeriod / 2);
 
@@ -2393,6 +2520,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                 this.style.backgroundColor = CurrMenuFGColor;
                 this.style.color = CurrMenuBGColor;
                 this.style.opacity = "1";
+                this.style.fontStyle="italic";
             }, VssTransitionPeriod / 2);
 
             e.stopPropagation();
@@ -2404,6 +2532,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                 this.style.backgroundColor = CurrMenuBGColor;
                 this.style.color = CurrMenuFGColor;
                 this.style.opacity = "1";
+                this.style.fontStyle="normal";
             }, VssTransitionPeriod / 2);
 
 

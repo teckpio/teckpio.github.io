@@ -79,7 +79,6 @@ arryinput: \{\par
 - dataset[VssFormDSDataObjX] - ID of data object instance\par
 \par
 - attribute 'type' set to button if objparam.arrybutton[rowIndex][param_item.arrybutton.Type is null\par
-- each button has a dataset.ID set to objparam.arrydataid[...DataObj] for the ID of the dataobject being represented by the form\par
 - event on button\par
 \tab - formaction set by objparam.button[...ActionURL] \par
 \tab - if formaction != submit and != reset --> onclick = objparam.arrybutton[...OnClick]\par
@@ -213,7 +212,17 @@ objparam.arryeditrow - an array of:\par
 \par
 - for cell acting as an input element, onchange event trigger with headercol[...arryheadercol.Input][...arryheadercol.Input.OnChange]\par
 \par
-\par
+\ul eg of tablepopulate_param:\ulnone\par
+arryheadercol = [\par
+    [, '0',,], \par
+    [, '0',], \par
+    [, '0',], \par
+    ['Product ID'], \par
+    ['Product Name',,,,["zz",function()\{alert(`cell clicked: $\{this.parentElement.firstChild.textContent\}`)\},null]], \par
+    ['Quantity'], \par
+    ['Unit Price'], \par
+    ['Amount'],\par
+    [,'0' ,]];\par
 \par
 \ul vssfnc_menupopulation\ulnone\par
 - visibility control\par
