@@ -57,7 +57,7 @@ const VssColorFormCaptionFG = "white";
 
 const VssColorFormButtonBG = "white";
 const VssColorFormButtonnFG = "black";
-const VssBorderFormButton = "1px solid white";
+const VssBorderFormButton = "1px solid black";
 const VssBorderFormButtonnBoxShadow = "0 0 1px 1px black";
 
 const VssBorderItemCount = "1px solid gray";
@@ -75,8 +75,7 @@ const VssMenu = "VssMenu";
 function vssfnc_tablepopulate_param() {
     // caption - caption of table (optional)
     // arryheadercol - a 2-dim array of:
-    //                  [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function], 4: [button text,
-    //                   click function, css class]]]
+    //                  [header col[0: description strings, 1: col-width, 2: text-alignment, 3: [input type, input data, onchange function], 4: [button text, click function, css class]]]
     //                  (col-width - set to '0%' to hide column - col-width is checked in both <th> and <td> to determine whether to <display:none>)
     //                  (text-alignment - 0:center, -1:left, 1:right (default - left))
     //                  (input type - 1: input element, 2: select element)
@@ -358,7 +357,8 @@ function vssfnc_tablepopulate(objparam) {
 
             // thead is parent to 0: header row, 1: edit row //
             let editrow = taction.parentElement.parentElement.children[1];
-            let editrowtaction = editrow.firstChild;
+            let tactioncellindex = objparam.boolselectcolumn ? 1 : 0;
+            let editrowtaction = editrow.children[tactioncellindex].firstChild;
             if (editrowtaction) {
                 if (editrowtaction.innerHTML !== VssTableEditDRAdd) {
                     // // re-init edit row //
@@ -368,11 +368,10 @@ function vssfnc_tablepopulate(objparam) {
                             // do nothing 
                         }
                         else if (objparam.boolselectcolumn && i == 1 || !objparam.boolselectcolumn && i == 0) {
-                            editrow.children[i].innerHTML = VssTableEditDRAdd;
+                            editrow.children[i].firstChild.innerHTML = VssTableEditDRAdd;
                         } else {
                             editrow.children[i].firstChild.value = null;
                         }
-
                     }
                 }
             }
@@ -447,22 +446,24 @@ function vssfnc_tablepopulate(objparam) {
 
         // add first an action column //
         let taction = document.createElement('td');
-        taction.id = VssTableEditRowBtn;
-        taction.innerHTML = VssTableEditDRAdd;
+        let btnaction = document.createElement('button');
+        btnaction.id = VssTableEditRowBtn;
+        btnaction.innerHTML = VssTableEditDRAdd;
+        taction.appendChild(btnaction);
+
         if (objparam.arryclass[param_item.arryclass.TrButton]) {
             taction.classList = objparam.arryclass[param_item.arryclass.TrButton];
         } else {
             taction.style.border = "2px solid lightgray";
         }
 
-        // ?? or using
-        // taction.dataset.DataObj = objparam.arryeditrow[param_item.arryeditrow.DataObj];
-
         // edit row clicked //
 
-        taction.onclick = function () {
+        // taction.onclick = function () {
+        btnaction.onclick = function () {
 
             let tbl = document.getElementById(objparam.htmltableid);
+            let editRow = this.parentElement.parentElement;
             let drops = this.innerHTML.includes(VssTableEditDRAdd) ? VssTableEditDRAdd : (this.innerHTML.includes(VssTableEditDREdit) ? VssTableEditDREdit : VssTableEditDRDelete);
 
             switch (drops) {
@@ -470,7 +471,7 @@ function vssfnc_tablepopulate(objparam) {
 
                     // editrow - delete row //
 
-                    tbl.deleteRow(this.parentElement.dataset[VssTableDatarowXDSIndex]);
+                    tbl.deleteRow(editRow.dataset[VssTableDatarowXDSIndex]);
                     vssfnc_tablepaintoddevenrow(tbl, objparam.arryclassdatarow, objparam.arryheadercol, booleditrow, objparam.boolselectcolumn);
                     break;
 
@@ -478,28 +479,28 @@ function vssfnc_tablepopulate(objparam) {
 
                     // editrow - edit row //
 
-                    let selectedRow = tbl.rows[this.parentElement.dataset[VssTableDatarowXDSIndex]];
+                    let selectedRow = tbl.rows[editRow.dataset[VssTableDatarowXDSIndex]];
                     // skip 0, which is the edit row action button //
                     let startI = objparam.boolselectcolumn && booleditrow ? 2 : objparam.boolselectcolumn || booleditrow ? 1 : 0;
-                    for (let i = startI; i < this.parentElement.children.length; i++) {
+                    for (let i = startI; i < editRow.children.length; i++) {
 
-                        switch (this.parentElement.children[i].firstChild.nodeName) {
+                        switch (editRow.children[i].firstChild.nodeName) {
                             case 'INPUT':
-                                selectedRow.children[i].innerHTML = this.parentElement.children[i].firstChild.value;
+                                selectedRow.children[i].innerHTML = editRow.children[i].firstChild.value;
                                 break;
                             case 'SELECT':
                                 // -1 to offset first column of edit row action button //
                                 // arryitemdata has no reference to edit row //
                                 if (objparam.arryitemdata[i - startI]) {
                                     let xitem = objparam.arryitemdata[i - startI].find(item => {
-                                        return item.ID == this.parentElement.children[i].firstChild.value;
+                                        return item.ID == editRow.children[i].firstChild.value;
                                     })
-                                    // selectedRow.children[i].dataset[VssTableColDSVal] = this.parentElement.children[i].firstChild.value;
+                                    // selectedRow.children[i].dataset[VssTableColDSVal] = editRow.children[i].firstChild.value;
                                     selectedRow.children[i].innerHTML = xitem ? xitem.Name : '';
                                 }
                                 break;
                         }
-                        selectedRow.children[i].dataset[VssTableColDSVal] = this.parentElement.children[i].firstChild.value;
+                        selectedRow.children[i].dataset[VssTableColDSVal] = editRow.children[i].firstChild.value;
 
                         // add back any preset cell button //
 
@@ -538,12 +539,12 @@ function vssfnc_tablepopulate(objparam) {
 
                     let tbody = tbl.getElementsByTagName('tbody')[0];
                     let newRow = tbody.insertRow(0);
-                    newRow.dataset[VssTableDatarowDSID] = this.parentElement.dataset[VssTableDatarowDSID];
-                    newRow.dataset[VssTableDatarowXDSIndex] = this.parentElement.dataset[VssTableDatarowXDSIndex];
+                    newRow.dataset[VssTableDatarowDSID] = editRow.dataset[VssTableDatarowDSID];
+                    newRow.dataset[VssTableDatarowXDSIndex] = editRow.dataset[VssTableDatarowXDSIndex];
 
                     let startX = objparam.boolselectcolumn && booleditrow ? 2 : objparam.boolselectcolumn || booleditrow ? 1 : 0;
 
-                    for (let i = 0; i < this.parentElement.children.length; i++) {
+                    for (let i = 0; i < editRow.children.length; i++) {
                         let newCell = newRow.insertCell(i);
 
                         // datarow select column //
@@ -562,23 +563,23 @@ function vssfnc_tablepopulate(objparam) {
                             // datarow data column //
                         } else {
                             newCell.dataset[VssTableColDSKey] = arrydataobjectkey[i - startX];
-                            switch (this.parentElement.children[i].firstChild.nodeName) {
+                            switch (editRow.children[i].firstChild.nodeName) {
                                 case 'INPUT':
-                                    newCell.innerHTML = this.parentElement.children[i].firstChild.value;
+                                    newCell.innerHTML = editRow.children[i].firstChild.value;
                                     break;
                                 case 'SELECT':
                                     // -1 to offset first column of edit row action button //
                                     // arryitemdata has no reference to edit row //
                                     if (objparam.arryitemdata[i - startX]) {
                                         let xitem = objparam.arryitemdata[i - startX].find(item => {
-                                            return item.ID == this.parentElement.children[i].firstChild.value;
+                                            return item.ID == editRow.children[i].firstChild.value;
                                         })
-                                        // newCell.dataset[VssTableColDSVal] = this.parentElement.children[i].firstChild.value;
+                                        // newCell.dataset[VssTableColDSVal] = editRow.children[i].firstChild.value;
                                         newCell.innerHTML = xitem ? xitem.Name : '';
                                     }
                                     break;
                             }
-                            newCell.dataset[VssTableColDSVal] = this.parentElement.children[i].firstChild.value;
+                            newCell.dataset[VssTableColDSVal] = editRow.children[i].firstChild.value;
                         }
 
                         // add back any preset cell button //
@@ -634,36 +635,21 @@ function vssfnc_tablepopulate(objparam) {
             }
 
             // re-init edit row //
-            for (let i = 0; i < this.parentElement.children.length; i++) {
+            for (let i = 0; i < editRow.children.length; i++) {
                 if (objparam.boolselectcolumn && i == 0) {
                     // do nothing //
                 }
                 else if ((objparam.boolselectcolumn && i == 1) || (!objparam.boolselectcolumn && i == 0)) {
-                    this.parentElement.children[i].innerHTML = VssTableEditDRAdd;
+                    editRow.children[i].firstChild.innerHTML = VssTableEditDRAdd;
                 } else {
-                    this.parentElement.children[i].firstChild.value = null;
+                    editRow.children[i].firstChild.value = null;
                 }
             }
 
         }
 
-        // taction.onmouseover = () => {
-        //     if(taction.innerHTML !== VssTableEditDRAdd){
-        //         let boolchange = false;
-        //         setTimeout(() => {
-        //             if (!boolchange) {
-        //                 taction.innerHTML = VssTableEditDRAdd;
-        //                 boolchange=true;
-        //             }
-        //         }, 500)
-        //     }
-        // }
-
-
         tredit.appendChild(taction);
 
-        // let hdr;
-        // let i = 0;
         arrydataobjectkey.forEach((ppt, idx) => {
             let tedit = document.createElement('td');
             tedit.style.border = "2px solid lightgray";
@@ -718,7 +704,6 @@ function vssfnc_tablepopulate(objparam) {
             }
             tedit.appendChild(ipt);
             tredit.appendChild(tedit);
-            // i++
         })
 
         thead.appendChild(tredit);
@@ -734,7 +719,7 @@ function vssfnc_tablepopulate(objparam) {
     if (objparam.arryjsondata.length == 1) {
         let empty = true;
         for (var ppt in objparam.arryjsondata[0]) {
-            if (ppt) {
+            if (objparam.arryjsondata[0][ppt]) {
                 empty = false;
                 break;
             }
@@ -796,7 +781,6 @@ function vssfnc_tablepopulate(objparam) {
             // all object presumed to start with column <ID> //
             tr.dataset[VssTableDatarowDSID] = Object.values(item)[0];
 
-
             // go throught the properties of current item / datarow //
 
             Object.values(item).forEach((val, index) => {
@@ -807,14 +791,21 @@ function vssfnc_tablepopulate(objparam) {
                 let td = document.createElement('td');
 
                 // css for td //
+                // let tdstyle = `text-align:${objparam.arryheadercol[index][param_item.arryheadercol.Align] === 1 ? 'right' : (objparam.arryheadercol[index][param_item.arryheadercol.Align] === 0 ? 'center' : 'left')};
+                // ${objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0%' || objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0' ? 'display:none' : ''}'`
 
-                let tdstyle = `text-align:${objparam.arryheadercol[index][param_item.arryheadercol.Align] === 1 ? 'right' : (objparam.arryheadercol[index][param_item.arryheadercol.Align] === 0 ? 'center' : 'left')};
-                ${objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0%' || objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0' ? 'display:none' : ''}'`
+                let tdstyle = '';
+                if (objparam.arryheadercol[index]) {
+                    let textalign = !objparam.arryheadercol[index][param_item.arryheadercol.Align] ? 'left' : (objparam.arryheadercol[index][param_item.arryheadercol.Align] === 1 ? 'right' : (objparam.arryheadercol[index][param_item.arryheadercol.Align] === 0 ? 'center' : 'left'));
+                    let coldisplay = !objparam.arryheadercol[index][param_item.arryheadercol.Width] ? '' : (objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0%' || objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0' ? 'display:none' : '');
+
+                    tdstyle = `text-align:${textalign}; ${coldisplay}`
+                }
 
                 // td is either for display or input //
                 // 3: [input type, input data, onchange function]]
 
-                if (objparam.arryheadercol[index][param_item.arryheadercol.Input]) {
+                if (objparam.arryheadercol[index] && objparam.arryheadercol[index][param_item.arryheadercol.Input]) {
 
                     // for input //
 
@@ -993,12 +984,14 @@ function vssfnc_tablepopulate(objparam) {
                         this.classList.add(objparam.arryclassdatarow[param_item.arryclassdatarow.SelectedRow]);
 
                         // call back to user-defined function with ID //
+                        // if none set, and if column select row is set, check current row as selected/unselected //
                         if (objparam.fncdatarowclicked !== undefined) {
                             objparam.fncdatarowclicked(this.dataset[VssTableDatarowDSID]);
+                        } else if (objparam.boolselectcolumn) {
+                            this.children[0].children[0].checked = this.children[0].children[0].checked ? false : true;
                         }
                     }
                 }
-
             }
         }
 
@@ -1163,46 +1156,39 @@ function vssfnc_tablepopdrselected() {
     //!! with vssfnc_tablepopulate
 
     // this: td : parentlement -> tr : parentelement -> tbody : parentelement -> table //
-    // let table = this.parentElement.parentElement.parentElement;
-    // let thead = table.children[0];
+    let table = this.parentElement.parentElement.parentElement;
+    console.log(table);
+    let thead = table.children[0];
     // table has 2 children: thead and tbody //
     // thead has 2 children: header row (th) and edit datarow //
-    // let editrow = thead.children[1];
-
-
-    let editrow = document.getElementById(VssTableEditRowID);
-    let editrowbtn = document.getElementById(VssTableEditRowBtn);
+    let editrow = thead.children[1];
+    // there is only one button in editrow //
+    let editrowbtn = editrow.getElementsByTagName('BUTTON')[0];
+    let editCellIndex = editrowbtn.parentElement.cellIndex;
+    let currCellIndex = this.cellIndex;
+    let currDR = this.parentElement;
 
     // if editrowbtn is situated at the 2nd column, then column select datarow is enabled //
-    let booldrselectcol = editrowbtn.cellIndex == 1 ? true : false;
+    let booldrselectcol = editCellIndex == 1 ? true : false;
 
     // 2 possible trigger event:
     //      1. when select td of a datarow is clicked
     //      2. if no callback is set for datarow clicked, when any td of a datarow is clicked
     let editbtnstr;
-    // if (this.cellIndex == 0) {
-    if ((booldrselectcol && this.cellIndex == 1) || (!booldrselectcol && this.cellIndex == 0)) {
+    if ((booldrselectcol && currCellIndex == 1) || (!booldrselectcol && currCellIndex == 0)) {
         editbtnstr = this.innerHTML.replace(VssTableDRSelectEdit, VssTableEditDRDelete);
     } else {
-        // editbtnstr = this.parentElement.children[0].innerHTML.replace(VssTableDRSelectEdit, VssTableEditDRDelete);
-        editbtnstr = this.parentElement.children[editrowbtn.cellIndex].innerHTML.replace(VssTableDRSelectEdit, VssTableEditDRDelete);
+        // editbtnstr = this.parentElement.children[editCellIndex].innerHTML.replace(VssTableDRSelectEdit, VssTableEditDRDelete);
+        editbtnstr = currDR.children[editCellIndex].innerHTML.replace(VssTableDRSelectEdit, VssTableEditDRDelete);
     }
-
-    // let editrow = document.getElementById(VssTableEditRowID);
-    // let editrowbtn = document.getElementById(VssTableEditRowBtn);
     editrowbtn.innerHTML = editbtnstr;
 
-
     // set dataset value of selected row //
-
-    // editrow.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]] = this.parentElement.dataset[objparam.arrydataid[param_item.arrydataid.Datarow]];
-    editrow.dataset[VssTableDatarowXDSIndex] = this.parentElement.rowIndex;
-    // editrow.dataset[VssTableDRSelectFnc] = this.onclick;
+    editrow.dataset[VssTableDatarowXDSIndex] = currDR.rowIndex;
 
     // i starts from after the action td -  1 if no datarow select column, 2 if datarow select column //
 
-    // for (let i = 1; i < editrow.children.length; i++) {
-    for (let i = editrowbtn.cellIndex + 1; i < editrow.children.length; i++) {
+    for (let i = editCellIndex + 1; i < editrow.children.length; i++) {
         // edit datarow's children is td whose children is either input or select //
         // this is action td. parent element is tr //
         if (editrow.children[i].children[0].nodeName == 'INPUT') {
@@ -1210,10 +1196,10 @@ function vssfnc_tablepopdrselected() {
             // if cell button is present, it will be a child of the td //
             // and the first child will be the required text, whereas, the button will
             // be the second child 
-            if (this.parentElement.children[i].children.length > 0) {
-                editrow.children[i].children[0].value = this.parentElement.children[i].firstChild.textContent;
+            if (currDR.children[i].children.length > 0) {
+                editrow.children[i].children[0].value = currDR.children[i].firstChild.textContent;
             } else {
-                editrow.children[i].children[0].value = this.parentElement.children[i].innerHTML;
+                editrow.children[i].children[0].value = currDR.children[i].innerHTML;
             }
 
         } else if (editrow.children[i].children[0].nodeName == 'SELECT') {
@@ -1221,12 +1207,12 @@ function vssfnc_tablepopdrselected() {
             // go through option of select search for match text string //
             for (let x = 0; x < editrow.children[i].children[0].length; x++) {
                 // matching Name to get ID //
-                if (editrow.children[i].children[0].children[x].text === this.parentElement.children[i].innerHTML) {
+                if (editrow.children[i].children[0].children[x].text === currDR.children[i].innerHTML) {
                     editrow.children[i].children[0].value = editrow.children[i].children[0].children[x].value;
                     break;
                 }
                 // matching ID to ID //
-                // if (editrow.children[i].children[0].children[x].value === this.parentElement.children[i].innerHTML) {
+                // if (editrow.children[i].children[0].children[x].value === currDR.children[i].innerHTML) {
                 //     editrow.children[i].children[0].value = editrow.children[i].children[0].children[x].value;
                 //     break;
                 // }
@@ -1723,8 +1709,37 @@ function vssfnc_formpopulate(objparam) {
                             // input type date takes the value of date in the format of YYYY-MM-DD //
                             // date string format: "2011-10-10T14:48:00" //
                             // date string format: "2011-10-10" //
-                            let tidx = objparam.jsondata[ppt].indexOf('T');
-                            inputelement.value = tidx === -1 ? objparam.jsondata[ppt].substring(0) : objparam.jsondata[ppt].substring(0, tidx);
+                            // date string format: 1580515200000 (number of miliseconds since 01-01-1970) //
+                            if (objparam.jsondata[ppt]) {
+                                try {
+                                    if (!isNaN(objparam.jsondata[ppt])) {
+                                        //returned format: Wed Mar 25 2015 08:00:00 GMT+0800 (Malaysia Time) //
+                                        let datevalue = new Date(objparam.jsondata[ppt]);
+                                        
+                                        let dddate = /\d{2}/;
+
+                                        let mon = (datevalue.getMonth() + 1).toString();
+                                        let monthstr = dddate.test(mon) ? mon : `0${mon}`;
+                                        
+                                        let day = (datevalue.getDate()).toString();
+                                        let datestr = dddate.test(day) ? day : `0${day}`;
+
+                                        inputelement.value = `${datevalue.getFullYear()}-${monthstr}-${datestr}`;
+                                    } else {
+                                        if (objparam.jsondata[ppt].indexOf('T') != -1) {
+                                            let tidx = objparam.jsondata[ppt].indexOf('T');
+                                            inputelement.value = objparam.jsondata[ppt].substring(0, tidx);
+                                        }
+                                    }
+                                }
+                                catch{
+                                    inputelement.value = new Date(objparam.jsondata[ppt])
+                                }
+                                
+
+                                // tidx = objparam.jsondata[ppt].indexOf('T');
+                                // inputelement.value = tidx === -1 ? objparam.jsondata[ppt].substring(0) : objparam.jsondata[ppt].substring(0, tidx);
+                            }
                         } else {
                             inputelement.value = objparam.jsondata[ppt];
                         }
@@ -1871,7 +1886,7 @@ function vssfnc_formpopulate(objparam) {
             } else {
                 buttonelement.style.boxSizing = "border-box";
                 buttonelement.style.padding = "1%";
-                buttonelement.style.margin="1%";
+                buttonelement.style.margin = "1%";
                 buttonelement.style.width = "80%";
             }
 
@@ -1909,30 +1924,84 @@ function vssfnc_formpopulate(objparam) {
             }
 
             buttonelement.onmouseover = function (e) {
-                this.style.opacity = "0.5";
-                setTimeout(() => {
-                    let bgcolor = this.style.backgroundColor;
-                    this.style.backgroundColor = this.style.color;
-                    this.style.color = bgcolor;
-                    this.style.fontStyle = "italic";
-                    this.style.opacity = "1";
-                }, VssTransitionPeriod / 2);
+                gainfocus(this);
+                // this.style.opacity = "0.5";
+                // setTimeout(() => {
+                //     let bgcolor = this.style.backgroundColor;
+                //     this.style.backgroundColor = this.style.color;
+                //     this.style.color = bgcolor;
+                //     this.style.fontStyle = "italic";
+                //     this.style.opacity = "1";
+                // }, VssTransitionPeriod / 2);
 
                 e.stopPropagation();
+            }
+
+            buttonelement.onfocus = function (e) {
+                gainfocus(this);
+                // this.style.opacity = "0.5";
+                // setTimeout(() => {
+                //     let bgcolor = this.style.backgroundColor;
+                //     this.style.backgroundColor = this.style.color;
+                //     this.style.color = bgcolor;
+                //     this.style.fontStyle = "italic";
+                //     this.style.opacity = "1";
+                // }, VssTransitionPeriod / 2);
+
+                e.stopPropagation();
+            }
+
+            function gainfocus(btn){
+                btn.style.opacity = "0.5";
+                setTimeout(() => {
+                    let bgcolor = btn.style.backgroundColor;
+                    btn.style.backgroundColor = btn.style.color;
+                    btn.style.color = bgcolor;
+                    btn.style.fontStyle = "italic";
+                    btn.style.opacity = "1";
+                }, VssTransitionPeriod / 2);
             }
 
             buttonelement.onmouseleave = function (e) {
-                this.style.opacity = "0.5";
-                setTimeout(() => {
-                    let bgcolor = this.style.backgroundColor;
-                    this.style.backgroundColor = this.style.color;
-                    this.style.color = bgcolor;
-                    this.style.fontStyle = "normal";
-                    this.style.opacity = "1";
-                }, VssTransitionPeriod / 2);
+                lostfocus(this);
+                // this.style.opacity = "0.5";
+                // setTimeout(() => {
+                //     let bgcolor = this.style.backgroundColor;
+                //     this.style.backgroundColor = this.style.color;
+                //     this.style.color = bgcolor;
+                //     this.style.fontStyle = "normal";
+                //     this.style.opacity = "1";
+                // }, VssTransitionPeriod / 2);
 
                 e.stopPropagation();
             }
+            buttonelement.onblur = function (e) {
+                lostfocus(this);
+                // this.style.opacity = "0.5";
+                // setTimeout(() => {
+                //     let bgcolor = this.style.backgroundColor;
+                //     this.style.backgroundColor = this.style.color;
+                //     this.style.color = bgcolor;
+                //     this.style.fontStyle = "normal";
+                //     this.style.opacity = "1";
+                // }, VssTransitionPeriod / 2);
+
+                e.stopPropagation();
+            }
+            function lostfocus(btn){
+                btn.style.opacity = "0.5";
+                setTimeout(() => {
+                    let bgcolor = btn.style.backgroundColor;
+                    btn.style.backgroundColor = btn.style.color;
+                    btn.style.color = bgcolor;
+                    btn.style.fontStyle = "normal";
+                    btn.style.opacity = "1";
+                }, VssTransitionPeriod / 2);
+
+                // e.stopPropagation();
+            }
+
+            
 
             divbutton.appendChild(buttonelement);
         }
@@ -2090,7 +2159,6 @@ const vssfnc_menupopparam_item = {
 // however, flex direction is preset in menu item during creation
 
 function vssfnc_menupopulate(objparam, initlevel, parentclass) {
-
 
     let DefualtBGColor = 'rgba(20, 140, 90, 1)';
     let DefaultFGColor = 'white';
@@ -2504,11 +2572,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                         }
 
                     }
-
-
-
                     break;
-
             }
             e.stopPropagation();
         }
@@ -2520,7 +2584,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                 this.style.backgroundColor = CurrMenuFGColor;
                 this.style.color = CurrMenuBGColor;
                 this.style.opacity = "1";
-                this.style.fontStyle="italic";
+                this.style.fontStyle = "italic";
             }, VssTransitionPeriod / 2);
 
             e.stopPropagation();
@@ -2532,7 +2596,7 @@ function vssfnc_menupopulate(objparam, initlevel, parentclass) {
                 this.style.backgroundColor = CurrMenuBGColor;
                 this.style.color = CurrMenuFGColor;
                 this.style.opacity = "1";
-                this.style.fontStyle="normal";
+                this.style.fontStyle = "normal";
             }, VssTransitionPeriod / 2);
 
 
