@@ -716,7 +716,7 @@ function vssfnc_tablepopulate(objparam) {
     // if table is used with edit row to add new data object, an empty object will be passed in as 
     // arryjsondata for its properties values, discard the arryjsondata to show an empty table
     // with its property
-    if (objparam.arryjsondata.length == 1) {
+    if (objparam.arryjsondata && objparam.arryjsondata.length == 1) {
         let empty = true;
         for (var ppt in objparam.arryjsondata[0]) {
             if (objparam.arryjsondata[0][ppt]) {
