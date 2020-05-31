@@ -121,7 +121,12 @@ function vssfnc_tablepopulate_param() {
     //          3. datatype attributes
     //              - an array of 2-elem array attributes type and value (eg, [['step','0.01'],['pattern','[0-9]']) with index
     //                  corresponding to header datacol
-    //          4. call back function (with array of datacell values as parameter) when done is clicked
+    //          4. CSS Style
+    //              - an array of 2-dim array of 2-elem: 1. CSS Style; 2. CSS Value (eg [['textAlign', 'center'], ['color', 'black']]) with index
+    //                  corresponding to header datacol
+    //          5. call back function for each input
+    //              - an array of call back function for onchange corresponding to each input
+    //          6. call back function (with array of datacell values as parameter) when done is clicked
     // boolselectcolumn to indicate whether a datarow select column is available for datarow selection
 
     return {
@@ -207,7 +212,9 @@ const vssfnc_tablepopparam_item = {
         ArryItemData: 1,
         ArryItemDataType: 2,
         ArryItemDataTypeAttr: 3,
-        FncDone: 4
+        ArryCSSStyle: 4,
+        ArryInputChangeCallback: 5,
+        FncDone: 6
     },
     tdinputtype: {
         Input: 1,
@@ -424,7 +431,7 @@ function vssfnc_tablepopulate(objparam) {
 
     thead.appendChild(trheader);
 
-    // search (?) / data edit row //
+    // data edit row / search (?) //
 
     if (booleditrow) {
 
@@ -520,12 +527,9 @@ function vssfnc_tablepopulate(objparam) {
                             }
 
                             button.innerHTML = objparam.arryheadercol[i - startI][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.Desc];
-                            // button.dataset[VssTableDatarowDSID] = Object.values(item)[0];
-                            // button.dataset.ID = val;
                             button.style.display = "inline-block";
                             button.style.float = "right";
                             button.style.marginLeft = "10%";
-                            // button.style.marginRight="0";
                             button.style.alignSelf = "flex-end";
                             button.onclick = objparam.arryheadercol[i - startI][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick];
                             selectedRow.children[i].appendChild(button);
@@ -600,12 +604,9 @@ function vssfnc_tablepopulate(objparam) {
                             }
 
                             button.innerHTML = objparam.arryheadercol[i - startX][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.Desc];
-                            // button.dataset[VssTableDatarowDSID] = Object.values(item)[0];
-                            // button.dataset.ID = val;
                             button.style.display = "inline-block";
                             button.style.float = "right";
                             button.style.marginLeft = "10%";
-                            // button.style.marginRight="0";
                             button.style.alignSelf = "flex-end";
                             button.onclick = objparam.arryheadercol[i - startX][param_item.arryheadercol.Button.ArryIndex][param_item.arryheadercol.Button.OnClick];
                             newCell.appendChild(button);
@@ -684,10 +685,20 @@ function vssfnc_tablepopulate(objparam) {
                 }
 
             }
+
+            // dataset-key //
+            ipt.dataset[VssTableColDSKey] = arrydataobjectkey[idx];
+
+            // style //
+            if(objparam.arryeditrow[param_item.arryeditrow.ArryCSSStyle] && objparam.arryeditrow[param_item.arryeditrow.ArryCSSStyle][idx]){
+                objparam.arryeditrow[param_item.arryeditrow.ArryCSSStyle][idx].forEach(CSS=>{
+                    ipt.style[CSS[0]]=CSS[1];
+                })
+            }
+            // default style //
             ipt.style.width = "100%";
             ipt.style.border = "none";
-            // ipt.style.boxSizing = "border-box";
-
+            
             ipt.onchange = function () {
                 // change taction to update op //
                 let ptt = this.getAttribute('pattern')
@@ -698,6 +709,10 @@ function vssfnc_tablepopulate(objparam) {
                         alert('Invalid input format.');
                     }
                 }
+                if (objparam.arryeditrow[param_item.arryeditrow.ArryInputChangeCallback] && objparam.arryeditrow[param_item.arryeditrow.ArryInputChangeCallback][idx]) {
+                    objparam.arryeditrow[param_item.arryeditrow.ArryInputChangeCallback][idx](this);
+                }
+
                 let actbutton = document.getElementById(VssTableEditRowBtn);
                 actbutton.innerHTML = actbutton.innerHTML.replace(VssTableEditDRDelete, VssTableEditDREdit);
 
@@ -1157,7 +1172,7 @@ function vssfnc_tablepopdrselected() {
 
     // this: td : parentlement -> tr : parentelement -> tbody : parentelement -> table //
     let table = this.parentElement.parentElement.parentElement;
-    console.log(table);
+    // console.log(table);
     let thead = table.children[0];
     // table has 2 children: thead and tbody //
     // thead has 2 children: header row (th) and edit datarow //
@@ -1340,9 +1355,12 @@ function vssfnc_formpopulate_param() {
     // htmlform - html element of the form container (if a form html is not provided, a form element will be returned)
     // formid - id of source datatable (for sorting by column purposes - obsolete?)
     // arryitemdata - an array of constituent json data object with properties: [[{ID:xx, Name:yy},{...},{...}], [{ID:xx, Name:yy},{...},{...}]]
-    // arryinput - a 2-dim array of [[label:[width ration, text-align]],[input[width ratio, text-align]] between label:input 
-    //                          - [xx%, -1]
-    //                          - text-align - -1:left, 0:center, 1:right
+    // arryinput - a array of 3 elements:
+    //      1. label (array: [width ration, text-align])
+    //      2. input (array: [width ratio, text-align]) 
+    //      3. fncOnChange
+    //      - [[xx%, -1], [yy%, 0], fncOnChange]
+    //      * text-align - -1:left, 0:center, 1:right
     // arryclass - an array of css classes - 
     //          0:caption
     //          1:label
@@ -1397,6 +1415,9 @@ const vssfnc_formpopparam_item = {
             ArryID: 1,
             WidthRatio: 0,
             Align: 1
+        },
+        FncOnChange: {
+            ArryID: 2
         }
     },
     arryclass: {
@@ -1567,6 +1588,7 @@ function vssfnc_formpopulate(objparam) {
             let inputelement;
 
             // dataobj vs non-dataobj //
+
             if (objparam.arrydatacol && isNaN(objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type])) {
 
                 // non-dataobj -> checkbox vs text //
@@ -1663,7 +1685,10 @@ function vssfnc_formpopulate(objparam) {
                                 inputelement.setAttribute(objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Attr][k][0], objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Attr][k][1]);
 
                                 if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Attr][k][0] === 'pattern') {
-                                    inputelement.onchange = function () {
+
+                                    // 1 of 3 places to add onchange event //
+                                    // 1. pattern; 2. selection lock; 3. user callback //
+                                    inputelement.addEventListener("change", () => {
                                         let ptt = this.getAttribute('pattern')
                                         if (ptt) {
                                             let testPtt = new RegExp(ptt);
@@ -1672,7 +1697,7 @@ function vssfnc_formpopulate(objparam) {
                                                 alert('Invalid input format.');
                                             }
                                         }
-                                    }
+                                    })
                                 }
                             }
                         }
@@ -1715,12 +1740,12 @@ function vssfnc_formpopulate(objparam) {
                                     if (!isNaN(objparam.jsondata[ppt])) {
                                         //returned format: Wed Mar 25 2015 08:00:00 GMT+0800 (Malaysia Time) //
                                         let datevalue = new Date(objparam.jsondata[ppt]);
-                                        
+
                                         let dddate = /\d{2}/;
 
                                         let mon = (datevalue.getMonth() + 1).toString();
                                         let monthstr = dddate.test(mon) ? mon : `0${mon}`;
-                                        
+
                                         let day = (datevalue.getDate()).toString();
                                         let datestr = dddate.test(day) ? day : `0${day}`;
 
@@ -1735,7 +1760,7 @@ function vssfnc_formpopulate(objparam) {
                                 catch{
                                     inputelement.value = new Date(objparam.jsondata[ppt])
                                 }
-                                
+
 
                                 // tidx = objparam.jsondata[ppt].indexOf('T');
                                 // inputelement.value = tidx === -1 ? objparam.jsondata[ppt].substring(0) : objparam.jsondata[ppt].substring(0, tidx);
@@ -1809,16 +1834,25 @@ function vssfnc_formpopulate(objparam) {
                 if (objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.ReadOnly]) {
 
                     // input select //
+                    // 1 of 3 places to add onchange event //
+                    // 1. pattern; 2. selection lock; 3. user callback //
                     if (objparam.arrydatacol && !isNaN(objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.Type])) {
-                        inputelement.onchange = function () {
+                        inputelement.addEventListener('change', () => {
                             this.selectedIndex = this.defaultIndex;
                             alert('Selection locked.');
-                        }
+                        })
 
                     } else {
                         inputelement.readOnly = objparam.arrydatacol[idxarrydatacol][param_item.arrydatacol.ReadOnly]
                     }
                 }
+            }
+
+            // 1 of 3 places to add onchange event //
+            // 1. pattern; 2. selection lock; 3. user callback //
+
+            if (objparam.arryinput[param_item.arryinput.FncOnChange.ArryID]) {
+                inputelement.addEventListener('change', objparam.arryinput[param_item.arryinput.FncOnChange.ArryID]);
             }
 
             // input format //
@@ -1951,7 +1985,7 @@ function vssfnc_formpopulate(objparam) {
                 e.stopPropagation();
             }
 
-            function gainfocus(btn){
+            function gainfocus(btn) {
                 btn.style.opacity = "0.5";
                 setTimeout(() => {
                     let bgcolor = btn.style.backgroundColor;
@@ -1988,7 +2022,7 @@ function vssfnc_formpopulate(objparam) {
 
                 e.stopPropagation();
             }
-            function lostfocus(btn){
+            function lostfocus(btn) {
                 btn.style.opacity = "0.5";
                 setTimeout(() => {
                     let bgcolor = btn.style.backgroundColor;
@@ -2001,7 +2035,7 @@ function vssfnc_formpopulate(objparam) {
                 // e.stopPropagation();
             }
 
-            
+
 
             divbutton.appendChild(buttonelement);
         }
