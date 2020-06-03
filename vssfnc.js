@@ -32,7 +32,7 @@ const VssTableDRSelectEdit = "^";
 const VssTableDRSelectFnc = "VssTableDRSelectFnc";
 
 const VssTableItemCount = "VssTableItemCount";
-const VssTableStrItemCount = "Item count: ";
+const VssTableStrItemCount = "Item Count: ";
 
 const VssTableDRClassSelect = "VssTableDRClassSelect";
 
@@ -690,15 +690,15 @@ function vssfnc_tablepopulate(objparam) {
             ipt.dataset[VssTableColDSKey] = arrydataobjectkey[idx];
 
             // style //
-            if(objparam.arryeditrow[param_item.arryeditrow.ArryCSSStyle] && objparam.arryeditrow[param_item.arryeditrow.ArryCSSStyle][idx]){
-                objparam.arryeditrow[param_item.arryeditrow.ArryCSSStyle][idx].forEach(CSS=>{
-                    ipt.style[CSS[0]]=CSS[1];
+            if (objparam.arryeditrow[param_item.arryeditrow.ArryCSSStyle] && objparam.arryeditrow[param_item.arryeditrow.ArryCSSStyle][idx]) {
+                objparam.arryeditrow[param_item.arryeditrow.ArryCSSStyle][idx].forEach(CSS => {
+                    ipt.style[CSS[0]] = CSS[1];
                 })
             }
             // default style //
             ipt.style.width = "100%";
             ipt.style.border = "none";
-            
+
             ipt.onchange = function () {
                 // change taction to update op //
                 let ptt = this.getAttribute('pattern')
@@ -734,11 +734,12 @@ function vssfnc_tablepopulate(objparam) {
     if (objparam.arryjsondata && objparam.arryjsondata.length == 1) {
         let empty = true;
         for (var ppt in objparam.arryjsondata[0]) {
-            if (objparam.arryjsondata[0][ppt]) {
+            if (objparam.arryjsondata[0][ppt] && typeof (objparam.arryjsondata[0][ppt]) != 'object') {
                 empty = false;
                 break;
             }
         }
+
         if (empty) {
             objparam.arryjsondata.length = 0;
         }
@@ -806,8 +807,6 @@ function vssfnc_tablepopulate(objparam) {
                 let td = document.createElement('td');
 
                 // css for td //
-                // let tdstyle = `text-align:${objparam.arryheadercol[index][param_item.arryheadercol.Align] === 1 ? 'right' : (objparam.arryheadercol[index][param_item.arryheadercol.Align] === 0 ? 'center' : 'left')};
-                // ${objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0%' || objparam.arryheadercol[index][param_item.arryheadercol.Width] === '0' ? 'display:none' : ''}'`
 
                 let tdstyle = '';
                 if (objparam.arryheadercol[index]) {

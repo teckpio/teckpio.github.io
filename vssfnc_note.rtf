@@ -56,6 +56,14 @@ arrydataid: \{\par
 - select\par
 \tab - if objparam.arryitemdata is populated with the required options\par
 \par
+// arrydatacol - a 2-dim array of  [key[field name, description strings, required, type, attr, readonly, hidden]]\par
+    //      (attr -> an 2-dim array of 2 elem array (ie can set multiple attributes): \par
+    //                  1. for type (eg pattern / step) \par
+    //                  2. for value (eg [0-9] / 0.01)\par
+    //                  (eg: [['pattern','[0-9]'],['step','0.01]])\par
+    //      (readonly -> because of option of select element, readonly explicitly set instead of being included in attr)\par
+    //      (hidden -> because hidden attribute affects both label and input elements, it's explicitly set instead of being included in attr)\par
+\par
 \par
 \ul objparam.arryinput\ulnone\par
 - format display of label and input\par
