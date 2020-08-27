@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="pt_project.css">
+</head>
+
+<body>
+    <div id="maintitle">
+        <h1><span style="color:darkblue;">Project Documentation</span> - <span style="color:darkgreen;">The Combined Bus
+                - Fleet Operation Management System</span></h1>
+        <!-- <h2>- Project Documentation</h2> -->
+    </div>
+
+
+
+    <!-- pt_main is a row flex with pt_content and pt_body -->
+    <div id="pt_main">
+
+
+        <!-- CONTENT -->
+        <div id="pt_content">
+            
+            <h3>Content:</h3>
+
+            <div id="contentloadbuttondiv">
+                <div>Upload Content:</div>
+                <button id="btnloadcontent">Select File</button>
+                <input id="iptloadcontent" type="file" value="Load Content File">
+            </div>
+
+            <div class="contentmain"><a href="#system_components"># System Components</a></div>
+            <div class="contentmain"><a href="#timeline_milestones"># Timeline and Milestones</a></div>
+            <div class="contentmain"><a href="#struct_server"># Server Conceptual Structure</a></div>
+            <div class="contentmain"><a href="#struct_tms"># TMS Conceptual Structure</a></div>
+            <div class="contentmain"><a href="#process_flow"># Process Flows</a>
+                <div class="contentsub"><a href="#processflow_tms">Ticketing Machine System (TMS)</a></div>
+                <div class="contentsub"><a href="#processflow_mis">Management Information System (MIS)</a></div>
+                <div class="contentsub"><a href="#processflow_breakdown">Breakdown/Accident</a></div>
+            </div>
+            <div class="contentmain"><a href="#user_interfaces"># User Interfaces</a></div>
+            <div class="contentmain"><a href="#apis"># APIs</a></div>
+            <div class="contentmain"><a href="#route_sched_trip"># Route-Schedule-Trip-Duty Roster-Duty Code</a></div>
+        </div>
+
+
+        <!-- BODY -->
+        <div id="pt_body">
+
+
+            <!-- SYSTEM COMPONENTS -->
+            <div class="mainsection" id="system_components">
+                <h2>System Components</h2>
+                <div>
+                    <img src="project scopes.svg">
+                </div>
+            </div>
+
+            <!-- TIMELINE AND MILESTONES -->
+            <div class="mainsection" id="timeline_milestones">
+                <h2>Timeline and Milestones</h2>
+                <div id="table_timeline"></div>
+            </div>
+
+
+
+            <!-- SERVER STRUCTURE -->
+            <div class="mainsection" id="timeline_milestones">
+                <h2>Server Conceptual Structure</h2>
+                <div id="struct_server">
+                    <img src="structure_server.svg">
+                </div>
+                <div id="table_struct_server"></div>
+            </div>
+
+
+            <!-- TMS STRUCTURE -->
+            <div class="mainsection" id="timeline_milestones">
+                <h2>TMS Conceptual Structure</h2>
+                <div id="struct_tms">
+                    <img src="structure_tms.svg">
+                </div>
+                <div id="table_struct_tms"></div>
+            </div>
+
+
+            <!-- PROCESS FLOWS -->
+            <div class="mainsection" id="process_flow">
+                <h2>Process Flow</h2>
+                <div class="subsection1">
+                    <h3>Ticketing Machine System (TMS) and Management Information System (MIS)</h3>
+                    <div class="subsection2">
+                        <h4 id="processflow_tms">TMS</h4>
+                        <img src="processflow_tms.svg">
+                    </div>
+                    <div id="table_processflow_tms"></div>
+
+
+
+                    <div class="subsection2">
+                        <h4 id="processflow_mis">MIS</h4>
+                        <img src="processflow_mis.svg">
+                    </div>
+                    <div id="table_processflow_mis"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- uSER INTERCACES -->
+            <div class="mainsection" id="user_interfaces">
+                <h2>User Interfaces</h2>
+                <div id="table_userinterface"></div>
+            </div>
+
+            
+
+            <!-- ROUTE-SCHEDULE-TRIP -->
+            <div class="mainsection" id="route_sched_trip">
+                <h2>Route - Schedule - Trip - Duty Roster - Duty Code</h2>
+                <div>
+                    <img src="route_sched_trip.svg">
+                </div>
+                <div id="table_route_sched_trip"></div>
+            </div>
+
+
+            <!-- APIs -->
+            <div class="mainsection" id="apis">
+                <h2>List of APIs</h2>
+                <div class="subsection1">
+                    <h3>Server -x- TMS</h3>
+                    <div id="table_api_servertms"></div>
+                </div>
+                <div class="subsection1">
+                    <h3>Server -x- MIS</h3>
+                    <div id="table_api_servermis"></div>
+                </div>
+                <div class="subsection1">
+                    <h3>Server -x- GPS</h3>
+                    <div id="table_api_servergps"></div>
+                </div>
+            </div>
+
+
+
+            <!-- User Access Control -->
+            <div class="mainsection" id="user_accesscontrol">
+                <h2>User Access Controls</h2>
+                <div class="subsection1">
+                    <h3></h3>
+                </div>
+                <div id="table_useraccess"></div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+</body>
+<script src="pt_project.js"></script>
+
+</html>
