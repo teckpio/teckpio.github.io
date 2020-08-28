@@ -12,8 +12,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1000"
-   height="700"
-   viewBox="0 0 750 525"
+   height="600"
+   viewBox="0 0 750 450"
    xml:space="preserve"
    class="st10"
    version="1.1"
@@ -180,50 +180,141 @@
 
 
 
+
+
+
+
 </defs>
-	<g
-   id="g6153"><path
-     inkscape:connector-curvature="0"
-     id="path1285"
-     d="m 450.48592,374.06796 32.34258,83.93669"
-     style="fill:none;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" /><path
-     inkscape:connector-curvature="0"
-     id="path1283"
-     d="M 572.92569,59.11285 496.6896,146.12978"
-     style="fill:none;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" /><path
-     inkscape:connector-curvature="0"
-     id="path1281"
-     d="m 174.5069,170.61096 99.63495,29.42312"
-     style="fill:none;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" /><g
-     id="shape32-1-6"
-     v:mID="32"
-     v:groupContext="shape"
-     transform="matrix(0.93179121,0,0,0.93163989,255.85876,-348.8733)"
-     style="font-size:12px;overflow:visible;color-interpolation-filters:sRGB;fill:none;fill-rule:evenodd;stroke-linecap:square;stroke-miterlimit:3"><title
-       id="title13-2">Circle</title><v:userDefs><v:ud
-         v:nameU="visVersion"
-         v:val="VT0(15):26" /></v:userDefs><path
-       d="m 0,635.4 a 156.596,156.596 0 0 1 313.19,0 156.596,156.596 0 1 1 -313.19,0 z"
-       class="st1"
-       id="path15-1"
-       inkscape:connector-curvature="0"
-       style="fill:#ffffff;stroke:#000000;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round" /></g><text
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000"
-     id="text59"
-     v:langID="2052"
-     class="st4"
-     y="120.14043"
-     x="354.52371"><v:paragraph
-   v:horizAlign="1" /><v:tabList />User access control</text>
-<g
-     transform="translate(18.721469,-10.28955)"
-     id="g1203"><g
-   transform="matrix(0.71677342,0,0,0.71667136,270.808,-201.87244)"
+	<path
+   style="fill:none;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+   d="m 423.53377,301.37814 32.34258,83.93669"
+   id="path1285"
+   inkscape:connector-curvature="0" /><path
+   style="fill:none;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+   d="M 565.99514,44.947702 478.20813,118.10352"
+   id="path1283"
+   inkscape:connector-curvature="0"
+   sodipodi:nodetypes="cc" /><path
+   style="fill:none;stroke:#000000;stroke-width:0.75px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+   d="m 170.65659,116.40261 99.63495,29.42312"
+   id="path1281"
+   inkscape:connector-curvature="0" /><g
+   style="font-size:12px;overflow:visible;color-interpolation-filters:sRGB;fill:none;fill-rule:evenodd;stroke-linecap:square;stroke-miterlimit:3"
+   transform="matrix(0.93179121,0,0,0.93163989,228.90661,-421.56312)"
    v:groupContext="shape"
    v:mID="32"
-   id="shape32-1">
+   id="shape32-1-6"><title
+     id="title13-2">Circle</title><v:userDefs><v:ud
+       v:val="VT0(15):26"
+       v:nameU="visVersion" /></v:userDefs><path
+     style="fill:#ffffff;stroke:#000000;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round"
+     inkscape:connector-curvature="0"
+     id="path15-1"
+     class="st1"
+     d="m 0,635.4 a 156.596,156.596 0 0 1 313.19,0 156.596,156.596 0 1 1 -313.19,0 z" /></g><text
+   x="327.57156"
+   y="47.450607"
+   class="st4"
+   v:langID="2052"
+   id="text59"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000"><v:paragraph
+   v:horizAlign="1" /><v:tabList />User access control</text>
+<g
+   id="g1203"
+   transform="translate(-8.2306803,-82.979366)"><g
+   id="shape32-1"
+   v:mID="32"
+   v:groupContext="shape"
+   transform="matrix(0.71677342,0,0,0.71667136,270.808,-201.87244)">
 			<title
    id="title13">Circle</title>
+			<v:userDefs>
+				<v:ud
+   v:nameU="visVersion"
+   v:val="VT0(15):26" />
+			</v:userDefs>
+			<path
+   d="m 0,635.4 a 156.596,156.596 0 0 1 313.19,0 156.596,156.596 0 1 1 -313.19,0 z"
+   class="st1"
+   id="path15"
+   inkscape:connector-curvature="0"
+   style="fill:#ffffff;stroke:#000000;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round" />
+		</g><g
+   transform="translate(48.342455,-77.650341)"
+   id="g1189"><path
+     transform="matrix(0.67867848,0,0,0.67873177,252.46642,-123.75489)"
+     style="font-size:12px;overflow:visible;color-interpolation-filters:sRGB;fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3"
+     inkscape:connector-curvature="0"
+     id="path20"
+     class="st1"
+     d="m 0,670.82 a 121.18,121.18 0 1 1 242.36,0 121.18,121.18 0 1 1 -242.36,0 z" /><g
+     id="g1143"
+     transform="translate(-76.469287,78.403224)"><g
+   transform="matrix(0.78264837,0,0,0.38702468,366.36352,-22.240755)"
+   v:groupContext="shape"
+   v:mID="35"
+   id="shape35-6">
+				<title
+   id="title27">Sheet.35</title>
+				<v:userDefs>
+					<v:ud
+   v:val="VT0(0.11811023622047):24"
+   v:prompt=""
+   v:nameU="ControlHalfHeight" />
+					<v:ud
+   v:val="VT0(1):26"
+   v:prompt=""
+   v:nameU="FillForegnd" />
+					<v:ud
+   v:val="VT0(3.222440845243):1"
+   v:prompt=""
+   v:nameU="ControlHalfHeight" />
+					<v:ud
+   v:val="VT5(#ffffff)"
+   v:prompt=""
+   v:nameU="FillForegnd" />
+				</v:userDefs>
+				<path
+   style="fill:#ffffff;stroke:#000000;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round"
+   inkscape:connector-curvature="0"
+   id="path29"
+   class="st1"
+   d="m 0,777.5 a 57.26,14.501051 -180 1 0 114.52,0 V 661.49 H 0 Z" />
+			</g><ellipse
+   cx="411.21118"
+   cy="233.05617"
+   rx="44.555523"
+   ry="10.900235"
+   class="st1"
+   id="ellipse32"
+   style="fill:#ffffff;stroke:#000000;stroke-width:0.57359588;stroke-linecap:round;stroke-linejoin:round" /><text
+   transform="scale(1.1114098,0.89975813)"
+   x="348.97855"
+   y="291.57587"
+   class="st2"
+   v:langID="2052"
+   id="text34"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke-width:0.89975816"><v:paragraph
+   v:horizAlign="1" /><v:tabList />Database</text>
+
+
+</g></g><text
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000"
+   id="text68"
+   v:langID="2052"
+   class="st2"
+   y="162.47408"
+   x="374.87234"><v:paragraph
+   v:horizAlign="1" /><v:tabList />API</text>
+
+
+</g><g
+   transform="matrix(0.9491868,0,0,0.74217478,406.42549,-154.2598)"
+   v:groupContext="shape"
+   v:mID="36"
+   id="shape36-11">
+			<title
+   id="title38">Circle.36</title>
 			<v:userDefs>
 				<v:ud
    v:val="VT0(15):26"
@@ -232,198 +323,113 @@
 			<path
    style="fill:#ffffff;stroke:#000000;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round"
    inkscape:connector-curvature="0"
-   id="path15"
-   class="st1"
-   d="m 0,635.4 a 156.596,156.596 0 0 1 313.19,0 156.596,156.596 0 1 1 -313.19,0 z" />
-		</g><g
-   id="g1189"
-   transform="translate(48.342455,-77.650341)"><path
-     d="m 0,670.82 a 121.18,121.18 0 1 1 242.36,0 121.18,121.18 0 1 1 -242.36,0 z"
-     class="st1"
-     id="path20"
-     inkscape:connector-curvature="0"
-     style="font-size:12px;overflow:visible;color-interpolation-filters:sRGB;fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3"
-     transform="matrix(0.67867848,0,0,0.67873177,252.46642,-123.75489)" /><g
-     transform="translate(-76.469287,78.403224)"
-     id="g1143"><g
-   id="shape35-6"
-   v:mID="35"
-   v:groupContext="shape"
-   transform="matrix(0.78264837,0,0,0.38702468,366.36352,-22.240755)">
-				<title
-   id="title27">Sheet.35</title>
-				<v:userDefs>
-					<v:ud
-   v:nameU="ControlHalfHeight"
-   v:prompt=""
-   v:val="VT0(0.11811023622047):24" />
-					<v:ud
-   v:nameU="FillForegnd"
-   v:prompt=""
-   v:val="VT0(1):26" />
-					<v:ud
-   v:nameU="ControlHalfHeight"
-   v:prompt=""
-   v:val="VT0(3.222440845243):1" />
-					<v:ud
-   v:nameU="FillForegnd"
-   v:prompt=""
-   v:val="VT5(#ffffff)" />
-				</v:userDefs>
-				<path
-   d="m 0,777.5 a 57.26,14.501051 -180 1 0 114.52,0 V 661.49 H 0 Z"
-   class="st1"
-   id="path29"
-   inkscape:connector-curvature="0"
-   style="fill:#ffffff;stroke:#000000;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round" />
-			</g><ellipse
-   style="fill:#ffffff;stroke:#000000;stroke-width:0.57359588;stroke-linecap:round;stroke-linejoin:round"
-   id="ellipse32"
-   class="st1"
-   ry="10.900235"
-   rx="44.555523"
-   cy="233.05617"
-   cx="411.21118" /><text
-   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;stroke-width:0.89975816"
-   id="text34"
-   v:langID="2052"
-   class="st2"
-   y="291.57587"
-   x="348.97855"
-   transform="scale(1.1114098,0.89975813)"><v:paragraph
-   v:horizAlign="1" /><v:tabList />Database</text>
-
-</g></g><text
-   x="374.87234"
-   y="162.47408"
-   class="st2"
-   v:langID="2052"
-   id="text68"
-   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000"><v:paragraph
-   v:horizAlign="1" /><v:tabList />API</text>
-
-</g><g
-     id="shape36-11"
-     v:mID="36"
-     v:groupContext="shape"
-     transform="matrix(0.9491868,0,0,0.74217478,433.37764,-81.56998)">
-			<title
-   id="title38">Circle.36</title>
-			<v:userDefs>
-				<v:ud
-   v:nameU="visVersion"
-   v:val="VT0(15):26" />
-			</v:userDefs>
-			<path
-   d="m 0,735.31 a 56.695,56.695 0 1 1 113.39,0 56.695,56.695 0 0 1 -113.39,0 z"
-   class="st1"
    id="path40"
-   inkscape:connector-curvature="0"
-   style="fill:#ffffff;stroke:#000000;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round" />
+   class="st1"
+   d="m 0,735.31 a 56.695,56.695 0 1 1 113.39,0 56.695,56.695 0 0 1 -113.39,0 z" />
 		</g><rect
-     style="fill:none;stroke:none;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round"
-     id="rect75"
-     class="st3"
-     height="27"
-     width="113.386"
-     y="450.65857"
-     x="430.49878" /><text
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000"
-     id="text81"
-     v:langID="2052"
-     class="st4"
-     y="446.34802"
-     x="486.90979"><v:paragraph
-       v:horizAlign="1" /><v:tabList /><tspan
-       y="446.34802"
-       x="486.90979"
-       id="tspan1075"
-       sodipodi:role="line">Ticketing</tspan><tspan
-       y="460.09802"
-       x="486.90979"
-       id="tspan1077"
-       sodipodi:role="line">Management</tspan><tspan
-       y="473.84802"
-       x="486.90979"
-       id="tspan1079"
-       sodipodi:role="line">System</tspan><tspan
-       y="487.59802"
-       x="486.90979"
-       id="tspan1081"
-       sodipodi:role="line">(TMS)</tspan></text>
+   x="403.54663"
+   y="377.96875"
+   width="113.386"
+   height="27"
+   class="st3"
+   id="rect75"
+   style="fill:none;stroke:none;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round" /><text
+   x="459.95764"
+   y="373.6582"
+   class="st4"
+   v:langID="2052"
+   id="text81"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000"><v:paragraph
+     v:horizAlign="1" /><v:tabList /><tspan
+     sodipodi:role="line"
+     id="tspan1075"
+     x="459.95764"
+     y="373.6582">Ticketing</tspan><tspan
+     sodipodi:role="line"
+     id="tspan1077"
+     x="459.95764"
+     y="387.4082">Management</tspan><tspan
+     sodipodi:role="line"
+     id="tspan1079"
+     x="459.95764"
+     y="401.1582">System</tspan><tspan
+     sodipodi:role="line"
+     id="tspan1081"
+     x="459.95764"
+     y="414.9082">(TMS)</tspan></text>
 <g
-     id="shape37-13"
-     v:mID="37"
-     v:groupContext="shape"
-     transform="matrix(0.87449777,0,0,0.55842313,524.2787,-360.91624)">
+   transform="matrix(0.87449777,0,0,0.55842313,517.34815,-372.00115)"
+   v:groupContext="shape"
+   v:mID="37"
+   id="shape37-13">
 			<title
    id="title43">Circle.37</title>
 			<v:userDefs>
 				<v:ud
-   v:nameU="visVersion"
-   v:val="VT0(15):26" />
+   v:val="VT0(15):26"
+   v:nameU="visVersion" />
 			</v:userDefs>
 			<path
-   d="m 0,735.31 a 56.695,56.695 0 1 1 113.39,0 56.695,56.695 0 0 1 -113.39,0 z"
-   class="st1"
-   id="path45"
+   style="fill:#ffffff;stroke:#000000;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round"
    inkscape:connector-curvature="0"
-   style="fill:#ffffff;stroke:#000000;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round" />
+   id="path45"
+   class="st1"
+   d="m 0,735.31 a 56.695,56.695 0 1 1 113.39,0 56.695,56.695 0 0 1 -113.39,0 z" />
 		</g><text
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000"
-     id="text90"
-     v:langID="2052"
-     class="st6"
-     y="38.445408"
-     x="574.03021"><v:paragraph
-       v:horizAlign="1" /><v:tabList /><tspan
-       y="38.445408"
-       x="574.03021"
-       id="tspan1242"
-       sodipodi:role="line">PT</tspan><tspan
-       y="52.195408"
-       x="574.03021"
-       id="tspan1244"
-       sodipodi:role="line">Android Mobile</tspan><tspan
-       y="65.945404"
-       x="574.03021"
-       id="tspan1246"
-       sodipodi:role="line">App</tspan></text>
+   x="567.09967"
+   y="27.360504"
+   class="st6"
+   v:langID="2052"
+   id="text90"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000"><v:paragraph
+     v:horizAlign="1" /><v:tabList /><tspan
+     sodipodi:role="line"
+     id="tspan1242"
+     x="567.09967"
+     y="27.360504">PT</tspan><tspan
+     sodipodi:role="line"
+     id="tspan1244"
+     x="567.09967"
+     y="41.110504">Android Mobile</tspan><tspan
+     sodipodi:role="line"
+     id="tspan1246"
+     x="567.09967"
+     y="54.860504">App</tspan></text>
 <path
-     style="fill:#ffffff;stroke:#000000;stroke-width:0.65208834;stroke-linecap:round;stroke-linejoin:round"
-     inkscape:connector-curvature="0"
-     id="path50"
-     class="st1"
-     d="m 79.35973,154.03071 a 56.695,42.858314 0 1 1 113.39,0 56.695,42.858314 0 0 1 -113.39,0 z" /><rect
-     style="fill:none;stroke:none;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round"
-     id="rect97"
-     class="st3"
-     height="27"
-     width="95.385803"
-     y="140.53072"
-     x="88.361839" /><text
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000"
-     id="text103"
-     v:langID="2052"
-     class="st7"
-     y="135.9543"
-     x="135.77275"><v:paragraph
-       v:horizAlign="1" /><v:tabList /><tspan
-       sodipodi:role="line"
-       id="tspan1225"
-       x="135.77275"
-       y="135.9543">Management</tspan><tspan
-       sodipodi:role="line"
-       id="tspan1227"
-       x="135.77275"
-       y="149.7043">Information</tspan><tspan
-       sodipodi:role="line"
-       id="tspan1229"
-       x="135.77275"
-       y="163.4543">System</tspan><tspan
-       sodipodi:role="line"
-       id="tspan1231"
-       x="135.77275"
-       y="177.2043">(MIS)</tspan></text>
-</g>
+   d="m 75.509423,99.822364 a 56.695,42.858314 0 1 1 113.389997,0 56.695,42.858314 0 0 1 -113.389997,0 z"
+   class="st1"
+   id="path50"
+   inkscape:connector-curvature="0"
+   style="fill:#ffffff;stroke:#000000;stroke-width:0.65208834;stroke-linecap:round;stroke-linejoin:round" /><rect
+   x="84.511536"
+   y="86.322372"
+   width="95.385803"
+   height="27"
+   class="st3"
+   id="rect97"
+   style="fill:none;stroke:none;stroke-width:0.75;stroke-linecap:round;stroke-linejoin:round" /><text
+   x="131.92244"
+   y="81.745956"
+   class="st7"
+   v:langID="2052"
+   id="text103"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000"><v:paragraph
+     v:horizAlign="1" /><v:tabList /><tspan
+     y="81.745956"
+     x="131.92244"
+     id="tspan1225"
+     sodipodi:role="line">Management</tspan><tspan
+     y="95.495956"
+     x="131.92244"
+     id="tspan1227"
+     sodipodi:role="line">Information</tspan><tspan
+     y="109.24596"
+     x="131.92244"
+     id="tspan1229"
+     sodipodi:role="line">System</tspan><tspan
+     y="122.99596"
+     x="131.92244"
+     id="tspan1231"
+     sodipodi:role="line">(MIS)</tspan></text>
+
 </svg>

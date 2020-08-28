@@ -1,10 +1,10 @@
 :root{
-    --heightmaintitle:10vh;
+    --heightmaintitle:8vh;
     --heightptmain:90vh;
 }
 
 *{
-    box-sizing: border-box;;
+    box-sizing: border-box;
 }
 
 html{
@@ -23,15 +23,20 @@ table{
     border-collapse: collapse;
 }
 
+img{
+    width:100%;
+}
+
 td, th{
     padding:.5em;
     border:1px solid gray;
 }
 
-#maintitla{
+#maintitle{
     height:var(--heightmaintitle);
 }
 
+/* <!-- pt_main is a row flex with pt_content and pt_body --> */
 #pt_main{
     display: flex;
     height:var(--heightptmain);
@@ -71,6 +76,12 @@ td, th{
     margin:5% 0 2% 0;
 }
 
+#btnprintdoc{
+    width: 100%;
+    padding: 1em;
+    margin:5% 0 5% 0;
+}
+
 #iptloadcontent{
     display: none;
 }
@@ -93,6 +104,7 @@ td, th{
 
 
 #pt_body{
+    font-size: 1em;
     flex:9;
     /* border:1px solid lightgray; */
     scroll-behavior: smooth;
@@ -110,4 +122,50 @@ td, th{
 
 .subsection1{
     margin: 3% 0 3% 3%;
+}
+
+@media print{
+    *{
+        color:black;
+    }
+
+    a{
+        color:black;
+    }
+
+    #btnprintdoc{
+        display: none;
+    }
+
+    #contentloadbuttondiv{
+        display: none;
+    }
+
+    #maintitle{
+        color:black;
+        font-size: 1em;
+        /* display:none; */
+        display:  inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* height:100%; */
+        text-align: center;
+        margin-top:33%;
+    }
+
+    #maintitle span{
+        color:black;
+    }
+
+    #pt_main{
+        display:block;
+    }
+
+    
+    #pt_body{
+        /* height:100%; */
+        overflow:none;
+        height:auto;
+    }
 }

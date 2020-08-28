@@ -1,8 +1,9 @@
 // const file_ui = "file:///C:/ltp/Perak%20Transit/Going/Project%20Web/ui.csv";
-const file_ui = "ui.csv";
+const project_csv = "pt_project.csv";
 
 const htmlid_iptloadcontent = "iptloadcontent";
 const htmlid_btnloadcontent = "btnloadcontent";
+const htmlid_btnprintdoc = "btnprintdoc";
 const htmlid_table_procflowtms = "processflow_tms_table";
 
 
@@ -10,43 +11,73 @@ init_project();
 
 
 function init_project() {
-    // populate_UI();
+    populate_UI();
+
+
     let btnloadcontent = document.getElementById(htmlid_btnloadcontent);
+    let btnprintdoc = document.getElementById(htmlid_btnprintdoc);
     let iptloadcontent = document.getElementById(htmlid_iptloadcontent);
 
     btnloadcontent.onclick = () => {
         iptloadcontent.click();
     }
 
+    btnprintdoc.onclick = () => {
+        window.print();
+    }
 
 
     iptloadcontent.onchange = () => {
         let fr = new FileReader();
         fr.onload = () => {
-            let arryline = fr.result.split('\n');
+            convert_upload(fr.result);
+            // let arryline = fr.result.split('\n');
 
-            let arrytablerow = [];
-            let tableid = "";
-            let colnum = 0;
-            arryline.forEach(line => {
+            // let arrytablerow = [];
+            // let tableid = "";
+            // let colnum = 0;
+            // arryline.forEach(line => {
 
-                if (line.startsWith("#") && !line.startsWith("##")) {
-                    // new table //
-                    tableid = line.split(",")[0];
-                    colnum = line.split(",")[1];
-                    arrytablerow = [];
-                } else if (line.startsWith("##")) {
-                    tableloading(tableid, colnum, arrytablerow);
-                } else {
-                    arrytablerow.push(line);
-                }
-                // console.log(line);
-            });
-            alert('Finished loading contents from file.');
+            //     if (line.startsWith("#") && !line.startsWith("##")) {
+            //         // new table //
+            //         tableid = line.split(",")[0];
+            //         colnum = line.split(",")[1];
+            //         arrytablerow = [];
+            //     } else if (line.startsWith("##")) {
+            //         tableloading(tableid, colnum, arrytablerow);
+            //     } else {
+            //         arrytablerow.push(line);
+            //     }
+            // });
+            // alert('Finished loading contents from file.');
         }
         fr.readAsText(iptloadcontent.files[0]);
         iptloadcontent.value = null;
     }
+}
+
+
+
+function convert_upload(uploadtext) {
+    let arryline = uploadtext.split('\n');
+
+    let arrytablerow = [];
+    let tableid = "";
+    let colnum = 0;
+    arryline.forEach(line => {
+
+        if (line.startsWith("#") && !line.startsWith("##")) {
+            // new table //
+            tableid = line.split(",")[0];
+            colnum = line.split(",")[1];
+            arrytablerow = [];
+        } else if (line.startsWith("##")) {
+            tableloading(tableid, colnum, arrytablerow);
+        } else {
+            arrytablerow.push(line);
+        }
+    });
+    alert('Finished loading contents from file.');
 }
 
 
@@ -65,22 +96,22 @@ function tableloading(tableid, colnum, arryline) {
 
         arryline.forEach(line => {
             let arrycell = line.split(",");
-            // arrycell.forEach(cell => {
+
             if (thead.children.length == 0) {
+                // header row //
                 let theadtr = thead.insertRow();
                 for (i = 0; i < colnum; i++) {
                     let thcell = theadtr.insertCell();
                     thcell.innerHTML = arrycell[i];
                 }
             } else {
+                // data row //
                 let datarow = tbody.insertRow();
                 for (i = 0; i < colnum; i++) {
                     let tdcell = datarow.insertCell();
-                    tdcell.innerHTML = arrycell[i];
+                    tdcell.innerHTML = convertcomma(arrycell[i]);
                 }
             }
-            console.log(line);
-            // })
         })
 
         tbl.appendChild(thead);
@@ -88,13 +119,19 @@ function tableloading(tableid, colnum, arryline) {
 
         divtable.appendChild(tbl);
     }
-
 }
 
+function convertcomma(ipttext) {
+    return ipttext.replace(/\|/g, ",");
+}
+
+
 function populate_UI() {
-    fetch(file_ui)
+    fetch(project_csv)
         .then(response => response.text())
-        .then(text => console.log(text))
+        .then(text => {
+            convert_upload(text);
+        })
 
 
     // var httpreq = new XMLHttpRequest();
