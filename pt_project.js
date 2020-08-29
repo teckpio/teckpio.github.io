@@ -31,25 +31,6 @@ function init_project() {
         let fr = new FileReader();
         fr.onload = () => {
             convert_upload(fr.result);
-            // let arryline = fr.result.split('\n');
-
-            // let arrytablerow = [];
-            // let tableid = "";
-            // let colnum = 0;
-            // arryline.forEach(line => {
-
-            //     if (line.startsWith("#") && !line.startsWith("##")) {
-            //         // new table //
-            //         tableid = line.split(",")[0];
-            //         colnum = line.split(",")[1];
-            //         arrytablerow = [];
-            //     } else if (line.startsWith("##")) {
-            //         tableloading(tableid, colnum, arrytablerow);
-            //     } else {
-            //         arrytablerow.push(line);
-            //     }
-            // });
-            // alert('Finished loading contents from file.');
         }
         fr.readAsText(iptloadcontent.files[0]);
         iptloadcontent.value = null;
@@ -65,7 +46,6 @@ function convert_upload(uploadtext) {
     let tableid = "";
     let colnum = 0;
     arryline.forEach(line => {
-
         if (line.startsWith("#") && !line.startsWith("##")) {
             // new table //
             tableid = line.split(",")[0];
@@ -107,9 +87,70 @@ function tableloading(tableid, colnum, arryline) {
             } else {
                 // data row //
                 let datarow = tbody.insertRow();
+                let colspan = 0;
+                let adjustedcolnum = colnum;
                 for (i = 0; i < colnum; i++) {
-                    let tdcell = datarow.insertCell();
-                    tdcell.innerHTML = convertcomma(arrycell[i]);
+                    let cellstring = arrycell[i];
+
+                    // if (i >= adjustedcolnum) {
+                    //     let tdcell = datarow.insertCell();
+                    //     tdcell.innerHTML = convertcomma(cellstring);
+                    //     continue;
+                    // }
+
+                    // let tdcell = datarow.insertCell();
+                    if (colspan > 0) {
+                        colspan--;
+                    } else if (cellstring.startsWith("(colspan:")) {
+                        let tdcell = datarow.insertCell();
+
+                        let idxclosing = cellstring.indexOf(")");
+                        // length of "(colspan:" = 9 //
+                        let colspanx = cellstring.substr(9, idxclosing - 9);
+
+                        tdcell.colSpan = colspanx;
+                        cellstring = cellstring.substr(idxclosing + 1);
+
+                        tdcell.innerHTML = convertcomma(cellstring);
+
+                        colspan = parseInt(colspanx);
+                        adjustedcolnum = colnum - colspan;
+                        colspan--;
+                        // continue;
+                    } else {
+                        let tdcell = datarow.insertCell();
+                        tdcell.innerHTML = convertcomma(cellstring);
+                    }
+
+                    // if (cellstring.startsWith("(colspan:")) {
+                    //     let tdcell = datarow.insertCell();
+
+                    //     let idxclosing = cellstring.indexOf(")");
+                    //     // length of "(colspan:" = 9 //
+                    //     let colspanx = cellstring.substr(9, idxclosing - 9);
+
+                    //     tdcell.colSpan = colspanx;
+                    //     cellstring = cellstring.substr(idxclosing + 1);
+
+                    //     tdcell.innerHTML = convertcomma(cellstring);
+
+                    //     colspan = parseInt(colspanx);
+                    //     adjustedcolnum = colnum - colspan;
+                    //     colspan--;
+                    //     // continue;
+                    // }
+                    // else if (i < adjustedcolnum) {
+                    //     if (colspan > 0)
+                    //         colspan--;
+                    //     else {
+                    //         let tdcell = datarow.insertCell();
+                    //         tdcell.innerHTML = convertcomma(cellstring);
+                    //     }
+                    // } else {
+                    //     let tdcell = datarow.insertCell();
+                    //     tdcell.innerHTML = convertcomma(cellstring);
+                    // }
+
                 }
             }
         })
