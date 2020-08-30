@@ -27,6 +27,8 @@ table{
 table thead tr td{
     text-align: center;
     background-color: var(--colortableheaderbg);
+    border:1px solid lightgray;
+    min-width: 3em;
 }
 
 img{
@@ -35,7 +37,8 @@ img{
 
 td, th{
     padding:.5em;
-    border:1px solid gray;
+    border:1px solid lightgray;
+
 }
 
 #maintitle{

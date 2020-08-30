@@ -101,12 +101,12 @@ function tableloading(tableid, colnum, arryline) {
                     // let tdcell = datarow.insertCell();
                     if (colspan > 0) {
                         colspan--;
-                    } else if (cellstring.startsWith("(colspan:")) {
+                    } else if (cellstring.startsWith("(cs:")) {
                         let tdcell = datarow.insertCell();
 
                         let idxclosing = cellstring.indexOf(")");
-                        // length of "(colspan:" = 9 //
-                        let colspanx = cellstring.substr(9, idxclosing - 9);
+                        // length of "(cs:" = 4 //
+                        let colspanx = cellstring.substr(4, idxclosing - 4);
 
                         tdcell.colSpan = colspanx;
                         cellstring = cellstring.substr(idxclosing + 1);
@@ -117,40 +117,19 @@ function tableloading(tableid, colnum, arryline) {
                         adjustedcolnum = colnum - colspan;
                         colspan--;
                         // continue;
-                    } else {
+                    } else if (cellstring.startsWith(".o")){
+                        let tdcell = datarow.insertCell();
+                        tdcell.style.backgroundColor="lightblue";
+                        tdcell.innerHTML = "";
+                    } else if (cellstring.startsWith(".x")){
+                        let tdcell = datarow.insertCell();
+                        tdcell.style.backgroundColor="lightgreen";
+                        tdcell.innerHTML = "";
+                    }
+                    else {
                         let tdcell = datarow.insertCell();
                         tdcell.innerHTML = convertcomma(cellstring);
                     }
-
-                    // if (cellstring.startsWith("(colspan:")) {
-                    //     let tdcell = datarow.insertCell();
-
-                    //     let idxclosing = cellstring.indexOf(")");
-                    //     // length of "(colspan:" = 9 //
-                    //     let colspanx = cellstring.substr(9, idxclosing - 9);
-
-                    //     tdcell.colSpan = colspanx;
-                    //     cellstring = cellstring.substr(idxclosing + 1);
-
-                    //     tdcell.innerHTML = convertcomma(cellstring);
-
-                    //     colspan = parseInt(colspanx);
-                    //     adjustedcolnum = colnum - colspan;
-                    //     colspan--;
-                    //     // continue;
-                    // }
-                    // else if (i < adjustedcolnum) {
-                    //     if (colspan > 0)
-                    //         colspan--;
-                    //     else {
-                    //         let tdcell = datarow.insertCell();
-                    //         tdcell.innerHTML = convertcomma(cellstring);
-                    //     }
-                    // } else {
-                    //     let tdcell = datarow.insertCell();
-                    //     tdcell.innerHTML = convertcomma(cellstring);
-                    // }
-
                 }
             }
         })
