@@ -92,21 +92,33 @@ function tableloading(tableid, colnum, arryline) {
                 for (i = 0; i < colnum; i++) {
                     let cellstring = arrycell[i];
 
-                    // if (i >= adjustedcolnum) {
-                    //     let tdcell = datarow.insertCell();
-                    //     tdcell.innerHTML = convertcomma(cellstring);
-                    //     continue;
-                    // }
-
-                    // let tdcell = datarow.insertCell();
                     if (colspan > 0) {
                         colspan--;
-                    } else if (cellstring.startsWith("(cs:")) {
+                    } else if (cellstring.includes("(cs:")) {
                         let tdcell = datarow.insertCell();
+
 
                         let idxclosing = cellstring.indexOf(")");
                         // length of "(cs:" = 4 //
                         let colspanx = cellstring.substr(4, idxclosing - 4);
+
+                        // console.log(cellstring);
+
+                        // let idxopening = cellstring.indexOf("(cs:");
+                        // let colspanx = '-';
+                        // for (i = idxopening; i < cellstring.length; i++) {
+                        //     if (cellstring[i] == ":") {
+                        //         colspanx = '';
+                        //     } else if (cellstring[i] == ')') {
+                        //         break;
+                        //     } else if (colspanx != '-') {
+                        //         colspanx += cellstring[i];
+                        //     }
+                        // }
+                        // cellstring = cellstring.replace("(cs:" + colspanx + ")", "");
+// console.log(colspanx);
+
+
 
                         tdcell.colSpan = colspanx;
                         cellstring = cellstring.substr(idxclosing + 1);
@@ -116,16 +128,27 @@ function tableloading(tableid, colnum, arryline) {
                         colspan = parseInt(colspanx);
                         adjustedcolnum = colnum - colspan;
                         colspan--;
-                        // continue;
-                    } else if (cellstring.startsWith(".o")){
+                    } else if (cellstring.startsWith(".o")) {
                         let tdcell = datarow.insertCell();
-                        tdcell.style.backgroundColor="lightblue";
+                        tdcell.style.backgroundColor = "lightblue";
                         tdcell.innerHTML = "";
-                    } else if (cellstring.startsWith(".x")){
+                    } else if (cellstring.startsWith(".x")) {
                         let tdcell = datarow.insertCell();
-                        tdcell.style.backgroundColor="lightgreen";
+                        tdcell.style.backgroundColor = "lightgreen";
                         tdcell.innerHTML = "";
-                    }
+                    } else if (cellstring == "%") {
+                        let tdcell = datarow.insertCell();
+                        tdcell.style.textAlign = "center";
+                        tdcell.innerHTML = cellstring;
+                    } else if (cellstring.startsWith(":1")) {
+                        let tdcell = datarow.insertCell();
+                        tdcell.style.paddingLeft = "2%";
+                        tdcell.innerHTML = cellstring.replace(":1","-");
+                    }  else if (cellstring.startsWith(":2")) {
+                        let tdcell = datarow.insertCell();
+                        tdcell.style.paddingLeft = "4%";
+                        tdcell.innerHTML = cellstring.replace(":2","-");
+                    } 
                     else {
                         let tdcell = datarow.insertCell();
                         tdcell.innerHTML = convertcomma(cellstring);

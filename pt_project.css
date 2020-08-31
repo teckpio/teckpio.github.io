@@ -13,6 +13,7 @@ html{
     overflow: hidden;
 }
 
+    
 a{
     text-decoration: none;
     color:white;
@@ -24,11 +25,12 @@ table{
     border-collapse: collapse;
 }
 
+
 table thead tr td{
     text-align: center;
     background-color: var(--colortableheaderbg);
     border:1px solid lightgray;
-    min-width: 3em;
+    min-width: 2em;
 }
 
 img{
@@ -56,7 +58,6 @@ td, th{
     background-color: darkblue;
     color:white;
     opacity: .7;
-    /* max-width:9%; */
     padding:1em;
     display: inline-flex;
     flex-direction: column;
@@ -97,7 +98,7 @@ td, th{
 
 .contentmain{
     width: 95%;
-    margin:1em 0 1em 0;
+    margin:1em 0 0 0;
     color:white;
     display: flex;
     flex-direction: column;
@@ -108,7 +109,6 @@ td, th{
     text-align: right;
     color:white;
     margin:.5em 0 .5em 0;
-    
 }
 
 
@@ -178,3 +178,26 @@ td, th{
         height:auto;
     }
 }
+
+/* 
+let tdcell = datarow.insertCell();
+
+let idxopening = cellstring.indexOf("(cs:");
+let colspanx = '-';
+for (i = idxopening; i < cellstring.length; i++) {
+    if (cellstring[i] == ":") {
+        colspanx = '';
+    } else if (cellstring[i] == ')') {
+        break;
+    } else if (colspanx == '') {
+        colspanx += cellstring[i];
+    }
+}
+tdcell.colSpan = colspanx;
+
+cellstring = cellstring.replace("(cs:" + colspanx + ")", "");
+tdcell.innerHTML = convertcomma(cellstring);
+
+colspan = parseInt(colspanx);
+adjustedcolnum = colnum - colspan;
+colspan--; */
