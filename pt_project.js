@@ -116,7 +116,7 @@ function tableloading(tableid, colnum, arryline) {
                         //     }
                         // }
                         // cellstring = cellstring.replace("(cs:" + colspanx + ")", "");
-// console.log(colspanx);
+                        // console.log(colspanx);
 
 
 
@@ -136,19 +136,19 @@ function tableloading(tableid, colnum, arryline) {
                         let tdcell = datarow.insertCell();
                         tdcell.style.backgroundColor = "lightgreen";
                         tdcell.innerHTML = "";
-                    } else if (cellstring == "%") {
+                    } else if (cellstring.startsWith("%")) {
                         let tdcell = datarow.insertCell();
                         tdcell.style.textAlign = "center";
-                        tdcell.innerHTML = cellstring;
+                        tdcell.innerHTML = cellstring.substr(1);
                     } else if (cellstring.startsWith(":1")) {
                         let tdcell = datarow.insertCell();
                         tdcell.style.paddingLeft = "2%";
-                        tdcell.innerHTML = cellstring.replace(":1","-");
-                    }  else if (cellstring.startsWith(":2")) {
+                        tdcell.innerHTML = cellstring.replace(":1", "-");
+                    } else if (cellstring.startsWith(":2")) {
                         let tdcell = datarow.insertCell();
                         tdcell.style.paddingLeft = "4%";
-                        tdcell.innerHTML = cellstring.replace(":2","-");
-                    } 
+                        tdcell.innerHTML = cellstring.replace(":2", "-");
+                    }
                     else {
                         let tdcell = datarow.insertCell();
                         tdcell.innerHTML = convertcomma(cellstring);

@@ -46,9 +46,10 @@
                 <div class="contentsub"><a href="#processflow_breakdown">Breakdown/Accident</a></div>
             </div>
             <div class="contentmain"><a href="#user_interfaces"># User Interfaces</a></div>
+            <div class="contentmain"><a href="#reporting"># Reporting</a></div>
             <div class="contentmain"><a href="#apis"># APIs</a></div>
-            <div class="contentmain"><a href="#route_sched_trip"># Event Handling of TMS</a></div>
-            <div class="contentmain"><a href="#route_sched_trip"># Event Handling of App</a></div>
+            <div class="contentmain"><a href="#eventhandling_tms"># Event Handling of TMS</a></div>
+            <div class="contentmain"><a href="#eventhandling_app"># Event Handling of App</a></div>
             <div class="contentmain"><a href="#route_sched_trip"># Route-Schedule-Trip-Duty Roster-Duty Code</a></div>
             <div class="contentmain"><a href="#object_statuscodes"># Status Codes</a></div>
             <div class="contentmain"><a href="#issue_tobe_finalised"># System Design Issues to be Finalised</a></div>
@@ -79,9 +80,9 @@
 
 
             <!-- SERVER STRUCTURE -->
-            <div class="mainsection" id="timeline_milestones">
+            <div class="mainsection" id="struct_server">
                 <h2>Server Conceptual Structure</h2>
-                <div id="struct_server">
+                <div>
                     <img src="structure_server.svg">
                 </div>
                 <div id="table_struct_server"></div>
@@ -89,22 +90,29 @@
 
 
             <!-- TMS STRUCTURE -->
-            <div class="mainsection" id="timeline_milestones">
+            <div class="mainsection" id="struct_tms">
                 <h2>TMS Conceptual Structure</h2>
-                <div id="struct_tms">
+                <div>
                     <img src="structure_tms.svg">
                 </div>
                 <div id="table_struct_tms"></div>
             </div>
 
+            <!-- APP STRUCTURE -->
+            <div class="mainsection" id="struct_app">
+                <h2>App Conceptual Structure</h2>
+                <div>
+                    <img src="structure_app.svg">
+                </div>
+                <div id="table_struct_tms"></div>
+            </div>
 
             <!-- PROCESS FLOWS -->
             <div class="mainsection" id="process_flow">
                 <h2>Process Flow</h2>
                 <div class="subsection1">
-                    <h3>Ticketing Machine System (TMS) and Management Information System (MIS)</h3>
                     <div class="subsection2">
-                        <h4 id="processflow_tms">TMS</h4>
+                        <h3 id="processflow_tms">TMS</h3>
                         <img src="processflow_tms.svg">
                     </div>
                     <div id="table_processflow_tms"></div>
@@ -112,14 +120,14 @@
 
 
                     <div class="subsection2">
-                        <h4 id="processflow_mis">MIS</h4>
+                        <h3 id="processflow_mis">MIS</h3>
                         <img src="processflow_mis.svg">
                     </div>
                     <div id="table_processflow_mis"></div>
 
 
                     <div class="subsection2">
-                        <h4 id="processflow_app">App</h4>
+                        <h3 id="processflow_app">App</h3>
                         <img src="processflow_app.svg">
                     </div>
                     <div id="table_processflow_app"></div>
@@ -136,25 +144,12 @@
             </div>
 
 
-
-            <!-- ROUTE-SCHEDULE-TRIP -->
-            <div class="mainsection" id="route_sched_trip">
-                <h2>Route - Schedule - Trip - Duty Roster - Duty Code</h2>
-                <div>
-                    <img src="route_sched_trip.svg">
-                </div>
-                <div id="table_route_sched_trip"></div>
+            <!-- REPORTING -->
+            <div class="mainsection" id="reporting">
+                <h2>Reporting</h2>
+                <div id="table_reporting"></div>
             </div>
 
-
-            <!-- STATUS -->
-            <div class="mainsection" id="object_statuscodes">
-                <h2>Sataus Code</h2>
-                <div class="subsection1">
-                    <h3></h3>
-                </div>
-                <div id="table_objectstatus"></div>
-            </div>
 
 
             <!-- APIs -->
@@ -190,6 +185,19 @@
                 </div>
             </div>
 
+            <!-- EVENT HANDLING TMS -->
+            <div class="mainsection" id="eventhandling_tms">
+                <h2>Event Handling - TMS</h2>
+                <div id="table_eventhandle_tms"></div>
+            </div>
+
+            <!-- EVENT HANDLING APP -->
+            <div class="mainsection" id="eventhandling_app">
+                <h2>Event Handling - App</h2>
+                <div id="table_eventhandle_app"></div>
+            </div>
+
+            
 
 
             <!-- User Access Control -->
@@ -200,6 +208,27 @@
                 </div>
                 <div id="table_useraccess"></div>
             </div>
+
+
+            <!-- ROUTE-SCHEDULE-TRIP -->
+            <div class="mainsection" id="route_sched_trip">
+                <h2>Route - Schedule - Trip - Duty Roster - Duty Code</h2>
+                <div>
+                    <img src="route_sched_trip.svg">
+                </div>
+                <div id="table_route_sched_trip"></div>
+            </div>
+
+
+            <!-- STATUS -->
+            <div class="mainsection" id="object_statuscodes">
+                <h2>Sataus Code</h2>
+                <div class="subsection1">
+                    <h3></h3>
+                </div>
+                <div id="table_objectstatus"></div>
+            </div>
+
 
             <!-- ISSUES TO BE FINALISED -->
             <div class="mainsection" id="issue_tobe_finalised">

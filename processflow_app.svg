@@ -12,8 +12,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="1000"
-   height="600"
-   viewBox="0 0 750.00108 450.00013"
+   height="500"
+   viewBox="0 0 750.00108 375.00011"
    xml:space="preserve"
    class="st8"
    version="1.1"
@@ -37,9 +37,9 @@
    id="namedview1276"
    showgrid="false"
    units="px"
-   inkscape:zoom="1.0180154"
-   inkscape:cx="417.20165"
-   inkscape:cy="353.62341"
+   inkscape:zoom="1.4396912"
+   inkscape:cx="585.66668"
+   inkscape:cy="235.747"
    inkscape:window-x="-9"
    inkscape:window-y="-9"
    inkscape:window-maximized="1"
@@ -253,37 +253,41 @@
 
 
 
+
+
 </defs>
 	
 <g
-   id="g4216"
-   transform="translate(1.4734572,47.88736)"><path
+   id="g16141"><path
      inkscape:connector-curvature="0"
      id="path1097"
-     d="M 219.54513,188.71347 H 540.75881"
-     style="fill:none;stroke:#000000;stroke-width:0.75000107px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" /><g
-     transform="translate(-62.621932,28.643252)"
-     id="g1090"><ellipse
-   style="fill:#ffffff;fill-opacity:1;stroke:#323232;stroke-width:0.57356954;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-   id="path2586"
-   cx="622.80328"
-   cy="160.07022"
-   rx="39.208336"
-   ry="19.036362" /><text
-   x="622.56158"
-   y="162.56509"
-   class="st2"
-   v:langID="18441"
-   id="text1229"
-   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00001621px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000"><v:paragraph
-     v:horizAlign="1" /><v:tabList /><v:newlineChar /><tspan
-     sodipodi:role="line"
-     id="tspan1016"
-     x="622.56158"
-     y="162.56509">Passengers</tspan></text>
-
-</g><g
-     transform="translate(-314.58312,-137.02802)"
+     d="m 460.30249,213.1255 h 69.59686"
+     style="fill:none;stroke:#000000;stroke-width:0.20354086px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" /><g
+     transform="translate(-19.500027)"
+     id="g14161"><ellipse
+       style="fill:#ffffff;fill-opacity:1;stroke:#323232;stroke-width:0.57356954;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path2586"
+       cx="587.44031"
+       cy="213.54008"
+       rx="39.208336"
+       ry="19.036362" /><text
+       x="587.19861"
+       y="216.03496"
+       class="st2"
+       v:langID="18441"
+       id="text1229"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00001621px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;fill:#000000"><v:paragraph
+         v:horizAlign="1" /><v:tabList /><v:newlineChar /><tspan
+         sodipodi:role="line"
+         id="tspan1016"
+         x="587.19861"
+         y="216.03496">Passengers</tspan></text>
+</g><path
+     inkscape:connector-curvature="0"
+     id="path14114"
+     d="m 174.19613,289.04427 c 0,0 3.66324,-53.13648 58.61201,-76.57903 54.94875,-23.44257 145.91946,10.93986 145.91946,10.93986 0,0 -14.04246,64.59727 -54.33821,93.2493 -40.29576,28.65202 -150.19326,-27.61013 -150.19326,-27.61013 z"
+     style="fill:none;stroke:#000000;stroke-width:0.81193876px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" /><g
+     transform="translate(-362.95068,-36.511683)"
      id="g1095"><ellipse
    style="font-size:12px;color-interpolation-filters:sRGB;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#323232;stroke-width:0.52763188;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
    id="path2586-7"
@@ -303,8 +307,14 @@
      x="512.91553"
      y="329.21658">Server</tspan></text>
 
-</g><g
-     transform="translate(70.725948,-55.845164)"
+
+</g><path
+     sodipodi:nodetypes="cc"
+     inkscape:connector-curvature="0"
+     id="path14058"
+     d="m 242.76075,71.809866 130.7574,92.207414"
+     style="fill:none;stroke:#000000;stroke-width:0.75000107px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" /><g
+     transform="translate(99.458364,-31.386909)"
      id="g1085"><rect
        x="272.87772"
        y="171.74181"
@@ -339,6 +349,7 @@
      id="tspan1025"
      sodipodi:role="line">(Android)</tspan></text>
 
+
 </g><g
        id="g1067"
        transform="translate(-1.7816535)"><rect
@@ -358,4 +369,124 @@
          inkscape:connector-curvature="0"
          id="path1058"
          d="m 291.12047,305.93303 7.63168,-4.39006 0.10749,7.39938 z"
-         style="fill:none;stroke:#000000;stroke-width:0.52987093;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:3.33333325;stroke-dasharray:none;stroke-opacity:1" /></g></g></g></svg>
+         style="fill:none;stroke:#000000;stroke-width:0.52987093;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:3.33333325;stroke-dasharray:none;stroke-opacity:1" /></g></g><g
+     transform="translate(17.470195,-182.46039)"
+     id="g13859"><ellipse
+       style="font-size:12px;color-interpolation-filters:sRGB;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#323232;stroke-width:0.52763188;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path2586-7-57"
+       cx="201.12692"
+       cy="242.38918"
+       rx="35.916019"
+       ry="17.585873" /><text
+       x="201.03561"
+       y="245.86427"
+       class="st2"
+       v:langID="18441"
+       id="text1229-4-8"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00001621px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;color-interpolation-filters:sRGB;fill:#000000;fill-rule:evenodd;stroke-linecap:square;stroke-miterlimit:3"><v:paragraph
+         v:horizAlign="1" /><v:tabList /><v:newlineChar /><tspan
+         y="245.86427"
+         x="201.03561"
+         sodipodi:role="line"
+         id="tspan13854">GPS</tspan></text>
+</g><rect
+     y="98.27253"
+     x="275.85501"
+     height="33.294506"
+     width="55.00584"
+     id="rect3367"
+     style="font-size:12px;overflow:visible;color-interpolation-filters:sRGB;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.79567891;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" /><text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00001621px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;overflow:visible;color-interpolation-filters:sRGB;fill:#000000;fill-rule:evenodd;stroke-width:0.99999994;stroke-linecap:square;stroke-miterlimit:3"
+     id="text1229-5"
+     v:langID="18441"
+     class="st2"
+     y="112.25755"
+     x="304.95804"><v:paragraph
+       v:horizAlign="1" /><v:tabList /><v:newlineChar /><tspan
+       y="112.25755"
+       x="304.95804"
+       id="tspan13882"
+       sodipodi:role="line">Current</tspan><tspan
+       y="126.00758"
+       x="304.95804"
+       id="tspan13884"
+       sodipodi:role="line">Location</tspan></text>
+<rect
+     y="193.21326"
+     x="172.54025"
+     height="64.030312"
+     width="105.01663"
+     id="rect3367-4"
+     style="font-size:12px;overflow:visible;color-interpolation-filters:sRGB;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.52464592;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" /><text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00001621px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;overflow:visible;color-interpolation-filters:sRGB;fill:#000000;fill-rule:evenodd;stroke-width:0.99999994;stroke-linecap:square;stroke-miterlimit:3"
+     id="text1229-5-1"
+     v:langID="18441"
+     class="st2"
+     y="207.19829"
+     x="227.16965"><v:paragraph
+       v:horizAlign="1" /><v:tabList /><v:newlineChar /><tspan
+       y="207.19829"
+       x="227.16965"
+       id="tspan14144"
+       sodipodi:role="line">Nearby</tspan><tspan
+       y="220.9483"
+       x="227.16965"
+       id="tspan14146"
+       sodipodi:role="line">Bus Stops</tspan><tspan
+       y="234.69833"
+       x="227.16965"
+       id="tspan14148"
+       sodipodi:role="line">based on</tspan><tspan
+       y="248.44835"
+       x="227.16965"
+       id="tspan14150"
+       sodipodi:role="line">Selected Destination</tspan></text>
+<rect
+     y="294.79767"
+     x="253.28688"
+     height="48.922878"
+     width="84.699753"
+     id="rect3367-4-7"
+     style="font-size:12px;overflow:visible;color-interpolation-filters:sRGB;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.19686246;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" /><text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00001621px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;overflow:visible;color-interpolation-filters:sRGB;fill:#000000;fill-rule:evenodd;stroke-width:0.99999994;stroke-linecap:square;stroke-miterlimit:3"
+     id="text1229-5-1-1"
+     v:langID="18441"
+     class="st2"
+     y="308.78271"
+     x="297.49734"><v:paragraph
+       v:horizAlign="1" /><v:tabList /><v:newlineChar /><tspan
+       y="308.78271"
+       x="297.49734"
+       id="tspan14152"
+       sodipodi:role="line">Timetable</tspan><tspan
+       y="322.53275"
+       x="297.49734"
+       id="tspan14154"
+       sodipodi:role="line">based on</tspan><tspan
+       y="336.28275"
+       x="297.49734"
+       id="tspan14156"
+       sodipodi:role="line">Selected Bus Stop</tspan></text>
+<rect
+     y="186.44098"
+     x="305.38147"
+     height="33.294506"
+     width="45.628811"
+     id="rect3367-0"
+     style="font-size:12px;overflow:visible;color-interpolation-filters:sRGB;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.72469127;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" /><text
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.00001621px;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle;overflow:visible;color-interpolation-filters:sRGB;fill:#000000;fill-rule:evenodd;stroke-width:0.99999994;stroke-linecap:square;stroke-miterlimit:3"
+     id="text1229-5-7"
+     v:langID="18441"
+     class="st2"
+     y="200.42598"
+     x="328.23315"><v:paragraph
+       v:horizAlign="1" /><v:tabList /><v:newlineChar /><tspan
+       y="200.42598"
+       x="328.23315"
+       id="tspan14140"
+       sodipodi:role="line">?</tspan><tspan
+       y="214.17599"
+       x="328.23315"
+       id="tspan14142"
+       sodipodi:role="line">(or GPS)</tspan></text>
+</g></svg>
