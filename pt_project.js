@@ -143,7 +143,7 @@ function tableloading(tableid, colnum, arryline) {
                     } else if (cellstring.startsWith(":1")) {
                         let tdcell = datarow.insertCell();
                         tdcell.style.paddingLeft = "2%";
-                        tdcell.innerHTML = cellstring.replace(":1", "-");
+                        tdcell.innerHTML = convertcomma(cellstring.replace(":1", "-"));
                     } else if (cellstring.startsWith(":2")) {
                         let tdcell = datarow.insertCell();
                         tdcell.style.paddingLeft = "4%";

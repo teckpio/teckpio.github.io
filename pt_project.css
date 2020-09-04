@@ -27,12 +27,14 @@ table{
 }
 
 
+
 table thead tr td{
     text-align: center;
     background-color: var(--colortableheaderbg);
     border:1px solid lightgray;
     min-width: 2em;
 }
+
 
 img{
     width:100%;
