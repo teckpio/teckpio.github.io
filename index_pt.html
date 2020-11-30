@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="pt_main.css">
+</head>
+
+<body>
+    <!-- Main is a row flex with NavBar and Content -->
+    <div id="Main">
+
+        <!-- NavBar is a column flex of NavBar_Logo and NavBar_Menu -->
+        <div id="NavBar">
+            <div id="NavBar_Logo">
+                <br>
+                Perak Transit Berhad: FOM
+                <br>
+                <div>
+                    <img src="PTIconLogo.svg" style="background-color: white;margin-top:5%; box-shadow: 1px 1px  gray;"> 
+                </div>
+                <h4 id = "NavBar_LogoDateTime">
+                    12-3-2020<br>
+                    12:02pm
+                </h4>
+            </div>
+            <div id="NavBar_Menu">
+                <ul id="NavBar_MenuItem">
+
+                </ul>
+            </div>
+
+        </div>
+
+
+        <!-- Content is a column flex of Content_Title and Content_Box  -->
+        <div id="Content">
+
+            <!-- Content_Title is a row flex of Content_TitleLogo and Content_TitleText -->
+            <div id="Content_Title">
+
+                <div id="Content_TitleLogo">
+                    <!-- <img src="PTIconLogo.svg"> -->
+                    Fleet Operation Management System
+                </div>
+
+                <div id="Content_TitleText">
+                    <img src="PTIconUser.svg" style="margin-right:2%; border:1px solid yellow;">
+                    User XYZ
+                </div>
+            </div>
+
+            <!-- Content_Box consists of Content_List and Content_Detail -->
+            <div id="Content_Box">
+                <!-- NavBar_SubMenu is part of NavBar_Menu residing in the area of Content_Detail -->
+                <div id="NavBar_SubMenu">
+
+                </div>
+                <div id="Content_List">
+
+                </div>
+                <div id="Content_Detail">
+
+                </div>
+                <!-- <div id = "map"></div> -->
+            </div>
+            
+        </div>
+    </div>
+</body>
+
+<script src='vssfnc.js'></script>
+<script src="pt_data.js"></script>
+<script src="pt_main.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+
+</html>
