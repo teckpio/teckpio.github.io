@@ -96,6 +96,10 @@ img {
     margin: 1rem;
 }
 
+#asinlife {
+    animation: rotatein 2s forwards ease-in 1s, slidein 2s forwards ease-in 1s;
+}
+
 #homesweethome {
     text-align: center;
     width: 30rem;
