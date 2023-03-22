@@ -85,8 +85,8 @@ body p {
 
 body {
     /*background-image:url(vas.bmp);
-    background-size:conver;
-    background-blend-mode: soft-light;*/
+    background-size:conver;*/
+    background-color: #EFEFFF;
     font-size: 1.2rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     letter-spacing: 1px;
@@ -143,15 +143,22 @@ img {
         }
     }
     #vsse_headeradyourad {
-        width: 20%;
+        /* width: 20%; */
+        width: 50%;
         animation: youradslide 10s infinite alternate;
         margin-left: 15px;
         animation-delay: 10s;
     }
-    @keyframes youradslide {
+    /* @keyframes youradslide {
         0% {}
         100% {
             transform: translate(350%);
+        }
+    } */
+    @keyframes youradslide {
+        0% {}
+        100% {
+            transform: translate(120%);
         }
     }
     header {
