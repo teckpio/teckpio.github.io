@@ -1,151 +1,1180 @@
-<!DOCTYPE html>
-<html>
-
 <head>
-    <meta charset="utf-8">
-    <title>VSS:E</title>
-    <!--for responsive layout -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="vsse.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* font-family: Arial, Georgia, 'Times New Roman', Times, serif; */
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: 100;
+            letter-spacing: .03rem;
+        }
+
+        header {
+            background-image: linear-gradient(rgba(22, 22, 121, .6), rgba(22, 22, 121, .1));
+        }
+
+        body {
+            background-image: url("./img_3sm/background.svg");
+            background-size: cover;
+        }
+
+        h1 {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: bolder;
+        }
+
+        h2 {
+            font-family: 'Roboto';
+        }
+
+        section {
+            display: none;
+        }
+
+        .divCatalogImg {
+            width: 100%;
+        }
+
+        .catalogImg {
+            object-fit: contain;
+            width: 100%;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 3px 3px #ababab;
+        }
+
+        .buttonX {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 800;
+
+            width: 2rem;
+            height: 2rem;
+
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            /* padding: .5rem; */
+
+            box-shadow: 0 0 3px 5px rgb(216, 213, 213);
+            background-color: black;
+            border: none;
+            color: white;
+
+            text-align: center;
+
+            border-radius: 5px;
+        }
+
+        .buttonX:hover {
+            background-color: white;
+            color: black;
+            box-shadow: 0 0 3px 5px rgb(139, 136, 136);
+        }
+
+        .buttonMore {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 800;
+
+            padding: 0 .5rem;
+            margin: 1rem;
+
+            box-shadow: 0 0 3px 5px rgb(236, 234, 234);
+            background-color: white;
+            color: black;
+
+            border-radius: 5px;
+            border: none;
+
+            display: none;
+        }
+
+        .buttonMore:hover {
+            background-color: black;
+            color: white;
+            box-shadow: 0 0 3px 5px rgb(139, 136, 136);
+        }
+
+        .buttonMoreBlink {
+            animation: blinkx .5s;
+            animation-iteration-count: 5;
+        }
+
+        #shield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -99;
+
+            background-color: #FEFEFE;
+            opacity: 0;
+
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .shieldUp {
+            animation: shieldUp .5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .shieldDown {
+            animation: shieldDown .5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .menu {
+            background-image: linear-gradient(rgba(22, 22, 121, .6), rgba(22, 22, 121, .1));
+            color: aliceblue;
+            font-size: large;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .imgLogoDiv {
+            width: 3rem;
+            box-shadow: 0 0 3px 3px rgb(42, 42, 159);
+        }
+
+        .imgLogo {
+            object-fit: contain;
+            width: 3rem;
+            ;
+        }
+
+        .menuItem3sm {
+            font-size: 1.5rem;
+        }
+
+        .menuItemMain {
+            color: aliceblue;
+            font-size: large;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* margin-left: 23%; */
+        }
+
+        .menuItemContact {
+            float: right;
+        }
+
+        .menuItem {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 .6rem 0 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .menuItem:hover {
+            cursor: grab;
+        }
+
+        .menuItemName {
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: .7rem;
+        }
+
+        .menuItemName:hover {
+            animation: blinkx .5s;
+            animation-iteration-count: 2;
+        }
+
+        .menuItemImg {
+            margin: 0 1rem;
+        }
+
+        .menuItemDiv {
+            border: 2px solid rgba(220, 220, 220, .7);
+            height: 1.5rem;
+            margin: 0 2rem;
+        }
+
+        .detailTitle3sm {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #FEFEFE;
+            border-radius: 8px;
+            padding: 1rem;
+            opacity: .9;
+        }
+
+        .detailTitle3smImgDiv {
+            width: 3rem;
+            margin: 0 2rem;
+        }
+
+        .detailTitle3smImg {
+            width: 3rem;
+            object-fit: contain;
+            box-shadow: 0 0 3px 6px rgb(240, 238, 238);
+
+        }
+
+        .detailTitle3smName {
+            font-size: 1.5rem;
+        }
+
+        .aboutUs {
+            position: fixed;
+            top: 10vh;
+            left: 40vh;
+
+            width: 0px;
+            height: 0px;
+
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 10px rgb(224, 220, 220);
+            background-image: url("./img_3sm/background_3sm.svg");
+            color: rgb(4, 4, 65);
+
+            opacity: 0;
+            z-index: -99;
+            overflow: auto;
+        }
+
+        .aboutUsSurface {
+            animation: aboutUsSurface .8s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .aboutUsSubmerge {
+            animation: aboutUsSubmerge .5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .onebyone {
+            opacity: 0;
+        }
+
+        .aboutUs span {
+            font-family: "Arial";
+            font-size: 1.2rem;
+        }
+
+        .aboutUsSpanBold {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .aboutUsSpanSurface {
+            animation: aboutUsSpanSurface 1s;
+            animation-delay: 1s;
+            animation-fill-mode: forwards;
+        }
+
+        .ourProducts {
+            width: 90vw;
+            height: 65vh;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            align-items: start;
+            margin-bottom: 2rem;
+        }
+
+        .ourProductsTitle {
+            font-size: 3rem;
+            font-weight:900;
+            text-align: left;
+
+            color: rgb(227, 237, 238);
+
+            margin-left: 15rem;
+            width: 60%;
+
+            align-self: flex-start;
+        }
+
+        .catalog {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .catalogMain {
+            display: flex;
+            justify-content: space-around;
+            align-items: baseline;
+            width: 100%;
+            height: 40vh;
+            /* position: fixed; */
+        }
+
+        .catalog3smTitle {
+            display: none;
+        }
+
+        .catalogRise {
+            animation: catalogRise 1s;
+            animation-fill-mode: forwards;
+        }
+
+        .catalogRevert {
+            animation: catalogRevert .5s;
+            animation-fill-mode: forwards;
+        }
+
+
+        .catalogItem {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(250, 250, 250, .85);
+
+            min-width: 22vw;
+            width: 22vw;
+            min-height: 20vh;
+            height: 55vh;
+
+            padding: 1rem;
+            margin: 1rem;
+            vertical-align: top;
+
+            box-shadow: 0 0 6px 8px rgb(234, 234, 246);
+            border-radius: 5px;
+
+            overflow: auto;
+        }
+
+        .catalogItemExtend {
+            height: 90vh;
+        }
+
+        .catalogItemHover {
+            animation: catalogItemRise .5s;
+            animation-fill-mode: forwards;
+            background-color: rgba(250, 250, 250, .96);
+        }
+
+        .catalogItemHoverOut {
+            animation: catalogItemRevert .5s;
+            animation-fill-mode: forwards;
+        }
+
+        .catalogItemRotate {
+            animation: catalogItemRotate .5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .catalogItemLogo {
+            margin-bottom: 1rem;
+        }
+
+        .catalogItemTitle {
+            min-height: 5rem;
+
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+
+            background-color: #efefef;
+            color: rgb(12, 85, 95);
+
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 8px;
+
+            position: sticky;
+            top: -1.1rem;
+        }
+
+        .catalogItemSummary {
+            color: darkslategray;
+            font-size: 1rem;
+            font-weight: normal;
+            line-height: 1.2rem;
+            margin: 1rem;
+        }
+
+        .catalogItemDetail {
+            display: none;
+        }
+
+        #catalogExit {
+            /* width: 1rem;
+            height: 1rem; */
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: none;
+        }
+
+        .contact {
+            position: fixed;
+            top: 10vh;
+            right: 1vh;
+
+            width: 0px;
+            height: 0px;
+
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 10px rgb(224, 220, 220);
+            background-image: url("./img_3sm/background_3sm.svg");
+            color: rgb(4, 4, 65);
+
+            opacity: 0;
+            z-index: -99;
+            overflow: auto;
+        }
+
+        .contactSurface {
+            animation: contactSurface .5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .contactSubmerge {
+            animation: contactSubmerge .5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .contactItem {
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem;
+        }
+
+        /* #catalog_licensePlate {
+            background-image: url("license_plate.svg");
+            background-size: contain;
+            background-repeat: repeat;
+            background-blend-mode: lighten;
+        }
+
+        #catalog_vms {
+            background-image: url("vms.svg");
+            background-size: contain;
+            background-repeat: repeat;
+            background-blend-mode: lighten;
+        }
+
+        #catalog_sensor {
+            background-image: url("sensor.svg");
+            background-size: contain;
+            background-repeat: repeat;
+            background-blend-mode: lighten;
+        }
+
+        #catalog_access {
+            background-image: url("sensor.svg");
+            background-size: contain;
+            background-repeat: repeat;
+            background-blend-mode: lighten;
+        } */
+
+        /* animation */
+
+        @keyframes shieldUp {
+            0% {
+                opacity: 0;
+                z-index: -99;
+            }
+
+            100% {
+                opacity: .9;
+                z-index: 99;
+            }
+        }
+
+        @keyframes shieldDown {
+            0% {
+                opacity: .9;
+                z-index: 99;
+            }
+
+            100% {
+                opacity: 0;
+                z-index: -99;
+            }
+        }
+
+        .blink {
+            animation: blinkx .5s;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes blinkx {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes aboutUsSurface {
+            0% {
+                opacity: 0;
+                z-index: -99;
+                width: 0px;
+                height: 0px;
+            }
+
+            50% {
+                opacity: .5;
+                z-index: 0;
+                width: 2px;
+                height: 80vh;
+            }
+
+            100% {
+                opacity: 1;
+                z-index: 99;
+                width: 50vw;
+                height: 80vh;
+            }
+        }
+
+        @keyframes aboutUsSubmerge {
+            0% {
+                opacity: 1;
+                z-index: 99;
+                width: 50vw;
+                height: 80vh;
+            }
+
+            50% {
+                opacity: .5;
+                z-index: 0;
+                width: 2px;
+                height: 80vh;
+            }
+
+            100% {
+                opacity: 0;
+                z-index: -99;
+                width: 0px;
+                height: 0px;
+            }
+        }
+
+        @keyframes aboutUsSpanSurface {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes catalogRise {
+            0% {
+                background-color: #FEFEFE;
+                opacity: 0;
+
+                transform: translate(0, 0);
+                z-index: 0;
+            }
+
+            100% {
+                background-color: #FEFEFE;
+                opacity: 1;
+
+                transform: translate(0, -60vh);
+                z-index: 199;
+                height: 80vh;
+
+                background-image: url("./img_3sm/background_3sm.svg");
+            }
+        }
+
+        @keyframes catalogRevert {
+            0% {
+                transform: translate(0, -60vh);
+                z-index: 100;
+            }
+
+            100% {
+                transform: translate(0, 0);
+                z-index: 0;
+            }
+        }
+
+        @keyframes catalogItemRotate {
+            0% {}
+
+            50% {
+                transform: rotateY(180deg);
+            }
+
+            100% {
+                transform: rotateY(0deg);
+                overflow: auto;
+            }
+        }
+
+        @keyframes catalogItemRise {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(0, -50vh);
+                height: 80vh;
+            }
+        }
+
+        @keyframes catalogItemRevert {
+            0% {
+                transform: translate(0, -50vh);
+                height: 80vh;
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes contactSurface {
+            0% {
+                opacity: 0;
+                z-index: -99;
+                width: 0px;
+                height: 0px;
+            }
+
+            100% {
+                opacity: 1;
+                z-index: 99;
+                width: 20vw;
+                height: 50vh;
+            }
+        }
+
+        @keyframes contactSubmerge {
+            0% {
+                opacity: 1;
+                z-index: 99;
+                width: 40vw;
+                height: 70vh;
+            }
+
+            100% {
+                opacity: 0;
+                z-index: -99;
+                width: 0px;
+                height: 0px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1 id="vsse_bodyvisionthere" style="padding:1rem;background-color: #333; color:#eee;">
-        OZ TRIP 2023
-    </h1>
-    <div>
-        <h2 id="vsse_headeradyourad">Melbourne, Here We Come!</h2>
-        <div style="background-color: white;padding:1px;">
-            <img src=" melbourne_wide.jfif " style="width:98%;height:30vh ">
+    <div id="shield">
+    </div>
+    <header>
+        <div class="menu">
+            <div class="menuItem menuItemLogo">
+                <div class="menuItemImg imgLogoDiv"><img class="imgLogo" src="./img_3sm/logo_3sm.svg" /></div>
+                <div class="menuItem3sm">3SM Pte Ltd</div>
+            </div>
+            <div class="menuItemMain">
+                <div class="menuItemDiv"></div>
+                <div class="menuItem" id="menuItemAboutUs">
+                    <div class="menuItemName">About Us</div>
+                    <div class="menuItemImg"><img src="./img_3sm/about_us.svg" /></div>
+                </div>
+                <div class="menuItemDiv"></div>
+                <div class="menuItem" id="menuItemProducts">
+                    <div class="menuItemName">Products</div>
+                    <div class="menuItemImg"><img src="./img_3sm/products.svg" /></div>
+                </div>
+                <div class="menuItemDiv"></div>
+                <div class="menuItem">
+                    <div class="menuItemName">Services</div>
+                    <div class="menuItemImg"><img src="./img_3sm/services.svg" /></div>
+                </div>
+                <div class="menuItemDiv"></div>
+            </div>
+            <div class="menuItem menuItemContact" id="menuItemContact">
+                <div class="menuItemName">Contact Us</div>
+                <div class="menuItemImg"><img src="./img_3sm/contact.svg" /></div>
+            </div>
         </div>
-        <br/>
-        <br/>
-        <div id="asinlife" style="font-style:italic;">* as in life, plans are subjected to changes ... anytime ... anywhere ...</div>
-        <br/>
-        <div style="display: flex column; ">
-            <div>
-                <h3>1. First Day on Arrival (11/4)</h3>
-                <br/>
-                <div style="display: flex; ">
+    </header>
+
+    <!-- DivAboutUs -->
+    <div class="aboutUs">
+        <div class="detailTitle3sm">
+            <div class="detailTitle3smImgDiv"><img class="detailTitle3smImg" src="./img_3sm/logo_3sm.svg" /></div>
+            <div class="detailTitle3smName">3SM Pte Ltd</div>
+        </div>
+        <br /><br />
+        <div class="onebyone" sec="1">
+            <span class="aboutUsSpanBold " id="aboutUsWelcome">
+                Welcome to 3SM Pte Ltd,</span>
+        </div>
+        <br /><br />
+        <div class="onebyone" sec="1">
+            <span> your one-stop solution for innovative security and control systems.
+            </span>
+        </div>
+        <br /><br />
+        <div class="onebyone" sec="2">
+            <span class="aboutUsSpanBold">Our focus </span>
+            <span>is to provide you with cutting-edge technology to enhance the safety and efficiency of your
+                facilities.</span>
+        </div>
+        <br /><br />
+        <div class="onebyone" sec="3">
+            <span>With </span><span class="aboutUsSpanBold">our expertise </span>
+            <span>in License Plate Recognition System for Barrier entry, Cloud-Based Access Control,
+                Visitor Management Software and IOT Sensor Technology, we ensure that you have the best tools for
+                securing
+                and managing your
+                property.
+            </span>
+        </div>
+        <br /><br />
+        <div class="onebyone" sec="3">
+            <span class="aboutUsSpanBold">Our products </span>
+            <span>are designed to be user-friendly and customizable, providing you with the flexibility to
+                meet your unique security needs. Our team of experts provide you with the highest level of customer
+                service
+                and support.
+            </span>
+        </div>
+        <br /><br />
+        <button class="buttonX" id="aboutUsExit">X</button>
+    </div>
+    <div class="contact">
+        <div class="detailTitle3sm">
+            <div class="detailTitle3smImgDiv"><img class="detailTitle3smImg" src="./img_3sm/logo_3sm.svg" /></div>
+            <div class="detailTitle3smName">3SM Pte Ltd</div>
+        </div>
+        <br /><br />
+        <h2>Contacts:</h2>
+        <br />
+        <div class="contactItem">
+            <div class="contactItemLabel">Email:</div>
+            <div class="contactItemData">Sales@3sm.com.sg</div>
+        </div>
+        <div class="contactItem">
+            <div class="contactItemLabel">Tel:</div>
+            <div class="contactItemData">+65- 6988 4094</div>
+        </div>
+        <button class="buttonX" id="contactExit">X</button>
+    </div>
+    <section>
+        <h2>License Plate Recognition System</h2>
+        <img alt="camera image 1" />
+        <h3>Lower Cost of Ownership</h3>
+        <h3>Easier and Faster Deployment</h3>
+        <h3>Integration to Visitor Management System</h3>
+        <h3>Easy Integration to other Barrier Entrance Control</h3>
+        <img alt="camera image 2" />
+    </section>
+    <section>
+        <h2>Cloud-based Access Control</h2>
+        <h3>Our system is highly flexible. Access can be managed through our Cloud-based Software. 
+            Access control through Facial Recognition, QR Code, Access Card, Biometric Fingerprint, Mobile
+            Phone.
+        </h3>
+        <img alt="access control image 1" />
+    </section>
+    <section>
+        <h2>Visitor Management System</h2>
+        <h3>Our system is easy to use and deploy. Allows control and recording of visiting vehicles, walk-in
+            visitors,
+            and contractors.
+            It is integrated to our License Plate Recognition System so that vehicle license plate numbers are
+            automatically
+            recorded. 
+        </h3>
+        <img alt="vms image 1" />
+    </section>
+    <section>
+        <h2>IOT & Sensor Systems</h2>
+        <h2>Monitor your environment with ease</h2>
+        <h3>Our Environmental Sensor IOT System provides real-time monitoring and analysis of your environment
+            to
+            ensure
+            optimal conditions. Whether you are monitoring temperature, humidity, air quality or any other
+            parameter,
+            our
+            system provides accurate and reliable data.</h3>
+        <img alt="iot image 1" />
+        <img alt="iot image 2" />
+    </section>
+    <section>
+        <h2>Contacts:</h2>
+        <h3>Sales@3sm.com.sg
+            Tel: +65- 6988 4094</h3>
+    </section>
+    <div class="ourProducts">
+        <div class="ourProductsTitle">
+            Our Products
+        </div>
+    </div>
+    <div class="catalog">
+        <div class="catalog3smTitle detailTitle3sm">
+            <div class="detailTitle3smImgDiv"><img class="detailTitle3smImg" src="./img_3sm/logo_3sm.svg" /></div>
+            <div class="detailTitle3smName">3SM Pte Ltd</div>
+        </div>
+        <div class="catalogMain">
+            <div class="catalogItem" id="catalog_licensePlate">
+                <div class="catalogItemLogo"><img src="./img_3sm/car_license_plate.svg" /></div>
+                <div class="catalogItemTitle">License Plate Recognition System</div>
+                <div><button class="buttonMore" id="moreLicense">...</button></div>
+                <div class="catalogItemDetailTitle"></div>
+                <div class="catalogItemSummary" id="catalog_licensePlate_summary">
+                    Lower Cost of Ownership,
+                    Easier and Faster Deployment,
+                    Integration to Visitor Management System,
+                    Easy Integration to other Barrier Entrance Control,
+                </div>
+                <div class="catalogItemDetail" id="catalog_licensePlate_details">
+                    <div class="divCatalogImg">
+                        <img class="catalogImg" src="./img_3sm/license_plate_pic.svg" alt="camera image 2" />
+                    </div>
                     <div>
-                        <img src=" touch_down.jfif " " />
-    </div>
-    <div>
-        <div>We will stay in the city after a long flight.</div>
-        <br/>
-        <div>In case we will be too tired after the flight, we will just relax around the city - walk walk, see see, and eat eat.</div>
-        <br/>
-        <h4>Place to stay:</h4>
-        <div>
-            <a target='_blank' href="https://www.booking.com/hotel/au/cbd-collins-st-address-near-southern-cross-2-beds.en-gb.html?aid=1471885&sid=bcf0de759757d74ac81a8384411fe993&all_sr_blocks=458267701_341580824_4_0_0;checkin=2023-04-11;checkout=2023-04-12;dest_id=1593;dest_type=district;dist=0;group_adults=4;group_children=0;hapos=1;highlighted_blocks=458267701_341580824_4_0_0;hpos=1;matching_block_id=458267701_341580824_4_0_0;no_rooms=1;req_adults=4;req_children=0;room1=A%2CA%2CA%2CA;sb_price_type=total;sr_order=price;sr_pri_blocks=458267701_341580824_4_0_0__12006;srepoch=1678546279;srpvid=c6a8686b36fe055a;type=total;ucfs=1&#hotelTmpl ">Collins Street</a>            OR
-            <a target='_blank' href="https://www.agoda.com/arrow-on-swanston-apartments/hotel/melbourne-au.html?finalPriceView=1&isShowMobileAppPrice=false&cid=1884721&numberOfBedrooms=&familyMode=false&adults=4&children=0&rooms=1&maxRooms=0&checkIn=2023-04-21&isCalendarCallout=false&childAges=&numberOfGuest=0&missingChildAges=false&travellerType=3&showReviewSubmissionEntry=false&currencyCode=MYR&isFreeOccSearch=false&isCityHaveAsq=false&tspTypes=8&los=2&searchrequestid=7dc5738a-86c2-4905-a499-131f74dfdc0f ">Swanston Street</a>
-        </div>
-    </div>
-    </div>
-    <br/>
-    <br/>
-    </div>
-    <div>
-        <h3>2. The Great Ocean Road (12/4-14/4)</h3>
-        <div style="display: flex; ">
-            <div>
-                <br/>
-                <div>During these few days, we will see how great is the ocean road; although we won't be singing "country road .. take me home .. " along the drive ...</div>
-                <br/>
-                <div>This trip will be mainly about ocean, treking, national park, wild life and everything natural.</div>
-                <br>
-                <h4>Browse before you see:</h4>
-                <a target='_blank' href="https://www.australia.com/en/places/melbourne-and-surrounds/guide-to-the-great-ocean-road.html ">The Great Ocean Road</a>
-                <br/>
-                <h4>Place to stay:</h4>
-                <a target='_blank' href="https://www.booking.com/hotel/au/great-ocean-road-tourist-park.en-gb.html?aid=1471885&sid=bcf0de759757d74ac81a8384411fe993&all_sr_blocks=38155202_101911978_4_0_0;checkin=2023-04-12;checkout=2023-04-14;dest_id=3724;dest_type=region;dist=0;group_adults=4;group_children=0;hapos=1;highlighted_blocks=38155202_101911978_4_0_0;hpos=1;matching_block_id=38155202_101911978_4_0_0;no_rooms=1;req_adults=4;req_children=0;room1=A%2CA%2CA%2CA;sb_price_type=total;sr_order=popularity;sr_pri_blocks=38155202_101911978_4_0_0__44000;srepoch=1678592423;srpvid=8f8219d291cf00fb;type=total;ucfs=1&#hotelTmpl ">Tourist Park</a>                OR
-                <a target='_blank' href="https://www.booking.com/hotel/au/the-terang-motor-inn-terang.en-gb.html?aid=1471885&sid=bcf0de759757d74ac81a8384411fe993&all_sr_blocks=172461903_308967104_4_2_0;checkin=2023-04-12;checkout=2023-04-14;dest_id=-1604118;dest_type=city;dist=0;group_adults=4;group_children=0;hapos=1;highlighted_blocks=172461903_308967104_4_2_0;hpos=1;matching_block_id=172461903_308967104_4_2_0;no_rooms=1;req_adults=4;req_children=0;room1=A%2CA%2CA%2CA;sb_price_type=total;sr_order=popularity;sr_pri_blocks=172461903_308967104_4_2_0__32000;srepoch=1678457520;srpvid=e64463d7ea880059;type=total;ucfs=1&#hotelTmpl ">Terang</a>
+                        more details ...
+                    </div>
+                </div>
             </div>
-            <div>
-                <img src="great_ocean_road.jpg " style="float:right;height:80%; " />
+            <div class="catalogItem" id="catalog_access">
+                <div class="catalogItemLogo"><img src="./img_3sm/access.svg" /></div>
+                <div class="catalogItemTitle">Cloud-based Access Control</div>
+                <div><button class="buttonMore" id="moreAccess">...</button></div>
+                <div class="catalogItemDetailTitle"></div>
+                <div class="catalogItemSummary" id="catalog_access_summary">
+                    Our system is highly flexible. Access can be managed through our Cloud-based Software. 
+                    Access control through Facial Recognition, QR Code, Access Card, Biometric Fingerprint, Mobile
+                    Phone.
+                </div>
+                <div class="catalogItemDetail" id="catalog_access_details">
+                    more details ...
+                </div>
             </div>
+            <div class="catalogItem" id="catalog_vms">
+                <div class="catalogItemLogo"><img src="./img_3sm/vms.svg" /></div>
+                <div class="catalogItemTitle">Visitor Management System</div>
+                <div><button class="buttonMore" id="moreVms">...</button></div>
+                <div class="catalogItemDetailTitle"></div>
+                <div class="catalogItemSummary" id="catalog_vms_summary">Our system is easy to use and deploy. Allows
+                    control and recording of
+                    visiting vehicles, walk-in visitors, and contractors.
+                    It is integrated to our License Plate Recognition System so that vehicle license plate numbers
+                    are
+                    automatically recorded. 
+                </div>
+                <div class="catalogItemDetail" id="catalog_vms_details">
+                    more details ...
+                </div>
+            </div>
+            <div class="catalogItem" id="catalog_sensor">
+                <div class="catalogItemLogo"><img src="./img_3sm/sensor.svg" /></div>
+                <div class="catalogItemTitle">IOT & Sensor Systems</div>
+                <div><button class="buttonMore" id="moreSensor">...</button></div>
+                <!-- <div class="catalogItemDetailTitle">Monitor your environment with ease</div> -->
+                <div class="catalogItemSummary" id="catalog_sensor_summary">Monitor your environment with ease, our
+                    Environmental Sensor IOT
+                    System
+                    provides real-time monitoring and
+                    analysis of your environment to
+                    ensure optimal conditions. Whether you are monitoring temperature, humidity, air quality or any
+                    other
+                    parameter, our system provides accurate and reliable data.
+                </div>
+                <div class="catalogItemDetail" id="catalog_sensor_details">
+                    <div class="divCatalogImg">
+                        <img class="catalogImg" src="./img_3sm/sensor_pic.svg" alt="camera image 2" />
+                    </div>
+                    <div class="divCatalogImg">
+                        <img class="catalogImg" src="./img_3sm/sensor_pic2.svg" alt="camera image 2" />
+                    </div>
+                    more details ...
+                </div>
+            </div>
+            <button class="buttonX" id="catalogExit">X</button>
         </div>
     </div>
-    <br/>
-    <br/>
-    <div style="margin-top:2rem; ">
-        <h3>3. The Suburbs (15/4-18/4)</h3>
-        <div style="display: flex column; ">
-            <div>
-                <div>We will live in the eastern suburbs during these few days. We will try to get a taste of what it's like as a Melbourne suburbian.</div>
-                <br/>
-                <div>Will be having day trips to Mornington Beach, Yarra Valley, Phillip Islands, etc; in between visiting friends and relatives.</div>
-                <br/>
-
-            </div>
-            <div style="display:flex; ">
-                <img src="yarra_valley.jpg " style="float:left;width:30%; " />
-                <img src="mornington.jpg " style="float:right;width:30%; " />
-                <img src="phillip_island.jpg " style="float:left;width:30%; " />
-            </div>
-            <h4>Browse before you see:</h4>
-            <a target='_blank' href="https://www.australia.com/en/places/melbourne-and-surrounds/guide-to-yarra-valley-dandenong-ranges.html ">Yarra Valley</a>
-            <a target='_blank' href="https://www.australia.com/en/places/melbourne-and-surrounds/guide-to-the-mornington-peninsula.html ">Mornington Peninsula</a>
-            <a target='_blank' href="https://www.australia.com/en/places/melbourne-and-surrounds/guide-to-phillip-island.html ">Philip Island</a>
-            <br/>
-            <h4>Place to stay:</h4>
-            <a target='_blank' href="https://www.booking.com/hotel/au/an-art-deco-treasure.en-gb.html?aid=304142&label=gen173nr-1FCAEoggI46AdIM1gEaA-IAQGYAQm4AQfIAQ3YAQHoAQH4AQyIAgGoAgO4AoK2xaAGwAIB0gIkOTIyNzA2YmItZjM1Mi00NzA2LTlhMjAtMmE1YWJjMDJlNzFh2AIG4AIB&sid=bcf0de759757d74ac81a8384411fe993&all_sr_blocks=938937302_368921937_4_0_0;checkin=2023-04-14;checkout=2023-04-22;dest_id=900049985;dest_type=city;dist=0;group_adults=4;group_children=0;hapos=2;highlighted_blocks=938937302_368921937_4_0_0;hpos=2;matching_block_id=938937302_368921937_4_0_0;no_rooms=1;req_adults=4;req_children=0;room1=A%2CA%2CA%2CA;sb_price_type=total;show_room=938937302;sr_order=popularity;sr_pri_blocks=938937302_368921937_4_0_0__157140;srepoch=1678875791;srpvid=f8fe49058f5d0211;type=total;ucfs=1&#RD938937302 ">Carnegie</a>            OR
-            <a target='_blank' href="https://www.booking.com/hotel/au/balwyn-duan-zu-fang.en-gb.html?aid=304142&label=gen173bo-1DCAsoD0ITYmFsd3luLWR1YW4tenUtZmFuZ0gJWANooQGIAQGYAQm4ARfIAQzYAQPoAQH4AQOIAgGYAgKoAgO4AvKVqqAGwAIB0gIkYzYyYzlhZjgtZTAwNi00ZWQxLWJkZmYtN2E3MTkwODc3ZTc42AIE4AIB&sid=bcf0de759757d74ac81a8384411fe993&all_sr_blocks=756453502_332509777_3_0_0;checkin=2023-04-16;checkout=2023-04-22;dest_id=-1586844;dest_type=city;dist=0;group_adults=3;group_children=0;hapos=1;highlighted_blocks=756453502_332509777_3_0_0;hpos=1;matching_block_id=756453502_332509777_3_0_0;no_rooms=1;req_adults=3;req_children=0;room1=A%2CA%2CA;sb_price_type=total;sr_order=popularity;sr_pri_blocks=756453502_332509777_3_0_0__50400;srepoch=1678412602;srpvid=ecba0c1c02f60010;type=total;ucfs=1&#hotelTmpl ">Balwyn</a>            OR
-            <a target='_blank' href="https://www.agoda.com/boxhill_2/hotel/all/melbourne-au.html?finalPriceView=1&isShowMobileAppPrice=false&cid=711137&numberOfBedrooms=&familyMode=false&adults=4&children=0&rooms=1&maxRooms=0&isCalendarCallout=false&childAges=&numberOfGuest=0&missingChildAges=false&travellerType=-1&showReviewSubmissionEntry=false&currencyCode=MYR&isFreeOccSearch=false&isCityHaveAsq=false&los=6&searchrequestid=d4f19495-a62c-49f7-bbf4-43b854f037c7&checkin=2023-04-16 ">Boxhill</a>            OR
-            <a target='_blank' href="https://www.agoda.com/parkville-place-serviced-apartments/hotel/melbourne-au.html?finalPriceView=1&isShowMobileAppPrice=false&cid=1884721&numberOfBedrooms=&familyMode=false&adults=4&children=0&rooms=1&maxRooms=0&checkIn=2023-04-14&isCalendarCallout=false&childAges=&numberOfGuest=0&missingChildAges=false&travellerType=3&showReviewSubmissionEntry=false&currencyCode=MYR&isFreeOccSearch=false&isCityHaveAsq=false&los=8&searchrequestid=205eb9b4-f160-4c1f-a446-852f067b67ba&preq=f743b1ea-ca62-4c45-afa3-024c995a2cff&ri=1 ">Brunswick</a>            OR
-            <a target='_blank' href="https://www.agoda.com/parkside-inn-motel_7/hotel/melbourne-au.html?locale=en-us&ckuid=d11b463c-73fd-4caa-824d-fb8f87900f9b&prid=0&currency=MYR&correlationId=ce6c360b-4820-4e72-9cf8-1bb8777674ee&analyticsSessionId=2094137381332830746&pageTypeId=7&realLanguageId=1&languageId=1&origin=MY&cid=711137&userId=d11b463c-73fd-4caa-824d-fb8f87900f9b&whitelabelid=1&loginLvl=0&storefrontId=3&currencyId=4&currencyCode=MYR&htmlLanguage=en-us&cultureInfoName=en-us&memberId=351352554&machineName=sg-pc-6f-acm-web-user-7b4f9d47d6-svxtx&trafficGroupId=5&sessionId=eo5eh5uzusjfkd5az5wkcsv3&trafficSubGroupId=47&aid=81590&useFullPageLogin=true&cttp=4&isRealUser=true&mode=production&browserFamily=Chrome&checkIn=2023-04-14&checkOut=2023-04-22&rooms=1&adults=4&childs=0&priceCur=MYR&los=8&textToSearch=Chadstone%20Executive%20Motel&productType=-1&travellerType=3&familyMode=off&preq=66686567-f6d8-4bcf-9dec-5045c46ec8f8&ri=1 ">Bundoora Motel</a>            OR
-            <a target='_blank' href="https://www.airbnb.com/rooms/43772216?adults=4&check_in=2023-04-16&federated_search_id=eb39e8ba-3c99-47d6-8a47-fee3830d173d&source_impression_id=p3_1678243413_BdqX8afM15KTt2tA&guests=1&check_out=2023-04-22 ">Bundoora airbnb</a>
-            <br/>
-            <br/>
-        </div>
-        <br/>
-        <br/>
-        <div>
-            <h3>4. Back to the City (19/4-21/4)</h3>
-            <br/>
-            <img src="melbourne_city.jfif " style="float:right;height:50%; " />
-            <div>Jie Jie will have started her classes after the Easter Break.</div>
-            <br/>
-            <div>People will also be flocking back to the city to work after the break.</div>
-            <br/>
-            <div>We will feel the city these few days.</div>
-            <br>
-            <!-- <h4>Browse before you see:</h4>
-                <a target='_blank' href="https://www.australia.com/en/places/melbourne-and-surrounds/guide-to-the-great-ocean-road.html ">The Great Ocean Road</a>
-                <br/> -->
-            <h4>Place to stay:</h4>
-            <a target='_blank' href="https://www.booking.com/hotel/au/cbd-collins-st-address-near-southern-cross-2-beds.en-gb.html?aid=1471885&sid=bcf0de759757d74ac81a8384411fe993&all_sr_blocks=458267701_341580824_4_0_0;checkin=2023-04-11;checkout=2023-04-12;dest_id=1593;dest_type=district;dist=0;group_adults=4;group_children=0;hapos=1;highlighted_blocks=458267701_341580824_4_0_0;hpos=1;matching_block_id=458267701_341580824_4_0_0;no_rooms=1;req_adults=4;req_children=0;room1=A%2CA%2CA%2CA;sb_price_type=total;sr_order=price;sr_pri_blocks=458267701_341580824_4_0_0__12006;srepoch=1678546279;srpvid=c6a8686b36fe055a;type=total;ucfs=1&#hotelTmpl ">Collins Street</a>            OR
-            <a target='_blank' href="https://www.agoda.com/arrow-on-swanston-apartments/hotel/melbourne-au.html?finalPriceView=1&isShowMobileAppPrice=false&cid=1884721&numberOfBedrooms=&familyMode=false&adults=4&children=0&rooms=1&maxRooms=0&checkIn=2023-04-21&isCalendarCallout=false&childAges=&numberOfGuest=0&missingChildAges=false&travellerType=3&showReviewSubmissionEntry=false&currencyCode=MYR&isFreeOccSearch=false&isCityHaveAsq=false&tspTypes=8&los=2&searchrequestid=7dc5738a-86c2-4905-a499-131f74dfdc0f ">Swanston Street</a>            OR
-            <a target='_blank' href="https://www.booking.com/hotel/au/citiclub.en-gb.html?aid=964694&app_hotel_id=598574&checkin=2023-04-17&checkout=2023-04-22&from_sn=android&group_adults=4&group_children=0&label=Share-HtGmOF%401678839736&no_rooms=1&req_adults=4&req_children=0&room1=A%2CA%2CA%2CA ">Queen Street</a>
-        </div>
-        <br/>
-        <br/>
-        <div>
-            <h1 style="text-align: center; ">.</h1>
-        </div>
-        <div>
-            <h1 style="text-align: center; ">.</h1>
-        </div>
-        <div>
-            <h1 style="text-align: center; ">.</h1>
-        </div>
-        <div>
-            <h1 style="text-align: center; ">.</h1>
-        </div>
-        <div>
-            <h1 style="text-align: center; ">22/4</h1>
-            <div style="display:flex;justify-content: center; ">
-                <h1 id='homesweethome'>HOME SWEET HOME</h1>
-            </div>
-        </div>
-        <br/>
-        <br/>
-        <br/>
-    </div>
-
-    </div>
-
-    <script src="vsse.js "></script>
 </body>
+<script>
 
-</html>
+    function shieldUp() {
+        let shield = document.getElementById("shield");
+        shield.classList.remove("shieldDown");
+        shield.classList.add("shieldUp");
+    }
+
+    function shieldDown() {
+        let shield = document.getElementById("shield");
+        shield.classList.remove("shieldUp");
+        shield.classList.add("shieldDown");
+    }
+
+    // about us //
+
+    document.getElementById("menuItemAboutUs").addEventListener("click", () => {
+        let aboutUs = document.querySelector(".aboutUs");
+        if (aboutUs.classList.contains("aboutUsSurface")) {
+            shieldDown();
+            aboutUs.classList.remove("aboutUsSurface");
+            aboutUs.classList.add("aboutUsSubmerge");
+        }
+        else {
+            let aboutUsExit = document.getElementById("aboutUsExit");
+            aboutUsExit.classList.add("blink");
+
+            aboutUs.classList.remove("aboutUsSubmerge");
+            aboutUs.classList.add("aboutUsSurface");
+
+            let spans = aboutUs.querySelectorAll(".onebyone");
+            let i = 0;
+            Array.from(spans).forEach(sp => {
+                sp.classList.add("aboutUsSpanSurface");
+                let sec = sp.getAttribute("sec");
+                sec = parseInt(sec);
+                i += sec;
+                sp.style.animationDelay = i + "s";
+            })
+
+            setTimeout(() => {
+                let aboutUsExit = document.getElementById("aboutUsExit");
+                aboutUsExit.classList.remove("blink");
+            }, i * 1000);
+
+            shieldUp();
+        }
+    });
+
+    document.getElementById("aboutUsExit").addEventListener("click", () => {
+        shieldDown();
+
+        let aboutUs = document.querySelector(".aboutUs");
+        aboutUs.classList.remove("aboutUsSurface");
+        aboutUs.classList.add("aboutUsSubmerge");
+
+        let spans = aboutUs.querySelectorAll(".onebyone");
+        Array.from(spans).forEach(sp => {
+            sp.classList.remove("aboutUsSpanSurface");
+        })
+    })
+
+    // products //
+
+    function catalogItemSwitch(item, to_detail) {
+        let summary = document.getElementById(item + "_summary");
+        let details = document.getElementById(item + "_details");
+
+        if (to_detail) {
+            summary.style.display = "none";
+            details.style.display = "block";
+            // summary.parentElement.removeChild(summary);
+            // catalogItemLicense.appendChild(details);
+        }
+        else {
+            summary.style.display = "block";
+            details.style.display = "none";
+            // details.parentElement.removeChild(details);
+            // catalogItemLicense.appendChild(summary);
+        }
+    }
+
+    function catalogItemMouseOver(ci) {
+        ci.classList.remove("catalogItemHoverOut");
+        ci.classList.add("catalogItemHover");
+    }
+
+    function catalogItemMouseOut(ci) {
+        ci.classList.remove("catalogItemHover");
+        ci.classList.add("catalogItemHoverOut");
+    }
+
+    function catalogItemAddHover() {
+        Array.from(document.querySelectorAll(".catalogItem")).forEach(ci => {
+            // ci.addEventListener("mouseover", catalogItemMouseOver(ci));
+            // ci.addEventListener("mouseout", catalogItemMouseOut(ci));
+            ci.addEventListener("mouseover", () => {
+                ci.classList.remove("catalogItemHoverOut");
+                ci.classList.add("catalogItemHover");
+            });
+
+            ci.addEventListener("mouseout", () => {
+                ci.classList.remove("catalogItemHover");
+                ci.classList.add("catalogItemHoverOut");
+            });
+        })
+    }
+
+    catalogItemAddHover();
+
+    document.getElementById("menuItemProducts").addEventListener("click", () => {
+        shieldUp();
+
+        let catalog = document.querySelector(".catalog");
+
+        let catalog3smTitle = document.querySelector(".catalog3smTitle");
+        catalog3smTitle.style.display = "flex";
+
+        let p_licensePlate = document.getElementById("catalog_licensePlate");
+        let p_access = document.getElementById("catalog_access");
+        let p_vms = document.getElementById("catalog_vms");
+        let p_sensor = document.getElementById("catalog_sensor");
+        // if (aboutUs.classList.contains("aboutUsSurface")) {
+        //     aboutUs.classList.remove("aboutUsSurface");
+        //     aboutUs.classList.add("aboutUsSubmerge");
+        // }
+        // else {
+        catalog.classList.remove("catalogRevert");
+        catalog.classList.add("catalogRise");
+
+        // show more buttons of catalogitem //
+
+        let arryButtonMore = document.querySelectorAll(".buttonMore");
+        Array.from(arryButtonMore).forEach(btn => {
+            btn.style.display = "block";
+            btn.classList.add("buttonMoreBlink");
+        })
+
+        // remove hover events of catalogitem //
+
+        Array.from(document.querySelectorAll(".catalogItem")).forEach(ci => {
+            ci.addEventListener("mouseover", () => {
+                ci.classList.remove("catalogItemHover");
+                ci.classList.remove("catalogItemHoverOut");
+            });
+            ci.addEventListener("mouseout", () => {
+                ci.classList.remove("catalogItemHover");
+                ci.classList.remove("catalogItemHoverOut");
+            });
+
+            ci.classList.add("catalogItemExtend");
+        })
+
+        // p_licensePlate.classList.add("catalogRise");
+        // p_access.classList.add("catalogRise");
+        // p_vms.classList.add("catalogRise");
+        // p_sensor.classList.add("catalogRise");
+        // }
+
+        // show exit button //
+
+        let buttonExit = document.getElementById("catalogExit");
+        buttonExit.style.display = "block";
+    });
+
+    for (let i = 0; i < 4; i++) {
+        let morex, cix;
+        switch (i) {
+            case 0:
+                morex = "moreLicense";
+                cix = "catalog_licensePlate";
+                break;
+            case 1:
+                morex = "moreAccess";
+                cix = "catalog_access";
+                break;
+            case 2:
+                morex = "moreVms";
+                cix = "catalog_vms";
+                break;
+            case 3:
+                morex = "moreSensor";
+                cix = "catalog_sensor";
+                break;
+        }
+
+        document.getElementById(morex).addEventListener("click", () => {
+            let catalogItemLicense = document.getElementById(cix);
+            catalogItemLicense.classList.add("catalogItemRotate");
+
+            catalogItemSwitch(cix, true);
+
+            document.getElementById(morex).style.display = "none";
+        })
+    }
+
+    document.getElementById("catalogExit").addEventListener("click", () => {
+        shieldDown();
+
+        let catalog3smTitle = document.querySelector(".catalog3smTitle");
+        catalog3smTitle.style.display = "none";
+
+        let buttonExit = document.getElementById("catalogExit");
+        buttonExit.style.display = "none";
+
+        let catalog = document.querySelector(".catalog");
+        catalog.classList.remove("catalogRise");
+        catalog.classList.add("catalogRevert");
+
+        let arryButtonMore = document.querySelectorAll(".buttonMore");
+        Array.from(arryButtonMore).forEach(btn => {
+            btn.style.display = "none";
+        })
+
+        // add back hover event //
+        catalogItemAddHover();
+
+        for (let i = 0; i < 4; i++) {
+            let morex, cix;
+            switch (i) {
+                case 0:
+                    morex = "moreLicense";
+                    cix = "catalog_licensePlate";
+                    break;
+                case 1:
+                    morex = "moreAccess";
+                    cix = "catalog_access";
+                    break;
+                case 2:
+                    morex = "moreVms";
+                    cix = "catalog_vms";
+                    break;
+                case 3:
+                    morex = "moreSensor";
+                    cix = "catalog_sensor";
+                    break;
+            }
+
+            let catalogItemLicense = document.getElementById(cix);
+            catalogItemLicense.classList.remove("catalogItemRotate");
+
+            catalogItemSwitch(cix, false);
+        }
+
+
+    })
+
+    // contact //
+
+    document.getElementById("menuItemContact").addEventListener("click", () => {
+        shieldUp();
+        let contact = document.querySelector(".contact");
+        contact.classList.remove("contactSubmerge");
+        contact.classList.add("contactSurface");
+    })
+
+    document.getElementById("contactExit").addEventListener("click", () => {
+        shieldDown();
+        let contact = document.querySelector(".contact");
+        contact.classList.remove("contactSurface");
+        contact.classList.add("contactSubmerge");
+    })
+</script>
