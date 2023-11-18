@@ -415,6 +415,43 @@
             display: none;
         }
 
+        .services {
+            position: fixed;
+            top: 10vh;
+            right: 40vh;
+
+            width: 0px;
+            height: 0px;
+
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 10px rgb(224, 220, 220);
+            background-image: url("./img_3sm/background_3sm.svg");
+            color: rgb(4, 4, 65);
+
+            opacity: 0;
+            z-index: -99;
+            overflow: hidden;
+        }
+
+        #servicesWIP{
+            animation: servicesFloat 8s;
+            animation-iteration-count: infinite;
+            animation-delay: 3s;
+        }
+
+        .servicesSurface {
+            animation: servicesSurface .5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .servicesSubmerge {
+            animation: servicesSubmerge .5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+        
         .contact {
             position: fixed;
             top: 10vh;
@@ -650,6 +687,48 @@
             }
         }
 
+        @keyframes servicesFloat {
+            0%{transform: translate(0, 0vh);font-style: normal;font-size: 1rem;letter-spacing: 3px;font-weight: 100;}
+            20%{transform: translate(5vw, 0vh);font-style: normal;font-size: 1rem;letter-spacing: 3px;font-weight: 100;}
+            30%{transform: translate(10vw, 10vh);font-style: italic;font-size: 1.2rem;letter-spacing: 15px;font-weight: 300;}
+            50%{transform: translate(-5vw, 20vh);font-style: normal;font-size: 0.8rem;letter-spacing: 10px;font-weight: 500;}
+            70%{transform: translate(10vw, 30vh);font-style:italic;font-size: 1.5rem;letter-spacing: 5px;font-weight: 900;}
+            90%{transform: translate(0vw, 20vh);font-style: italic;font-size: 1.2em;letter-spacing: 10px;font-weight: 800;}
+            100%{transform: translate(0vw, 0vh);font-style: normal;font-size: 1rem;letter-spacing: 3px;font-weight: 200;}
+        }
+
+        @keyframes servicesSurface {
+            0% {
+                opacity: 0;
+                z-index: -99;
+                width: 0px;
+                height: 0px;
+            }
+
+            100% {
+                opacity: 1;
+                z-index: 99;
+                width: 30vw;
+                height: 50vh;
+            }
+        }
+
+        @keyframes servicesSubmerge {
+            0% {
+                opacity: 1;
+                z-index: 99;
+                width: 30vw;
+                height: 70vh;
+            }
+
+            100% {
+                opacity: 0;
+                z-index: -99;
+                width: 0px;
+                height: 0px;
+            }
+        }
+
         @keyframes contactSurface {
             0% {
                 opacity: 0;
@@ -705,7 +784,7 @@
                     <div class="menuItemImg"><img src="./img_3sm/products.svg" /></div>
                 </div>
                 <div class="menuItemDiv"></div>
-                <div class="menuItem">
+                <div class="menuItem" id="menuItemService">
                     <div class="menuItemName">Services</div>
                     <div class="menuItemImg"><img src="./img_3sm/services.svg" /></div>
                 </div>
@@ -780,52 +859,10 @@
         </div>
         <button class="buttonX" id="contactExit">X</button>
     </div>
-    <section>
-        <h2>License Plate Recognition System</h2>
-        <img alt="camera image 1" />
-        <h3>Lower Cost of Ownership</h3>
-        <h3>Easier and Faster Deployment</h3>
-        <h3>Integration to Visitor Management System</h3>
-        <h3>Easy Integration to other Barrier Entrance Control</h3>
-        <img alt="camera image 2" />
-    </section>
-    <section>
-        <h2>Cloud-based Access Control</h2>
-        <h3>Our system is highly flexible. Access can be managed through our Cloud-based Software. 
-            Access control through Facial Recognition, QR Code, Access Card, Biometric Fingerprint, Mobile
-            Phone.
-        </h3>
-        <img alt="access control image 1" />
-    </section>
-    <section>
-        <h2>Visitor Management System</h2>
-        <h3>Our system is easy to use and deploy. Allows control and recording of visiting vehicles, walk-in
-            visitors,
-            and contractors.
-            It is integrated to our License Plate Recognition System so that vehicle license plate numbers are
-            automatically
-            recorded. 
-        </h3>
-        <img alt="vms image 1" />
-    </section>
-    <section>
-        <h2>IOT & Sensor Systems</h2>
-        <h2>Monitor your environment with ease</h2>
-        <h3>Our Environmental Sensor IOT System provides real-time monitoring and analysis of your environment
-            to
-            ensure
-            optimal conditions. Whether you are monitoring temperature, humidity, air quality or any other
-            parameter,
-            our
-            system provides accurate and reliable data.</h3>
-        <img alt="iot image 1" />
-        <img alt="iot image 2" />
-    </section>
-    <section>
-        <h2>Contacts:</h2>
-        <h3>Sales@3sm.com.sg
-            Tel: +65- 6988 4094</h3>
-    </section>
+    <div class="services">
+        <div id="servicesWIP">WORK IN PROGRESS ...</div>
+        <button class="buttonX" id="servicesExit">X</button>
+    </div>
     <div class="ourProducts">
         <div class="ourProductsTitle">
             Our Products
@@ -1160,6 +1197,22 @@
         }
 
 
+    })
+
+    // services //
+
+    document.getElementById("menuItemService").addEventListener("click", () => {
+        shieldUp();
+        let services = document.querySelector(".services");
+        services.classList.remove("servicesSubmerge");
+        services.classList.add("servicesSurface");
+    })
+
+    document.getElementById("servicesExit").addEventListener("click", () => {
+        shieldDown();
+        let services = document.querySelector(".services");
+        services.classList.remove("servicesSurface");
+        services.classList.add("servicesSubmerge");
     })
 
     // contact //
