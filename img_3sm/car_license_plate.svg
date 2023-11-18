@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="36"
+   height="34"
+   viewBox="0 0 9.5249994 8.9958331"
+   version="1.1"
+   id="svg5898"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="car_license_plate.svg">
+  <defs
+     id="defs5892">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-0.20177363 : 5.0807102 : 1"
+       inkscape:vp_y="0 : 1510.603 : 0"
+       inkscape:vp_z="12.029843 : 5.0807102 : 1"
+       inkscape:persp3d-origin="5.9140346 : 3.0823085 : 1"
+       id="perspective7383" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="15.839192"
+     inkscape:cx="13.828725"
+     inkscape:cy="13.484095"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     units="px" />
+  <metadata
+     id="metadata5895">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-288.00418)">
+    <ellipse
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#969696;stroke-width:0.52916664;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path11087"
+       cx="4.7650633"
+       cy="292.47046"
+       rx="4.2354169"
+       ry="4.2354164" />
+    <path
+       style="fill:none;stroke:#969696;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 2.2521331,291.8254 -0.4134114,-0.0104 -0.2007999,0.55127 h 0.3661645 l -0.094494,0.17681 0.047247,1.96585 0.1063058,0.10401 1.1103051,0.0104 0.023623,-0.53046 h 3.1183035 v 0.36405 l 0.1299294,0.16642 h 0.9685643 l 0.1889882,-0.15602 v -1.84103 l -0.094494,-0.29124 H 7.8627171 L 7.6973525,291.8462 7.3075647,291.8046 6.7287886,290.44203 c 0,0 0,-0.39525 -1.6654576,-0.40565 -1.6654575,-0.0104 -2.22061,0.44726 -2.22061,0.44726 z"
+       id="path11054"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccccccccccccccccc" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:#969696;stroke-width:0.5291667;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect11052"
+       width="3.3663504"
+       height="1.4145752"
+       x="3.1970732"
+       y="292.67831" />
+    <path
+       style="fill:none;stroke:#969696;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 2.9490268,291.8254 c 0,0 0.094494,0.21843 1.7953869,0.21843 1.7008928,0 1.9725632,-0.20803 1.9725632,-0.20803 L 6.374436,290.60845 c 0,0 -0.2480469,-0.10401 -1.405599,-0.10401 -1.157552,0 -1.6418341,0.11441 -1.6418341,0.11441 z"
+       id="path11075"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 3.9530259,293.3856 H 5.9137775"
+       id="path11077"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
