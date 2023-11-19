@@ -302,12 +302,21 @@
             width: 60%;
 
             align-self: flex-start;
+
+            animation: ourProductsInitRise 2s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
         }
 
+        
         .catalog {
             display: flex;
             flex-direction: column;
             position: relative;
+
+            animation: catalogInitRise 2s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
         }
 
         .catalogMain {
@@ -623,6 +632,26 @@
             }
         }
 
+        @keyframes ourProductsInitRise {
+            0% {
+                transform: translate(0, 60vh);
+            }
+
+            100% {
+                transform: translate(0, 0vh);
+            }
+        }
+
+        @keyframes catalogInitRise {
+            0% {
+                transform: translate(0, 60vh);
+            }
+
+            100% {
+                transform: translate(0, 0vh);
+            }
+        }
+
         @keyframes catalogRise {
             0% {
                 background-color: #FEFEFE;
@@ -675,14 +704,14 @@
             }
 
             100% {
-                transform: translate(0, -50vh);
+                transform: translate(0, -40vh);
                 height: 80vh;
             }
         }
 
         @keyframes catalogItemRevert {
             0% {
-                transform: translate(0, -50vh);
+                transform: translate(0, -40vh);
                 height: 80vh;
             }
 
