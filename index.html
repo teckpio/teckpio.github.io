@@ -298,8 +298,20 @@
         .backgroundItemsLeft {
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
+            /* justify-content: space-around; */
+            justify-content: center;
             height: 100%;
+        }
+
+        .backgroundItemsLeft hr {
+            width: 90%;
+            height: 3px;
+            margin-left: 5%;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            opacity: .3;
+            background-color: #FEFEFE;
+
         }
 
         .backgroundItemsRight {
@@ -308,8 +320,9 @@
         }
 
         .backgroundItemsRightImgDiv {
+            width: 100%;
             height: auto;
-            padding: 2rem;
+            padding: 50px;
             padding-top: 0;
         }
 
@@ -319,9 +332,28 @@
             object-fit: contain;
         }
 
-        .SecAndEff span {
+        #background_internet_of_things {
+            position: absolute;
+            top: 25vh;
+            right: 0;
+            width: 60%;
+            z-index: -1;
+        }
+
+        #background_internet_of_things>img {
+            width: 100%;
+            opacity: .5;
+        }
+
+        .SecAndEff {
+            padding-top: 3rem;
+        }
+
+        .SecAndEff span,
+        .SecAndEff div {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 4.5rem;
+            /* font-size: 4.5rem; */
+            font-size: 5vw;
             font-weight: 800;
             text-align: left;
             letter-spacing: 2px;
@@ -329,6 +361,11 @@
             color: #efefef;
 
             margin: 3rem;
+        }
+
+        .SecAndEff div {
+            margin-top: 0;
+            margin-bottom: 0;
         }
 
         .SecAndEff2 {
@@ -349,15 +386,31 @@
             padding-left: 5rem;
         }
 
-        .mission span {
+        .mission span,
+        .mission div {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 1.2rem;
+            /* font-size: 1.3vw; */
             font-weight: 600;
             text-align: left;
 
             color: #efefef;
 
-            margin: 5rem;
+            /* margin: 5rem; */
+            margin: 0 2.5rem 0 0;
+            text-align: right;
+        }
+
+        .mission div {
+            color: #0d1f62;
+            margin-top: 0;
+            margin-bottom: 0;
+            font-weight: 800;
+            letter-spacing: 2px;
+            /* animation: glitter 3s;
+            animation-delay: 2s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite; */
         }
 
         /* .ourProducts { */
@@ -611,7 +664,7 @@
             background-blend-mode: lighten;
         } */
 
-        /* animation */
+        /* animation def */
 
         @keyframes shieldUp {
             0% {
@@ -638,6 +691,20 @@
                 opacity: 0;
                 z-index: -99;
                 display: none;
+            }
+        }
+
+        @keyframes glitter {
+            0% {
+                color: #efefef;
+            }
+
+            50% {
+                color: #ababab;
+            }
+
+            100% {
+                color: #efefef;
             }
         }
 
@@ -967,13 +1034,13 @@
             }
 
             body {
-                background-image: url("./img_3sm/background_p.svg");
+                background-image: url("./img_3sm/background_p2.svg");
                 background-size: cover;
                 min-height: 100%;
                 height: 100%;
-                overflow: scroll;
+                overflow-y: scroll;
                 /* height: fit-content; */
-                height:200dvh;
+                height: 200dvh;
             }
 
             .menuItemName {
@@ -996,6 +1063,38 @@
                 object-fit: contain;
             }
 
+            #background_internet_of_things {
+                position: absolute;
+                top: 90vh;
+                /* right: 20vw; */
+                width: 100%;
+                z-index: 1;
+            }
+
+            #background_internet_of_things>img {
+                width: 100%;
+                opacity: 1;
+            }
+
+            .SecAndEff div {
+                font-size: 8vw;
+                margin: 0 0 0 2rem;                
+            }
+
+            .mission span,
+            .mission div {
+                font-size: 3vw;
+                text-align: right;
+
+                /* font-weight: 600;
+                text-align: left;
+
+                color: #efefef;
+
+                /* margin: 5rem; */
+                /* margin: 0 2rem 0 5rem; */
+            }
+            
             .catalog {
                 display: flex;
                 flex-direction: column;
@@ -1175,16 +1274,27 @@
 
     <!-- background items - start -->
     <div class="backgroundItems">
+        <div class="backgroundItemsRightImgDiv" id="background_internet_of_things"><img
+                src="img_3sm/internet_of_things.svg" /></div>
         <div class="backgroundItemsLeft">
             <div class="SecAndEff">
-                <span class="SecAndEff1">Automation</span><br />
-                <span class="SecAndEff2">and Efficiencies</span>
-                <!-- <span class="SecAndEff2">Automation and Efficiencies</span> -->
+                <div class="SecAndEff1">Automation</div>
+                <div class="SecAndEff2">and Efficiencies</div>
+                <!-- <span class="SecAndEff1">Automation</span><br />
+                <span class="SecAndEff2">and Efficiencies</span> -->
             </div>
+            <hr>
             <div class="mission">
-                <span class="mission1">Offering cutting-edge IoT solutions,</span><br />
+                <div class="mission1">Offering cutting-edge IoT solutions, <br>
+                    we enhance automation and efficiency  <br>
+                    while providing user-friendly, customizable <br>
+                    products and excellent customer support.</div>
+                <!-- <div class="mission1">Offering cutting-edge IoT solutions,</div>
+                <div class="mission2">we enhance automation and efficiency while providing</div>
+                <div class="mission3">user-friendly, customizable products and excellent customer support.</div> -->
+                <!-- <span class="mission1">Offering cutting-edge IoT solutions,</span><br />
                 <span class="mission2">we enhance automation and efficiency while providing</span><br />
-                <span class="mission3">user-friendly, customizable products and excellent customer support.</span><br />
+                <span class="mission3">user-friendly, customizable products and excellent customer support.</span><br /> -->
             </div>
             <!-- <div class="ourProducts">
                 <div class="ourProductsTitle">
@@ -1300,17 +1410,18 @@
 
     // on resize //
     window.addEventListener("resize", () => {
-        if (window.innerWidth > (SmallPageWidth + 10)) {
-            shieldDown();
-        }
-        else if ((SmallPageWidth - 10) < window.innerWidth && window.innerWidth < (SmallPageWidth + 10)) {
+        // if (window.innerWidth > (SmallPageWidth + 10)) {
+        //     shieldDown();
+        // }
+        // else 
+        if ((SmallPageWidth - 10) < window.innerWidth && window.innerWidth < (SmallPageWidth + 10)) {
             shieldUp();
         }
         else {
             shieldDown();
         };
     });
-    shieldDown();
+    // shieldDown();
 
     // about us //
 
@@ -1406,13 +1517,13 @@
         })
     }
 
-    // catalogItemAddHover();
+    // // catalogItemAddHover();
 
-    if (window.innerWidth > SmallPageWidth)
-        catalogItemAddHover();
-    else {
-        // alert("small screen");
-    }
+    // if (window.innerWidth > SmallPageWidth)
+    //     catalogItemAddHover();
+    // else {
+    //     // alert("small screen");
+    // }
 
 
     document.getElementById("menuItemProducts").addEventListener("click", () => {
