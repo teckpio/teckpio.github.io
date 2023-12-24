@@ -1,6 +1,11 @@
 <head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <style>
+        :root{
+            --internet_of_things_init_v1:90vh;
+            --internet_of_things_init_v2:80vh;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -258,8 +263,9 @@
             overflow: auto;
         }
 
-        .aboutUsSurface {
+        .aboutUsSurface {            
             animation: aboutUsSurface 2s;
+            animation-delay: .5s;
             animation-iteration-count: 1;
             animation-fill-mode: forwards;
         }
@@ -625,6 +631,7 @@
         .contactSurface {
             animation: contactSurface 1s;
             animation-iteration-count: 1;
+            animation-delay: .5s;
             animation-fill-mode: forwards;
         }
 
@@ -735,14 +742,15 @@
         @keyframes aboutUsSurface {
             0% {
                 opacity: 0;
-                z-index: -99;
+                /* z-index: -99; */
+                z-index: 100;
                 width: 0px;
                 height: 0px;
             }
 
             50% {
                 opacity: .5;
-                z-index: 0;
+                z-index: 100;
                 width: 2px;
                 height: 80vh;
             }
@@ -1014,15 +1022,16 @@
         @keyframes contactSurface {
             0% {
                 opacity: 0;
-                z-index: -99;
+                z-index: 100;
                 width: 0px;
                 height: 0px;
             }
 
             100% {
                 opacity: 1;
-                z-index: 99;
-                width: 20vw;
+                z-index: 100;
+                width: 30vw;
+                /* height: 50vh; */
                 height: 50vh;
             }
         }
@@ -1104,7 +1113,7 @@
 
             #background_internet_of_things {
                 position: absolute;
-                top: 90vh;
+                top: calc(var(--internet_of_things_init_v1) - 2vh);
                 /* right: 20vw; */
                 width: 100%;
                 z-index: 1;
@@ -1208,12 +1217,42 @@
 
             #background_internet_of_things {
                 position: absolute;
-                top: 55vh;
+                top: calc(var(--internet_of_things_init_v2) - 3%);
                 /* right: 20vw; */
                 width: 100%;
                 z-index: 1;
             }
 
+            .catalogItem{
+                min-height: 5rem;
+                height: fit-content;    
+            }
+
+            .catalogItem:hover > .catalogItemDetail{
+                display: block;
+                animation: catalogItemGrow 2s;
+                animation-iteration-count: 1;
+                animation-fill-mode: forwards;
+                
+            }
+            
+            .catalogItemSummary{
+                display: none;
+            }
+
+            .catalogItemDetail{
+                display: none;
+            }
+
+            @keyframes catalogItemGrow {
+                0% {
+                    height: 0;
+                }
+
+                100% {
+                    height: fit-content;
+                }
+            }
         }
     </style>
 </head>
@@ -1568,11 +1607,11 @@
 
     // // catalogItemAddHover();
 
-    // if (window.innerWidth > SmallPageWidth)
-    //     catalogItemAddHover();
-    // else {
-    //     // alert("small screen");
-    // }
+    if (window.innerWidth > SmallPageWidth)
+         catalogItemAddHover();
+    else {
+         // alert("small screen");
+    }
 
 
     document.getElementById("menuItemProducts").addEventListener("click", () => {
