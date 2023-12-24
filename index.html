@@ -339,6 +339,10 @@
             right: 0;
             width: 60%;
             z-index: -1;
+            animation: iotMove 10s;
+            animation-delay: 2s;
+            /* animation-timing-function: ease-in-out; */
+            animation-iteration-count: infinite;
         }
 
         #background_internet_of_things>img {
@@ -408,10 +412,10 @@
             margin-bottom: 0;
             font-weight: 800;
             letter-spacing: 2px;
-            /* animation: glitter 3s;
+            animation: glitter 8s;
             animation-delay: 2s;
             animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite; */
+            animation-iteration-count: infinite;
         }
 
         /* .ourProducts { */
@@ -697,15 +701,15 @@
 
         @keyframes glitter {
             0% {
-                color: #efefef;
+                color: #0d1f62;
             }
 
             50% {
-                color: #ababab;
+                color: #5e0608;
             }
 
             100% {
-                color: #efefef;
+                color: #0d1f62;
             }
         }
 
@@ -801,6 +805,40 @@
 
             100% {
                 transform: translate(0, 0vh);
+            }
+        }
+
+        @keyframes iotMove {
+            0% {
+                /* transform: translate(0, 0vh); */
+                opacity: 1;
+            }
+
+            20% {
+                transform: translate(.2vw, -.2vh);
+            }
+
+            
+            40% {
+                transform: translate(.2vw, .2vh);
+                opacity: .5;
+            }
+
+            50% {
+                transform: translate(0, 0);
+            }
+
+            60% {
+                transform: translate(-.2vw, .2vh);            
+            }
+
+            80% {
+                transform: translate(-.2vw, -.2vh);
+            }
+
+            100% {
+                transform: translate(0, 0);
+                opacity: 1;
             }
         }
 
@@ -1066,7 +1104,7 @@
 
             #background_internet_of_things {
                 position: absolute;
-                top: 60vh;
+                top: 90vh;
                 /* right: 20vw; */
                 width: 100%;
                 z-index: 1;
@@ -1079,7 +1117,7 @@
 
             .SecAndEff div {
                 font-size: 8vw;
-                margin: 0 0 0 2rem;                
+                margin: 0 0 0 2rem;
             }
 
             .mission span,
@@ -1095,7 +1133,7 @@
                 /* margin: 5rem; */
                 /* margin: 0 2rem 0 5rem; */
             }
-            
+
             .catalog {
                 display: flex;
                 flex-direction: column;
@@ -1167,6 +1205,15 @@
                 animation-iteration-count: 1;
                 animation-fill-mode: forwards;
             }
+
+            #background_internet_of_things {
+                position: absolute;
+                top: 55vh;
+                /* right: 20vw; */
+                width: 100%;
+                z-index: 1;
+            }
+
         }
     </style>
 </head>
@@ -1287,8 +1334,8 @@
             <hr>
             <div class="mission">
                 <div class="mission1">Offering cutting-edge IoT solutions, <br>
-                    we enhance automation and efficiency  <br>
-                    while providing user-friendly,  <br>
+                    we enhance automation and efficiency <br>
+                    while providing user-friendly, <br>
                     customizable products and <br>
                     excellent customer support.</div>
                 <!-- <div class="mission1">Offering cutting-edge IoT solutions,</div>
