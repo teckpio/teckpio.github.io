@@ -1233,7 +1233,7 @@
                 animation: catalogItemGrow 2s;
                 animation-iteration-count: 1;
                 animation-fill-mode: forwards;
-                
+                animation-timing-function: ease-in;
             }
             
             .catalogItemSummary{
@@ -1247,6 +1247,10 @@
             @keyframes catalogItemGrow {
                 0% {
                     height: 0;
+                }
+
+                50% {
+                    height: 20rem;
                 }
 
                 100% {
