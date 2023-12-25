@@ -3,7 +3,7 @@
     <style>
         :root {
             --internet_of_things_init_v1: 90vh;
-            --internet_of_things_init_v2: 80vh;
+            --internet_of_things_init_v2: 30vh;
         }
 
         * {
@@ -424,6 +424,10 @@
             animation-iteration-count: infinite;
         }
 
+        .mission_d2 {
+            display: none;
+        }
+
         /* .ourProducts { */
         /* width: 90vw;
             height: 65vh;
@@ -769,7 +773,8 @@
             }
         }
 
-        @keyframes missionSlideIn {
+        /* different version for different page size */
+        /* @keyframes missionSlideIn {
             0% {
                 transform: translate(-50vw, 0);
             }
@@ -777,7 +782,7 @@
             100% {
                 transform: translate(0, 0);
             }
-        }
+        } */
 
         @keyframes ourProductsInitRise {
             0% {
@@ -1038,6 +1043,17 @@
                     transform: translate(0, 0vh);
                 }
             }
+
+            /* different version for different page size */
+            @keyframes missionSlideIn {
+                0% {
+                    transform: translate(-50vw, 0);
+                }
+
+                100% {
+                    transform: translate(0, 0);
+                }
+            }
         }
 
         /* Styles for MEDIUM-sized screens (tablets) */
@@ -1102,18 +1118,24 @@
                 margin: 0 0 0 2rem;
             }
 
+            .mission {
+                animation: missionSlideIn 8s;
+                animation-iteration-count: 1;
+                animation-fill-mode: forwards;
+            }
+
             .mission span,
             .mission div {
                 font-size: 3.5vw;
                 text-align: right;
+            }
 
-                /* font-weight: 600;
-                text-align: left;
+            .mission_d1 {
+                display: none;
+            }
 
-                color: #efefef;
-
-                /* margin: 5rem; */
-                /* margin: 0 2rem 0 5rem; */
+            .mission_d2 {
+                display: block;
             }
 
             .catalog {
@@ -1121,6 +1143,7 @@
                 flex-direction: column;
                 justify-content: flex-start;
                 overflow: auto;
+                margin-top: 1rem;
             }
 
             .catalogMain {
@@ -1162,14 +1185,37 @@
                 0% {
                     transform: translate(0, 60vh);
                 }
+
                 30% {
                     transform: translate(0, -10vh);
                 }
+
                 80% {
                     transform: translate(0, -10vh);
                 }
+
                 100% {
                     transform: translate(0, 0vh);
+                }
+            }
+
+            /* different version for different page size */
+            @keyframes missionSlideIn {
+                0% {
+                    transform: translate(-50vw, 0);
+                }
+                25%{
+                    opacity: 1;
+                }
+                30% {
+                    opacity: 0;
+                    transform: translate(0, 0);
+                }
+                90%{
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;                    
                 }
             }
         }
@@ -1410,22 +1456,15 @@
             <div class="SecAndEff">
                 <div class="SecAndEff1">Automation</div>
                 <div class="SecAndEff2">and Efficiencies</div>
-                <!-- <span class="SecAndEff1">Automation</span><br />
-                <span class="SecAndEff2">and Efficiencies</span> -->
             </div>
             <hr>
-            <div class="mission">
+            <div class="mission mission_d1">
                 <div class="mission1">Offering cutting-edge IoT solutions, <br>
                     we enhance automation and efficiency <br>
                     while providing user-friendly, <br>
                     customizable products and <br>
-                    excellent customer support.</div>
-                <!-- <div class="mission1">Offering cutting-edge IoT solutions,</div>
-                <div class="mission2">we enhance automation and efficiency while providing</div>
-                <div class="mission3">user-friendly, customizable products and excellent customer support.</div> -->
-                <!-- <span class="mission1">Offering cutting-edge IoT solutions,</span><br />
-                <span class="mission2">we enhance automation and efficiency while providing</span><br />
-                <span class="mission3">user-friendly, customizable products and excellent customer support.</span><br /> -->
+                    excellent customer support.
+                </div>
             </div>
             <!-- <div class="ourProducts">
                 <div class="ourProductsTitle">
@@ -1435,6 +1474,14 @@
         </div>
         <div class="backgroundItemsRight">
             <div class="backgroundItemsRightImgDiv"><img src="img_3sm/background_iot.svg" /></div>
+            <div class="mission mission_d2">
+                <div class="mission1">Offering cutting-edge IoT solutions, <br>
+                    we enhance automation and efficiency <br>
+                    while providing user-friendly, <br>
+                    customizable products and <br>
+                    excellent customer support.
+                </div>
+            </div>
         </div>
     </div>
     <!-- background items - end -->
