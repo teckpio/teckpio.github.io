@@ -1,9 +1,9 @@
 <head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <style>
-        :root{
-            --internet_of_things_init_v1:90vh;
-            --internet_of_things_init_v2:80vh;
+        :root {
+            --internet_of_things_init_v1: 90vh;
+            --internet_of_things_init_v2: 80vh;
         }
 
         * {
@@ -263,7 +263,7 @@
             overflow: auto;
         }
 
-        .aboutUsSurface {            
+        .aboutUsSurface {
             animation: aboutUsSurface 2s;
             animation-delay: .5s;
             animation-iteration-count: 1;
@@ -647,34 +647,7 @@
             justify-content: space-between;
             margin: 1rem;
         }
-
-        /* #catalog_licensePlate {
-            background-image: url("license_plate.svg");
-            background-size: contain;
-            background-repeat: repeat;
-            background-blend-mode: lighten;
-        }
-
-        #catalog_vms {
-            background-image: url("vms.svg");
-            background-size: contain;
-            background-repeat: repeat;
-            background-blend-mode: lighten;
-        }
-
-        #catalog_sensor {
-            background-image: url("sensor.svg");
-            background-size: contain;
-            background-repeat: repeat;
-            background-blend-mode: lighten;
-        }
-
-        #catalog_access {
-            background-image: url("sensor.svg");
-            background-size: contain;
-            background-repeat: repeat;
-            background-blend-mode: lighten;
-        } */
+       
 
         /* animation def */
 
@@ -826,7 +799,7 @@
                 transform: translate(.2vw, -.2vh);
             }
 
-            
+
             40% {
                 transform: translate(.2vw, .2vh);
                 opacity: .5;
@@ -837,7 +810,7 @@
             }
 
             60% {
-                transform: translate(-.2vw, .2vh);            
+                transform: translate(-.2vw, .2vh);
             }
 
             80% {
@@ -1186,8 +1159,16 @@
 
             /* different version for different page size */
             @keyframes catalogInitRise {
-                0% {
+
+                /* 0% {
                     transform: translate(-60vw, 0);
+                }
+
+                100% {
+                    transform: translate(0, 0vh);
+                } */
+                0% {
+                    transform: translate(0, 60vh);
                 }
 
                 100% {
@@ -1223,25 +1204,91 @@
                 z-index: 1;
             }
 
-            .catalogItem{
-                min-height: 5rem;
-                height: fit-content;    
+            .catalogItem {
+                padding: 0;
+
+                min-height: .1px;
+                height: .1px;
+
+                box-shadow: none;
+                border-radius: 5px;
             }
 
-            .catalogItem:hover > .catalogItemDetail{
+            .catalogItem:hover>.catalogItemDetail {
                 display: block;
                 animation: catalogItemGrow 2s;
                 animation-iteration-count: 1;
                 animation-fill-mode: forwards;
                 animation-timing-function: ease-in;
             }
-            
-            .catalogItemSummary{
+
+            .catalogItemSummary {
                 display: none;
             }
 
-            .catalogItemDetail{
+            .catalogItemDetail {
                 display: none;
+            }
+
+            #catalog_vms {
+                animation: catalogItemDebut 1s;
+                animation-iteration-count: 1;
+                animation-delay: 5s;
+                animation-fill-mode: forwards;
+            }
+
+            #catalog_access {
+                animation: catalogItemDebut 1s;
+                animation-iteration-count: 1;
+                animation-delay: 4s;
+                animation-fill-mode: forwards;
+            }
+
+            #catalog_weigh {
+                animation: catalogItemDebut 1s;
+                animation-iteration-count: 1;
+                animation-delay: 3s;
+                animation-fill-mode: forwards;
+            }
+
+            #catalog_sensor {
+                animation: catalogItemDebut 1s;
+                animation-iteration-count: 1;
+                animation-delay: 2s;
+                animation-fill-mode: forwards;
+            }
+
+            @keyframes catalogMainDebut {
+                0% {
+                    height: 2px;
+                }
+
+                50% {
+                    height: 10rem;
+                }
+
+                100% {
+                    height: fit-content;
+                }
+            }
+
+            @keyframes catalogItemDebut {
+                0% {
+                    padding: 0;
+                    min-height: .1px;
+                    height: .1px;
+                    /* overflow: hidden; */
+                }
+
+                50% {
+                    height: 10rem;
+                }
+
+                100% {
+                    padding: 1rem;
+                    height: fit-content;
+                    box-shadow: 0 0 6px 8px rgb(234, 234, 246);
+                }
             }
 
             @keyframes catalogItemGrow {
@@ -1410,7 +1457,7 @@
                 <div class="catalogItemLogo"><img src="./img_3sm/vms.svg" /></div>
                 <div class="catalogItemTitle">Visitor Management System</div>
                 <div><button class="buttonMore" id="moreVms">...</button></div>
-                <div class="catalogItemDetailTitle"></div>
+                <!-- <div class="catalogItemDetailTitle"></div> -->
                 <div class="catalogItemSummary" id="catalog_vms_summary">Our system is easy to use and deploy. Allows
                     control and recording of
                     visiting vehicles, walk-in visitors, and contractors.
@@ -1426,7 +1473,7 @@
                 <div class="catalogItemLogo"><img src="./img_3sm/access.svg" /></div>
                 <div class="catalogItemTitle">Cloud-based Access Control</div>
                 <div><button class="buttonMore" id="moreAccess">...</button></div>
-                <div class="catalogItemDetailTitle"></div>
+                <!-- <div class="catalogItemDetailTitle"></div> -->
                 <div class="catalogItemSummary" id="catalog_access_summary">
                     Our system is highly flexible. Access can be managed through our Cloud-based Software. 
                     Access control through Facial Recognition, QR Code, Access Card, Biometric Fingerprint, Mobile
@@ -1436,18 +1483,18 @@
                     more details ...
                 </div>
             </div>
-            <div class="catalogItem" id="catalog_licensePlate">
+            <div class="catalogItem" id="catalog_weigh">
                 <div class="catalogItemLogo"><img src="./img_3sm/car_license_plate.svg" /></div>
                 <div class="catalogItemTitle">Automated Weighing Solutions</div>
                 <div><button class="buttonMore" id="moreLicense">...</button></div>
-                <div class="catalogItemDetailTitle"></div>
-                <div class="catalogItemSummary" id="catalog_licensePlate_summary">
+                <!-- <div class="catalogItemDetailTitle"></div> -->
+                <div class="catalogItemSummary" id="catalog_weigh_summary">
                     Our WEIGHMASTER system integrates weighing system's reading to customer's IT systems. 
                     The Weighing Dashboard provide access to information anytime, anywhere across different platforms.
                     This allows audits, automation, and access of weighing information anywhere, anytime from multiple
                     devices and platforms.
                 </div>
-                <div class="catalogItemDetail" id="catalog_licensePlate_details">
+                <div class="catalogItemDetail" id="catalog_weigh_details">
                     <div class="divCatalogImg">
                         <img class="catalogImg" src="./img_3sm/license_plate_pic.svg" alt="camera image 2" />
                     </div>
@@ -1612,9 +1659,9 @@
     // // catalogItemAddHover();
 
     if (window.innerWidth > SmallPageWidth)
-         catalogItemAddHover();
+        catalogItemAddHover();
     else {
-         // alert("small screen");
+        // alert("small screen");
     }
 
 
@@ -1626,7 +1673,7 @@
         let catalog3smTitle = document.querySelector(".catalog3smTitle");
         catalog3smTitle.style.display = "flex";
 
-        let p_licensePlate = document.getElementById("catalog_licensePlate");
+        let p_licensePlate = document.getElementById("catalog_weigh");
         let p_access = document.getElementById("catalog_access");
         let p_vms = document.getElementById("catalog_vms");
         let p_sensor = document.getElementById("catalog_sensor");
@@ -1678,7 +1725,7 @@
         switch (i) {
             case 0:
                 morex = "moreLicense";
-                cix = "catalog_licensePlate";
+                cix = "catalog_weigh";
                 break;
             case 1:
                 morex = "moreAccess";
@@ -1730,7 +1777,7 @@
             switch (i) {
                 case 0:
                     morex = "moreLicense";
-                    cix = "catalog_licensePlate";
+                    cix = "catalog_weigh";
                     break;
                 case 1:
                     morex = "moreAccess";
