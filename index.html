@@ -65,7 +65,7 @@
             right: .5rem;
             /* bottom: 1rem;
             right: 1rem; */
-            
+
             box-shadow: 0 0 3px 5px rgb(216, 213, 213);
             background-color: black;
             border: none;
@@ -248,7 +248,8 @@
         .aboutUs {
             position: fixed;
             top: 10vh;
-            left: 40vh;
+            /* left: 40vh; */
+            left: 10vh;
 
             width: 0px;
             height: 0px;
@@ -728,21 +729,23 @@
                 width: 0px;
                 height: 0px;
             }
-
             50% {
                 opacity: .5;
                 z-index: 100;
                 width: 2px;
                 height: 80vh;
             }
-
+            /* 75% {
+                width: 25vw;
+                height: 40vh;
+            } */
             100% {
                 opacity: 1;
                 z-index: 99;
-                /* width: 50vw;
-                height: 80vh; */
-                width: fit-content;
-                height: fit-content;
+                width: 50vw;
+                height: 80vh;
+                /* width: fit-content;
+                height: fit-content; */
             }
         }
 
@@ -1631,7 +1634,7 @@
 
     // about us //
 
-    document.getElementById("menuItemAboutUs").addEventListener("click", () => {
+    function aboutus_clicked() {
         let aboutUs = document.querySelector(".aboutUs");
         if (aboutUs.classList.contains("aboutUsSurface")) {
             shieldDown();
@@ -1662,7 +1665,41 @@
 
             shieldUp();
         }
-    });
+    }
+
+    document.getElementById("menuItemAboutUs").addEventListener("click", aboutus_clicked);
+    // document.getElementById("menuItemAboutUs").addEventListener("click", () => {
+    //     let aboutUs = document.querySelector(".aboutUs");
+    //     if (aboutUs.classList.contains("aboutUsSurface")) {
+    //         shieldDown();
+    //         aboutUs.classList.remove("aboutUsSurface");
+    //         aboutUs.classList.add("aboutUsSubmerge");
+    //     }
+    //     else {
+    //         let aboutUsExit = document.getElementById("aboutUsExit");
+    //         aboutUsExit.classList.add("blink");
+
+    //         aboutUs.classList.remove("aboutUsSubmerge");
+    //         aboutUs.classList.add("aboutUsSurface");
+
+    //         let spans = aboutUs.querySelectorAll(".onebyone");
+    //         let i = 0;
+    //         Array.from(spans).forEach(sp => {
+    //             sp.classList.add("aboutUsSpanSurface");
+    //             let sec = sp.getAttribute("sec");
+    //             sec = parseInt(sec);
+    //             i += sec;
+    //             sp.style.animationDelay = i + "s";
+    //         })
+
+    //         setTimeout(() => {
+    //             let aboutUsExit = document.getElementById("aboutUsExit");
+    //             aboutUsExit.classList.remove("blink");
+    //         }, i * 1000);
+
+    //         shieldUp();
+    //     }
+    // });
 
     document.getElementById("aboutUsExit").addEventListener("click", () => {
         shieldDown();
@@ -1903,6 +1940,6 @@
 
     // hamburger menu //
     function hamburgMenu_clicked() {
-        alert('clicked')
+        aboutus_clicked()
     }
 </script>
