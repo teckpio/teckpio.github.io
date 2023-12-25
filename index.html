@@ -3,7 +3,7 @@
     <style>
         :root {
             --internet_of_things_init_v1: 90vh;
-            --internet_of_things_init_v2: 40vh;
+            --internet_of_things_init_v2: 43vh;
         }
 
         * {
@@ -61,10 +61,11 @@
             height: 2rem;
 
             position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            /* padding: .5rem; */
-
+            top: .5rem;
+            right: .5rem;
+            /* bottom: 1rem;
+            right: 1rem; */
+            
             box-shadow: 0 0 3px 5px rgb(216, 213, 213);
             background-color: black;
             border: none;
@@ -738,8 +739,10 @@
             100% {
                 opacity: 1;
                 z-index: 99;
-                width: 50vw;
-                height: 80vh;
+                /* width: 50vw;
+                height: 80vh; */
+                width: fit-content;
+                height: fit-content;
             }
         }
 
