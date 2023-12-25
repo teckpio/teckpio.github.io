@@ -389,7 +389,7 @@
             animation: missionSlideIn 2s;
             animation-iteration-count: 1;
             animation-delay: 1s;
-            animation-fill-mode: forwards;            
+            animation-fill-mode: forwards;
         }
 
         .mission2 {
@@ -1098,9 +1098,14 @@
                 height: fit-content;
             }
 
+            .backgroundItemsRightImgDiv {
+                padding: 10px;
+                padding-top: 0;
+            }
+
             .backgroundItemsRightImgDiv>img {
                 /* width: 30vw; */
-                width: 90%;
+                width: 100%;
                 height: auto;
                 object-fit: contain;
             }
@@ -1191,12 +1196,15 @@
                 0% {
                     transform: translate(0, 60vh);
                 }
+
                 30% {
                     transform: translate(0, -20vh);
                 }
+
                 90% {
                     transform: translate(0, -20vh);
                 }
+
                 100% {
                     transform: translate(0, 0vh);
                 }
@@ -1207,18 +1215,22 @@
                 0% {
                     transform: translate(-50vw, 0);
                 }
-                25%{
+
+                25% {
                     opacity: 1;
                     transform: translate(0, 0);
                 }
+
                 30% {
-                    opacity: 0;                  
-                }
-                90%{
                     opacity: 0;
                 }
+
+                90% {
+                    opacity: 0;
+                }
+
                 100% {
-                    opacity: 1;                    
+                    opacity: 1;
                 }
             }
         }
@@ -1332,6 +1344,7 @@
                 50% {
                     height: 15rem;
                 }
+
                 100% {
                     padding: 1rem;
                     margin: 1rem;
