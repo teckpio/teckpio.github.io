@@ -384,9 +384,12 @@
         }
 
         .mission {
-            animation: missionSlideIn 1.5s;
+            opacity: 0;
+
+            animation: missionSlideIn 2s;
             animation-iteration-count: 1;
-            animation-fill-mode: forwards;
+            animation-delay: 1s;
+            animation-fill-mode: forwards;            
         }
 
         .mission2 {
@@ -1051,6 +1054,7 @@
                 }
 
                 100% {
+                    opacity: 1;
                     transform: translate(0, 0);
                 }
             }
@@ -1121,6 +1125,7 @@
             .mission {
                 animation: missionSlideIn 8s;
                 animation-iteration-count: 1;
+                animation-delay: 1s;
                 animation-fill-mode: forwards;
             }
 
@@ -1185,15 +1190,12 @@
                 0% {
                     transform: translate(0, 60vh);
                 }
-
                 30% {
                     transform: translate(0, -20vh);
                 }
-
-                80% {
+                90% {
                     transform: translate(0, -20vh);
                 }
-
                 100% {
                     transform: translate(0, 0vh);
                 }
@@ -1206,10 +1208,10 @@
                 }
                 25%{
                     opacity: 1;
+                    transform: translate(0, 0);
                 }
                 30% {
-                    opacity: 0;
-                    transform: translate(0, 0);
+                    opacity: 0;                  
                 }
                 90%{
                     opacity: 0;
@@ -1248,7 +1250,7 @@
             }
 
             .catalog {
-                animation: catalogInitRise 8s;
+                animation: catalogInitRise 9s;
                 /* animation-iteration-count: 1;
                 animation-fill-mode: forwards; */
             }
@@ -1284,28 +1286,28 @@
             #catalog_vms {
                 animation: catalogItemDebut 1s;
                 animation-iteration-count: 1;
-                animation-delay: 5s;
+                animation-delay: 6s;
                 animation-fill-mode: forwards;
             }
 
             #catalog_access {
                 animation: catalogItemDebut 1s;
                 animation-iteration-count: 1;
-                animation-delay: 4s;
+                animation-delay: 5s;
                 animation-fill-mode: forwards;
             }
 
             #catalog_weigh {
                 animation: catalogItemDebut 1s;
                 animation-iteration-count: 1;
-                animation-delay: 3s;
+                animation-delay: 4s;
                 animation-fill-mode: forwards;
             }
 
             #catalog_sensor {
                 animation: catalogItemDebut 1s;
                 animation-iteration-count: 1;
-                animation-delay: 2s;
+                animation-delay: 3s;
                 animation-fill-mode: forwards;
             }
 
@@ -1319,7 +1321,6 @@
                 50% {
                     height: 15rem;
                 }
-
                 100% {
                     padding: 1rem;
                     margin: 1rem;
