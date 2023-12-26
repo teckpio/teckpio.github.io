@@ -3,7 +3,7 @@
     <style>
         :root {
             --internet_of_things_init_v1: 90vh;
-            --internet_of_things_init_v2: 43vh;
+            --internet_of_things_init_v2: 35vh;
         }
 
         * {
@@ -721,10 +721,10 @@
             }
         }
 
-        @keyframes aboutUsSurface {
+        /* different version for different page size */
+        /* @keyframes aboutUsSurface {
             0% {
                 opacity: 0;
-                /* z-index: -99; */
                 z-index: 100;
                 width: 0px;
                 height: 0px;
@@ -735,19 +735,13 @@
                 width: 2px;
                 height: 80vh;
             }
-            /* 75% {
-                width: 25vw;
-                height: 40vh;
-            } */
             100% {
                 opacity: 1;
                 z-index: 99;
                 width: 50vw;
                 height: 80vh;
-                /* width: fit-content;
-                height: fit-content; */
             }
-        }
+        } */
 
         @keyframes aboutUsSubmerge {
             0% {
@@ -1043,6 +1037,10 @@
 
         @media only screen and (min-width: 850px) {
 
+            /* #aboutUsContact{
+                display: none;
+            }
+             */
             /* different version for different page size */
             @keyframes catalogInitRise {
                 0% {
@@ -1063,6 +1061,29 @@
                 100% {
                     opacity: 1;
                     transform: translate(0, 0);
+                }
+            }
+
+            @keyframes aboutUsSurface {
+                0% {
+                    opacity: 0;
+                    z-index: 100;
+                    width: 0px;
+                    height: 0px;
+                }
+
+                50% {
+                    opacity: .5;
+                    z-index: 100;
+                    width: 2px;
+                    height: 80vh;
+                }
+
+                100% {
+                    opacity: 1;
+                    z-index: 99;
+                    width: 50vw;
+                    height: 80vh;
                 }
             }
         }
@@ -1104,6 +1125,14 @@
                 height: fit-content;
             }
 
+            .SecAndEff {
+                padding-top: 1rem;
+            }
+
+            .backgroundItemsRight {
+                margin-top: 0;
+            }
+
             .backgroundItemsRightImgDiv {
                 padding: 10px;
                 padding-top: 0;
@@ -1135,7 +1164,8 @@
             }
 
             .mission {
-                animation: missionSlideIn 8s;
+                /* animation: missionSlideIn 8s; */
+                animation: missionSlideIn 10s;
                 animation-iteration-count: 1;
                 animation-delay: 1s;
                 animation-fill-mode: forwards;
@@ -1153,6 +1183,10 @@
 
             .mission_d2 {
                 display: block;
+            }
+
+            .mission_d2>div {
+                text-align: center;
             }
 
             .catalog {
@@ -1222,12 +1256,12 @@
                     transform: translate(-50vw, 0);
                 }
 
-                25% {
+                10% {
                     opacity: 1;
                     transform: translate(0, 0);
                 }
 
-                30% {
+                40% {
                     opacity: 0;
                 }
 
@@ -1279,7 +1313,7 @@
             }
 
             .catalog {
-                animation: catalogInitRise 9s;
+                animation: catalogInitRise 11s;
                 /* animation-iteration-count: 1;
                 animation-fill-mode: forwards; */
             }
@@ -1313,31 +1347,51 @@
             }
 
             #catalog_vms {
-                animation: catalogItemDebut 1s;
+                animation: catalogItemDebut 1.5s;
+                animation-iteration-count: 1;
+                animation-delay: 7.5s;
+                animation-fill-mode: forwards;
+            }
+
+            #catalog_access {
+                animation: catalogItemDebut 1.5s;
                 animation-iteration-count: 1;
                 animation-delay: 6s;
                 animation-fill-mode: forwards;
             }
 
-            #catalog_access {
-                animation: catalogItemDebut 1s;
-                animation-iteration-count: 1;
-                animation-delay: 5s;
-                animation-fill-mode: forwards;
-            }
-
             #catalog_weigh {
-                animation: catalogItemDebut 1s;
+                animation: catalogItemDebut 1.5s;
                 animation-iteration-count: 1;
-                animation-delay: 4s;
+                animation-delay: 4.5s;
                 animation-fill-mode: forwards;
             }
 
             #catalog_sensor {
-                animation: catalogItemDebut 1s;
+                animation: catalogItemDebut 1.5s;
                 animation-iteration-count: 1;
                 animation-delay: 3s;
                 animation-fill-mode: forwards;
+            }
+
+            .aboutUs {
+                /* position: fixed; */
+                /* top: 10vh; */
+                /* left: 40vh; */
+                left: 5px;
+
+                /* width: 0px;
+                height: 0px;
+
+                padding: 1rem;
+                border-radius: 8px;
+                box-shadow: 0 0 10px 10px rgb(224, 220, 220);
+                background-image: url("./img_3sm/background_3sm.svg");
+                color: rgb(4, 4, 65);
+
+                opacity: 0;
+                z-index: -99;
+                overflow: auto; */
             }
 
             @keyframes catalogItemDebut {
@@ -1371,6 +1425,30 @@
 
                 100% {
                     height: fit-content;
+                }
+            }
+
+            /* different version for different page size */
+            @keyframes aboutUsSurface {
+                0% {
+                    opacity: 0;
+                    z-index: 100;
+                    width: 0px;
+                    height: 0px;
+                }
+
+                50% {
+                    opacity: .5;
+                    z-index: 100;
+                    width: 2px;
+                    height: 80vh;
+                }
+
+                100% {
+                    opacity: 1;
+                    z-index: 99;
+                    width: 99vw;
+                    height: 80vh;
                 }
             }
         }
@@ -1451,6 +1529,30 @@
                 meet your unique security needs. Our team of experts provide you with the highest level of customer
                 service and support.
             </span>
+        </div>
+        <br /><br />
+        <div class="onebyone" sec="4" id="aboutUsContact">
+            <!-- <span class="aboutUsSpanBold">Our Solutions </span>
+            <span>are designed to be user-friendly and customizable, providing you with the flexibility to
+                meet your unique security needs. Our team of experts provide you with the highest level of customer
+                service and support.
+            </span> -->
+
+            <!-- <div class="detailTitle3sm">
+                <div class="detailTitle3smImgDiv"><img class="detailTitle3smImg" src="./img_3sm/logo_3sm.svg" /></div>
+                <div class="detailTitle3smName">3SM Pte Ltd</div>
+            </div>
+            <br /><br /> -->
+            <span class="aboutUsSpanBold">Contacts:</span>
+            <br />
+            <div class="contactItem">
+                <div class="contactItemLabel">Email:</div>
+                <div class="contactItemData">Sales@3sm.com.sg</div>
+            </div>
+            <div class="contactItem">
+                <div class="contactItemLabel">Tel:</div>
+                <div class="contactItemData">+65- 6988 4094</div>
+            </div>
         </div>
         <br /><br />
         <button class="buttonX" id="aboutUsExit">X</button>
