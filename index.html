@@ -391,6 +391,7 @@
             animation: missionSlideIn 2s;
             animation-iteration-count: 1;
             animation-delay: 1s;
+            animation-timing-function: ease-out;
             animation-fill-mode: forwards;
         }
 
@@ -1057,7 +1058,6 @@
                 0% {
                     transform: translate(-50vw, 0);
                 }
-
                 100% {
                     opacity: 1;
                     transform: translate(0, 0);
@@ -1186,6 +1186,8 @@
             }
 
             .mission_d2>div {
+                font-size: large;
+                font-weight: 800;
                 text-align: center;
             }
 
@@ -1318,7 +1320,6 @@
                 animation-fill-mode: forwards; */
             }
 
-
             .catalogItem {
                 padding: 0;
                 margin: 0;
@@ -1375,23 +1376,11 @@
             }
 
             .aboutUs {
-                /* position: fixed; */
-                /* top: 10vh; */
-                /* left: 40vh; */
                 left: 5px;
+            }
 
-                /* width: 0px;
-                height: 0px;
-
-                padding: 1rem;
-                border-radius: 8px;
-                box-shadow: 0 0 10px 10px rgb(224, 220, 220);
-                background-image: url("./img_3sm/background_3sm.svg");
-                color: rgb(4, 4, 65);
-
-                opacity: 0;
-                z-index: -99;
-                overflow: auto; */
+            .aboutUs span            {
+                font-weight: 1.5rem;
             }
 
             @keyframes catalogItemDebut {
@@ -1400,11 +1389,9 @@
                     min-height: .1px;
                     height: .1px;
                 }
-
                 50% {
                     height: 15rem;
                 }
-
                 100% {
                     padding: 1rem;
                     margin: 1rem;
@@ -1608,11 +1595,9 @@
         <div class="backgroundItemsRight">
             <div class="backgroundItemsRightImgDiv"><img src="img_3sm/background_iot.svg" /></div>
             <div class="mission mission_d2">
-                <div class="mission1">Offering cutting-edge IoT solutions, <br>
-                    we enhance automation and efficiency <br>
-                    while providing user-friendly, <br>
-                    customizable products and <br>
-                    excellent customer support.
+                <div class="mission1">Cutting-edge IoT Solutions, <br>
+                    User-friendly, Customizable<br>
+                    and Excellent Customer Support.<br>                    
                 </div>
             </div>
         </div>
