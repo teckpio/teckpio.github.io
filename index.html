@@ -4,6 +4,9 @@
         :root {
             --internet_of_things_init_v1: 90vh;
             --internet_of_things_init_v2: 40vh;
+            --catalogItem_initWidth: 22vw;
+            --catalogItem_contractedWidth: 12rem;
+            --catalogItem_expandedWidth: 100%;
         }
 
         * {
@@ -42,7 +45,8 @@
         }
 
         .divCatalogImg {
-            width: 100%;
+            width: 30%;
+            margin: 1rem;
         }
 
         .catalogImg {
@@ -63,8 +67,6 @@
             position: absolute;
             top: .5rem;
             right: .5rem;
-            /* bottom: 1rem;
-            right: 1rem; */
 
             box-shadow: 0 0 3px 5px rgb(216, 213, 213);
             background-color: black;
@@ -504,8 +506,8 @@
             align-items: center;
             background-color: rgba(250, 250, 250, .85);
 
-            min-width: 22vw;
-            width: 22vw;
+            /* min-width: 22vw; */
+            width: var(--catalogItem_initWidth);
             min-height: 20vh;
             height: 60vh;
 
@@ -516,11 +518,15 @@
             box-shadow: 0 0 6px 8px rgb(234, 234, 246);
             border-radius: 5px;
 
+            border: 3px solid rgba(55, 55, 132, 0.3);
+
             overflow: auto;
         }
 
+
         .catalogItemExtend {
-            height: 90vh;
+            /* height: 70vh; */
+            height: 80vh;
         }
 
         .catalogItemHover {
@@ -540,11 +546,34 @@
             animation-fill-mode: forwards;
         }
 
+        .catalogItemExpand {
+            animation: catalogItemExpand 1s;
+            animation-delay: .5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .catalogItemContract {
+            animation: catalogItemContract .5s;
+            /* animation-delay: .5s; */
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        .catalogItemBack {
+            animation: catalogItemBack 1s;
+            /* animation-delay: 1s; */
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
         .catalogItemLogo {
             margin-bottom: 1rem;
         }
 
         .catalogItemTitle {
+            width: 100%;
+
             min-height: 5rem;
 
             font-size: 1.1rem;
@@ -558,20 +587,31 @@
             padding: 1rem;
             border-radius: 8px;
 
-            position: sticky;
-            top: -1.1rem;
+            overflow: hidden;
+
+            /* position: sticky; */
+            /* top: -1.1rem; */
+            /* top: -1.2rem; */
         }
 
         .catalogItemSummary {
-            color: darkslategray;
-            font-size: 1rem;
+            color: #676767;
+            font-size: 1.2rem;
             font-weight: normal;
             line-height: 1.2rem;
             margin: 1rem;
         }
 
         .catalogItemDetail {
+            /* font-family: 'Roboto', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #676767;
             display: none;
+        }
+
+        .catalogItemPointDetail {
+            font-size: 1.2rem;
         }
 
         #catalogExit {
@@ -857,7 +897,8 @@
                 background-color: #FEFEFE;
                 opacity: 1;
 
-                transform: translate(0, -60vh);
+                /* transform: translate(0, -60vh); */
+                transform: translate(0, -70vh);
                 z-index: 199;
                 height: 80vh;
 
@@ -885,6 +926,7 @@
             }
 
             100% {
+                width: var(--catalogItem_initWidth);
                 transform: rotateY(0deg);
                 overflow: auto;
             }
@@ -909,6 +951,58 @@
 
             100% {
                 transform: translate(0, 0);
+            }
+        }
+
+        @keyframes catalogItemExpand {
+            /* 0% {
+                display: none;
+            } */
+
+            50% {
+                /* width: 50%; */
+                /* width: var(--catalogItem_initWidth); */
+            }
+
+            100% {
+                /* width: 100%; */
+                width: var(--catalogItem_expandedWidth);
+                display: flex;
+                overflow: auto;
+            }
+        }
+
+        @keyframes catalogItemContract {
+            0% {
+                /* min-width: 0;                 */
+            }
+
+            50% {
+                /* width: 50%; */
+                /* width: var(--catalogItem_initWidth); */
+            }
+
+            100% {
+                /* width: 12rem; */
+                width: var(--catalogItem_contractedWidth);
+                /* opacity: .2; */
+                overflow: hidden;
+            }
+        }
+
+        @keyframes catalogItemBack {
+            /* 0% {
+                min-width: 0;                
+            } */
+
+            50% {
+                width: 50%;
+            }
+
+            100% {
+                width: var(--catalogItem_initWidth);
+                opacity: 1;
+                overflow: auto;
             }
         }
 
@@ -1620,78 +1714,143 @@
             <div class="detailTitle3smName">3SM Pte Ltd</div>
         </div>
         <div class="catalogMain">
-            <div class="catalogItem" id="catalog_vms">
-                <div class="catalogItemLogo"><img src="./img_3sm/vms.svg" /></div>
-                <div class="catalogItemTitle">Visitor Management &<br/>License Plate Recognition System</div>
+            <div class="catalogItem" id="catalog_vms" cix="catalog_vms">
+                <div class="catalogItemLogo" cix="catalog_vms"><img src="./img_3sm/vms.svg" /></div>
+                <div class="catalogItemTitle" cix="catalog_vms">Visitor Management &<br />License Plate Recognition
+                    System</div>
                 <div><button class="buttonMore" id="moreVms">...</button></div>
-                <!-- <div class="catalogItemDetailTitle"></div> -->
-                <div class="catalogItemSummary" id="catalog_vms_summary">Our system is easy to use and deploy. Allows
-                    control and recording of
-                    visiting vehicles, walk-in visitors, and contractors.
+                <div class="catalogItemSummary" id="catalog_vms_summary" cix="catalog_vms">Our system is easy to use and
+                    deploy. Allows control and recording of visiting vehicles, walk-in visitors, and contractors.
                     It is integrated to our License Plate Recognition System so that vehicle license plate numbers
-                    are
-                    automatically recorded. 
+                    are automatically recorded.
                 </div>
-                <div class="catalogItemDetail" id="catalog_vms_details">
-                    more details ...
+                <div class="catalogItemDetail" id="catalog_vms_details" cix="catalog_vms">
+                    <div class="divCatalogImg" cix="catalog_vms" style="float:left;">
+                        <img class="catalogImg" src="./img_3sm/vms_pic.svg" cix="catalog_vms" alt="camera image 2" />
+                    </div>
+                    <br /><br />
+                    Elevate your residential security with our comprehensive Visitor Management System, designed to
+                    streamline check-in processes and enhance overall safety.
+                    <br /><br />
+                    Simplify visitor registration, effortlessly track visitor data, and fortify residential security
+                    measures.
+                    <br /><br />
+                    The tracking of Blacklisted Vehicles Listing adds an extra layer of security to access controls,
+                    promoting a secure living environment.
+                    <br /><br />
+                    <div class="divCatalogImg" cix="catalog_vms" style="float: right;width:50%;">
+                        <img class="catalogImg" src="./img_3sm/vms_pic4.svg" cix="catalog_vms" alt="camera image 2" />
+                    </div>
+                    Enjoy the flexibility of customizable visiting hours, tailored for different vehicle entries,
+                    offering precise control over potential overstays.
+                    <br /><br />
+                    Pre-register Vehicle Entries to optimize traffic flow, fostering a smoother and more organized
+                    community.
+                    <br /><br />
+                    With customizable reporting, focus on specific areas of concern to ensure a proactive and secure
+                    residential atmosphere.
+                    <br /><br />
+                    <div class="divCatalogImg" cix="catalog_vms" style="width: 95%;">
+                        <img class="catalogImg" src="./img_3sm/vms_pic3.svg" cix="catalog_vms" alt="camera image 2" />
+                    </div>
                 </div>
             </div>
-            <div class="catalogItem" id="catalog_access">
-                <div class="catalogItemLogo"><img src="./img_3sm/access.svg" /></div>
-                <div class="catalogItemTitle">Cloud-based Access Control</div>
+            <div class="catalogItem" id="catalog_access" cix="catalog_access">
+                <div class="catalogItemLogo" cix="catalog_access"><img src="./img_3sm/access.svg" /></div>
+                <div class="catalogItemTitle" cix="catalog_access">Cloud-based Access Control</div>
                 <div><button class="buttonMore" id="moreAccess">...</button></div>
-                <!-- <div class="catalogItemDetailTitle"></div> -->
-                <div class="catalogItemSummary" id="catalog_access_summary">
-                    Our system is highly flexible. Access can be managed through our Cloud-based Software. 
+                <div class="catalogItemSummary" id="catalog_access_summary" cix="catalog_access">
+                    Our system is highly flexible. Access can be managed through our Cloud-based Software.
                     Access control through Facial Recognition, QR Code, Access Card, Biometric Fingerprint, Mobile
                     Phone.
                 </div>
-                <div class="catalogItemDetail" id="catalog_access_details">
-                    more details ...
+                <div class="catalogItemDetail" id="catalog_access_details" cix="catalog_access">
+                    <div class="divCatalogImg" cix="catalog_access" style="float: left;width: 60%;">
+                        <img class="catalogImg" src="./img_3sm/access_pic.svg" cix="catalog_access"
+                            alt="camera image 2" />
+                    </div>
+                    Experience unparalleled flexibility with our advanced access control system.
+                    <br /><br />
+                    Our Cloud-based Software ensures seamless management of access privileges, allowing you to adapt
+                    effortlessly to evolving security needs.
+                    <br /><br />
+                    Whether it's Facial Recognition, QR Code, Access Card, Biometric Fingerprint, or Mobile Phone
+                    access, our system offers a diverse range of secure options.
+                    <br /><br />
+                    This versatility ensures that you have the freedom to choose the method that suits your
+                    organization's preferences and requirements.
+                    <br /><br />
+                    Enjoy the convenience of a system that aligns with your security goals, providing a comprehensive
+                    and adaptable solution to safeguard your premises with cutting-edge access control technologies.
                 </div>
             </div>
-            <div class="catalogItem" id="catalog_weigh">
-                <div class="catalogItemLogo"><img src="./img_3sm/car_license_plate.svg" /></div>
-                <div class="catalogItemTitle">Automated<br/> Weighing Solutions</div>
-                <div><button class="buttonMore" id="moreLicense">...</button></div>
-                <!-- <div class="catalogItemDetailTitle"></div> -->
-                <div class="catalogItemSummary" id="catalog_weigh_summary">
-                    Our WEIGHMASTER system integrates weighing system's reading to customer's IT systems. 
-                    The Weighing Dashboard provide access to information anytime, anywhere across different platforms.
+            <div class="catalogItem" id="catalog_weigh" cix="catalog_weigh">
+                <div class="catalogItemLogo" cix="catalog_weigh"><img src="./img_3sm/car_license_plate.svg" /></div>
+                <div class="catalogItemTitle" cix="catalog_weigh">Automated<br /> Weighing Solutions</div>
+                <div><button class="buttonMore" id="moreWeigh">...</button></div>
+                <div class="catalogItemSummary" id="catalog_weigh_summary" cix="catalog_weigh">
+                    Our WEIGHMASTER system integrates weighing system's reading to customer's IT systems.
+                    The Weighing Dashboard provide access to information anytime, anywhere across different platforms.
                     This allows audits, automation, and access of weighing information anywhere, anytime from multiple
                     devices and platforms.
                 </div>
-                <div class="catalogItemDetail" id="catalog_weigh_details">
-                    <div class="divCatalogImg">
-                        <img class="catalogImg" src="./img_3sm/license_plate_pic.svg" alt="camera image 2" />
+                <div class="catalogItemDetail" id="catalog_weigh_details" cix="catalog_weigh">
+                    <div class="divCatalogImg" style="width: 60%;float:right;" cix="catalog_weigh">
+                        <img class="catalogImg" src="./img_3sm/weigh_pic.svg" cix="catalog_weigh"
+                            alt="camera image 2" />
                     </div>
-                    <div>
-                        more details ...
-                    </div>
+                    <br><br>
+                    Revolutionize your business operations with our innovative WEIGHMASTER system.
+                    <br><br>
+                    Seamlessly integrating weighing system readings into your IT infrastructure.
+                    <br><br>
+                    The Weighing Dashboard takes accessibility to the next level, offering real-time information
+                    anytime, anywhere, across various platforms.
+                    <br><br>
+                    Unlock the power of audits, automation, and instant access to weighing data from multiple devices
+                    and platforms.
+                    <br><br>
+                    This unparalleled connectivity ensures that critical information is at your fingertips, empowering
+                    your team to make informed decisions with efficiency and precision.
+                    <br><br>
+                    Elevate your weighing processes with the WEIGHMASTER system, where convenience meets cutting-edge
+                    technology for unparalleled control and accessibility in your business operations.
                 </div>
             </div>
-            <div class="catalogItem" id="catalog_sensor">
-                <div class="catalogItemLogo"><img src="./img_3sm/sensor.svg" /></div>
-                <div class="catalogItemTitle">IOT & Sensor Systems</div>
+            <div class="catalogItem" id="catalog_sensor" cix="catalog_sensor">
+                <div class="catalogItemLogo" cix="catalog_sensor"><img src="./img_3sm/sensor.svg" /></div>
+                <div class="catalogItemTitle" cix="catalog_sensor">IOT & Sensor Systems</div>
                 <div><button class="buttonMore" id="moreSensor">...</button></div>
-                <!-- <div class="catalogItemDetailTitle">Monitor your environment with ease</div> -->
-                <div class="catalogItemSummary" id="catalog_sensor_summary">Monitor your environment with ease, our
-                    Environmental Sensor IOT
-                    System
-                    provides real-time monitoring and
-                    analysis of your environment to
+                <div class="catalogItemSummary" id="catalog_sensor_summary" cix="catalog_sensor">Monitor your
+                    environment with ease, our
+                    Environmental Sensor IOT System provides real-time monitoring and analysis of your environment to
                     ensure optimal conditions. Whether you are monitoring temperature, humidity, air quality or any
-                    other
-                    parameter, our system provides accurate and reliable data.
+                    other parameter, our system provides accurate and reliable data.
                 </div>
-                <div class="catalogItemDetail" id="catalog_sensor_details">
-                    <div class="divCatalogImg">
-                        <img class="catalogImg" src="./img_3sm/sensor_pic.svg" alt="camera image 2" />
+                <div class="catalogItemDetail" id="catalog_sensor_details" cix="catalog_sensor">
+                    <div class="divCatalogImg" cix="catalog_sensor" style="float:right;">
+                        <img class="catalogImg" src="./img_3sm/sensor_pic.svg" cix="catalog_sensor"
+                            alt="camera image 2" />
                     </div>
-                    <div class="divCatalogImg">
-                        <img class="catalogImg" src="./img_3sm/sensor_pic2.svg" alt="camera image 2" />
+                    <br><br>
+                    Transform your environment effortlessly with our advanced Environmental Sensor IoT System.
+                    <br><br>
+                    Experience real-time monitoring and analysis for optimal conditions, whether it's temperature,
+                    humidity, air quality, or other parameters.
+                    <br><br>
+                    Our system enhances accuracy and reliability in delivering crucial data.
+                    <div class="divCatalogImg" cix="catalog_sensor" style="width: 20%; float:left;">
+                        <img class="catalogImg" src="./img_3sm/sensor_pic2.svg" cix="catalog_sensor"
+                            alt="camera image 2" />
                     </div>
-                    more details ...
+                    <br><br>
+                    Stay ahead by making informed decisions, taking proactive steps, and cultivating a healthier and
+                    more efficient environment.
+                    <br><br>
+                    Trust our Environmental Sensor IoT System for insightful data that goes beyond monitoring -
+                    <br><br>
+                    it's about shaping a smarter, more responsive, and environmentally conscious world.
+                    <br><br>
                 </div>
             </div>
             <button class="buttonX" id="catalogExit">X</button>
@@ -1813,38 +1972,119 @@
 
     // products //
 
-    function catalogItemSwitch(item, to_detail) {
+    function catalogItemContractItem(ci) {
+        ci.classList.add("catalogItemContract");
+        // ci.querySelector(".catalogItemTitle").style.opacity = 1;
+        Array.from(ci.children).forEach(cic => {
+            // if (!cic.classList.contains("catalogItemTitle") && !cic.classList.contains("catalogItemLogo"))
+            if (!cic.classList.contains("catalogItemLogo"))
+                cic.style.opacity = .2;
+        });
+        ci.scrollTop = 0;
+    }
+
+    function catalogItemExpandItem(catalogItemX) {
+        catalogItemX.classList.add("catalogItemExpand");
+
+        Array.from(catalogItemX.children).forEach(cic => {
+            cic.style.opacity = 1;
+        });
+    }
+
+    function catalogItemSwitch(item, to_detail, morexbutton) {
+
+        let arrycatalogitems = document.querySelectorAll(".catalogItem");
+        Array.from(arrycatalogitems).forEach(ci => {
+            ci.classList.remove("catalogItemBack");
+            ci.classList.remove("catalogItemRotate");
+            ci.classList.remove("catalogItemContract");
+            ci.classList.remove("catalogItemExpand");
+        });
+
+        let catalogItemX = document.getElementById(item);
+
+        if (to_detail) {
+            //<<
+            // rotate select catalogitem //
+            catalogItemX.classList.add("catalogItemRotate");
+            //>>
+
+            //<<
+            // finish rotate, revert to original width //
+            setTimeout(() => {
+                Array.from(arrycatalogitems).forEach(ci => {
+                    ci.classList.add("catalogItemBack");
+                    ci.classList.remove("catalogItemContract");
+                    ci.classList.remove("catalogItemExpand");
+                });
+            }, 500);
+            //>>
+        }
+
+        //<<        
+        if (to_detail) {
+            if (morexbutton)
+                document.getElementById(morexbutton).style.display = "none";
+
+            setTimeout(() => {
+                // contract all catalogitem //
+                Array.from(arrycatalogitems).forEach(ci => {
+                    ci.classList.remove("catalogItemRotate");
+                    ci.classList.remove("catalogItemBack");
+                    // ci.classList.add("catalogItemContract");
+                    ci.classList.remove("catalogItemExpand");
+                    catalogItemContractItem(ci);
+                });
+
+                // expand selected catalogitem //
+                catalogItemX.classList.remove("catalogItemContract");
+                catalogItemX.classList.remove("catalogItemBack");
+                // catalogItemX.classList.add("catalogItemExpand");
+                catalogItemExpandItem(catalogItemX);
+            }, 1000);
+        }
+        //>>
+
         let summary = document.getElementById(item + "_summary");
         let details = document.getElementById(item + "_details");
 
         if (to_detail) {
             summary.style.display = "none";
             details.style.display = "block";
-            // summary.parentElement.removeChild(summary);
-            // catalogItemLicense.appendChild(details);
         }
         else {
             summary.style.display = "block";
             details.style.display = "none";
-            // details.parentElement.removeChild(details);
-            // catalogItemLicense.appendChild(summary);
         }
     }
 
-    function catalogItemMouseOver(ci) {
-        ci.classList.remove("catalogItemHoverOut");
-        ci.classList.add("catalogItemHover");
+    // function catalogItemMouseOver(ci) {
+    //     ci.classList.remove("catalogItemHoverOut");
+    //     ci.classList.add("catalogItemHover");
+    // }
+
+    // function catalogItemMouseOut(ci) {
+    //     ci.classList.remove("catalogItemHover");
+    //     ci.classList.add("catalogItemHoverOut");
+    // }
+
+    function catalogItemMouseOver(e) {
+        e.target.classList.remove("catalogItemHoverOut");
+        e.target.classList.add("catalogItemHover");
     }
 
-    function catalogItemMouseOut(ci) {
-        ci.classList.remove("catalogItemHover");
-        ci.classList.add("catalogItemHoverOut");
+    function catalogItemMouseOut(e) {
+        e.target.classList.remove("catalogItemHover");
+        e.target.classList.add("catalogItemHoverOut");
     }
 
     function catalogItemAddHover() {
         Array.from(document.querySelectorAll(".catalogItem")).forEach(ci => {
-            // ci.addEventListener("mouseover", catalogItemMouseOver(ci));
-            // ci.addEventListener("mouseout", catalogItemMouseOut(ci));
+            // // ci.addEventListener("mouseover", catalogItemMouseOver(ci));
+            // // ci.addEventListener("mouseout", catalogItemMouseOut(ci));            
+            // ci.addEventListener("mouseover", catalogItemMouseOver);
+            // ci.addEventListener("mouseout", catalogItemMouseOut);            
+
             ci.addEventListener("mouseover", () => {
                 ci.classList.remove("catalogItemHoverOut");
                 ci.classList.add("catalogItemHover");
@@ -1854,6 +2094,9 @@
                 ci.classList.remove("catalogItemHover");
                 ci.classList.add("catalogItemHoverOut");
             });
+
+            // ci.removeEventListener("click", catalogItemClickListenerExpand);
+            // ci.addEventListener("click", catalogItemClickListenerRise);
         })
     }
 
@@ -1865,6 +2108,45 @@
         // alert("small screen");
     }
 
+    function catalogItemClickListenerRise(e) {
+        Array.from(document.querySelectorAll(".catalogItem")).forEach(ci => {
+            ci.classList.remove("catalogItemHover");
+            ci.classList.remove("catalogItemHoverOut");
+        })
+        e.target.classList.add("catalogItemHover");
+    }
+
+    function catalogItemClickListenerExpand(e) {
+        let morex = "";
+        switch (e.target.getAttribute("cix")) {
+            case "catalog_weigh":
+                // case "catalog_weigh_summary":
+                // case "catalog_weigh_details":
+                cix = "catalog_weigh";
+                morex = "moreWeigh";
+                break;
+            case "catalog_access":
+                // case "catalog_access_summary":
+                // case "catalog_access_details":
+                cix = "catalog_access";
+                morex = "moreAccess";
+                break;
+            case "catalog_vms":
+                // case "catalog_vms_summary":
+                // case "catalog_vms_details":
+                cix = "catalog_vms";
+                morex = "moreVms";
+                break;
+            case "catalog_sensor":
+                // case "catalog_sensor_summary":
+                // case "catalog_sensor_details":
+                cix = "catalog_sensor";
+                morex = "moreSensor";
+                break;
+        }
+
+        catalogItemSwitch(cix, true, morex)
+    }
 
     document.getElementById("menuItemProducts").addEventListener("click", () => {
         shieldUp();
@@ -1906,6 +2188,9 @@
                 ci.classList.remove("catalogItemHoverOut");
             });
 
+            // ci.removeEventListener("click", catalogItemClickListenerRise);
+            ci.addEventListener("click", catalogItemClickListenerExpand);
+
             ci.classList.add("catalogItemExtend");
         })
 
@@ -1925,7 +2210,7 @@
         let morex, cix;
         switch (i) {
             case 0:
-                morex = "moreLicense";
+                morex = "moreWeigh";
                 cix = "catalog_weigh";
                 break;
             case 1:
@@ -1942,13 +2227,9 @@
                 break;
         }
 
-        document.getElementById(morex).addEventListener("click", () => {
-            let catalogItemLicense = document.getElementById(cix);
-            catalogItemLicense.classList.add("catalogItemRotate");
-
-            catalogItemSwitch(cix, true);
-
-            document.getElementById(morex).style.display = "none";
+        document.getElementById(morex).addEventListener("click", (e) => {
+            e.stopPropagation();
+            catalogItemSwitch(cix, true, e.target.id);
         })
     }
 
@@ -1977,7 +2258,7 @@
             let morex, cix;
             switch (i) {
                 case 0:
-                    morex = "moreLicense";
+                    morex = "moreWeigh";
                     cix = "catalog_weigh";
                     break;
                 case 1:
@@ -1994,13 +2275,30 @@
                     break;
             }
 
-            let catalogItemLicense = document.getElementById(cix);
-            catalogItemLicense.classList.remove("catalogItemRotate");
+            // let catalogItemx = document.getElementById(cix);
+            // catalogItemx.classList.remove("catalogItemRotate");
 
-            catalogItemSwitch(cix, false);
+            catalogItemSwitch(cix, false, null);
+
+            let catalogItemx = document.getElementById(cix);
+            catalogItemx.classList.remove("catalogItemRotate");
+
+            //<<
+            catalogItemx.classList.remove("catalogItemExpand");
+            catalogItemx.classList.remove("catalogItemContract");
+            catalogItemx.removeEventListener("click", catalogItemClickListenerExpand, false);
+            //>>            
+            //<<
+            catalogItemx.classList.remove("catalogItemExtend");
+            catalogItemx.classList.remove("catalogItemBack");
+            //>>
+
+            catalogItemx.scrollTop = 0;
+            
+            Array.from(catalogItemx.children).forEach(cic => {
+                cic.style.opacity = 1;
+            });
         }
-
-
     })
 
     // // services //
