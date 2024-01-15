@@ -44,8 +44,28 @@
             display: none;
         }
 
-        .divCatalogImg {
+        .divCatalogImg20 {
+            width: 20%;
+            margin: 1rem;
+        }
+
+        .divCatalogImg30 {
             width: 30%;
+            margin: 1rem;
+        }
+
+        .divCatalogImg50 {
+            width: 50%;
+            margin: 1rem;
+        }
+
+        .divCatalogImg60 {
+            width: 60%;
+            margin: 1rem;
+        }
+
+        .divCatalogImg95 {
+            width: 95%;
             margin: 1rem;
         }
 
@@ -1448,6 +1468,15 @@
                 display: none;
             }
 
+            .divCatalogImg20,
+            .divCatalogImg30,
+            .divCatalogImg50,
+            .divCatalogImg60,
+            .divCatalogImg95 {
+                width: 95%;
+                margin: 1rem;
+            }
+
             #catalog_vms {
                 animation: catalogItemDebut 1.5s;
                 animation-iteration-count: 1;
@@ -1725,7 +1754,7 @@
                     are automatically recorded.
                 </div>
                 <div class="catalogItemDetail" id="catalog_vms_details" cix="catalog_vms">
-                    <div class="divCatalogImg" cix="catalog_vms" style="float:left;">
+                    <div class="divCatalogImg30" cix="catalog_vms" style="float:left;">
                         <img class="catalogImg" src="./img_3sm/vms_pic.svg" cix="catalog_vms" alt="camera image 2" />
                     </div>
                     <br /><br />
@@ -1738,7 +1767,8 @@
                     The tracking of Blacklisted Vehicles Listing adds an extra layer of security to access controls,
                     promoting a secure living environment.
                     <br /><br />
-                    <div class="divCatalogImg" cix="catalog_vms" style="float: right;width:50%;">
+                    <!-- <div class="divCatalogImg" cix="catalog_vms" style="float: right;width:50%;"> -->
+                    <div class="divCatalogImg50" cix="catalog_vms" style="float: right;">
                         <img class="catalogImg" src="./img_3sm/vms_pic4.svg" cix="catalog_vms" alt="camera image 2" />
                     </div>
                     Enjoy the flexibility of customizable visiting hours, tailored for different vehicle entries,
@@ -1750,7 +1780,8 @@
                     With customizable reporting, focus on specific areas of concern to ensure a proactive and secure
                     residential atmosphere.
                     <br /><br />
-                    <div class="divCatalogImg" cix="catalog_vms" style="width: 95%;">
+                    <!-- <div class="divCatalogImg" cix="catalog_vms" style="width: 95%;"> -->
+                    <div class="divCatalogImg95" cix="catalog_vms">
                         <img class="catalogImg" src="./img_3sm/vms_pic3.svg" cix="catalog_vms" alt="camera image 2" />
                     </div>
                 </div>
@@ -1765,7 +1796,8 @@
                     Phone.
                 </div>
                 <div class="catalogItemDetail" id="catalog_access_details" cix="catalog_access">
-                    <div class="divCatalogImg" cix="catalog_access" style="float: left;width: 60%;">
+                    <!-- <div class="divCatalogImg" cix="catalog_access" style="float: left;width: 60%;"> -->
+                    <div class="divCatalogImg60" cix="catalog_access" style="float: left;">
                         <img class="catalogImg" src="./img_3sm/access_pic.svg" cix="catalog_access"
                             alt="camera image 2" />
                     </div>
@@ -1795,7 +1827,8 @@
                     devices and platforms.
                 </div>
                 <div class="catalogItemDetail" id="catalog_weigh_details" cix="catalog_weigh">
-                    <div class="divCatalogImg" style="width: 60%;float:right;" cix="catalog_weigh">
+                    <!-- <div class="divCatalogImg" style="width: 60%;float:right;" cix="catalog_weigh"> -->
+                    <div class="divCatalogImg60" style="float:right;" cix="catalog_weigh">
                         <img class="catalogImg" src="./img_3sm/weigh_pic.svg" cix="catalog_weigh"
                             alt="camera image 2" />
                     </div>
@@ -1828,7 +1861,7 @@
                     other parameter, our system provides accurate and reliable data.
                 </div>
                 <div class="catalogItemDetail" id="catalog_sensor_details" cix="catalog_sensor">
-                    <div class="divCatalogImg" cix="catalog_sensor" style="float:right;">
+                    <div class="divCatalogImg30" cix="catalog_sensor" style="float:right;">
                         <img class="catalogImg" src="./img_3sm/sensor_pic.svg" cix="catalog_sensor"
                             alt="camera image 2" />
                     </div>
@@ -1839,7 +1872,8 @@
                     humidity, air quality, or other parameters.
                     <br><br>
                     Our system enhances accuracy and reliability in delivering crucial data.
-                    <div class="divCatalogImg" cix="catalog_sensor" style="width: 20%; float:left;">
+                    <!-- <div class="divCatalogImg" cix="catalog_sensor" style="width: 20%; float:left;"> -->
+                    <div class="divCatalogImg20" cix="catalog_sensor" style="float:left;">
                         <img class="catalogImg" src="./img_3sm/sensor_pic2.svg" cix="catalog_sensor"
                             alt="camera image 2" />
                     </div>
@@ -1859,6 +1893,9 @@
 
 </body>
 <script>
+    // document.querySelector("body").scrollTop = 0;
+    // console.log(document.querySelector("body"));
+
     const SmallPageWidth = 850;
 
     function shieldUp() {
